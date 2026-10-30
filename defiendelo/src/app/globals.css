@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #f7f9fc;
+  --ink: #1b2a4a;
+  --graphite: #5b6478;
+  --rule: #d9e2ef;
+  --pen: #c8102e;
+  --pen-soft: #fbe7ea;
+  --ink-soft: #e6ecf6;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-graphite: var(--graphite);
+  --color-rule: var(--rule);
+  --color-pen: var(--pen);
+  --color-pen-soft: var(--pen-soft);
+  --color-ink-soft: var(--ink-soft);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+}
+
+html {
+  background: var(--paper);
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+/* Notebook sheet: the red margin line is the page's one signature element. */
+.sheet {
+  min-height: 100vh;
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: 3rem 1.25rem 5rem 2.75rem;
+  background-image: linear-gradient(to right, transparent 1.5rem, var(--pen) 1.5rem, var(--pen) calc(1.5rem + 2px), transparent calc(1.5rem + 2px));
+}
+
+@media (min-width: 640px) {
+  .sheet {
+    padding-left: 5rem;
+    background-image: linear-gradient(to right, transparent 3rem, var(--pen) 3rem, var(--pen) calc(3rem + 2px), transparent calc(3rem + 2px));
+  }
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display), system-ui, sans-serif;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 800;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+section + section {
+  border-top: 1px solid var(--rule);
+  margin-top: 2.5rem;
+  padding-top: 2.5rem;
+}
+
+.prose-measure {
+  max-width: 68ch;
+}
+
+textarea,
+input[type="text"] {
+  width: 100%;
+  background: white;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 0.75rem 0.875rem;
+  color: var(--ink);
+}
+
+textarea:focus,
+input[type="text"]:focus,
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--ink);
+  color: white;
+  font-weight: 700;
+  padding: 0.7rem 1.2rem;
+  border-radius: 6px;
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: progress;
+}
+
+.btn-quiet {
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Teacher's red-pen mark, used only for gaps and given-away criteria. */
+.pen-mark {
+  color: var(--pen);
+  text-decoration: underline wavy var(--pen);
+  text-underline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -1,0 +1,47 @@
+# Defiéndelo
+
+Assignments students may solve with AI, graded on what they can explain. Built for DSC HACK 2026 (Educación 2036).
+
+Flow: the teacher redesigns an assignment → a stress test shows how much of the grade an AI earns alone → each student submits and defends their own work → the teacher sees who to attend first and what to re-teach.
+
+## Run locally
+
+```bash
+npm install
+npm run dev
+```
+
+Without `ANTHROPIC_API_KEY` the app runs in **demo mode**: deterministic canned responses, so the whole flow works offline.
+
+## Environment
+
+| Variable | Required | Purpose |
+| --- | --- | --- |
+| `ANTHROPIC_API_KEY` | For real mode | Claude API (`claude-opus-5-5`, with server-side refusal fallback) |
+| `UPSTASH_REDIS_REST_URL` | For deploys | Shared storage across serverless instances |
+| `UPSTASH_REDIS_REST_TOKEN` | For deploys | Token for the URL above |
+
+Without Upstash, data lives in process memory: fine for `npm run dev`, but on Vercel instances do not share it.
+
+## Deploy on Vercel
+
+1. Import the repository and set the **Root Directory** to `defiendelo`.
+2. Add an Upstash Redis integration (free tier) and `ANTHROPIC_API_KEY`.
+3. Deploy. The stress-test route needs up to 120 s (`maxDuration`).
+
+## Structure
+
+- `src/domain` — types and pure scoring logic (gap, triage, AI-obtainable score), tested with Vitest.
+- `src/ports` — `AssessmentAI` and `AssignmentStore` interfaces.
+- `src/adapters` — Claude, demo, memory and Upstash implementations.
+- `src/application` — use cases; API routes in `src/app/api` stay thin.
+
+## Privacy
+
+Students use an alias; no personal data or audio is stored. The teacher dashboard requires the teacher key in its URL.
+
+## Tests
+
+```bash
+npm test
+```
