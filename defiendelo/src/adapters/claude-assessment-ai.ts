@@ -1,216 +1,44 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { betaZodOutputFormat } from "@anthropic-ai/sdk/helpers/beta/zod";
-import { z } from "zod/v4";
-import type { AssessmentAI, RedesignInput } from "@/ports/assessment-ai";
-import type {
-  Criterion,
-  CriterionScore,
-  DefenseAnswer,
-  DefenseQuestion,
-  Evaluation,
-  MisconceptionCluster,
-  Redesign,
-  Submission,
-} from "@/domain/types";
+import type { z } from "zod/v4";
+import { PromptedAssessmentAI } from "./prompted-assessment-ai";
 
 const MODEL = "claude-opus-5-5";
 
-const LANGUAGE_RULE =
-  "Write every user-facing string in neutral, clear Spanish suitable for Peruvian university students and teachers.";
-
-const criterionSchema = z.object({
-  id: z.string().describe("Short stable id such as c1, c2"),
-  name: z.string(),
-  description: z.string(),
-  weight: z.number().int().describe("Integer weight; all weights in the list sum to 100"),
-  evidence: z.enum(["entrega", "defensa"]),
-});
-
-const redesignSchema = z.object({
-  statement: z.string(),
-  aiPolicy: z.string(),
-  criteria: z.array(criterionSchema),
-  originalCriteria: z.array(criterionSchema),
-  rationale: z.string(),
-});
-
-const scoresSchema = z.object({
-  scores: z.array(
-    z.object({
-      criterionId: z.string(),
-      score: z.number().describe("From 0 to 1"),
-      reason: z.string(),
-    }),
-  ),
-});
-
-const questionsSchema = z.object({
-  questions: z.array(z.object({ criterionId: z.string(), question: z.string() })),
-});
-
-const evaluationSchema = z.object({
-  perCriterion: z.array(
-    z.object({
-      criterionId: z.string(),
-      submissionScore: z.number().describe("From 0 to 1"),
-      defenseScore: z.number().describe("From 0 to 1"),
-      evidenceQuote: z.string().describe("Verbatim quote from the student's defense answers"),
-      misconception: z.string().nullable(),
-    }),
-  ),
-  summary: z.string(),
-});
-
-const clustersSchema = z.object({
-  clusters: z.array(
-    z.object({
-      label: z.string(),
-      criterionId: z.string(),
-      studentAliases: z.array(z.string()),
-      quotes: z.array(z.string()),
-      suggestion: z.string(),
-    }),
-  ),
-});
-
-const clamp01 = (n: number) => Math.min(1, Math.max(0, n));
-
-function rubricText(criteria: Criterion[]): string {
-  return criteria
-    .map((c) => `- ${c.id} | ${c.name} (${c.weight}%, verified in: ${c.evidence}): ${c.description}`)
-    .join("\n");
-}
-
-export class ClaudeAssessmentAI implements AssessmentAI {
+export class ClaudeAssessmentAI extends PromptedAssessmentAI {
   private readonly client = new Anthropic();
 
-  private async ask<T>(schema: z.ZodType<T>, system: string, user: string): Promise<T> {
+  protected async structured<T>(schema: z.ZodType<T>, system: string, user: string): Promise<T> {
     const response = await this.client.beta.messages.parse({
       model: MODEL,
       max_tokens: 16000,
       betas: ["server-side-fallback-2026-07-01"],
       fallbacks: "default",
       output_config: { effort: "low", format: betaZodOutputFormat(schema) },
-      system: `${system}\n\n${LANGUAGE_RULE}`,
+      system,
       messages: [{ role: "user", content: user }],
     });
-    if (response.stop_reason === "refusal") {
-      throw new Error("The model declined this request.");
-    }
+    if (response.stop_reason === "refusal") throw new Error("The model declined this request.");
     if (!response.parsed_output) {
       throw new Error(`Could not parse model output (stop_reason: ${response.stop_reason}).`);
     }
     return response.parsed_output as T;
   }
 
-  async redesign(input: RedesignInput): Promise<Redesign> {
-    const result = await this.ask(
-      redesignSchema,
-      `You help teachers redesign assignments for a world where students use generative AI.
-The redesigned task must ALLOW AI, but the grade must be earned through the student's own judgment:
-decisions taken, alternatives discarded and why, verification of AI output, and the ability to explain choices.
-Execution quality that an AI can produce alone must weigh little.
-Mark a criterion with evidence "defensa" when it can only be verified by asking the student about their own work live;
-mark it "entrega" when it is verified in the written submission. At least half of the weight must be "defensa".
-Also produce originalCriteria: the product-focused rubric a teacher would typically use for the ORIGINAL task today (mostly "entrega").
-Use 3 to 5 criteria in each list. Weights in each list sum to 100.`,
-      `Subject: ${input.subject}\nTitle: ${input.title}\n\nOriginal assignment:\n${input.original}`,
-    );
-    return result;
-  }
-
-  async solveAlone(subject: string, statement: string): Promise<string> {
+  protected async text(system: string, user: string): Promise<string> {
     const response = await this.client.beta.messages.create({
       model: MODEL,
       max_tokens: 16000,
       betas: ["server-side-fallback-2026-07-01"],
       fallbacks: "default",
       output_config: { effort: "low" },
-      system: `You are a student who delegates the whole assignment to an AI and submits whatever it produces.
-Write the complete submission exactly as it would be handed in, including any justifications the task asks for. ${LANGUAGE_RULE}`,
-      messages: [{ role: "user", content: `Subject: ${subject}\n\nAssignment:\n${statement}` }],
+      system,
+      messages: [{ role: "user", content: user }],
     });
     if (response.stop_reason === "refusal") throw new Error("The model declined this request.");
     return response.content
       .flatMap((block) => (block.type === "text" ? [block.text] : []))
       .join("\n")
       .trim();
-  }
-
-  async grade(statement: string, criteria: Criterion[], answer: string): Promise<CriterionScore[]> {
-    const result = await this.ask(
-      scoresSchema,
-      `You are a strict, fair grader. Score each criterion from 0 to 1 using only the written submission.
-Give one short reason per criterion. Return one score per criterion id.`,
-      `Assignment:\n${statement}\n\nRubric:\n${rubricText(criteria)}\n\nSubmission:\n${answer}`,
-    );
-    return result.scores.map((s) => ({ ...s, score: clamp01(s.score) }));
-  }
-
-  async defenseQuestions(statement: string, criteria: Criterion[], work: string): Promise<DefenseQuestion[]> {
-    const result = await this.ask(
-      questionsSchema,
-      `You run a short oral-style defense of a student's own submission.
-Write 3 to 5 questions about concrete decisions IN THIS submission (quote or point to the exact part),
-prioritizing criteria verified in "defensa". Each question must be answerable in 2-4 sentences by someone who
-truly made the work, and hard to answer by someone who only pasted AI output. Never ask for definitions.`,
-      `Assignment:\n${statement}\n\nRubric:\n${rubricText(criteria)}\n\nStudent submission:\n${work}`,
-    );
-    return result.questions.map((q, i) => ({ id: `q${i + 1}`, ...q }));
-  }
-
-  async evaluateDefense(
-    statement: string,
-    criteria: Criterion[],
-    work: string,
-    questions: DefenseQuestion[],
-    answers: DefenseAnswer[],
-  ): Promise<Evaluation> {
-    const transcript = questions
-      .map((q) => `${q.id} [${q.criterionId}] ${q.question}\nAnswer: ${answers.find((a) => a.questionId === q.id)?.answer ?? "(no answer)"}`)
-      .join("\n\n");
-    const result = await this.ask(
-      evaluationSchema,
-      `You compare what a student SUBMITTED with what they could EXPLAIN in their defense.
-For every criterion give submissionScore (quality visible in the written work) and defenseScore (how well the
-student's own answers show they understand and made those decisions). Quote the student's words verbatim as evidence.
-If an answer reveals a specific misunderstanding, state it in one sentence as misconception; otherwise null.
-You do not assign the final grade; the teacher does. The summary speaks to the student, warmly and concretely.`,
-      `Assignment:\n${statement}\n\nRubric:\n${rubricText(criteria)}\n\nSubmission:\n${work}\n\nDefense:\n${transcript}`,
-    );
-    return {
-      summary: result.summary,
-      perCriterion: result.perCriterion.map((p) => ({
-        ...p,
-        submissionScore: clamp01(p.submissionScore),
-        defenseScore: clamp01(p.defenseScore),
-      })),
-    };
-  }
-
-  async clusterMisconceptions(
-    statement: string,
-    criteria: Criterion[],
-    submissions: Submission[],
-  ): Promise<MisconceptionCluster[]> {
-    const evidence = submissions
-      .filter((s) => s.evaluation)
-      .map(
-        (s) =>
-          `Student ${s.alias}:\n` +
-          s.evaluation!.perCriterion
-            .filter((p) => p.misconception)
-            .map((p) => `- [${p.criterionId}] ${p.misconception} | quote: "${p.evidenceQuote}"`)
-            .join("\n"),
-      )
-      .join("\n\n");
-    const result = await this.ask(
-      clustersSchema,
-      `Group the misconceptions found across a class into at most 5 clusters, largest first.
-For each cluster: a short label, the criterion id, the student aliases, up to 3 verbatim quotes, and ONE concrete
-activity the teacher can run in the next class (10-15 minutes) to address it.`,
-      `Assignment:\n${statement}\n\nRubric:\n${rubricText(criteria)}\n\nMisconceptions:\n${evidence || "(none)"}`,
-    );
-    return result.clusters;
   }
 }

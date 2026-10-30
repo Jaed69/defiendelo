@@ -1,5 +1,6 @@
 import type { AssessmentAI, RedesignInput } from "@/ports/assessment-ai";
 import type { AssignmentStore } from "@/ports/assignment-store";
+import { reconcileEvaluation } from "@/domain/reconcile";
 import type { Assignment, Criterion, DefenseAnswer, Submission } from "@/domain/types";
 
 export class NotFoundError extends Error {}
@@ -119,10 +120,14 @@ export async function submitDefense(
   const submission = assignment.submissions.find((s) => s.id === submissionId);
   if (!submission) throw new NotFoundError("Submission not found");
   if (submission.evaluation) return submission;
-  const evaluation = await ai.evaluateDefense(
-    assignment.redesign.statement,
-    assignment.redesign.criteria,
-    submission.work,
+  const evaluation = reconcileEvaluation(
+    await ai.evaluateDefense(
+      assignment.redesign.statement,
+      assignment.redesign.criteria,
+      submission.work,
+      submission.questions,
+      answers,
+    ),
     submission.questions,
     answers,
   );

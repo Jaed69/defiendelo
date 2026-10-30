@@ -11,13 +11,15 @@ npm install
 npm run dev
 ```
 
-Without `ANTHROPIC_API_KEY` the app runs in **demo mode**: deterministic canned responses, so the whole flow works offline.
+Put keys in `.env.local` (git-ignored). With no AI key the app runs in **demo mode**: deterministic canned responses, so the whole flow works offline.
 
 ## Environment
 
 | Variable | Required | Purpose |
 | --- | --- | --- |
-| `ANTHROPIC_API_KEY` | For real mode | Claude API (`claude-opus-5-5`, with server-side refusal fallback) |
+| `ANTHROPIC_API_KEY` | Option A | Claude API (`claude-opus-5-5`, with server-side refusal fallback). Takes precedence |
+| `OPENROUTER_API_KEY` | Option B | OpenRouter; used when no Anthropic key is set |
+| `OPENROUTER_MODEL` | No | OpenRouter model id. Default `z-ai/glm-5.3-flash` (very low cost, not free). Free `:free` models work but are slower and rate-limited |
 | `UPSTASH_REDIS_REST_URL` | For deploys | Shared storage across serverless instances |
 | `UPSTASH_REDIS_REST_TOKEN` | For deploys | Token for the URL above |
 
@@ -26,14 +28,14 @@ Without Upstash, data lives in process memory: fine for `npm run dev`, but on Ve
 ## Deploy on Vercel
 
 1. Import the repository and set the **Root Directory** to `defiendelo`.
-2. Add an Upstash Redis integration (free tier) and `ANTHROPIC_API_KEY`.
-3. Deploy. The stress-test route needs up to 120 s (`maxDuration`).
+2. Add an Upstash Redis integration (free tier) and either `ANTHROPIC_API_KEY` or `OPENROUTER_API_KEY`.
+3. Deploy. The stress-test route can take 1–3 minutes with free or small models (`maxDuration` 300 s, needs Fluid Compute).
 
 ## Structure
 
 - `src/domain` — types and pure scoring logic (gap, triage, AI-obtainable score), tested with Vitest.
 - `src/ports` — `AssessmentAI` and `AssignmentStore` interfaces.
-- `src/adapters` — Claude, demo, memory and Upstash implementations.
+- `src/adapters` — shared prompts (`PromptedAssessmentAI`), Claude, OpenRouter, demo, memory and Upstash implementations.
 - `src/application` — use cases; API routes in `src/app/api` stay thin.
 
 ## Privacy
