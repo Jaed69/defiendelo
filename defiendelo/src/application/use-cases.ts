@@ -1,7 +1,7 @@
 import type { AssessmentAI, RedesignInput } from "@/ports/assessment-ai";
 import type { AssignmentStore } from "@/ports/assignment-store";
 import { reconcileEvaluation } from "@/domain/reconcile";
-import { acceptsSubmissions, gradeQuestion, proposeQueue, questionsFor, sessionOf, studentStatus, studentView } from "@/domain/session";
+import { acceptsSubmissions, gradeQuestion, isLive, proposeQueue, questionsFor, sessionOf, studentStatus, studentView } from "@/domain/session";
 import type { Assignment, ClassSession, Criterion, DefenseAnswer, Submission } from "@/domain/types";
 
 export class NotFoundError extends Error {}
@@ -33,6 +33,8 @@ export interface PublicAssignment {
   aiPolicy: string;
   criteria: Pick<Criterion, "id" | "name" | "description" | "weight" | "evidence">[];
   session: Pick<ClassSession, "method" | "deadline" | "phase" | "questionsPerStudent">;
+  /** False until the teacher configures a live session; until then the defense is self-paced. */
+  live: boolean;
   acceptsSubmissions: boolean;
 }
 
@@ -51,6 +53,7 @@ export async function getForStudent(store: AssignmentStore, id: string): Promise
     aiPolicy: a.redesign.aiPolicy,
     criteria: a.redesign.criteria.map(({ id, name, description, weight, evidence }) => ({ id, name, description, weight, evidence })),
     session: { method, deadline, phase, questionsPerStudent },
+    live: isLive(a),
     acceptsSubmissions: acceptsSubmissions(sessionOf(a), new Date()),
   };
 }
@@ -130,16 +133,17 @@ export async function submitDefense(
   const assignment = await load(store, id);
   const submission = ownSubmission(assignment, submissionId, token);
   if (submission.evaluation) return submission;
-  if (studentStatus(sessionOf(assignment), submission) !== "responder") throw new ConflictError("Not answering now");
+  const live = isLive(assignment);
+  if (studentStatus(sessionOf(assignment), submission, live) !== "responder") throw new ConflictError("Not answering now");
   const evaluation = reconcileEvaluation(
     await ai.evaluateDefense(
       assignment.redesign.statement,
       assignment.redesign.criteria,
       submission.work,
-      questionsFor(sessionOf(assignment), submission),
+      questionsFor(sessionOf(assignment), submission, live),
       answers,
     ),
-    questionsFor(sessionOf(assignment), submission),
+    questionsFor(sessionOf(assignment), submission, live),
     answers,
   );
   const latest = await load(store, id);

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { acceptsSubmissions, DEFAULT_SESSION, gradeQuestion, proposeQueue, studentStatus, studentView } from "./session";
+import { acceptsSubmissions, DEFAULT_SESSION, gradeQuestion, isLive, proposeQueue, studentStatus, studentView } from "./session";
 import type { Assignment, ClassSession, Submission } from "./types";
 
 const NOW = new Date("2026-10-31T12:00:00Z");
@@ -79,5 +79,34 @@ describe("session", () => {
     expect(studentView(assignment({}, [sub]), sub, NOW).canReplace).toBe(true);
     expect(studentView(assignment({ deadline: "2026-10-31T11:00:00Z" }, [sub]), sub, NOW).canReplace).toBe(false);
     expect(studentView(assignment({ phase: "defensas" }, [sub]), sub, NOW).canReplace).toBe(false);
+  });
+
+  describe("without a session configured by the teacher", () => {
+    const selfPaced = (sub: Submission) => ({ submissions: [sub] }) as unknown as Assignment;
+
+    it("lets the student answer every question right after handing in", () => {
+      const sub = submission("a");
+      const view = studentView(selfPaced(sub), sub, NOW);
+      expect(view.status).toBe("responder");
+      expect(view.questions.map((q) => q.id)).toEqual(["q1", "q2", "q3"]);
+      expect(view.result).toBeNull();
+    });
+
+    it("shows the evaluation as soon as the defense is answered", () => {
+      const sub = submission("a");
+      sub.answeredAt = "2026-10-31T11:00:00Z";
+      sub.evaluation = { summary: "Explica bien", perCriterion: [] } as unknown as Submission["evaluation"];
+      const view = studentView(selfPaced(sub), sub, NOW);
+      expect(view.status).toBe("publicado");
+      expect(view.questions).toEqual([]);
+      expect(view.result).toEqual({ grade: null, perQuestion: [], evaluation: sub.evaluation });
+    });
+
+    it("still accepts submissions", () => {
+      const sub = submission("a");
+      expect(studentView(selfPaced(sub), sub, NOW).canReplace).toBe(true);
+      expect(isLive(selfPaced(sub))).toBe(false);
+      expect(isLive(assignment({}, [sub]))).toBe(true);
+    });
   });
 });

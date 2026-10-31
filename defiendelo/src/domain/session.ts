@@ -16,6 +16,14 @@ export function sessionOf(assignment: Assignment): ClassSession {
   return { ...DEFAULT_SESSION, ...assignment.session };
 }
 
+/**
+ * The live session starts once the teacher configures it. Until then the assignment keeps the
+ * self-paced flow: the student hands in, answers the written defense at once and sees the result.
+ */
+export function isLive(assignment: Assignment): boolean {
+  return assignment.session !== undefined;
+}
+
 export function acceptsSubmissions(session: ClassSession, now: Date): boolean {
   return session.phase === "entregas" && (!session.deadline || now < new Date(session.deadline));
 }
@@ -25,9 +33,9 @@ export function proposeQueue(submissions: Submission[]): string[] {
   return [...submissions].sort((a, b) => a.createdAt.localeCompare(b.createdAt)).map((s) => s.id);
 }
 
-/** The AI may return more questions than the teacher asked for; only the first N count. */
-export function questionsFor(session: ClassSession, submission: Submission): DefenseQuestion[] {
-  return submission.questions.slice(0, session.questionsPerStudent);
+/** The AI may return more questions than the teacher asked for; in a live session only the first N count. */
+export function questionsFor(session: ClassSession, submission: Submission, live = true): DefenseQuestion[] {
+  return live ? submission.questions.slice(0, session.questionsPerStudent) : submission.questions;
 }
 
 /**
@@ -59,7 +67,8 @@ export function gradeQuestion(
 
 export type StudentStatus = "entregado" | "en_cola" | "turno" | "responder" | "papel" | "evaluado" | "publicado";
 
-export function studentStatus(session: ClassSession, submission: Submission): StudentStatus {
+export function studentStatus(session: ClassSession, submission: Submission, live = true): StudentStatus {
+  if (!live) return submission.answeredAt ? "publicado" : "responder";
   if (session.phase === "publicado") return "publicado";
   if (session.phase === "entregas") return "entregado";
   if (submission.grade != null || (session.method === "escrito" && submission.answeredAt)) return "evaluado";
@@ -96,8 +105,9 @@ export interface StudentView {
 
 export function studentView(assignment: Assignment, submission: Submission, now: Date): StudentView {
   const session = sessionOf(assignment);
-  const status = studentStatus(session, submission);
-  const questions = questionsFor(session, submission);
+  const live = isLive(assignment);
+  const status = studentStatus(session, submission, live);
+  const questions = questionsFor(session, submission, live);
   const aliasOf = (id: string | null) => assignment.submissions.find((s) => s.id === id)?.alias ?? null;
   const oral = session.method === "oral" && session.phase === "defensas";
   const position = session.queue.indexOf(submission.id);
@@ -123,7 +133,8 @@ export function studentView(assignment: Assignment, submission: Submission, now:
       status === "publicado"
         ? {
             grade: submission.grade ?? null,
-            perQuestion: questions.map((q) => ({ question: q.question, score: submission.questionGrades?.[q.id] ?? null })),
+            // Without a live session the teacher grades nothing per question, so there is nothing to list.
+            perQuestion: live ? questions.map((q) => ({ question: q.question, score: submission.questionGrades?.[q.id] ?? null })) : [],
             evaluation: submission.evaluation,
           }
         : null,

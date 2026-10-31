@@ -611,7 +611,9 @@ export default function StudentPage({ params }: { params: Promise<{ id: string }
     );
   }
 
-  const { method, deadline } = assignment.session;
+  const { deadline } = assignment.session;
+  // Until the teacher configures a live session, the defense is answered on the phone right after handing in.
+  const method = assignment.live ? assignment.session.method : "escrito";
   const { label: methodLabel, Icon: MethodIcon } = METHOD[method];
   const criterionName = (cid: string) => assignment.criteria.find((c) => c.id === cid)?.name ?? cid;
   const status = view?.status;
