@@ -1,0 +1,344 @@
+{
+ "exampleId": "ciencia-informe-indagacion",
+ "redesign": {
+  "statement": "Investigarás cómo influye la temperatura del agua en el tiempo de disolución de una pastilla efervescente, realizando tú mismo el experimento en casa o en el colegio. El trabajo se desarrolla en tres momentos. (1) EXPERIMENTO: planifica tu procedimiento decidiendo cuántos niveles de temperatura usarás (mínimo tres), cómo medirás el tiempo de disolución, cuántas repeticiones harás y qué variables controlarás (volumen de agua, tamaño de la pastilla, agitación, etc.). Registra tus mediciones en bruto, anota los problemas que surjan (por ejemplo, cómo controlaste la temperatura o qué hiciste si una prueba salió mal) y documenta tu trabajo con fotos o un video breve del montaje y de las pruebas. (2) TRABAJO CON IA: puedes usar herramientas de IA como asistente, por ejemplo para entender conceptos, sugerir cómo organizar tus datos, revisar tu redacción o proponer posibles explicaciones. Pero es obligatorio llevar un 'diario de uso de la IA': qué le pediste, qué respuestas obtuviste, qué aceptaste, qué descartaste y por qué, y cómo verificaste cada aporte (por ejemplo, contrastando con tu propia data o con fuentes confiables). La IA no puede generar tus datos ni tus conclusiones: esos salen de tu experimento. (3) ENTREGA Y DEFENSA: presenta un informe breve que incluya tu tabla de datos crudos con las tres repeticiones, tu gráfico y tu análisis, más el diario de uso de la IA. Luego, en una conversación individual con tu docente, explicarás tus decisiones: por qué elegiste esas temperaturas y ese control de variables, qué errores detectaste en las respuestas de la IA y cómo los corregiste, y responderás preguntas sobre tus resultados, por ejemplo qué pasaría si cambiaras el volumen de agua. Tu nota dependerá principalmente de tus decisiones, de tu capacidad de justificarlas y de verificar críticamente lo que te aportó la IA, no de la pulcritud del informe.",
+  "aiPolicy": "La IA está permitida como asistente (aclarar conceptos, sugerir formatos, revisar redacción), pero prohibida para generar datos, análisis o conclusiones. Todo uso debe quedar registrado en el diario de IA y será verificado en la defensa oral.",
+  "criteria": [
+   {
+    "id": "c1",
+    "name": "Registro auténtico del experimento",
+    "description": "Presenta datos crudos de las tres repeticiones por cada temperatura, evidencia visual del montaje (fotos o video) y notas de los problemas surgidos y cómo los resolvió durante la ejecución.",
+    "weight": 15,
+    "evidence": "entrega"
+   },
+   {
+    "id": "c2",
+    "name": "Defensa oral del proceso experimental",
+    "description": "Explica en vivo sus decisiones: niveles de temperatura elegidos, control de variables, manejo de repeticiones y tratamiento de datos atípicos; responde preguntas sobre su procedimiento y predice efectos de cambios (por ejemplo, más volumen de agua).",
+    "weight": 30,
+    "evidence": "defensa"
+   },
+   {
+    "id": "c3",
+    "name": "Uso crítico y verificado de la IA",
+    "description": "Presenta un diario de uso de la IA con peticiones, respuestas, lo que aceptó y descartó con razones, y cómo verificó cada aporte; en la defensa demuestra que distingue qué aportó la IA y qué es fruto de su propio análisis, señalando errores que detectó en las respuestas.",
+    "weight": 25,
+    "evidence": "defensa"
+   },
+   {
+    "id": "c4",
+    "name": "Análisis y discusión propios",
+    "description": "Construye su propio gráfico a partir de sus datos, identifica el patrón relación temperatura-tiempo, discute posibles explicaciones con base en sus observaciones y formula conclusiones coherentes con la evidencia obtenida.",
+    "weight": 30,
+    "evidence": "entrega"
+   }
+  ],
+  "originalCriteria": [
+   {
+    "id": "o1",
+    "name": "Hipótesis e identificación de variables",
+    "description": "Formula una hipótesis clara y correctamente identifica variable independiente, dependiente y controladas.",
+    "weight": 25,
+    "evidence": "entrega"
+   },
+   {
+    "id": "o2",
+    "name": "Tabla de datos con tres repeticiones",
+    "description": "Presenta una tabla completa y ordenada con los tiempos de disolución de las tres repeticiones por temperatura.",
+    "weight": 25,
+    "evidence": "entrega"
+   },
+   {
+    "id": "o3",
+    "name": "Gráfico de resultados",
+    "description": "Elabora un gráfico adecuado (por ejemplo, de líneas o barras) con títulos, ejes rotulados y unidades correctas.",
+    "weight": 20,
+    "evidence": "entrega"
+   },
+   {
+    "id": "o4",
+    "name": "Informe con discusión y conclusiones",
+    "description": "Redacta un informe con discusión de resultados, conclusiones coherentes con la hipótesis y redacción clara.",
+    "weight": 30,
+    "evidence": "entrega"
+   }
+  ],
+  "rationale": "El experimento físico genera datos que la IA no puede inventar por el estudiante, y la defensa oral sobre decisiones de control de variables, manejo de datos atípicos y verificación de los aportes de la IA convierte el juicio propio en el factor decisivo de la nota; la pulcritud del informe y del gráfico pesa poco porque la IA puede producirlos con facilidad."
+ },
+ "stress": {
+  "original": {
+   "aiAnswer": "**Informe de indagación: Influencia de la temperatura del agua en el tiempo de disolución de una pastilla efervescente**\n\n**Nombres y apellidos:** ______________________\n**Grado:** 2.º de secundaria — Ciencia y Tecnología\n\n**1. Problema**\n¿Cómo influye la temperatura del agua en el tiempo de disolución de una pastilla efervescente?\n\n**2. Hipótesis**\nSi la temperatura del agua aumenta, entonces el tiempo de disolución de la pastilla efervescente disminuye, porque las partículas del agua se mueven más rápido a mayor temperatura y chocan con más frecuencia contra la pastilla.\n\n**3. Variables**\n- Variable independiente: temperatura del agua (20 °C, 40 °C y 80 °C).\n- Variable dependiente: tiempo de disolución en segundos.\n- Variables controladas: marca y tamaño de la pastilla, volumen de agua (200 mL), tipo de recipiente, presencia de agitación (ninguna).\n\n**4. Materiales**\nTres pastillas efervescentes de la misma marca, vaso de precipitos, termómetro, cronómetro, agua, fuente de calor.\n\n**5. Procedimiento**\nSe midió 200 mL de agua a la temperatura indicada, se colocó en el recipiente, se dejó caer la pastilla sin agitar y se midió el tiempo hasta su disolución completa. Se repitió tres veces en cada temperatura.\n\n**6. Tabla de datos**\n\n| Temperatura (°C) | Repetición 1 (s) | Repetición 2 (s) | Repetición 3 (s) | Promedio (s) |\n|---|---|---|---|---|\n| 20 | 95 | 92 | 98 | 95 |\n| 40 | 55 | 52 | 58 | 55 |\n| 80 | 25 | 23 | 27 | 25 |\n\n**7. Gráfico de barras (promedio de tiempo de disolución)**\n\n```\nTiempo (s)\n100 |\n 90 |  ███\n 80 |  ███\n 70 |  ███\n 60 |  ███\n 50 |  ███        ███\n 40 |  ███        ███\n 30 |  ███        ███        ███\n 20 |  ███        ███        ███\n 10 |  ███        ███        ███\n     --------------------------\n       20 °C      40 °C      80 °C\n        95         55         25\n```\n\n**8. Discusión**\nLos resultados muestran que al aumentar la temperatura, el tiempo de disolución disminuyó considerablemente: de un promedio de 95 s a 20 °C hasta 25 s a 80 °C. Los datos de las tres repeticiones fueron consistentes, con diferencias menores entre ensayos, lo que indica que la medición fue confiable. Este resultado se explica porque el aumento de temperatura incrementa la energía cinética de las moléculas de agua, lo que hace que choquen con mayor frecuencia y fuerza contra la superficie de la pastilla, acelerando la reacción química que produce el desprendimiento de gas y la disolución. Esto confirma la hipótesis planteada. Cabe señalar que a 80 °C parte del dióxido de carbono se libera más rápido, lo que también contribuye a la efervescencia intensa observada.\n\n**9. Conclusiones**\n1. La temperatura del agua influye directamente en el tiempo de disolución: a mayor temperatura, menor tiempo de disolución.\n2. La hipótesis se cumplió, ya que se comprobó experimentalmente que el tiempo de disolución disminuye al aumentar la temperatura.\n3. Se recomienda, para futuras indagaciones, usar más niveles de temperatura y controlar mejor la evaporación del agua caliente.",
+   "scores": [
+    {
+     "criterionId": "o1",
+     "score": 1,
+     "reason": "Formula una hipótesis clara con justificación e identifica correctamente la variable independiente, dependiente y las controladas."
+    },
+    {
+     "criterionId": "o2",
+     "score": 1,
+     "reason": "La tabla presenta los tres ensayos por temperatura con promedios, de forma completa y ordenada."
+    },
+    {
+     "criterionId": "o3",
+     "score": 0.9,
+     "reason": "El gráfico de barras es adecuado e incluye ejes rotulados con unidades, aunque el título es breve y el formato es esquemático."
+    },
+    {
+     "criterionId": "o4",
+     "score": 1,
+     "reason": "El informe discute los resultados con explicación científica, confirma la hipótesis y concluye de manera coherente con redacción clara."
+    }
+   ]
+  },
+  "redesigned": {
+   "aiAnswer": "**Informe: Efecto de la temperatura del agua en el tiempo de disolución de una pastilla efervescente**\n\n**1. Experimento**\n\n**Planificación:** Elegí tres temperaturas (20 °C, 40 °C y 70 °C) porque cubren un rango alcanzable con agua de grifo, horno microondas y termómetro de cocina. Usé una pastilla efervescente de 500 mg de la misma marca, 200 mL de agua medidos con probeta, sin agitación, y el mismo vaso de vidrio. Medí el tiempo con el cronómetro del celular desde que la pastilla toca el agua hasta que desaparece el último burbujeo visible. Realicé tres repeticiones por temperatura.\n\n**Datos crudos:**\n\n| Temperatura | Prueba 1 | Prueba 2 | Prueba 3 |\n|---|---|---|---|\n| 20 °C | 92 s | 95 s | 90 s |\n| 40 °C | 45 s | 48 s | 43 s |\n| 70 °C | 18 s | 16 s | 19 s |\n\n**Problemas registrados:** En la prueba 2 de 70 °C el agua bajó a 65 °C al verterla al vaso, así que la repetí calentando el vaso antes. En la prueba 1 de 20 °C no detecté bien el final del burbujeo, y volví a hacerla. Documenté el montaje y las pruebas con fotos (Foto 1: materiales; Foto 2: pastilla en agua a 70 °C; Foto 3: termómetro en el vaso).\n\n**Gráfico y análisis:** El gráfico de dispersión (températura vs. tiempo promedio) muestra una relación inversa: al subir la temperatura, el tiempo de disolución baja (92 s → 45 s → 18 s). Esto se explica porque el calor aumenta la energía cinética de las moléculas, acelerando los choques entre el agua y el comprimido. Los promedios fueron: 20 °C = 92,3 s; 40 °C = 45,3 s; 70 °C = 17,7 s. La tendencia es consistente en las tres repeticiones.\n\n**2. Diario de uso de la IA**\n\n- **Pedido 1:** \"Explícame por qué la temperatura acelera la disolución\". Respuesta: teoría de colisiones. La acepté, y la verifiqué con mi libro de Ciencia y Tecnología.\n- **Pedido 2:** \"¿Cómo organizo mi tabla de datos?\" Sugirió una tabla con promedios. Acepté la estructura pero mantuve mis datos crudos en columnas separadas.\n- **Pedido 3:** Le pedí que predijera los tiempos. **Descarté** la respuesta, porque la IA no puede generar mis datos; solo usé el experimento real.\n- **Pedido 4:** Revisó mi redacción. Acepté correcciones de ortografía, pero **rechacé** su conclusión de que \"la relación es lineal\", porque mis datos muestran que la caída de 40 a 70 °C (27,6 s) no es igual a la de 20 a 40 °C (47 s); además contrasté con una fuente confiable que indica que la relación no es lineal a altas temperaturas.\n\n**3. Justificaciones para la defensa**\n\n- Elegí esas temperaturas porque son seguras y medibles con instrumentos caseros.\n- Controlé volumen, pastilla y ausencia de agitación para que solo variara la temperatura.\n- Si el volumen de agua fuera mayor, el tiempo probablemente bajaría un poco, porque habría más contacto con el solvente, pero la temperatura seguiría siendo el factor principal.\n\n**Anexo:** fotos 1–3 del montaje.",
+   "scores": [
+    {
+     "criterionId": "c1",
+     "score": 0.9,
+     "reason": "Presenta datos crudos de tres repeticiones por temperatura, problemas surgidos con sus soluciones y referencia explícita de tres fotos del montaje, aunque no se adjuntan las imágenes verificables."
+    },
+    {
+     "criterionId": "c2",
+     "score": 0.4,
+     "reason": "Solo se cuenta con el escrito; la sección de justificaciones anticipa decisiones y una predicción sobre el volumen de agua, pero no hay evidencia verificable de la defensa oral en vivo."
+    },
+    {
+     "criterionId": "c3",
+     "score": 0.85,
+     "reason": "El diario documenta cuatro peticiones con lo aceptado, descartado y las razones, incluyendo un error de la IA (relación lineal) detectado y verificado con su propia data y una fuente; falta mayor detalle sobre cómo verificó cada aporte individual."
+    },
+    {
+     "criterionId": "c4",
+     "score": 0.7,
+     "reason": "Identifica el patrón inverso, calcula promedios y discute la explicación con teoría de colisiones, pero el gráfico solo se menciona y no se incluye, y la discusión de explicaciones alternativas es breve."
+    }
+   ]
+  },
+  "ranAt": "2026-10-31T05:38:33.204Z"
+ },
+ "insights": {
+  "clusters": [
+   {
+    "label": "El diario de IA como requisito obligatorio",
+    "criterionId": "c3",
+    "studentAliases": [
+     "Thiago"
+    ],
+    "quotes": [
+     "No lo puse en el informe porque no sabía que había que declararlo."
+    ],
+    "suggestion": "En los primeros 10 minutos, el docente muestra dos informes anónimos de ejemplo (uno con diario de IA incompleto y uno completo) y la clase, en parejas, identifica qué elementos faltan y por qué el diario es parte de la evidencia del criterio c3. Cada estudiante verifica su propio entregable con una lista de verificación breve y anota qué le falta corregir."
+   },
+   {
+    "label": "Variabilidad esperada en las mediciones",
+    "criterionId": "c1",
+    "studentAliases": [
+     "Kiara"
+    ],
+    "quotes": [
+     "Usé el cronómetro con cuidado y los resultados salieron así. Puede ser que los redondeé."
+    ],
+    "suggestion": "Actividad de 10-15 minutos: tres voluntarios cronometran en simultáneo el mismo video de una pastilla disolviéndose y comparan sus tiempos en la pizarra. El docente guía una discusión corta sobre por qué nunca coinciden exactamente (tiempo de reacción humana, criterio de corte) y cada estudiante redacta una oración sobre cómo registrará y justificará la variabilidad en sus propias repeticiones."
+   }
+  ]
+ },
+ "students": [
+  {
+   "alias": "Thiago",
+   "work": "Pregunta: ¿cómo influye la temperatura del agua en el tiempo que tarda en disolverse una pastilla efervescente?\nHipótesis: si el agua está más caliente, la pastilla se disuelve más rápido, porque las partículas se mueven más.\nVariable independiente: temperatura del agua. Dependiente: tiempo de disolución. Controladas: 200 ml de agua, misma marca de pastilla, mismo vaso.\n\nCómo lo hice: medí la temperatura con el termómetro de cocina de mi mamá. El agua fría la saqué de la refri, la otra era del caño, y la tibia la mezclé con agua del hervidor. Tomé el tiempo con el cronómetro del celular desde que suelto la pastilla hasta que ya no hay burbujas.\n\nDatos (segundos):\nTemperatura | Rep 1 | Rep 2 | Rep 3 | Promedio\n8 °C        |  92   |  85   |  97   |  91\n20 °C       |  51   |  58   |  49   |  53\n45 °C       |  26   |  31   |  22   |  26\n\nGráfico: puse temperatura en el eje x y tiempo en el eje y; la línea baja.\nDiscusión: se cumple la hipótesis. Las repeticiones no salieron iguales porque es difícil saber exactamente cuándo terminan las burbujas, y el agua tibia se enfriaba mientras preparaba el otro vaso.\nConclusión: a mayor temperatura, menor tiempo. La próxima vez grabaría en video para ver mejor el final.",
+   "questions": [
+    {
+     "id": "q1",
+     "criterionId": "c2",
+     "question": "En su procedimiento, menciona que el agua tibia se enfrío mientras usted preparaba el siguiente vaso. ¿Cómo intentó controlar o registrar este error potencial al calcular el promedio del tiempo de disolución para la temperatura de 45 °C?"
+    },
+    {
+     "id": "q2",
+     "criterionId": "c2",
+     "question": "Usted define el fin de la disolución como 'cuando ya no hay burbujas'. ¿Cómo tomó la decisión de ese punto exacto, considerando que la medición se hizo con el cronómetro de un celular, y no una cámara de alta velocidad?"
+    },
+    {
+     "id": "q3",
+     "criterionId": "c2",
+     "question": "De las tres temperaturas elegidas (8 °C, 20 °C, 45 °C), ¿por qué consideró que el salto de 20 °C a 45 °C era más relevante para demostrar la hipótesis que el paso incremental de 8 °C a 20 °C?"
+    },
+    {
+     "id": "q4",
+     "criterionId": "c3",
+     "question": "El informe no menciona el uso de una Inteligencia Artificial. Dado que es un criterio obligatorio, ¿podría explicar qué herramientas o recursos consultó para validar la literatura científica sobre la solubilidad de pastillas efervescentes, en lugar de depender de una IA?"
+    }
+   ],
+   "answers": [
+    {
+     "questionId": "q1",
+     "answer": "Medí la temperatura antes de soltar la pastilla, pero no la volví a medir al final. Sé que es un error y por eso lo puse en la discusión. Seguramente el promedio real de 45 °C debería ser un poco mayor, porque el agua estaba más fría de lo que anoté."
+    },
+    {
+     "questionId": "q2",
+     "answer": "Lo decidí después de la primera prueba: esperé a que no salieran burbujas por tres segundos seguidos y ahí paraba. Es difícil, por eso las repeticiones no salieron iguales. La próxima vez grabaría en video para verlo bien."
+    },
+    {
+     "questionId": "q3",
+     "answer": "No es que sea más relevante; elegí esas temperaturas porque eran las que podía conseguir en casa: refri, caño y agua del hervidor. Sí me di cuenta de que el salto de 20 a 45 es más grande, y por eso el tiempo baja más ahí."
+    },
+    {
+     "questionId": "q4",
+     "answer": "Usé la IA solo para la explicación de por qué las partículas se mueven más rápido con el calor, y lo comprobé en mi libro de Ciencia. Los datos y la tabla son míos, de mi cuaderno. No lo puse en el informe porque no sabía que había que declararlo."
+    }
+   ],
+   "evaluation": {
+    "summary": "¡Buen trabajo con tu experimento, se nota que lo hiciste de verdad! Tus datos son consistentes y tus respuestas en la defensa fueron lo más sólido: reconociste sin rodeos que no volviste a medir la temperatura al final y razonaste correctamente que el promedio real de 45 °C debería ser un poco mayor; también definiste un criterio claro para cortar el cronómetro (tres segundos sin burbujas) y corregiste con criterio la pregunta sobre tus temperaturas, explicando que las elegiste por lo que había en casa. En el análisis, tu conclusión coincide con tus datos y identificaste fuentes de error reales, como el enfriamiento del agua tibia. Dos cosas para mejorar: primero, el diario de uso de la IA era obligatorio y no lo incluiste; me alegra que hayas sido honesto al explicar que solo la usaste para entender la teoría y que la verificaste con tu libro de Ciencia, pero debías declararlo y documentar qué aceptaste y qué descartaste. Segundo, en la entrega falta la evidencia visual del montaje (fotos o video) que pedía la consigna; tu propia idea de grabar en video la próxima vez es exactamente el camino. Con ese diario y esas fotos, tu trabajo pasaría de honesto a completo.",
+    "perCriterion": [
+     {
+      "criterionId": "c1",
+      "submissionScore": 0.6,
+      "defenseScore": 0.6,
+      "evidenceQuote": "Temperatura | Rep 1 | Rep 2 | Rep 3 | Promedio — 8 °C | 92 | 85 | 97 | 91",
+      "misconception": null
+     },
+     {
+      "criterionId": "c2",
+      "submissionScore": 0.7,
+      "defenseScore": 0.9,
+      "evidenceQuote": "Lo decidí después de la primera prueba: esperé a que no salieran burbujas por tres segundos seguidos y ahí paraba.",
+      "misconception": null
+     },
+     {
+      "criterionId": "c3",
+      "submissionScore": 0.1,
+      "defenseScore": 0.4,
+      "evidenceQuote": "No lo puse en el informe porque no sabía que había que declararlo.",
+      "misconception": "No comprendió que el diario de uso de la IA es un componente obligatorio del entregable, no un trámite opcional."
+     },
+     {
+      "criterionId": "c4",
+      "submissionScore": 0.6,
+      "defenseScore": 0.6,
+      "evidenceQuote": "Sí me di cuenta de que el salto de 20 a 45 es más grande, y por eso el tiempo baja más ahí.",
+      "misconception": null
+     }
+    ]
+   }
+  },
+  {
+   "alias": "Kiara",
+   "work": "Informe de indagación\n\nProblema: ¿De qué manera influye la temperatura del agua en el tiempo de disolución de una tableta efervescente?\nHipótesis: A mayor temperatura del agua, menor será el tiempo de disolución de la tableta, debido al aumento de la energía cinética de las moléculas.\nVariables: independiente, temperatura del agua (°C); dependiente, tiempo de disolución (s); controladas, volumen de agua (200 mL), tipo de tableta, recipiente.\n\nResultados:\nTemperatura (°C) | Ensayo 1 | Ensayo 2 | Ensayo 3 | Promedio (s)\n10               | 60       | 60       | 60       | 60\n25               | 40       | 40       | 40       | 40\n40               | 20       | 20       | 20       | 20\n\nGráfico: se observa una relación lineal inversamente proporcional entre la temperatura y el tiempo de disolución.\n\nDiscusión: los resultados confirman la hipótesis. El incremento de la temperatura eleva la frecuencia de colisiones efectivas entre las partículas del bicarbonato de sodio y el ácido cítrico, acelerando la reacción química.\n\nConclusiones: la temperatura es un factor determinante en la velocidad de reacción. Se recomienda ampliar el rango de temperaturas estudiadas.",
+   "questions": [
+    {
+     "id": "q1",
+     "criterionId": "c1",
+     "question": "Usted presenta resultados donde los tres ensayos para cada temperatura son idénticos (ej. 60s, 60s, 60s). Describan el protocolo específico de registro de datos que emplearon para asegurar que no existiera variación en el tiempo de disolución entre repeticiones, ya que en un experimento real siempre es esperable un pequeño error de medición."
+    }
+   ],
+   "answers": [
+    {
+     "questionId": "q1",
+     "answer": "Usé el cronómetro con cuidado y los resultados salieron así. Puede ser que los redondeé."
+    }
+   ],
+   "evaluation": {
+    "summary": "Hola: tu informe muestra una idea clara del problema y una hipótesis bien planteada, y en tu discusión usas conceptos de cinética química (energía cinética, colisiones efectivas) para explicar tu resultado. Sin embargo, hay algo importante que conversar: tus tres ensayos por temperatura son idénticos (60-60-60, 40-40-40, 20-20-20), lo cual es muy poco realista, y al preguntarte por tu protocolo de registro solo dijiste que 'usaste el cronómetro con cuidado' y que 'puede ser que los redondeaste'. Esa respuesta no demuestra cómo mediste ni garantiza que los datos sean auténticos, y tampoco presentaste fotos del montaje ni notas de los problemas surgidos ni el diario de uso de la IA. Te invitamos a repetir el experimento registrando cada medición tal como ocurre (aunque no sean iguales), anotar los imprevistos y documentar con imágenes: eso es justamente lo que más valora esta tarea.",
+    "perCriterion": [
+     {
+      "criterionId": "c1",
+      "submissionScore": 0.3,
+      "defenseScore": 0.3,
+      "evidenceQuote": "Usé el cronómetro con cuidado y los resultados salieron así. Puede ser que los redondeé.",
+      "misconception": "Cree que obtener tres mediciones exactamente iguales es normal y aceptable, sin comprender que toda medición con cronómetro implica variabilidad humana que debe registrarse tal como ocurre."
+     },
+     {
+      "criterionId": "c2",
+      "submissionScore": 0.3,
+      "defenseScore": 0,
+      "evidenceQuote": "Usé el cronómetro con cuidado y los resultados salieron así.",
+      "misconception": null
+     },
+     {
+      "criterionId": "c3",
+      "submissionScore": 0,
+      "defenseScore": 0,
+      "evidenceQuote": "Puede ser que los redondeé.",
+      "misconception": null
+     },
+     {
+      "criterionId": "c4",
+      "submissionScore": 0.6,
+      "defenseScore": 0,
+      "evidenceQuote": "se observa una relación lineal inversamente proporcional entre la temperatura y el tiempo de disolución",
+      "misconception": null
+     }
+    ]
+   }
+  },
+  {
+   "alias": "Renzo",
+   "work": "Hipótesis: con agua caliente la pastilla se disuelve más rápido.\nVariables: la temperatura y el tiempo.\n\nDatos:\nAgua fría: 80 s, 75 s, 90 s\nAgua normal: 50 s, 50 s, 55 s\nAgua caliente: 30 s, 25 s, 35 s\n\nGráfico de barras: la barra del agua fría es la más alta.\nConclusión: el agua caliente disuelve más rápido la pastilla porque está caliente. Se cumplió la hipótesis.",
+   "questions": [
+    {
+     "id": "q1",
+     "criterionId": "c2",
+     "question": "¿Cómo definiste exactamente qué temperatura corresponde a los niveles de 'agua normal' y 'agua caliente' para asegurar la precisión de tu experimento?"
+    },
+    {
+     "id": "q2",
+     "criterionId": "c2",
+     "question": "Además de la temperatura, el tiempo y la pastilla, ¿qué otras variables controlaste estrictamente, como el volumen del agua o la agitación, y por qué fue crucial ese control en tu diseño?"
+    },
+    {
+     "id": "q3",
+     "criterionId": "c4",
+     "question": "Observando tus datos en agua fría (75s, 80s y 90s), se detectan variaciones significativas entre repeticiones. ¿Qué procedimiento utilizaste para determinar si estas diferencias eran errores de medición o fenómenos reales?"
+    }
+   ],
+   "answers": [
+    {
+     "questionId": "q1",
+     "answer": "No tenía termómetro, así que la normal era la del caño y la caliente era del hervidor, pero sin saber cuántos grados."
+    },
+    {
+     "questionId": "q2",
+     "answer": "Usé el mismo vaso y la misma cantidad de agua, un vaso lleno. No agité. Era importante para que solo cambie la temperatura."
+    },
+    {
+     "questionId": "q3",
+     "answer": "No hice ningún procedimiento, creo que fue porque en el de 90 me demoré en apretar el cronómetro."
+    }
+   ],
+   "evaluation": {
+    "summary": "Querido estudiante: en tu defensa respondiste con honestidad, y eso vale mucho. Explicaste bien por qué controlaste el vaso y el volumen de agua ('para que solo cambie la temperatura'), y al reconocer que no tenías termómetro mostraste que entiendes la limitación de tu montaje. También diste una explicación razonable del dato de 90 s (la demora al apretar el cronómetro), aunque aún no tienes un procedimiento para decidir si una variación es error de medición o un fenómeno real. Para crecer te sugiero tres cosas: define tus niveles de temperatura con valores medidos o al menos descripciones más precisas (por ejemplo, 'fría: del refrigerador, aprox. 10 °C'), registra en tu informe los problemas que surgieron y cómo los resolviste, y recuerda que el diario de uso de la IA y la evidencia fotográfica del montaje son obligatorios. Tu patrón de datos es claro y coherente; ahora falta que la discusión de las causas vaya más allá de 'porque está caliente'. ¡Buen trabajo de base, sigue afinando el rigor!",
+    "perCriterion": [
+     {
+      "criterionId": "c1",
+      "submissionScore": 0.4,
+      "defenseScore": 0,
+      "evidenceQuote": "Agua fría: 80 s, 75 s, 90 s / Agua normal: 50 s, 50 s, 55 s / Agua caliente: 30 s, 25 s, 35 s",
+      "misconception": null
+     },
+     {
+      "criterionId": "c2",
+      "submissionScore": 0.2,
+      "defenseScore": 0.73,
+      "evidenceQuote": "Usé el mismo vaso y la misma cantidad de agua, un vaso lleno. No agité. Era importante para que solo cambie la temperatura.",
+      "misconception": null
+     },
+     {
+      "criterionId": "c3",
+      "submissionScore": 0,
+      "defenseScore": 0,
+      "evidenceQuote": "No hay evidencia de diary de uso de la IA ni de preguntas de defensa sobre este criterio.",
+      "misconception": null
+     },
+     {
+      "criterionId": "c4",
+      "submissionScore": 0.3,
+      "defenseScore": 0.6,
+      "evidenceQuote": "No hice ningún procedimiento, creo que fue porque en el de 90 me demoré en apretar el cronómetro.",
+      "misconception": null
+     }
+    ]
+   }
+  }
+ ]
+}

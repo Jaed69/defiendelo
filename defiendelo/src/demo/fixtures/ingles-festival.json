@@ -1,0 +1,404 @@
+{
+ "exampleId": "ingles-festival",
+ "redesign": {
+  "statement": "Escribe un correo (120–150 palabras) a tu amigo canadiense describiendo una festividad de tu región, como Inti Raymi o la Fiesta de la Candelaria, usando presente simple y cinco expresiones de tiempo. Puedes usar IA en todo el proceso, pero con estas condiciones: (1) Elige una festividad que tú o tu familia hayan vivido de verdad y verifica cada dato (fecha, actividades, comidas, significado) con una fuente real: un familiar, un vecino o una fuente local. Anota lo que la IA inventó o erró. (2) Elige tú mismo las cinco expresiones de tiempo y decide qué sugerencias de la IA conservas, cambias o descartas. (3) Entrega junto con el correo un registro de decisiones de media página: los prompts que usaste, dos sugerencias que descartaste y por qué, y las correcciones que hiciste al texto de la IA. (4) Sustenta en una conversación oral de 3 a 5 minutos: explicarás por qué elegiste esa festividad, señalarás tus expresiones de tiempo en el texto, contarás qué corregiste a la IA y cómo lo verificaste, y reformularás una oración que tu docente te pida en ese momento.",
+  "aiPolicy": "La IA está permitida en todas las etapas: generar ideas, proponer borradores, corregir gramática y sugerir vocabulario. La nota, sin embargo, se gana sobre todo en la defensa oral: allí el estudiante demuestra que las decisiones —la festividad elegida, las expresiones de tiempo seleccionadas, lo que conservó o descartó de la IA y cómo verificó los datos culturales— son suyas. La pulidez del texto final pesa poco, porque un texto así puede producirlo la IA por sí sola.",
+  "criteria": [
+   {
+    "id": "c1",
+    "name": "Defensa oral: decisiones sobre el contenido",
+    "description": "En una breve conversación en vivo, el estudiante explica por qué eligió esa festividad, qué detalles provienen de su propia experiencia o de una fuente verificada y por qué descartó algunas ideas que le propuso la IA.",
+    "weight": 30,
+    "evidence": "defensa"
+   },
+   {
+    "id": "c2",
+    "name": "Defensa oral: control del lenguaje elegido",
+    "description": "El estudiante señala en su propio correo las cinco expresiones de tiempo que eligió, explica cómo funciona el presente simple en su texto y reformula o corrige una oración cuando el docente se lo pide en vivo.",
+    "weight": 25,
+    "evidence": "defensa"
+   },
+   {
+    "id": "c3",
+    "name": "Defensa oral: verificación de la IA",
+    "description": "El estudiante demuestra en vivo cómo comprobó los datos culturales que la IA produjo (fechas, actividades, comidas, significado), identifica al menos un error o invención y menciona la fuente real con la que lo corrigió.",
+    "weight": 15,
+    "evidence": "defensa"
+   },
+   {
+    "id": "c4",
+    "name": "Registro de decisiones",
+    "description": "Entrega escrita breve que muestra los prompts que usó con la IA, dos sugerencias descartadas con su motivo y las correcciones que él o ella aplicó al borrador generado.",
+    "weight": 20,
+    "evidence": "entrega"
+   },
+   {
+    "id": "c5",
+    "name": "Correo final con propósito comunicativo",
+    "description": "El correo final (120–150 palabras) mantiene el saludo, el tono y el propósito comunicativo para un amigo canadiense e incluye las cinco expresiones de tiempo elegidas. La corrección gramatical del texto pesa poco, porque pudo lograrse con ayuda de la IA.",
+    "weight": 10,
+    "evidence": "entrega"
+   }
+  ],
+  "originalCriteria": [
+   {
+    "id": "o1",
+    "name": "Contenido de la descripción",
+    "description": "Describe una festividad regional (nombre, época, actividades principales) con detalles claros y comprensibles para un lector canadiense.",
+    "weight": 30,
+    "evidence": "entrega"
+   },
+   {
+    "id": "o2",
+    "name": "Uso del presente simple y expresiones de tiempo",
+    "description": "Emplea el presente simple correctamente e incluye al menos cinco expresiones de tiempo (always, on Sunday, in June, etc.).",
+    "weight": 30,
+    "evidence": "entrega"
+   },
+   {
+    "id": "o3",
+    "name": "Formato y extensión del correo",
+    "description": "Cumple el formato de correo electrónico (saludo, cuerpo, despedida) y la extensión de 120 a 150 palabras.",
+    "weight": 20,
+    "evidence": "entrega"
+   },
+   {
+    "id": "o4",
+    "name": "Vocabulario, ortografía y puntuación",
+    "description": "Usa vocabulario pertinente sobre festividades con ortografía, puntuación y mayúsculas correctas.",
+    "weight": 20,
+    "evidence": "entrega"
+   }
+  ],
+  "rationale": "La tarea original se evalúa por el producto escrito, algo que hoy una IA puede generar completa en segundos. El rediseño conserva la meta comunicativa (describir una festividad regional a un amigo canadiense con presente simple y expresiones de tiempo), pero convierte el uso de la IA en parte visible del proceso: el estudiante debe verificar datos culturales que la IA suele inventar o deformar, decidir qué sugerencias conservan su voz y sustentar todo en una defensa oral. El 70 % de la nota se verifica solo preguntando al estudiante sobre su propio trabajo en vivo; el 30 % restante premia el registro de decisiones y el correo final, cuyo peso es bajo porque su ejecución puede lograrse con IA."
+ },
+ "stress": {
+  "original": {
+   "aiAnswer": "**Entrega – Tarea de Inglés, 2.º de secundaria**\n\n**Estudiante:** Valeria Quispe Ramírez\n**Tarea:** Correo electrónico a un amigo por correspondencia de Canadá (120–150 palabras; presente simple; al menos cinco expresiones de tiempo)\n**Festival elegido:** Fiesta de la Candelaria (Puno, Perú)\n\n---\n\n**Para:** emily.carter@gmail.com\n**Asunto:** The Fiesta de la Candelaria, a festival from my region\n\nDear Emily,\n\nHow are you? I want to tell you about a traditional festival from my region: the Fiesta de la Candelaria, in Puno, Peru. It is one of the biggest festivals in the country. It takes place every year in the first two weeks of February. People always prepare for months, and musicians and dancers arrive from all over the region. In the mornings, families usually attend Mass, and in the afternoons, thousands of dancers perform in the streets in colorful costumes. I normally go with my cousins, and we watch the parade from the main square every day. At night, there are fireworks and typical food, so we rarely go home early. This festival celebrates the Virgin of Candelaria and shows our love for our culture. Would you like to come next February? Write to me soon!\n\nBest wishes,\nValeria",
+   "scores": [
+    {
+     "criterionId": "o1",
+     "score": 1,
+     "reason": "Describe con claridad el nombre, la época (febrero) y las actividades de la Fiesta de la Candelaria, comprensible para un lector canadiense."
+    },
+    {
+     "criterionId": "o2",
+     "score": 1,
+     "reason": "Usa el presente simple correctamente e incluye más de cinco expresiones de tiempo (every year, always, usually, every day, at night, rarely)."
+    },
+    {
+     "criterionId": "o3",
+     "score": 1,
+     "reason": "Cumple el formato completo de correo (saludo, cuerpo, despedida, asunto) con una extensión aproximada de 140 palabras."
+    },
+    {
+     "criterionId": "o4",
+     "score": 1,
+     "reason": "Emplea vocabulario pertinente sobre festividades con ortografía, puntuación y mayúsculas correctas."
+    }
+   ]
+  },
+  "redesigned": {
+   "aiAnswer": "**Correo (Inglés – tarea)**\n\nSubject: My favorite festival in my region\n\nHi Emma,\n\nHow are you? Today I want to tell you about Inti Raymi, the Festival of the Sun, from my city, Cusco.\n\nEvery year, on June 24th, thousands of people go to the fortress of Sacsayhuamán. In the morning, actors dressed as Inca nobles and priests celebrate a ceremony in Quechua. At noon, the \"Inca\" offers a speech and a symbolic sacrifice to the sun god, Inti. After that, people dance and play music with traditional instruments all afternoon. My family usually eats chiriuchu, a typical cold dish with guinea pig, corn and cheese. This festival represents the winter solstice and the respect our ancestors had for nature and the sun.\n\nI love this celebration because it connects me with my culture. I hope you can visit Cusco one day!\n\nBest wishes,\nDiego\n\n---\n\n**Registro de decisiones de IA (media página)**\n\n**Festividad elegida:** Inti Raymi (Cusco).\n\n**Prompts que usé:**\n1. \"Escribe un correo de 130 palabras sobre Inti Raymi en presente simple con cinco expresiones de tiempo.\"\n2. \"Dame expresiones de tiempo para describir festivales.\"\n3. \"Revisa la gramática del correo.\"\n\n**Expresiones de tiempo elegidas:** *every year, on June 24th, in the morning, at noon, after that*. Conservé las sugerencias de la IA porque son correctas.\n\n**Sugerencias que descarté:**\n1. La IA propuso escribir que el festival \"lasts an entire week\" (dura una semana entera). Lo descarté porque no estoy seguro de que sea cierto para el 24 de junio.\n2. La IA sugirió terminar con \"Yours faithfully\". Lo cambié por \"Best wishes\" porque es un correo a un amigo, no una carta formal.\n\n**Correcciones que hice al texto de la IA:**\n- Cambié un adjetivo repetido (\"amazing\" aparecía tres veces).\n- Corregí \"peoples\" por \"people\".\n\n**Verificación de datos:** Consulté con mi abuela y ella me dijo que la información del correo es correcta. También revisé información en internet sobre la fecha y las comidas típicas. Todo coincide, así que no encontré datos inventados por la IA que haya necesitado corregir. La IA también me explicó el significado del solsticio de invierno, lo cual entendí bien.\n\n**Preparación para la exposición oral:** Estoy listo para señalar las cinco expresiones de tiempo en el texto y explicar que elegí Inti Raymi porque es la festividad más importante de mi región y mi familia asista todos los años.\n\n---\n\n*Nota: este registro y el correo fueron revisados juntos antes de la entrega.*",
+   "scores": [
+    {
+     "criterionId": "c1",
+     "score": 0,
+     "reason": "La defensa oral en vivo no está incluida en la entrega escrita, por lo que no hay evidencia verificable de las decisiones explicadas en vivo."
+    },
+    {
+     "criterionId": "c2",
+     "score": 0,
+     "reason": "El criterio se verifica en la defensa oral, que no forma parte de la entrega; el registro solo anuncia la preparación, sin demostrarla."
+    },
+    {
+     "criterionId": "c3",
+     "score": 0,
+     "reason": "No hay defensa oral que demostrar; además, el registro declara no haber hallado errores de la IA y la fuente citada (la abuela) es vaga y sin dato concreto corregido."
+    },
+    {
+     "criterionId": "c4",
+     "score": 1,
+     "reason": "El registro incluye los tres prompts usados, dos sugerencias descartadas con motivo claro y las correcciones aplicadas al borrador."
+    },
+    {
+     "criterionId": "c5",
+     "score": 1,
+     "reason": "El correo tiene unas 134 palabras, saludo, tono y propósito adecuados para una amiga canadiense, e incluye las cinco expresiones de tiempo declaradas."
+    }
+   ]
+  },
+  "ranAt": "2026-10-31T05:04:24.367Z"
+ },
+ "insights": {
+  "clusters": [
+   {
+    "label": "Manejo Indebido de Fuentes de Verificación",
+    "criterionId": "c3",
+    "studentAliases": [
+     "Fabi",
+     "Ale"
+    ],
+    "quotes": [
+     "Lo busqué en internet, en varias páginas sobre el Inti Raymi. / No encontré errores, la información estaba bien.",
+     "Lo vi en la televisión, en el noticiero pasan el Inti Raymi cada año."
+    ],
+    "suggestion": "Implementar una actividad de 'Categorización de Fuentes'. Mostrar tres ejemplos de fuentes (1. Búsqueda en internet, 2. Reportaje de televisión, 3. Conversación con un familiar o vecino) y pedir a los estudiantes que identifiquen cuál de ellas cumple con el requisito específico del trabajo (fuente real, local o de experiencia directa) y justifiquen su elección en 10 minutos."
+   }
+  ]
+ },
+ "students": [
+  {
+   "alias": "Fabi",
+   "work": "Hi Emma!\n\nHow are you? I want to tell you about the Fiesta de la Candelaria in Puno, my city. It is every year in February and it lasts two weeks. On the first days people go to the church of the Virgen de la Candelaria. Then, on the weekends, thousands of dancers dance in the streets and in the stadium.\n\nMy family always dances diablada. My uncle makes the masks, they are very big and heavy. Every night we practice the steps in my grandmother's house. On Sunday morning we wake up very early and we wear the costumes. Sometimes it is very cold, but I never feel tired when the music starts.\n\nUsually the festival finishes with a big party. Do you have festivals like this in Canada? What do you do in winter?\n\nWrite soon,\nFabi",
+   "questions": [
+    {
+     "id": "q1",
+     "criterionId": "c1",
+     "question": "Usted elige describir la Fiesta de la Candelaria en Puno. ¿Podría explicar qué elementos de esta festividad —como sus fechas o las actividades en el estadio— provienen de su experiencia personal y cuáles verificó con fuentes externas?"
+    },
+    {
+     "id": "q2",
+     "criterionId": "c2",
+     "question": "El ejercicio requería el uso de cinco expresiones de tiempo. ¿Cuáles fueron esas cinco expresiones y cómo contribuyen a la cohesión y a la cronología de su descripción?"
+    },
+    {
+     "id": "q3",
+     "criterionId": "c1",
+     "question": "Al escribir sobre su familia practicando la diablada, ¿qué detalle específico de la tradición (como el papel de su tío o el esfuerzo de bailar) considera usted como el más relevante para transmitir la cultura puneña a un lector extranjero?"
+    },
+    {
+     "id": "q4",
+     "criterionId": "c3",
+     "question": "Mencionó que los disfraces y las máscaras son 'muy grandes y pesadas'. ¿Podría indicarnos cómo verificó esta descripción específica y si esta información fue una observación directa o una corrección a una sugerencia de la Inteligencia Artificial?"
+    }
+   ],
+   "answers": [
+    {
+     "questionId": "q1",
+     "answer": "Lo de la diablada, mi tío con las máscaras y los ensayos es de mi familia, lo vivo cada año. Las fechas las confirmé en la página de la Federación de Folklore de Puno, porque yo sabía que era en febrero pero no exactamente cuánto duraba."
+    },
+    {
+     "questionId": "q2",
+     "answer": "Usé every year, on the first days, then, on the weekends, every night, on Sunday morning, sometimes y usually. Son más de cinco. Ayudan porque cuentan la fiesta en orden: primero la misa, luego los bailes y al final la fiesta."
+    },
+    {
+     "questionId": "q3",
+     "answer": "El papel de mi tío que hace las máscaras, porque muestra que no es solo un show, es algo que hacen las familias. My uncle makes the masks and they are very heavy, so the dancers train every night."
+    },
+    {
+     "questionId": "q4",
+     "answer": "Es observación directa, una vez me probé la máscara de mi tío y pesaba un montón. La IA me había puesto que las máscaras eran de madera y lo corregí, porque son de yeso y lata."
+    }
+   ],
+   "evaluation": {
+    "summary": "¡Buen trabajo, Fabi! Tu defensa oral es tu mayor fortaleza: separas con claridad lo que vives en familia ('lo de la diablada, mi tío con las máscaras y los ensayos es de mi familia, lo vivo cada año') de lo que verificaste con una fuente ('las fechas las confirmé en la página de la Federación de Folklore de Puno'), y detectaste un error de la IA —las máscaras de madera— que corregiste con observación directa ('son de yeso y lata'). También identificaste todas tus expresiones de tiempo con exactitud y explicaste que ordenan la fiesta en el tiempo. Tu correo cumple bien el propósito comunicativo: saludo, tono cercano, preguntas a Emma y una extensión dentro del rango pedido. Dos puntos para atender: (1) en tu entrega solo aparece el correo; el registro de decisiones de media página (los prompts, dos sugerencias descartadas con su motivo y tus correcciones al borrador de la IA) no se recibió, así que si ya lo escribiste, preséntalo cuanto antes. (2) Se te pidió elegir cinco expresiones de tiempo y usaste ocho; la próxima vez fija exactamente las cinco que vas a defender y dilo de entrada.",
+    "perCriterion": [
+     {
+      "criterionId": "c1",
+      "submissionScore": 0.6,
+      "defenseScore": 1,
+      "evidenceQuote": "\"Lo de la diablada, mi tío con las máscaras y los ensayos es de mi familia, lo vivo cada año. Las fechas las confirmé en la página de la Federación de Folklore de Puno\"; \"porque muestra que no es solo un show, es algo que hacen las familias\"",
+      "misconception": null
+     },
+     {
+      "criterionId": "c2",
+      "submissionScore": 1,
+      "defenseScore": 1,
+      "evidenceQuote": "\"Usé every year, on the first days, then, on the weekends, every night, on Sunday morning, sometimes y usually. Son más de cinco.\"; \"cuentan la fiesta en orden: primero la misa, luego los bailes y al final la fiesta\"",
+      "misconception": null
+     },
+     {
+      "criterionId": "c3",
+      "submissionScore": 0.3,
+      "defenseScore": 1,
+      "evidenceQuote": "\"Es observación directa, una vez me probé la máscara de mi tío y pesaba un montón. La IA me había puesto que las máscaras eran de madera y lo corregí, porque son de yeso y lata.\"",
+      "misconception": null
+     },
+     {
+      "criterionId": "c4",
+      "submissionScore": 0,
+      "defenseScore": 0.3,
+      "evidenceQuote": "\"La IA me había puesto que las máscaras eran de madera y lo corregí\"",
+      "misconception": null
+     },
+     {
+      "criterionId": "c5",
+      "submissionScore": 1,
+      "defenseScore": 0,
+      "evidenceQuote": "\"Usé every year, on the first days, then, on the weekends, every night, on Sunday morning, sometimes y usually.\"",
+      "misconception": null
+     }
+    ]
+   }
+  },
+  {
+   "alias": "Mateo",
+   "work": "Dear Liam,\n\nI hope you are doing well! Today I want to tell you about Inti Raymi, one of the most important festivals in Peru. Every year, on June 24th, people in Cusco celebrate the Festival of the Sun. It is an ancient Inca ceremony that honors Inti, the Sun God.\n\nIn the morning, the celebration usually starts at the Qoricancha temple. Then, the procession moves to the main square. In the afternoon, thousands of people gather at Sacsayhuaman, where actors perform the main ritual. The ceremony always includes traditional music, colorful costumes and dances.\n\nNowadays, many tourists visit Cusco during this festival. At night, families often share traditional food together.\n\nDo you celebrate any traditional festivals in Canada? I would love to hear about them!\n\nBest wishes,\nMateo",
+   "questions": [
+    {
+     "id": "q1",
+     "criterionId": "c3",
+     "question": "¿Podrías especificar con qué fuente real (familiar, vecino o fuente local) verificaste la descripción de las actividades, como el inicio del ritual en Qoricancha o la ubicación de la procesión?"
+    },
+    {
+     "id": "q2",
+     "criterionId": "c2",
+     "question": "El correo requiere el uso de cinco expresiones de tiempo específicas; ¿podrías señalar cuáles elegiste y cómo estas ayudan a establecer el orden cronológico de la celebración para tu amigo canadiense?"
+    },
+    {
+     "id": "q3",
+     "criterionId": "c1",
+     "question": "Mencionas que esta es una festividad que tú o tu familia han vivido; ¿qué detalle específico del texto, como la mención a los vestuarios o la comida, proviene directamente de tu experiencia personal y no fue una sugerencia de la IA?"
+    },
+    {
+     "id": "q4",
+     "criterionId": "c3",
+     "question": "En tu registro de decisiones, identificaste errores o invenciones de la IA. ¿Cuál fue una de esas sugerencias y qué corrección aplicaste para asegurar la precisión cultural de Inti Raymi?"
+    }
+   ],
+   "answers": [
+    {
+     "questionId": "q1",
+     "answer": "Lo busqué en internet, en varias páginas sobre el Inti Raymi."
+    },
+    {
+     "questionId": "q2",
+     "answer": "Every year, in the morning, then, in the afternoon y nowadays. Ayudan a ordenar la celebración."
+    },
+    {
+     "questionId": "q3",
+     "answer": "Lo de la comida, creo. Mi familia comparte comida en las fiestas."
+    },
+    {
+     "questionId": "q4",
+     "answer": "No encontré errores, la información estaba bien."
+    }
+   ],
+   "evaluation": {
+    "summary": "Mateo, tu correo está muy bien logrado: el saludo a Liam, el tono cercano, la descripción ordenada del Inti Raymi y la pregunta final sobre las festividades de Canadá cumplen el propósito comunicativo, y el texto mantiene el presente simple con expresiones de tiempo claras. La sustentación, en cambio, quedó corta frente a lo que pedía la tarea. Sobre tu fuente real dijiste: «Lo busqué en internet, en varias páginas sobre el Inti Raymi», pero la consigna pedía verificar los datos con un familiar, un vecino o una fuente local; y sobre los errores de la IA respondiste: «No encontré errores, la información estaba bien», sin poder mostrar qué corregiste ni cómo lo comprobaste. Tu identificación de las cinco expresiones de tiempo fue correcta, pero la explicación fue muy breve («Ayudan a ordenar la celebración»), y sobre tu experiencia personal solo dijiste: «Lo de la comida, creo. Mi familia comparte comida en las fiestas». Además, la entrega no incluyó el registro de decisiones, que vale el 20 % de la nota. Para la próxima: elige una festividad que vivas de verdad, anota quién te confirmó cada dato, guarda tus prompts y las ideas que descartas, y llega a la defensa con al menos un error de la IA identificado y corregido. Escribes bien; ahora falta que tu defensa demuestre que las decisiones fueron tuyas.",
+    "perCriterion": [
+     {
+      "criterionId": "c1",
+      "submissionScore": 0.6,
+      "defenseScore": 0.3,
+      "evidenceQuote": "Lo de la comida, creo. Mi familia comparte comida en las fiestas.",
+      "misconception": null
+     },
+     {
+      "criterionId": "c2",
+      "submissionScore": 0.8,
+      "defenseScore": 0.6,
+      "evidenceQuote": "Every year, in the morning, then, in the afternoon y nowadays. Ayudan a ordenar la celebración.",
+      "misconception": null
+     },
+     {
+      "criterionId": "c3",
+      "submissionScore": 0,
+      "defenseScore": 0.3,
+      "evidenceQuote": "Lo busqué en internet, en varias páginas sobre el Inti Raymi. / No encontré errores, la información estaba bien.",
+      "misconception": "Cree que una búsqueda en internet cumple el requisito de verificar los datos con una fuente real (familiar, vecino o fuente local) y sostiene que no halló errores, por lo que no pudo identificar ninguna invención de la IA."
+     },
+     {
+      "criterionId": "c4",
+      "submissionScore": 0,
+      "defenseScore": 0,
+      "evidenceQuote": "",
+      "misconception": null
+     },
+     {
+      "criterionId": "c5",
+      "submissionScore": 1,
+      "defenseScore": 0,
+      "evidenceQuote": "",
+      "misconception": null
+     }
+    ]
+   }
+  },
+  {
+   "alias": "Ale",
+   "work": "Hello Noah,\n\nI want tell you about Inti Raymi. Is a festival in Cusco. It is in June. People celebrate the sun. They wear colorful clothes and they dance. Every year many tourist go to Cusco. In the morning they go to Qoricancha and in the afternoon to Sacsayhuaman.\n\nI never go to Inti Raymi but I see it in TV with my family. My father always say we go next year.\n\nBye,\nAle",
+   "questions": [
+    {
+     "id": "q1",
+     "criterionId": "c3",
+     "question": "¿Cómo verificaste la información sobre la ubicación de las ceremonias (Qoricancha y Sacsayhuaman) y el cronograma (mañana y tarde), dado que tú nunca has asistido a Inti Raymi?"
+    },
+    {
+     "id": "q2",
+     "criterionId": "c2",
+     "question": "El correo pide cinco expresiones de tiempo. ¿Cuáles elegiste de forma específica y por qué crees que esas cinco le dan el sentido temporal que la consignas te pedía?"
+    },
+    {
+     "id": "q3",
+     "criterionId": "c1",
+     "question": "Aunque no asistes a la festividad, mencionas que la ves en televisión; ¿qué elemento particular de la celebración (una comida, un baile o un significado) decidiste incluir para que el lector canadiense sienta que el mensaje es auténtico?"
+    },
+    {
+     "id": "q4",
+     "criterionId": "c4",
+     "question": "Debes demostrar que revisaste el texto de la IA: ¿Podrías mencionar una sugerencia que el generador de inteligencia artificial te dio y que tú decidiste eliminar de tu correo y por qué la descartaste?"
+    }
+   ],
+   "answers": [
+    {
+     "questionId": "q1",
+     "answer": "Lo vi en la televisión, en el noticiero pasan el Inti Raymi cada año."
+    },
+    {
+     "questionId": "q2",
+     "answer": "It is in June, every year, in the morning, in the afternoon... y always. Creo que son esas."
+    },
+    {
+     "questionId": "q3",
+     "answer": "Puse que bailan y usan ropa de colores, porque es lo que se ve en la tele."
+    },
+    {
+     "questionId": "q4",
+     "answer": "Use la IA para corregir. Me puso 'Sacsayhuamán fortress' y lo saqué porque no sabía qué significaba fortress."
+    }
+   ],
+   "evaluation": {
+    "summary": "Ale, elegiste bien al conectar el Inti Raymi con tu familia: el correo lo dice con franqueza ('I never go to Inti Raymi but I see it in TV with my family. My father always say we go next year'), y eso le da un toque personal al mensaje. También identificaste correctamente tus cinco expresiones de tiempo (in June, every year, in the morning, in the afternoon y always), que sí aparecen en tu texto, y descartaste una sugerencia de la IA con una razón propia. Hay tres cosas para llegar más lejos: primero, tu correo tiene unas 73 palabras y la consigna pedía 120–150; agrega detalles que solo tú puedes dar, como qué comentó tu padre o qué comieron mientras lo veían. Segundo, 'lo vi en la tele' no cuenta como verificación: contrasta los datos con tu padre, un vecino o una fuente local y señala al menos un dato que la IA inventara o errara; además, ojo, 'Sacsayhuamán fortress' era probablemente correcto porque el sitio fue una fortaleza inca, así que antes de descartar una palabra, verifica su significado. Tercero, no se vio el registro de decisiones con tus prompts y dos sugerencias descartadas: entrégalo junto con el correo. Con esos ajustes, tu próxima versión será mucho más sólida.",
+    "perCriterion": [
+     {
+      "criterionId": "c1",
+      "submissionScore": 0.6,
+      "defenseScore": 0.6,
+      "evidenceQuote": "Puse que bailan y usan ropa de colores, porque es lo que se ve en la tele. / Me puso 'Sacsayhuamán fortress' y lo saqué porque no sabía qué significaba fortress.",
+      "misconception": null
+     },
+     {
+      "criterionId": "c2",
+      "submissionScore": 1,
+      "defenseScore": 0.6,
+      "evidenceQuote": "It is in June, every year, in the morning, in the afternoon... y always. Creo que son esas.",
+      "misconception": null
+     },
+     {
+      "criterionId": "c3",
+      "submissionScore": 0.6,
+      "defenseScore": 0.3,
+      "evidenceQuote": "Lo vi en la televisión, en el noticiero pasan el Inti Raymi cada año.",
+      "misconception": "Confunde haber visto el Inti Raymi por televisión con verificar los datos en una fuente, y no identifica ningún error o invención de la IA ni una fuente del tipo pedido (familiar, vecino o fuente local)."
+     },
+     {
+      "criterionId": "c4",
+      "submissionScore": 0,
+      "defenseScore": 0.6,
+      "evidenceQuote": "Use la IA para corregir. Me puso 'Sacsayhuamán fortress' y lo saqué porque no sabía qué significaba fortress.",
+      "misconception": null
+     },
+     {
+      "criterionId": "c5",
+      "submissionScore": 0.3,
+      "defenseScore": 0,
+      "evidenceQuote": "Hello Noah, […] Bye, Ale (el correo completo tiene unas 73 palabras, muy por debajo del rango de 120–150).",
+      "misconception": null
+     }
+    ]
+   }
+  }
+ ]
+}

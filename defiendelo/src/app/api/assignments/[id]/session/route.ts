@@ -24,6 +24,9 @@ const grade = z.intersection(
     z.object({ questionId: z.string().max(10), score: z.number().min(0).max(100) }),
     z.object({ grade: z.number().min(0).max(100) }),
     z.object({ letter: z.enum(["AD", "A", "B", "C"]) }),
+    z.object({ criterionId: z.string().max(10), points: z.number().min(0).max(100) }),
+    z.object({ comment: z.string().max(1000) }),
+    z.object({ redo: z.literal(true) }),
   ]),
 );
 
@@ -35,7 +38,10 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
   });
 }
 
-/** Teacher scores one question (advances the oral queue when done) or sets the final grade or letter. */
+/**
+ * Teacher scores one question (advances the oral queue when done), confirms or changes a criterion,
+ * writes a comment, asks the student to explain again, or sets the final grade or letter.
+ */
 export async function POST(request: Request, { params }: { params: Promise<{ id: string }> }) {
   return handle(async () => {
     const { id } = await params;

@@ -1,4 +1,4 @@
-import type { Assignment } from "@/domain/types";
+import type { Account, Assignment } from "@/domain/types";
 import type { AssignmentStore } from "@/ports/assignment-store";
 
 const TTL_SECONDS = 60 * 60 * 24 * 30;
@@ -30,5 +30,14 @@ export class UpstashAssignmentStore implements AssignmentStore {
 
   async save(assignment: Assignment): Promise<void> {
     await this.command(["SET", `assignment:${assignment.id}`, JSON.stringify(assignment), "EX", TTL_SECONDS]);
+  }
+
+  async getAccount(code: string): Promise<Account | null> {
+    const raw = await this.command(["GET", `account:${code}`]);
+    return typeof raw === "string" ? (JSON.parse(raw) as Account) : null;
+  }
+
+  async saveAccount(account: Account): Promise<void> {
+    await this.command(["SET", `account:${account.code}`, JSON.stringify(account), "EX", TTL_SECONDS]);
   }
 }

@@ -72,3 +72,64 @@ export function rubricProblem(criteria: Pick<Criterion, "name" | "weight">[]): s
   const total = criteria.reduce((sum, c) => sum + c.weight, 0);
   return total === 100 ? null : `Los pesos suman ${total}%; deben sumar 100%.`;
 }
+
+/** One rubric criterion of a reviewed submission: what the AI suggests and what the teacher decided. */
+export interface CriterionMark {
+  criterionId: string;
+  name: string;
+  evidence: Criterion["evidence"];
+  weight: number;
+  /** Points this criterion is worth on the grade scale. */
+  max: number;
+  /** AI suggestion: written-work score for "entrega" criteria, defense score for "defensa" ones. */
+  suggested: number;
+  /** Points the teacher confirmed or changed; null while still to review. */
+  points: number | null;
+  /** Level of the final points (teacher's, else the suggestion). */
+  level: Letter;
+  /** What the AI read in the work or the defense, and the gap it found, if any. */
+  evidenceQuote: string;
+  misconception: string | null;
+}
+
+const roundHalf = (value: number) => Math.round(value * 2) / 2;
+
+function levelOf(share: number): Letter {
+  return share >= 0.85 ? "AD" : share >= 0.65 ? "A" : share >= 0.45 ? "B" : "C";
+}
+
+/** Per-criterion breakdown of a reviewed submission; empty until the AI reviewed the defense. */
+export function criterionMarks(session: Pick<ClassSession, "gradeScale">, criteria: Criterion[], submission: Submission): CriterionMark[] {
+  const evaluation = submission.evaluation;
+  if (!evaluation) return [];
+  return criteria.map((c) => {
+    const p = evaluation.perCriterion.find((x) => x.criterionId === c.id);
+    const score = p ? (c.evidence === "entrega" ? p.submissionScore : p.defenseScore) : 0;
+    const max = roundHalf((c.weight / 100) * session.gradeScale);
+    const suggested = roundHalf(score * max);
+    const points = submission.criterionPoints?.[c.id] ?? null;
+    return {
+      criterionId: c.id,
+      name: c.name,
+      evidence: c.evidence,
+      weight: c.weight,
+      max,
+      suggested,
+      points,
+      level: levelOf(max === 0 ? 0 : (points ?? suggested) / max),
+      evidenceQuote: p?.evidenceQuote ?? "",
+      misconception: p?.misconception ?? null,
+    };
+  });
+}
+
+/** Sum of the marks, using the teacher's points where set and the AI suggestion elsewhere. */
+export function marksTotal(marks: CriterionMark[], source: "final" | "suggested" = "final"): number {
+  return roundHalf(marks.reduce((sum, m) => sum + (source === "final" ? (m.points ?? m.suggested) : m.suggested), 0));
+}
+
+/** Letter for a total on the literal scale, with the same cut points as the AI suggestion. */
+export function letterForMarks(marks: CriterionMark[], source: "final" | "suggested" = "final"): Letter {
+  const max = marks.reduce((sum, m) => sum + m.max, 0);
+  return levelOf(max === 0 ? 0 : marksTotal(marks, source) / max);
+}

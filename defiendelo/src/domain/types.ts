@@ -80,6 +80,12 @@ export interface Submission {
   grade?: number | null;
   /** Final letter set by the teacher when the session uses the literal scale. */
   letter?: Letter | null;
+  /** Points the teacher confirmed or changed per criterion id, on the session grade scale. */
+  criterionPoints?: Record<string, number>;
+  /** Feedback the teacher writes for the student; shown with the published grade. */
+  comment?: string;
+  /** The teacher asked the student to explain the work again; cleared when the student answers. */
+  redoRequested?: boolean;
 }
 
 /** oral: one by one in front of the class; escrito: answered on the phone; papel: printed exam. */
@@ -139,4 +145,19 @@ export interface Assignment {
   createdAt: string;
   /** Missing on assignments created before sessions existed; read it through sessionOf(). */
   session?: ClassSession;
+  /** Set when the task was created from an example: it replays synthetic data instead of waiting on a model. */
+  demo?: { exampleId: string };
+}
+
+export type AccountRole = "docente" | "alumno";
+
+/** Code-only account (no email, no name): PROFE- codes list a teacher's tasks, ALUM- codes a student's submissions. */
+export interface Account {
+  code: string;
+  role: AccountRole;
+  /** docente: tasks with their teacher key. */
+  assignments: { id: string; teacherKey: string }[];
+  /** alumno: submissions with their student token. */
+  submissions: { assignmentId: string; submissionId: string; token: string }[];
+  createdAt: string;
 }

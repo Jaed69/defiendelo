@@ -1,0 +1,408 @@
+{
+ "exampleId": "comunicacion-comprension-lectora",
+ "redesign": {
+  "statement": "Lee el cuento «Los gallinazos sin plumas» de Julio Ramón Ribeyro. Puedes usar IA para explorar el texto, pero tu evaluación dependerá de las decisiones que tomes, de cómo verifiques lo que la IA produce y de tu capacidad para explicar y defender tus propias interpretaciones.",
+  "aiPolicy": "Uso de IA permitido y esperado para: explorar el contexto de la narrativa urbana peruana, generar preguntas de lectura, revisar borradores o pedir contraargumentos. Debes registrar qué usaste, qué descartaste y por qué. La interpretación final del cuento, la selección de evidencia textual y la defensa oral de tus conclusiones son tuyas y no pueden delegarse.",
+  "criteria": [
+   {
+    "id": "c1",
+    "name": "Registro de decisiones interpretativas",
+    "description": "El estudiante documenta las posibles interpretaciones del tema central, del personaje don Santos y del título que exploró (con ayuda de IA o propias), cuál descartó y con qué evidencia del texto justificó su elección final.",
+    "weight": 25,
+    "evidence": "entrega"
+   },
+   {
+    "id": "c2",
+    "name": "Verificación de lo producido por la IA",
+    "description": "El estudiante contrasta las respuestas generadas por la IA con el texto mismo: identifica afirmaciones incorrectas, imprecisas o no respaldadas por el cuento y señala cómo las corrigió o descartó, citando pasajes concretos.",
+    "weight": 20,
+    "evidence": "entrega"
+   },
+   {
+    "id": "c3",
+    "name": "Defensa oral de la interpretación",
+    "description": "En conversación en vivo, el estudiante explica su tesis sobre el tema central y el significado del título, responde preguntas de profundización, justifica por qué descartó otras lecturas y señala los pasajes del cuento que sustentan su posición.",
+    "weight": 35,
+    "evidence": "defensa"
+   },
+   {
+    "id": "c4",
+    "name": "Lectura atenta en vivo",
+    "description": "El estudiante demuestra, ante preguntas directas sobre fragmentos del cuento (por ejemplo, la escena del chiquero o el final de Efraín y Enrique), que comprende el texto más allá de lo que pudo haber copiado de un resumen generado por IA.",
+    "weight": 20,
+    "evidence": "defensa"
+   }
+  ],
+  "originalCriteria": [
+   {
+    "id": "o1",
+    "name": "Identificación correcta del tema central",
+    "description": "La respuesta identifica adecuadamente el tema central del cuento (la explotación y la miseria urbana en Lima, entre otras formulaciones aceptables).",
+    "weight": 30,
+    "evidence": "entrega"
+   },
+   {
+    "id": "o2",
+    "name": "Interpretación del personaje don Santos",
+    "description": "La respuesta explica qué representa don Santos (la explotación del trabajo infantil y la crueldad de la supervivencia urbana) con referencia al cuento.",
+    "weight": 25,
+    "evidence": "entrega"
+   },
+   {
+    "id": "o3",
+    "name": "Explicación del significado del título",
+    "description": "La respuesta explica el sentido metafórico del título «Los gallinazos sin plumas» y su relación con los personajes.",
+    "weight": 25,
+    "evidence": "entrega"
+   },
+   {
+    "id": "o4",
+    "name": "Resumen de 150 palabras",
+    "description": "El resumen respeta la extensión solicitada, presenta los hechos principales en orden y usa redacción clara y coherente.",
+    "weight": 20,
+    "evidence": "entrega"
+   }
+  ],
+  "rationale": "El formato original de preguntas y resumen es replicable casi por completo por una IA: basta pegarlo en un chat para obtener un producto indistinguible del de un estudiante. El rediseño convierte el uso de IA en parte visible del trabajo (registro de decisiones y verificación crítica) y traslada el peso de la nota a la defensa oral y a la lectura atenta en vivo, donde el estudiante debe sostener sus interpretaciones con evidencia textual frente a preguntas imprevistas. La entrega escrita aún puntúa, pero solo por el proceso de decisión y verificación, no por la corrección de las respuestas en sí."
+ },
+ "stress": {
+  "original": {
+   "aiAnswer": "**Tarea de Comunicación — «Los gallinazos sin plumas», Julio Ramón Ribeyro**\n\n**1. ¿Cuál es el tema central?**\n\nEl tema central del cuento es la explotación y el sufrimiento de los niños pobres en la Lima de mediados del siglo XX. Ribeyro muestra cómo Efraín y Enrique, dos nietos de don Santos, son obligados a recolectar basura y hierros para alimentar a un cerdo, mientras ellos mismos carecen de alimento, afecto y oportunidades. El relato denuncia la crueldad de la pobreza y el maltrato infantil, y plantea la idea de que los niños, tratados como animales de carga, pierden gradualmente su infancia y su humanidad. A través de la comparación entre los niños y los gallinazos que escarban en los basurales, el autor reflexiona sobre la desigualdad social y la indiferencia de una ciudad que crece a costa de los más débiles.\n\n**2. ¿Qué representa don Santos?**\n\nDon Santos representa la crueldad, el egoísmo y la degradación moral que produce la miseria. Es un viejo alimentado por el vicio —el alcohol y la explotación de sus propios nietos— que antepone el bienestar de su cerdo Pascual al de los niños. Encarna la figura del explotador que, habiendo sufrido él mismo la pobreza, reproduce el daño en los más vulnerables. Su muerte final, consumida por la podredumbre, simboliza el castigo de una vida dedicada a corromper y devorar a los demás. En términos sociales, don Santos representa a quienes se benefician del sufrimiento ajeno sin sentir remordimiento.\n\n**3. Explica el significado del título.**\n\nEl título alude a los gallinazos, aves carroñeras que sobreviven hurgando en la basura. Ribeyro los compara con Efraín y Enrique: niños que, como esos animales, viven de los desechos de la ciudad. Sin embargo, son «gallinazos sin plumas» porque carecen incluso de las defensas que tienen esas aves: son niños desvalidos, despojados de infancia, protección y dignidad. El título condensa así la denuncia central del cuento: unos seres humanos reducidos a la condición de carroñeros, pero aún más frágiles y abandonados.\n\n**Resumen (150 palabras)**\n\nEn «Los gallinazos sin plumas», Julio Ramón Ribeyro narra la vida de Efraín y Enrique, dos niños que viven con su abuelo don Santos en una choza de Lima. El viejo los obliga a recorrer los basurales a diario para recolectar alimentos y hierros destinados a engordar a su cerdo Pascual, mientras los niños apenas comen y sufren maltratos. Un día, Enrique cae al cajón de la basura y Efraín, agotado por el hambre y la indiferencia del abuelo, deja de ir a trabajar. Don Santos, furioso, mata al cerdo, pero ya es demasiado tarde: el viejo muere consumido por la podredumbre, y la cucha donde dormían los niños se destruye. Efraín, entonces, parte hacia la ciudad sin rumbo. El cuento denuncia la explotación infantil y la miseria urbana, comparando a los niños con gallinazos sin plumas: seres que sobreviven entre basura, pero sin defensa ni esperanza.",
+   "scores": [
+    {
+     "criterionId": "o1",
+     "score": 1,
+     "reason": "Identifica con precisión la explotación y miseria urbana en Lima, con referencia textual a los personajes."
+    },
+    {
+     "criterionId": "o2",
+     "score": 1,
+     "reason": "Explica acertadamente que don Santos representa la crueldad y la explotación infantil, citando elementos del cuento."
+    },
+    {
+     "criterionId": "o3",
+     "score": 1,
+     "reason": "Explica correctamente la metáfora del título y su vínculo con la fragilidad de Efraín y Enrique."
+    },
+    {
+     "criterionId": "o4",
+     "score": 1,
+     "reason": "El resumen cumple la extensión aproximada, presenta los hechos en orden y con redacción clara."
+    }
+   ]
+  },
+  "redesigned": {
+   "aiAnswer": "**Análisis del cuento «Los gallinazos sin plumas» de Julio Ramón Ribeyro**\n\n**Nombre:** [Estudiante de 3.º de secundaria]\n**Curso:** Comunicación\n\n**1. Resumen general**\n\n«Los gallinazos sin plumas» es un cuento del escritor peruano Julio Ramón Ribeyro, publicado en la década de 1950. La obra narra la historia de Efraín y Enrique, dos nietos que viven con su abuelo Don Santos en una zona marginal de Lima. El abuelo los obliga a buscar alimentos entre la basura del muladar para alimentar a su cerro de engorde llamado Pascual. Los niños abandonan la escuela y dedican su infancia a hurgar en los basurales, lo que representa la pérdida de su niñez y de sus sueños. Al final, Efraín cae enfermo y, en un desenlace trágico, es devorado por el cerdo.\n\n**2. Personajes principales**\n\n- **Efraín y Enrique:** nietos de Don Santos, niños víctimas de la explotación infantil.\n- **Don Santos:** abuelo ambicioso y egoísta que prioriza el engorde de su cerdo sobre el bienestar de sus nietos.\n- **Pascual:** el cerdo de engorde, símbolo de la codicia del abuelo.\n\n**3. Temas principales**\n\n- La pobreza y la marginación social en la Lima de mediados del siglo XX.\n- La explotación infantil y el abandono de la educación.\n- La pérdida de la infancia, representada por el título, ya que los niños son comparados con gallinazos sin plumas: criaturas que aún no están listas pero que deben sobrevivir en un mundo hostil.\n\n**4. Interpretación personal**\n\nConsidero que este cuento es una crítica social muy importante porque muestra la realidad de muchos niños peruanos que se ven obligados a trabajar desde pequeños. El abuelo representa a las personas adultas que, en lugar de proteger a los más pequeños, los explotan por interés propio. Asimismo, el muladar simboliza el abandono del Estado frente a los sectores más pobres. Por otro lado, la escuela que aparece en el cuento representa la esperanza de un futuro mejor, pero los niños no pueden acceder a ella por las circunstancias que viven.\n\nEn conclusión, «Los gallinazos sin plumas» nos hace reflexionar sobre la importancia de la educación y de la protección de la niñez, temas que siguen siendo actuales en el Perú de hoy.\n\n**5. Justificación del uso de IA**\n\nUtilicé una herramienta de inteligencia artificial para obtener un resumen y organizar las ideas del cuento. Verifiqué la información consultando el texto y confirmando los nombres de los personajes y los hechos principales.\n\n**6. Fuentes consultadas**\n\n- Ribeyro, Julio Ramón. «Los gallinazos sin plumas», en *Palabra de hombre*.\n- Diversas páginas de internet sobre literatura peruana.\n\n---\n\n*Nota final: este trabajo cumple con los puntos solicitados: resumen, personajes, temas e interpretación personal. Quedo atento a sus comentarios para mejorar la nota.*",
+   "scores": [
+    {
+     "criterionId": "c1",
+     "score": 0.3,
+     "reason": "El estudiante presenta sus ideas interpretativas, pero no documentó un proceso de descarte de lecturas alternativas ni citó evidencia textual para justificar su postura final."
+    },
+    {
+     "criterionId": "c2",
+     "score": 0.3,
+     "reason": "Afirma haber verificado la información de la IA, pero no presenta evidencia de las afirmaciones incorrectas de la IA ni cita pasajes del texto para demostrar su proceso de contraste."
+    },
+    {
+     "criterionId": "c3",
+     "score": 0,
+     "reason": "Este criterio requiere una defensa oral en vivo, lo cual no puede ser evaluado a partir de la entrega escrita."
+    },
+    {
+     "criterionId": "c4",
+     "score": 0,
+     "reason": "Este criterio evalúa la comprensión de fragmentos específicos de forma oral y no puede ser verificado únicamente a través de la lectura del resumen."
+    }
+   ]
+  },
+  "ranAt": "2026-10-31T05:03:21.042Z"
+ },
+ "insights": {
+  "clusters": [
+   {
+    "label": "Sustentación basada en fuentes externas y conocimiento general del argumento, no en lectura atenta del texto",
+    "criterionId": "c3",
+    "studentAliases": [
+     "Joaquín"
+    ],
+    "quotes": [
+     "Lo de la migración... lo leí en un análisis del cuento. No recuerdo un pasaje exacto que lo diga, pero es el contexto de la época. No exploré otra interpretación, me pareció que esa era la correcta porque es la que dan los análisis.",
+     "No recuerdo exactamente qué pasa con Efraín al final. Don Santos estaba discutiendo con los niños y se cae al chiquero. Enrique se escapa con su hermano. No estoy seguro de que se la coman ellos."
+    ],
+    "suggestion": "Actividad «Caza de evidencia» (12 min): el docente proyecta cinco afirmaciones sobre «Los gallinazos sin plumas» (incluida una falsa sobre el final de Efraín y Enrique y otra sobre la escena del chiquero). En parejas, los estudiantes tienen 8 minutos para ubicar en el cuento el pasaje exacto que respalda o refuta cada afirmación, leerlo en voz alta y señalar página o párrafo. Se cierra con 4 minutos en los que cada pareja explica por qué una interpretación «de los análisis» no vale como evidencia si no puede anclarse en un fragmento textual."
+   },
+   {
+    "label": "Uso de IA sin registro ni verificación contrastable con el texto",
+    "criterionId": "c2",
+    "studentAliases": [
+     "Mafer"
+    ],
+    "quotes": [
+     "No se presentó evidencia de haber utilizado o verificado contenido generado por IA."
+    ],
+    "suggestion": "Taller de verificación en vivo (12 min): el docente entrega un párrafo supuestamente generado por IA sobre el cuento con dos errores y una imprecisión planteadas. En parejas, los estudiantes tienen 8 minutos para detectarlos y corregirlos citando el pasaje textual correspondiente. Los últimos 4 minutos se usan para que cada estudiante redacte en su registro de decisiones una entrada modelo: qué afirmación usó de la IA, qué verificó, qué descartó y con qué cita del cuento lo justificó."
+   }
+  ]
+ },
+ "students": [
+  {
+   "alias": "Mafer",
+   "work": "1) El tema central para mí es cómo la pobreza y el maltrato convierten a las personas en algo parecido a los gallinazos: los chicos tienen que buscar comida en la basura para el chancho y el abuelo los trata como si fueran animales.\n\n2) Don Santos representa al que tiene un poquito de poder sobre otros más débiles y lo usa para explotarlos. Él también es pobre, pero en vez de cuidar a sus nietos los manda a trabajar enfermos. Me dio cólera la parte en que Efraín se corta el pie con el vidrio y aun así lo obliga a salir.\n\n3) El título es porque Efraín y Enrique salen de madrugada al muladar igual que los gallinazos, pero ellos no tienen plumas, o sea, son niños indefensos.\n\nResumen: Efraín y Enrique viven con su abuelo don Santos, que los despierta cada madrugada para recoger desperdicios en los basurales y alimentar a Pascual, el chancho que quiere engordar. Efraín se lastima el pie y Enrique se enferma, pero el abuelo los insulta y los sigue obligando. Cuando ya no pueden salir, don Santos le echa al chancho el perro de Enrique. Al final Enrique se rebela, golpea al abuelo, que cae al chiquero, y escapa con su hermano mientras Pascual ataca a don Santos.",
+   "questions": [
+    {
+     "id": "q1",
+     "criterionId": "c4",
+     "question": "Citas la parte en que Efraín se corta el pie con el vidrio y dices que don Santos aun así lo obliga a salir. Señala en qué momento del cuento ocurre esa herida y explica qué le va pasando al pie de Efraín después, según el texto: ¿cómo actúa o habla don Santos mientras la situación empeora y en qué termina esto para el niño?"
+    },
+    {
+     "id": "q2",
+     "criterionId": "c4",
+     "question": "En tu resumen escribes que 'don Santos le echa al chancho el perro de Enrique'. Cuenta cómo y dónde consiguió Enrique ese perrito, qué hacía por él, y describe exactamente cómo interviene don Santos en esa escena: ¿qué hace el chancho y cómo reacciona Enrique en ese instante?"
+    },
+    {
+     "id": "q3",
+     "criterionId": "c4",
+     "question": "Tu resumen termina así: 'Enrique se rebela, golpea al abuelo, que cae al chiquero, y escapa con su hermano mientras Pascual ataca a don Santos'. Relata con tus palabras cómo ocurre esa pelea, qué imagen cierra el cuento respecto de Pascual y en qué condición queda Efraín al final. Indica qué pasaje usaste para reconstruirlo."
+    },
+    {
+     "id": "q4",
+     "criterionId": "c3",
+     "question": "Interpretas el título como que los niños 'no tienen plumas, o sea, son niños indefensos'. Antes de elegir esa lectura, ¿qué otra interpretación del título exploraste y por qué la descartaste? Además, en el desenlace aparece junto al chiquero una figura que también podría encajar en la metáfora: ¿de quién se trata y cómo la incorporas o la ajustas a tu tesis?"
+    },
+    {
+     "id": "q5",
+     "criterionId": "c3",
+     "question": "Sobre don Santos sostienes que 'representa al que tiene un poquito de poder sobre otros más débiles y lo usa para explotarlos'. ¿Qué otra lectura de este personaje consideraste (por ejemplo, que él mismo es una víctima de la pobreza) y qué pasaje concreto del cuento te hizo preferir la tuya? Señala un detalle del texto donde se vea que él también es pobre y explica por qué eso no debilita tu interpretación."
+    }
+   ],
+   "answers": [
+    {
+     "questionId": "q1",
+     "answer": "Es cuando ya Enrique y Efraín están yendo al muladar y Efraín pisa un vidrio. El pie se le hincha y se le infecta, y don Santos no lo cura, le grita que es un pretexto y lo hace seguir trabajando. Por eso me dio cólera."
+    },
+    {
+     "questionId": "q2",
+     "answer": "El perro, Pedro, Enrique lo encontró en el muladar y lo llevó a la casa, le daba de su comida. Cuando ya no traen desperdicios, el abuelo dice que el perro también come y al final se lo echa al chiquero a Pascual, y Enrique lo ve y ahí es cuando reacciona."
+    },
+    {
+     "questionId": "q3",
+     "answer": "Enrique agarra un palo y le pega al abuelo, que se tambalea y cae al chiquero. Lo último que se ve es a Pascual encima de don Santos, y los niños se van corriendo; Efraín va cojeando por su pie. Lo reconstruí del último párrafo del cuento."
+    },
+    {
+     "questionId": "q4",
+     "answer": "Primero pensé que era porque los niños son feos o sucios como los gallinazos, pero lo descarté porque el cuento no se burla de ellos, les tiene pena. Al final el que termina en el chiquero, como basura, es don Santos, entonces el que se vuelve animal es él."
+    },
+    {
+     "questionId": "q5",
+     "answer": "Sí pensé que él también es víctima, porque vive en la miseria igual que ellos. Pero prefiero mi lectura porque, aunque es pobre, quiere más al chancho que a sus nietos; eso lo elige él. Que sea pobre explica su vida pero no lo disculpa."
+    }
+   ],
+   "evaluation": {
+    "summary": "Estimado estudiante: Has demostrado un dominio excepcional del cuento 'Los gallinazos sin plumas' durante la defensa. Tu capacidad para hilar detalles del texto, como la progresión de la herida de Efraín o el destino de Don Santos, es sumamente sólida y evidencia una lectura profunda. Tu defensa de la tesis de Don Santos como un explotador, aun siendo pobre, fue particularmente perspicaz. Para futuras entregas, enfócate en documentar tu proceso de toma de decisiones interpretativas (C1) y, si utilizas herramientas de IA, es crucial que demuestres explícitamente cómo verificaste y corregiste sus salidas (C2). ¡Excelente trabajo en la comprensión textual!",
+    "perCriterion": [
+     {
+      "criterionId": "c1",
+      "submissionScore": 0.6,
+      "defenseScore": 1,
+      "evidenceQuote": "Tema central para mí es cómo la pobreza y el maltrato convierten a las personas en algo parecido a los gallinazos... El título es porque Efraín y Enrique salen de madrugada al muladar igual que los gallinazos, pero ellos no tienen plumas, o sea, son niños indefensos.",
+      "misconception": null
+     },
+     {
+      "criterionId": "c2",
+      "submissionScore": 0,
+      "defenseScore": 0,
+      "evidenceQuote": "",
+      "misconception": "No se presentó evidencia de haber utilizado o verificado contenido generado por IA."
+     },
+     {
+      "criterionId": "c3",
+      "submissionScore": 0,
+      "defenseScore": 1,
+      "evidenceQuote": "Primero pensé que era porque los niños son feos o sucios como los gallinazos, pero lo descarté porque el cuento no se burla de ellos, les tiene pena. Al final el que termina en el chiquero, como basura, es don Santos, entonces el que se vuelve animal es él.",
+      "misconception": null
+     },
+     {
+      "criterionId": "c4",
+      "submissionScore": 0,
+      "defenseScore": 1,
+      "evidenceQuote": "Es cuando ya Enrique y Efraín están yendo al muladar y Efraín pisa un vidrio. El pie se le hincha y se le infecta, y don Santos no lo cura, le grita que es un pretexto y lo hace seguir trabajando.",
+      "misconception": null
+     }
+    ]
+   }
+  },
+  {
+   "alias": "Joaquín",
+   "work": "1) El tema central del cuento es la marginación social y la deshumanización producto de la pobreza extrema en la Lima de mediados del siglo XX, en el contexto de la migración del campo a la ciudad.\n\n2) Don Santos simboliza el sistema opresor que explota a los más vulnerables. Representa una figura autoritaria que antepone el interés económico, encarnado en el cerdo Pascual, al bienestar de sus propios nietos.\n\n3) El título constituye una metáfora: los niños, al igual que los gallinazos, se alimentan de los desperdicios de la ciudad, pero sin plumas, lo que alude a su desprotección e indefensión.\n\nResumen: El cuento narra la historia de Efraín y Enrique, dos niños que viven con su abuelo don Santos en un barrio marginal de Lima. Cada madrugada deben recolectar basura para alimentar al cerdo Pascual. Cuando los niños enferman, el abuelo los maltrata y sacrifica al perro Pedro. Finalmente, Enrique se rebela contra su abuelo, quien cae al chiquero y es atacado por el cerdo, mientras los niños huyen. Ribeyro denuncia así la miseria y la violencia de la sociedad limeña.",
+   "questions": [
+    {
+     "id": "q1",
+     "criterionId": "c4",
+     "question": "En su resumen usted escribe que don Santos «cae al chiquero y es atacado por el cerdo, mientras los niños huyen». Describa esa secuencia tal como la presenta el cuento: ¿qué estaba haciendo don Santos justo antes de caer, cuál es el papel de Enrique en ese momento y qué destino tiene finalmente Efraín?"
+    },
+    {
+     "id": "q2",
+     "criterionId": "c4",
+     "question": "Su resumen menciona que el abuelo «sacrifica al perro Pedro». ¿En qué circunstancias exactas ocurre esto, qué relación tiene con la enfermedad de Efraín y con el hambre de Pascual, y por qué decidió que ese episodio merecía aparecer en su resumen?"
+    },
+    {
+     "id": "q3",
+     "criterionId": "c3",
+     "question": "Usted sostiene que los niños, «al igual que los gallinazos, se alimentan de los desperdicios de la ciudad». ¿Existe un pasaje del cuento donde eso suceda de manera literal y no solo como metáfora? Señálelo y explique cómo ese detalle refuerza o corrige su lectura de «sin plumas» como «desprotección e indefensión»."
+    },
+    {
+     "id": "q4",
+     "criterionId": "c3",
+     "question": "Su tesis sitúa el cuento «en el contexto de la migración del campo a la ciudad». ¿Qué pasaje del texto respalda esa afirmación? Si al contrastar la respuesta de la IA con el cuento no encontró ese respaldo, explique por qué decidió mantenerla o por qué la descartó."
+    },
+    {
+     "id": "q5",
+     "criterionId": "c3",
+     "question": "Antes de fijar su lectura del tema central, del título y de don Santos, ¿qué otra interpretación exploró y terminó descartando? Indique con qué evidencia del cuento la descartó y por qué su lectura elegida resiste mejor al texto que esa alternativa."
+    }
+   ],
+   "answers": [
+    {
+     "questionId": "q1",
+     "answer": "Don Santos estaba discutiendo con los niños y se cae al chiquero. Enrique se escapa con su hermano. No recuerdo exactamente qué pasa con Efraín al final."
+    },
+    {
+     "questionId": "q2",
+     "answer": "El abuelo sacrifica al perro porque ya no había comida para el cerdo. Lo incluí porque es un momento importante del cuento."
+    },
+    {
+     "questionId": "q3",
+     "answer": "Creo que en el cuento ellos buscan comida en la basura para el cerdo, no para ellos. No estoy seguro de que se la coman ellos."
+    },
+    {
+     "questionId": "q4",
+     "answer": "Lo de la migración... lo leí en un análisis del cuento. No recuerdo un pasaje exacto que lo diga, pero es el contexto de la época."
+    },
+    {
+     "questionId": "q5",
+     "answer": "No exploré otra interpretación, me pareció que esa era la correcta porque es la que dan los análisis."
+    }
+   ],
+   "evaluation": {
+    "summary": "Valoramos positivamente la solidez y claridad de su análisis escrito sobre 'Los gallinazos sin plumas'. Su comprensión de los ejes temáticos —la marginación, la figura de Don Santos y el simbolismo del título— demuestra una excelente base teórica. Sin embargo, durante la defensa oral, se observaron dificultades importantes para fundamentar dichas ideas en la evidencia directa del texto, recurriendo a resúmenes o análisis externos. Le recomendamos enfocar su práctica en la lectura atenta y en la citación precisa de pasajes del cuento para que su gran capacidad interpretativa se complementé con la solidez de su conocimiento literario.",
+    "perCriterion": [
+     {
+      "criterionId": "c1",
+      "submissionScore": 0.9,
+      "defenseScore": 0.8,
+      "evidenceQuote": "El tema central del cuento es la marginación social y la deshumanización producto de la pobreza extrema en la Lima de mediados del siglo XX... Don Santos simboliza el sistema opresor que explota a los más vulnerables... El título constituye una metáfora: los niños, al igual que los gallinazos, se alimentan de los desperdicios de la ciudad, pero sin plumas, lo que alude a su desprotección e indefensión.",
+      "misconception": null
+     },
+     {
+      "criterionId": "c2",
+      "submissionScore": 0.3,
+      "defenseScore": 0.2,
+      "evidenceQuote": "No se presentó evidencia de comparación o verificación de afirmaciones de la IA con pasajes del texto.",
+      "misconception": null
+     },
+     {
+      "criterionId": "c3",
+      "submissionScore": 0.9,
+      "defenseScore": 0.3,
+      "evidenceQuote": "Lo de la migración... lo leí en un análisis del cuento. No recuerdo un pasaje exacto que lo diga, pero es el contexto de la época. No exploré otra interpretación, me pareció que esa era la correcta porque es la que dan los análisis.",
+      "misconception": "Se confunde la validación académica con la evidencia textual, citando análisis externos en lugar de pasajes del cuento."
+     },
+     {
+      "criterionId": "c4",
+      "submissionScore": 0.8,
+      "defenseScore": 0.3,
+      "evidenceQuote": "No recuerdo exactamente qué pasa con Efraín al final. Don Santos estaba discutiendo con los niños y se cae al chiquero. Enrique se escapa con su hermano. No estoy seguro de que se la coman ellos.",
+      "misconception": "Existe una confusión entre el conocimiento general del argumento y la lectura atenta y detallada del texto."
+     }
+    ]
+   }
+  },
+  {
+   "alias": "Nico",
+   "work": "1) El tema es la pobreza en Lima.\n\n2) Don Santos es el abuelo malo que hace trabajar a los niños. Representa la maldad.\n\n3) Se llama así porque los niños van a la basura como los gallinazos.\n\nResumen: Unos niños viven con su abuelo y tienen que ir a buscar basura para el chancho. El abuelo es muy malo y los grita. Un día un niño se enferma y no puede ir. Al final el chancho se come al abuelo y los niños se van. Es un cuento triste que muestra cómo vivía la gente pobre antes.",
+   "questions": [
+    {
+     "id": "q1",
+     "criterionId": "c3",
+     "question": "En la parte 1 de tu entrega afirmas que «el tema es la pobreza en Lima». Dime qué otras lecturas del tema exploraste antes de quedarte con esa y cita un pasaje concreto del cuento con el que justificaste descartarlas."
+    },
+    {
+     "id": "q2",
+     "criterionId": "c3",
+     "question": "En la parte 3 explicas el título diciendo que «los niños van a la basura como los gallinazos». ¿En qué momento de la primera página aparecen juntos los gallinazos y los niños en el basural, y qué le agrega a tu interpretación la expresión «sin plumas» y no simplemente la comparación con aves carroñeras?"
+    },
+    {
+     "id": "q3",
+     "criterionId": "c3",
+     "question": "En la parte 2 sostienes que don Santos «representa la maldad», pero el cuento dedica párrafos a su pasado y a su cariño por el chancho Pichulita. ¿Cómo integras esos rasgos en tu lectura del personaje o por qué decidiste dejarlos fuera?"
+    },
+    {
+     "id": "q4",
+     "criterionId": "c4",
+     "question": "Tu resumen cierra con «el chancho se come al abuelo y los niños se van». Ese desenlace no coincide con el cuento. Descríbeme el final real: qué decide hacer don Santos con Pichulita, en qué estado regresa esa noche y qué le ocurre a Efraín."
+    },
+    {
+     "id": "q5",
+     "criterionId": "c4",
+     "question": "En el resumen dices que «un niño se enferma y no puede ir». Recuérdame esa escena tal como la narra el cuento: qué le exige don Santos a Efraín con fiebre y qué castigo o reacción del abuelo se describe cuando el niño vuelve con las manos vacías mientras el chancho se queja de hambre."
+    }
+   ],
+   "answers": [
+    {
+     "questionId": "q1",
+     "answer": "No pensé en otras, para mí es la pobreza porque todo el cuento es eso. No recuerdo un pasaje exacto."
+    },
+    {
+     "questionId": "q2",
+     "answer": "Es al principio, cuando salen de madrugada y los gallinazos también bajan al muladar. Lo de sin plumas no lo había pensado, creo que es porque son niños y no pueden volar ni defenderse."
+    },
+    {
+     "questionId": "q3",
+     "answer": "Yo no recuerdo que el chancho se llame así, creo que se llamaba Pascual. Del pasado del abuelo no me acuerdo, por eso puse que era malo nomás."
+    },
+    {
+     "questionId": "q4",
+     "answer": "Ahí me equivoqué, creo. Me parece que no es que se lo coma, sino que el abuelo se cae al chiquero y el chancho lo ataca, y los niños escapan. Lo de Efraín no me acuerdo."
+    },
+    {
+     "questionId": "q5",
+     "answer": "Efraín tiene el pie herido y Enrique se enferma, y el abuelo los obliga igual a salir y les grita. No recuerdo bien el castigo exacto."
+    }
+   ],
+   "evaluation": {
+    "summary": "Tu iniciativa de abordar la pobreza en Lima como tema central es un buen punto de partida para la lectura. Sin embargo, durante la defensa, fue difícil para ti sustentar tus ideas con la evidencia textual, como al no recordar pasajes clave ni al simplificar demasiado la complejidad del personaje de Don Santos y el título. Para futuras exploraciones, te sugiero enfocarte en cómo la lectura de una obra de Ribeyro exige una memorización detallada de los diálogos y desenlaces. Revisa con mucha atención los matices del cuento y practica la contextualización de los argumentos; esto te ayudará a defender tus interpretaciones con mayor seguridad y profundidad académica.",
+    "perCriterion": [
+     {
+      "criterionId": "c1",
+      "submissionScore": 0.5,
+      "defenseScore": 0,
+      "evidenceQuote": "No pensé en otras, para mí es la pobreza porque todo el cuento es eso. No recuerdo un pasaje exacto.",
+      "misconception": null
+     },
+     {
+      "criterionId": "c2",
+      "submissionScore": 0,
+      "defenseScore": 0,
+      "evidenceQuote": "N/A (Information not provided in the submission or defense regarding AI verification)",
+      "misconception": null
+     },
+     {
+      "criterionId": "c3",
+      "submissionScore": 0.5,
+      "defenseScore": 0.3,
+      "evidenceQuote": "Lo de sin plumas no lo había pensado, creo que es porque son niños y no pueden volar ni defenderse. Yo no recuerdo que el chancho se llame así, creo que se llamaba Pascual. Del pasado del abuelo no me acuerdo, por eso puse que era malo nomás.",
+      "misconception": null
+     },
+     {
+      "criterionId": "c4",
+      "submissionScore": 0,
+      "defenseScore": 0.3,
+      "evidenceQuote": "Ahí me equivoqué, creo. Me parece que no es que se lo coma, sino que el abuelo se cae al chiquero y el chancho lo ataca, y los niños escapan. Lo de Efraín no me acuerdo.",
+      "misconception": null
+     }
+    ]
+   }
+  }
+ ]
+}

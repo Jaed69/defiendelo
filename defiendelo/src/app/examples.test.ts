@@ -23,6 +23,10 @@ describe("example tasks", () => {
     expect(example.defense.trim()).not.toBe("");
   });
 
+  it.each(EXAMPLES)("$id names the kind of task it is", (example) => {
+    expect(example.kind.trim()).not.toBe("");
+  });
+
   it("cites every figure with a named source and a secure link", () => {
     for (const evidence of [HEADLINE_EVIDENCE, ...EXAMPLES.flatMap((e) => (e.evidence ? [e.evidence] : []))]) {
       expect(evidence.source.trim()).not.toBe("");

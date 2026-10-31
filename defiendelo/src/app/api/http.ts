@@ -10,6 +10,11 @@ export function studentToken(request: Request): string | null {
   return request.headers.get("x-student-token");
 }
 
+/** The PROFE- or ALUM- code the device remembers, if any; new tasks and submissions are added to it. */
+export function accountCode(request: Request): string | null {
+  return request.headers.get("x-account-code");
+}
+
 export async function handle(run: () => Promise<unknown>): Promise<NextResponse> {
   try {
     return NextResponse.json(await run());

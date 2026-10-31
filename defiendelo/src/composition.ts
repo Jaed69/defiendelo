@@ -4,6 +4,7 @@ import { withFallback } from "@/adapters/fallback-assessment-ai";
 import { MemoryAssignmentStore } from "@/adapters/memory-assignment-store";
 import { OpenRouterAssessmentAI } from "@/adapters/openrouter-assessment-ai";
 import { UpstashAssignmentStore } from "@/adapters/upstash-assignment-store";
+import type { Assignment } from "@/domain/types";
 import type { AssessmentAI } from "@/ports/assessment-ai";
 import type { AssignmentStore } from "@/ports/assignment-store";
 
@@ -15,6 +16,11 @@ export function assessmentAI(): AssessmentAI {
     return withFallback(new OpenRouterAssessmentAI(process.env.OPENROUTER_API_KEY, process.env.OPENROUTER_MODEL || undefined), demo);
   }
   return demo;
+}
+
+/** Demo tasks (created from an example) use the instant offline engine; the rest use the real AI. */
+export function aiForTask(assignment: Pick<Assignment, "demo">): AssessmentAI {
+  return assignment.demo ? new DemoAssessmentAI() : assessmentAI();
 }
 
 export function assignmentStore(): AssignmentStore {

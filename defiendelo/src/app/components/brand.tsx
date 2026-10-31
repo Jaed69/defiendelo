@@ -1,16 +1,27 @@
 import Link from "next/link";
+import { QuoteIcon } from "./icons";
 
-/** Brand mark: a speech bubble (the defense is a conversation) with the teacher's red tick. */
-export function Logo() {
+/**
+ * Brand mark: a quote mark in the brand square. The product quotes the student's own words as the
+ * evidence of every grade ("Sale de: …"), so the mark says "your words, quoted". A chat bubble was
+ * dropped: it read as one more chatbot.
+ */
+export function LogoMark({ size = 36 }: { size?: number }) {
   return (
-    <Link href="/" className="inline-flex min-h-11 items-center gap-2.5 font-display text-2xl font-extrabold tracking-tight text-ink">
-      <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
-        <path
-          d="M6 4H30C32.2 4 34 5.8 34 8V24C34 26.2 32.2 28 30 28H16L8 34V28H6C3.8 28 2 26.2 2 24V8C2 5.8 3.8 4 6 4Z"
-          fill="var(--color-bg-brand)"
-        />
-        <path d="M11 16.5L16 21L25.5 11" stroke="var(--color-text-danger)" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
+    <span
+      aria-hidden="true"
+      className="inline-grid shrink-0 place-items-center rounded-[10px] bg-brand text-white"
+      style={{ width: size, height: size }}
+    >
+      <QuoteIcon size={Math.round(size * 0.55)} />
+    </span>
+  );
+}
+
+export function Logo({ href = "/" }: { href?: string }) {
+  return (
+    <Link href={href} className="inline-flex min-h-11 items-center gap-2.5 font-display text-2xl font-extrabold tracking-tight text-ink">
+      <LogoMark />
       Defiéndelo
     </Link>
   );
