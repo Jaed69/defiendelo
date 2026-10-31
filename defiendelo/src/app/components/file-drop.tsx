@@ -8,8 +8,18 @@ const ACCEPT =
 
 type Status = { kind: "idle" } | { kind: "reading"; name: string } | { kind: "done"; message: string } | { kind: "error"; message: string };
 
+function UploadIcon() {
+  return (
+    <svg width="48" height="48" viewBox="0 0 56 56" fill="none" aria-hidden="true" className="shrink-0">
+      <rect x="10" y="4" width="36" height="48" rx="6" fill="white" stroke="var(--color-bg-brand)" strokeWidth="2.5" />
+      <path d="M28 36V20M28 20L21 27M28 20L35 27" stroke="var(--color-bg-brand)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M18 44H38" stroke="var(--color-bg-brand)" strokeWidth="2.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 /** Lets a person drop or pick a document; its text is read in the browser and handed to the form field. */
-export function FileDrop({ limit, hint, onText }: { limit: number; hint: string; onText: (text: string) => void }) {
+export function FileDrop({ limit, title, hint, onText }: { limit: number; title: string; hint: string; onText: (text: string) => void }) {
   const inputId = useId();
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   const [dragging, setDragging] = useState(false);
@@ -35,7 +45,7 @@ export function FileDrop({ limit, hint, onText }: { limit: number; hint: string;
 
   return (
     <div
-      className={`drop ${dragging ? "drop-active" : ""}`}
+      className={`drop file-drop flex flex-col items-center gap-4 p-6 text-center sm:flex-row sm:p-8 sm:text-left ${dragging ? "drop-active" : ""}`}
       onDragOver={(e) => {
         e.preventDefault();
         setDragging(true);
@@ -47,6 +57,18 @@ export function FileDrop({ limit, hint, onText }: { limit: number; hint: string;
         void read(e.dataTransfer.files[0]);
       }}
     >
+      <UploadIcon />
+      <div className="grid flex-1 gap-1">
+        <p className="font-display text-xl font-bold">{title}</p>
+        <p className="text-[0.9375rem] text-graphite">{hint}</p>
+        <p
+          className={`text-[0.9375rem] ${status.kind === "error" ? "font-bold text-pen" : "text-ink"}`}
+          role={status.kind === "error" ? "alert" : "status"}
+        >
+          {status.kind === "reading" && `Leyendo «${status.name}» en tu dispositivo; el archivo no se sube a ningún servidor.`}
+          {(status.kind === "done" || status.kind === "error") && status.message}
+        </p>
+      </div>
       <input
         id={inputId}
         type="file"
@@ -57,17 +79,9 @@ export function FileDrop({ limit, hint, onText }: { limit: number; hint: string;
           e.target.value = "";
         }}
       />
-      <label htmlFor={inputId} className="btn-outline">
-        {status.kind === "reading" ? "Leyendo el archivo…" : "Subir un archivo"}
+      <label htmlFor={inputId} className="btn-secondary shrink-0">
+        {status.kind === "reading" ? "Leyendo…" : "Elegir archivo"}
       </label>
-      <span className="text-sm text-graphite">{hint}</span>
-      <p
-        className={`w-full text-sm ${status.kind === "error" ? "font-bold text-pen" : ""}`}
-        role={status.kind === "error" ? "alert" : "status"}
-      >
-        {status.kind === "reading" && `Leyendo «${status.name}» en tu dispositivo; el archivo no se sube a ningún servidor.`}
-        {(status.kind === "done" || status.kind === "error") && status.message}
-      </p>
     </div>
   );
 }

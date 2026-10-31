@@ -1,115 +1,235 @@
 @import "tailwindcss";
 
+/* Tokens mirror the Figma variables (file vJbFealOdYHmWfiR8SumcH): squared notebook, blue ballpoint, teacher's red pen. */
 :root {
-  --paper: #f7f9fc;
-  --ink: #1b2a4a;
-  --graphite: #5b6478;
-  --rule: #d9e2ef;
-  --pen: #c8102e;
-  --pen-soft: #fbe7ea;
-  --ink-soft: #e6ecf6;
+  --ink-900: #141b34;
+  --ink-600: #4a5578;
+  --ink-200: #d9e4f2;
+  --ink-100: #eef3fa;
+  --paper: #fdfdfb;
+  --blue-700: #1b2f8f;
+  --blue-600: #2340b8;
+  --blue-100: #e4e9fb;
+  --red-600: #d7263d;
+  --red-100: #fce6e9;
+  --yellow-300: #f5e642;
+  --yellow-100: #fdf8c9;
+  --green-700: #187a4c;
+  --green-100: #ddf2e6;
+
+  --color-bg-page: var(--paper);
+  --color-bg-surface: #ffffff;
+  --color-bg-subtle: var(--ink-100);
+  --color-bg-brand: var(--blue-600);
+  --color-bg-brand-strong: var(--blue-700);
+  --color-bg-brand-subtle: var(--blue-100);
+  --color-bg-danger: var(--red-600);
+  --color-bg-danger-subtle: var(--red-100);
+  --color-bg-highlight: var(--yellow-300);
+  --color-bg-highlight-subtle: var(--yellow-100);
+  --color-bg-success-subtle: var(--green-100);
+  --color-bg-inverse: var(--ink-900);
+  --color-text-primary: var(--ink-900);
+  --color-text-secondary: var(--ink-600);
+  --color-text-brand: var(--blue-600);
+  --color-text-danger: var(--red-600);
+  --color-text-success: var(--green-700);
+  --color-border-default: var(--ink-200);
+  --color-border-strong: var(--ink-900);
+  --color-grid-line: var(--ink-200);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --shadow-card: 0 2px 4px rgb(20 27 52 / 0.06), 0 12px 32px -4px rgb(20 27 52 / 0.1);
 }
 
 @theme inline {
-  --color-paper: var(--paper);
-  --color-ink: var(--ink);
-  --color-graphite: var(--graphite);
-  --color-rule: var(--rule);
-  --color-pen: var(--pen);
-  --color-pen-soft: var(--pen-soft);
-  --color-ink-soft: var(--ink-soft);
+  --color-page: var(--color-bg-page);
+  --color-surface: var(--color-bg-surface);
+  --color-subtle: var(--color-bg-subtle);
+  --color-brand: var(--color-bg-brand);
+  --color-brand-subtle: var(--color-bg-brand-subtle);
+  --color-danger-subtle: var(--color-bg-danger-subtle);
+  --color-highlight: var(--color-bg-highlight);
+  --color-highlight-subtle: var(--color-bg-highlight-subtle);
+  --color-success-subtle: var(--color-bg-success-subtle);
+  --color-inverse: var(--color-bg-inverse);
+  --color-ink: var(--color-text-primary);
+  --color-graphite: var(--color-text-secondary);
+  --color-brand-text: var(--color-text-brand);
+  --color-pen: var(--color-text-danger);
+  --color-success: var(--color-text-success);
+  --color-rule: var(--color-border-default);
+  --color-ink-soft: var(--color-bg-subtle);
+  --color-pen-soft: var(--color-bg-danger-subtle);
   --font-display: var(--font-display);
   --font-body: var(--font-body);
+  --font-note: var(--font-note);
+  --font-mono: var(--font-mono);
 }
 
 html {
-  background: var(--paper);
+  background: var(--color-bg-page);
 }
 
 body {
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--color-bg-page);
+  color: var(--color-text-primary);
   font-family: var(--font-body), system-ui, sans-serif;
   font-size: 1.0625rem;
-  line-height: 1.6;
-}
-
-/* Notebook sheet: the red margin line is the page's one signature element. */
-.sheet {
-  min-height: 100vh;
-  max-width: 52rem;
-  margin: 0 auto;
-  padding: 3rem 1.25rem 5rem 2.75rem;
-  background-image: linear-gradient(to right, transparent 1.5rem, var(--pen) 1.5rem, var(--pen) calc(1.5rem + 2px), transparent calc(1.5rem + 2px));
-}
-
-@media (min-width: 640px) {
-  .sheet {
-    padding-left: 5rem;
-    background-image: linear-gradient(to right, transparent 3rem, var(--pen) 3rem, var(--pen) calc(3rem + 2px), transparent calc(3rem + 2px));
-  }
+  line-height: 1.55;
 }
 
 h1,
 h2,
 h3 {
   font-family: var(--font-display), system-ui, sans-serif;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+  color: var(--color-text-primary);
 }
 
+/* Type scale: Display/XL, Heading/H2, Heading/H3, Stat (Figma text styles). */
 h1 {
-  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-size: clamp(2.5rem, 5.2vw, 4rem);
+  line-height: 1.06;
   font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
 h2 {
-  font-size: 1.5rem;
+  font-size: clamp(1.5rem, 2.4vw, 1.75rem);
+  line-height: 1.2;
   font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 h3 {
-  font-size: 1.125rem;
+  font-size: 1.25rem;
+  line-height: 1.3;
   font-weight: 700;
+  letter-spacing: -0.005em;
 }
 
-section + section {
-  border-top: 1px solid var(--rule);
-  margin-top: 2.5rem;
-  padding-top: 2.5rem;
+.stat-value {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: 3rem;
+  line-height: 1.08;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.label {
+  font-size: 0.875rem;
+  line-height: 1.4;
+  font-weight: 700;
 }
 
 .prose-measure {
   max-width: 68ch;
 }
 
+.container-page {
+  width: 100%;
+  max-width: 80rem;
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 768px) {
+  .container-page {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-page {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+}
+
+/* Squared-notebook paper: the page's one signature texture. */
+.grid-paper {
+  background-color: var(--color-bg-surface);
+  background-image:
+    linear-gradient(to right, rgb(217 228 242 / 0.7) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(217 228 242 / 0.7) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Lined sheet with the red margin, for the student's answer. */
+.ruled {
+  background-color: var(--color-bg-surface);
+  background-image:
+    linear-gradient(to right, transparent 35px, rgb(215 38 61 / 0.6) 35px, rgb(215 38 61 / 0.6) 37px, transparent 37px),
+    repeating-linear-gradient(to bottom, transparent 0, transparent 31px, var(--color-grid-line) 31px, var(--color-grid-line) 32px);
+  background-attachment: local;
+  line-height: 32px;
+  padding: 0 1rem 0 3rem;
+}
+
+.card {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.app-bar {
+  background: var(--color-bg-surface);
+  border-bottom: 1px solid var(--color-border-default);
+}
+
 textarea,
 input[type="text"] {
   width: 100%;
-  background: white;
-  border: 1px solid var(--rule);
-  border-radius: 6px;
-  padding: 0.75rem 0.875rem;
-  color: var(--ink);
+  background: var(--color-bg-surface);
+  border: 1.5px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1rem;
+  color: var(--color-text-primary);
+}
+
+textarea::placeholder,
+input[type="text"]::placeholder {
+  color: var(--color-text-secondary);
 }
 
 textarea:focus,
 input[type="text"]:focus,
 button:focus-visible,
-a:focus-visible {
-  outline: 3px solid var(--ink);
+a:focus-visible,
+summary:focus-visible {
+  outline: 3px solid var(--color-bg-brand);
   outline-offset: 2px;
 }
 
-.btn {
+/* Buttons: Primary for the one main action, Secondary for alternatives, Quiet for links. */
+.btn,
+.btn-secondary,
+.btn-outline {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  background: var(--ink);
-  color: white;
+  min-height: 3rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-md);
   font-weight: 700;
-  padding: 0.7rem 1.2rem;
-  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 120ms ease;
+}
+
+.btn {
+  background: var(--color-bg-brand);
+  color: white;
+}
+
+.btn:hover {
+  background: var(--color-bg-brand-strong);
 }
 
 .btn:disabled {
@@ -117,60 +237,99 @@ a:focus-visible {
   cursor: progress;
 }
 
+.btn-secondary,
+.btn-outline {
+  background: var(--color-bg-surface);
+  color: var(--color-text-primary);
+  border: 2px solid var(--color-border-strong);
+}
+
+.btn-secondary:hover,
+.btn-outline:hover {
+  background: var(--color-bg-subtle);
+}
+
 .btn-quiet {
   display: inline-flex;
   align-items: center;
   min-height: 2.75rem;
-  color: var(--ink);
+  color: var(--color-text-brand);
   font-weight: 700;
   text-decoration: underline;
   text-underline-offset: 3px;
-}
-
-.btn,
-.btn-outline {
-  min-height: 2.75rem;
   cursor: pointer;
 }
 
-.btn-outline {
+.chip {
   display: inline-flex;
   align-items: center;
-  border: 2px solid var(--ink);
-  border-radius: 6px;
-  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.4;
   font-weight: 700;
-  background: white;
+  white-space: nowrap;
 }
 
-.btn-outline:hover {
-  background: var(--ink-soft);
+.chip-neutral {
+  background: var(--color-bg-subtle);
+  color: var(--color-text-secondary);
 }
 
-/* The file input is visually hidden; its label is the visible control, so focus shows there. */
-.drop:has(input:focus-visible) .btn-outline {
-  outline: 3px solid var(--ink);
-  outline-offset: 2px;
+.chip-brand {
+  background: var(--color-bg-brand-subtle);
+  color: var(--color-text-brand);
 }
 
-.drop {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem 1rem;
-  border: 2px dashed var(--rule);
-  border-radius: 8px;
-  padding: 1rem;
-  background: white;
+.chip-danger {
+  background: var(--color-bg-danger-subtle);
+  color: var(--color-text-danger);
+}
+
+.chip-success {
+  background: var(--color-bg-success-subtle);
+  color: var(--color-text-success);
+}
+
+.chip-highlight {
+  background: var(--color-bg-highlight);
+  color: var(--color-text-primary);
+}
+
+/* Teacher's handwritten red-pen remark. Decorative: the same fact is always stated in text nearby. */
+.note {
+  font-family: var(--font-note), cursive;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.15;
+  color: var(--color-text-danger);
+}
+
+.pen-mark {
+  color: var(--color-text-danger);
+  text-decoration: underline wavy var(--color-text-danger);
+  text-underline-offset: 4px;
+}
+
+.file-drop {
+  border: 2px dashed var(--color-bg-brand);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-brand-subtle);
 }
 
 .drop-active {
-  border-color: var(--ink);
-  background: var(--ink-soft);
+  background: #d3dcf8;
+  border-style: solid;
+}
+
+/* The file input is visually hidden; its label is the visible control, so focus shows there. */
+.drop:has(input:focus-visible) .btn-secondary {
+  outline: 3px solid var(--color-bg-brand);
+  outline-offset: 2px;
 }
 
 .waiting {
-  border-left: 4px solid var(--ink);
+  border-left: 4px solid var(--color-bg-brand);
   padding-left: 1rem;
 }
 
@@ -178,11 +337,11 @@ a:focus-visible {
   position: absolute;
   left: 1rem;
   top: -4rem;
-  z-index: 10;
-  background: var(--ink);
+  z-index: 50;
+  background: var(--color-bg-inverse);
   color: white;
   padding: 0.75rem 1rem;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-weight: 700;
 }
 
@@ -190,50 +349,49 @@ a:focus-visible {
   top: 1rem;
 }
 
-/* Where the person is in a flow; the current step is the one in ink, done steps get a check. */
+/* Progress through a flow: Done shows a check, Current is filled blue, Upcoming is muted. */
 .steps {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 1.5rem;
-  font-size: 0.9375rem;
-  color: var(--graphite);
+  gap: 0.5rem 2rem;
 }
 
 .steps > li > a,
 .steps > li > span {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
   min-height: 2.75rem;
+  color: var(--color-text-secondary);
 }
 
 .steps .step-number {
   display: inline-grid;
   place-items: center;
-  width: 1.75rem;
-  height: 1.75rem;
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
   border-radius: 999px;
-  border: 2px solid currentColor;
+  background: var(--color-bg-subtle);
+  color: var(--color-text-secondary);
   font-weight: 700;
   font-size: 0.875rem;
 }
 
+.steps .step-done .step-number {
+  background: var(--color-bg-brand-subtle);
+  color: var(--color-text-brand);
+}
+
 .steps [aria-current="step"] {
-  color: var(--ink);
+  color: var(--color-text-primary);
   font-weight: 700;
 }
 
-.steps [aria-current="step"] .step-number {
-  background: var(--ink);
-  border-color: var(--ink);
+.steps [aria-current="step"] .step-number,
+.steps .step-filled .step-number {
+  background: var(--color-bg-brand);
   color: white;
-}
-
-/* Teacher's red-pen mark, used only for gaps and given-away criteria. */
-.pen-mark {
-  color: var(--pen);
-  text-decoration: underline wavy var(--pen);
-  text-underline-offset: 4px;
 }
 
 @media (prefers-reduced-motion: reduce) {

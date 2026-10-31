@@ -17,7 +17,7 @@ Objective: make the teacher and student flows easier and more accessible, and le
 | T1 | S1, S2 | inline | done | 9cdd71c, ce6a0c8 |
 | T2 | S3, S4 | inline | done | ce6a0c8 |
 | T3 | S5 | inline | done | ce6a0c8 |
-| T4 | S1–S5 | inline | local done; production pending push/deploy | — |
+| T4 | S1–S5 | inline | done: PR #2 merged (d768f5a), production verified | d768f5a |
 
 Route evidence: one app, the units share `globals.css` and the new upload component; no disjoint parallel units worth a writer. Forecast ~600 authored lines; single-pr accepted for the hackathon.
 
@@ -27,3 +27,4 @@ Route evidence: one app, the units share `globals.css` and the new upload compon
 - L2: Browsed awwwards collections in Chrome: "Inspiring UX Design" (Typeform-style one-question-at-a-time forms, "press Enter" hints, natural-language forms) and "Microcopy and UX writing" (loading-state microcopy). Figma MCP not used: it needs authentication and adds nothing over code for this scope.
 - L3: Libraries: pdfjs-dist 6.4.299 (2026-10-03) and mammoth 1.13.0, both loaded on demand in the browser.
 - L4: Evidence. Vitest RED (missing module) then GREEN 16/16 (fileKind, fitToLimit). tsc clean, eslint 0 errors (1 pre-existing warning), next build OK; pdf.js is loaded on demand (route first-load JS ~108 kB). Playwright end-to-end in demo mode, 16/16 PASS: skip link first focus; Word-exported PDF and DOCX fill the task; .jpg shows an alert; image-only PDF explains it has no text; teacher step nav (4 links); student .py upload; one question at a time; paste blocked with explanation; "Necesito más tiempo" 10:00 -> 15:00 once; Ctrl+Enter walks questions; result; triage lists the student; no horizontal scroll at 375 px; no console errors. Visual QA fixed stretched step circles and missing spacing under the teacher step nav. Commits 9cdd71c, ce6a0c8.
+- L5 (user): "Si haz push pr y mergue'" — PR https://github.com/Jaed69/defiendelo/pull/2, Vercel preview passed, merged as d768f5a, production deploy Ready. Same Playwright check against https://defiendelo.vercel.app with the real AI provider: 16/16 PASS (5 defense questions that quote the student's own code).

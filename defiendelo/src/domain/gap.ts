@@ -60,3 +60,9 @@ export function triage(criteria: Criterion[], submissions: Submission[]): Triage
     .filter((e): e is TriageEntry => e.gap !== null)
     .sort((a, b) => b.gap - a.gap);
 }
+
+/** Mean gap across defended submissions, as a whole percent; null before the first defense. */
+export function averageGap(entries: TriageEntry[]): number | null {
+  if (entries.length === 0) return null;
+  return Math.round(entries.reduce((sum, e) => sum + e.gap, 0) / entries.length);
+}
