@@ -38,6 +38,9 @@ Without Upstash, data lives in process memory: fine for `npm run dev`, but on Ve
 - `src/ports` — `AssessmentAI` and `AssignmentStore` interfaces.
 - `src/adapters` — shared prompts (`PromptedAssessmentAI`), Claude, OpenRouter, demo, memory and Upstash implementations.
 - `src/application` — use cases; API routes in `src/app/api` stay thin.
+- `src/demo` — synthetic classes, already run through the AI pipeline, that example assignments replay instantly.
+- `src/app` — screens (teacher, student, sign-in), API routes and the example tasks (`examples.ts`).
+- `scripts` — `build-example-pdfs.py` and `dump-examples.mjs` build the example PDFs in `public/ejemplos`.
 
 ## Privacy
 

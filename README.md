@@ -2,22 +2,49 @@
 
 **Tareas que los alumnos pueden resolver con IA, calificadas por lo que saben explicar.**
 
-Proyecto para **DSC HACK 2026 · Educación 2036**. La aplicación vive en [`defiendelo/`](defiendelo/).
+Proyecto para **DSC HACK 2026 · Educación 2036**.
 
-🔗 **Demo:** https://defiendelo.vercel.app
+🔗 **Demo:** https://defiendelo.vercel.app · 📄 **Propuesta:** [`docs/propuesta/`](docs/propuesta/) · 🔬 **Investigación:** [`docs/investigacion/`](docs/investigacion/)
+
+## 🗂️ Estructura del repositorio
+
+```
+.
+├── defiendelo/              Aplicación web (Next.js): código, tests y scripts
+│   ├── src/                 Dominio, puertos, adaptadores, casos de uso y pantallas
+│   ├── public/ejemplos/     PDF de las tareas de ejemplo
+│   └── README.md            Detalle técnico de la aplicación
+└── docs/                    Documentación del proyecto
+    ├── propuesta/           Propuesta enviada al hackathon y presentación del pitch
+    ├── investigacion/       Informes con la evidencia que sustenta el problema y la solución
+    ├── validacion/          Conversaciones y pruebas con usuarios reales
+    ├── diseno/              Diseño de las pantallas (Pencil) y capturas
+    └── flujo-sintetico/     Datos para probar el flujo completo a mano
+```
 
 ---
 
 ## 🎯 Problema y solución
 
-### La brecha
+### La brecha: la IA mejora la tarea y empeora el aprendizaje
 
-La IA generativa ya resuelve la mayoría de las tareas escolares: ensayos, cuestionarios de lectura, problemas, monografías, informes de laboratorio, código. Según PISA 2025, el **54 % de los alumnos peruanos de 15 años usa chatbots de IA cada semana para estudiar** (promedio OCDE: 46 %).
+De las cuatro grietas del reto, elegimos la **02**. La IA generativa ya resuelve la mayoría de las tareas escolares: ensayos, cuestionarios de lectura, problemas, monografías, informes de laboratorio, código. Según PISA 2025, el **54 % de los alumnos peruanos de 15 años usa chatbots de IA cada semana para estudiar** (promedio OCDE: 46 %; [La República](https://larepublica.pe/sociedad/2026/09/08/peru-retrocede-en-prueba-pisa-2025-y-no-alcanza-niveles-minimos-en-lectura-matematica-y-ciencias-439808)).
 
-El problema de fondo no es que los alumnos "hagan trampa". Es que **la IA mejora el producto sin mejorar el aprendizaje, y la nota de hoy mide el producto.** Un docente que corrige 150 entregas no puede saber cuánto de cada una entendió el alumno. Las alternativas actuales tampoco sirven:
+El problema de fondo no es que los alumnos "hagan trampa". Es que **la IA mejora el producto sin mejorar el aprendizaje, y la nota de hoy mide el producto.**
 
-- **Prohibir la IA o "detectarla"** no funciona: los detectores fallan y castigan a alumnos inocentes.
-- **La defensa oral** sí funciona, pero no escala: son de 15 a 20 minutos por alumno.
+| Evidencia | Qué muestra |
+| --- | --- |
+| Bastani et al., *PNAS* 2025 (~1.000 escolares) | Con IA, la práctica mejoró 48 %; al retirarla, ese grupo rindió **17 % menos** que quienes nunca la usaron. Con salvaguardas pedagógicas, el daño se mitigó. ([Wharton](https://knowledge.wharton.upenn.edu/article/without-guardrails-generative-ai-can-harm-education/)) |
+| Fan et al., 2024 (117 universitarios) | El grupo con ChatGPT **mejoró más la nota del ensayo**, pero **no difirió** en conocimiento ni en transferencia. ([arXiv](https://arxiv.org/abs/2412.09315v1)) |
+| Anthropic Education Report, 2025 | En ~47 % de las conversaciones el estudiante pide la respuesta directa; la IA hace sobre todo las tareas de **crear** y **analizar**. ([Anthropic](https://www.anthropic.com/research/anthropic-education-report-how-university-students-use-claude)) |
+
+Un docente que corrige 150 entregas no puede saber cuánto de cada una entendió el alumno. Las alternativas actuales no cierran la brecha:
+
+- **Prohibir la IA o "detectarla"**: los detectores no prueban comprensión y convierten la evaluación en una acusación.
+- **Los modos de estudio de los chatbots**: el alumno los apaga con un clic y al docente no le llega nada.
+- **La defensa oral** sí funciona, pero no escala: la literatura trabaja con 15 a 20 minutos por alumno ([CAUSE](https://www.causeweb.org/cause/node/26215)). Y hacia 2036 habrá menos docentes: **1 de cada 5 docentes de secundaria tiene 55 años o más** ([Gestión](https://gestion.pe/economia/peru-1-de-cada-5-profesores-de-secundaria-tiene-55-anos-hay-personal-listo-para-el-relevo-noticia/)).
+
+Nuestra conclusión, a partir de la [investigación](docs/investigacion/): **la solución tiene que vivir en la evaluación y en el flujo del docente, no ser otro tutor más.**
 
 ### Nuestra respuesta
 
@@ -29,9 +56,30 @@ Defiéndelo cambia **qué se evalúa**. La IA está permitida; lo que cuenta es 
 4. **Defensa** en el celular, en papel o en voz alta en clase. La IA sugiere un nivel por criterio y muestra la evidencia.
 5. **El docente decide la nota**, ve a quién atender primero y qué errores se repiten en la clase para volver a enseñarlos.
 
-> Principio de diseño: **la IA sugiere, el docente decide.** Coincide con el Reglamento peruano de IA (D.S. 115-2025-PCM), que pide supervisión humana con capacidad de corregir cuando un sistema evalúa a menores de edad, y con la RVM 094-2020-MINEDU, que define la evaluación por competencias como formativa y basada en evidencias.
+> Principio de diseño: **la IA sugiere, el docente decide.** El Reglamento peruano de IA (D.S. 115-2025-PCM, art. 24.1 b) considera de riesgo alto la evaluación de aprendizajes de menores, *salvo que el sistema sea complementario y no reemplace la evaluación pedagógica humana*: Defiéndelo está diseñado para quedar en ese caso. También coincide con la RVM 094-2020-MINEDU, que define la conclusión descriptiva como un juicio docente basado en evidencias.
 
-Además de medir mejor, defender enseña: explicar el propio trabajo activa la autoexplicación, una técnica de estudio con un efecto medio de g = 0,55 en 64 estudios (Bisra et al., 2018).
+Además de medir mejor, defender enseña: explicar el propio trabajo activa la autoexplicación, una técnica de estudio con un efecto medio de g = 0,55 en 64 estudios, alrededor de medio desvío estándar (Bisra et al., 2018; [BPS](https://bps.org.uk/research-digest/self-explanation-powerful-learning-technique-according-meta-analysis-64-studies)). Las preguntas abiertas sobre el contenido propio son la variante de mayor efecto.
+
+---
+
+## 💡 Por qué es diferente
+
+Ninguna de las alternativas revisadas combina el rediseño previo de la tarea, la prueba contra la IA y una defensa que no depende de la voz ni de un dispositivo por alumno.
+
+| Alternativa | Ejemplos | Qué le falta |
+| --- | --- | --- |
+| Detectores de IA | GPTZero, Turnitin | Vigilan, no comprueban comprensión, y generan acusaciones. |
+| Modos de estudio | Modo estudio de ChatGPT, Guided Learning de Google | Son opcionales para el alumno y no le llega nada al docente. |
+| Asistentes docentes gratuitos | Khanmigo, Gemini for Education, MagicSchool | Generan material, pero no prueban la tarea contra la IA ni miden comprensión. |
+| Exámenes orales con IA | Rocketproof, Socratic Mind, el piloto de NYU Stern | Por voz, uno a uno, en inglés y pensados para la universidad. |
+
+Lo propio de Defiéndelo:
+
+- **No detecta IA ni da respuestas: pregunta.** Las preguntas salen del trabajo que entregó cada alumno.
+- **Prueba de estrés:** el docente ve cuánta nota saca una IA sola, antes y después del rediseño.
+- **Tres formas de defender:** en el celular, en papel o en voz alta. Funciona sin un dispositivo por alumno y no procesa voz, rostro ni emociones.
+- **Hecho para el aula peruana:** escala AD · A · B · C o vigesimal, en español, y orientado a competencias.
+- **Cierra el ciclo:** agrupa los errores repetidos de la clase y propone una actividad corta para cada uno.
 
 ---
 
@@ -123,6 +171,41 @@ También puedes subir **tu propia tarea** en PDF o Word: en ese caso pasa por la
 
 ---
 
+## 📈 Caso de negocio y sostenibilidad
+
+- **Gratis para el docente, la institución paga por evidencia.** Los asistentes docentes ya son gratuitos (Khanmigo, Gemini for Education), así que no competimos como "otro asistente". El colegio o la universidad paga por evidencia documentada de comprensión, del presupuesto que hoy destina a integridad académica: Turnitin cobra entre USD 1,79 y 6,50 por alumno al año en contratos públicos de California ([Sacra](https://sacra.com/c/turnitin/); no hay dato latinoamericano público).
+- **Costo de operación muy bajo.** Estimamos que una defensa cuesta **menos de medio centavo de dólar** en IA (≈ USD 0,0013 con Gemini 2.5 Flash-Lite). Los precios del modelo están verificados; los tokens por defensa son una estimación propia que mediremos en el piloto.
+- **Ruta de adopción:**
+  1. **0 a 6 meses:** docentes individuales, gratis con un límite mensual.
+  2. **6 a 18 meses:** colegios privados y facultades, cuando 3 o más docentes de la misma institución lo usan. Licencia por alumno al año, por debajo de lo que hoy cuesta un detector.
+  3. **18 meses en adelante:** sector público (pilotos con UGEL), financiado por fondos de innovación o cooperación.
+- **Canal:** los docentes inscritos en los cursos de IA del Minedu y PerúEduca.
+
+Análisis completo, con supuestos y riesgos, en [Más valor para Defiéndelo](docs/investigacion/mas-valor-para-defiendelo.md).
+
+---
+
+## 🧪 Validación con usuarios
+
+**Usuario:** docente de secundaria. Conversamos por Meet con C., docente de un colegio público donde los docentes no usan IA de forma habitual, pero sus alumnos sí, y probó la plataforma.
+
+| | |
+| --- | --- |
+| **Qué asumíamos** | Que los alumnos resolvían todas sus tareas con IA y no les quedaba el aprendizaje. |
+| **Qué aprendimos** | La IA siempre va a estar presente, y los alumnos deben ser calificados por sus soluciones y no solo por sus habilidades. Al docente le gustó: no sintió que la IA le estuviera haciendo todo, sino que era una nueva forma de calificar. |
+| **Dónde se trabó** | Primero pensó que era una plataforma para el alumno. Le resultó fácil de usar, pero se trabó porque veía muchas formas en la pantalla. |
+| **Qué cambiamos** | Redujimos el ruido visual de la tarea rediseñada: menos íconos, cajas y etiquetas, y solo destaca el paso de la defensa ([PR #24](https://github.com/Jaed69/defiendelo/pull/24)). |
+
+Registro completo en [`docs/validacion/`](docs/validacion/). Es un solo docente: el siguiente paso es ampliar la muestra.
+
+Próximos pasos (sin menores de edad):
+
+- **Con quién:** más docentes de secundaria, al menos un docente novel, y de 5 a 10 estudiantes.
+- **Guion para el docente:** ¿Cómo sabes hoy quién entendió y quién solo entregó? ¿Cuánto tiempo te toma? ¿Qué parte de esto usarías mañana?
+- **Qué medimos:** la brecha entre lo entregado y lo explicado, el porcentaje de sugerencias de la IA que el docente cambia, el tiempo de revisión y si la IA sola saca menos de la mitad de la nota en la tarea rediseñada.
+
+---
+
 ## 📖 Instrucciones de ejecución
 
 Requisitos: **Node.js 20 o superior** y npm.
@@ -163,4 +246,20 @@ npm run examples:pdf   # regenera los PDF de ejemplo (requiere Python con report
 2. Agrega la integración de **Upstash Redis** y una clave de IA (`ANTHROPIC_API_KEY` u `OPENROUTER_API_KEY`).
 3. Despliega. La prueba de estrés usa `maxDuration` de 300 s (requiere Fluid Compute).
 
-Más detalle técnico en [`defiendelo/README.md`](defiendelo/README.md).
+Más detalle técnico en [`defiendelo/README.md`](defiendelo/README.md). Para recorrer el flujo completo a mano con tres alumnos de prueba, sigue [`docs/flujo-sintetico/`](docs/flujo-sintetico/).
+
+---
+
+## 📚 Documentación
+
+| Documento | Qué contiene |
+| --- | --- |
+| [Propuesta DSC HACK 2026](docs/propuesta/propuesta-dsc-hack-2026.pdf) | La propuesta presentada al reto. |
+| [Pitch para el jurado](docs/propuesta/defiendelo-pitch-jurado.pptx) | 3 minutos con el Círculo de Oro (por qué, cómo, qué) y guion en las notas. |
+| [Recorrido de la demo](docs/propuesta/defiendelo-pitch.pptx) | Capturas paso a paso de la aplicación. |
+| [Educación 2036: oportunidades](docs/investigacion/educacion-2036-oportunidades.md) | Las cuatro grietas del reto y la evidencia detrás de la que elegimos. |
+| [Más valor para Defiéndelo](docs/investigacion/mas-valor-para-defiendelo.md) | Evidencia de aprendizaje, carga docente, regulación y caso de negocio. |
+| [Validación con usuarios](docs/validacion/) | Registro de la conversación y prueba con un docente de secundaria. |
+| [Diseño](docs/diseno/) | Flujos y pantallas en Pencil. |
+
+Índice completo en [`docs/README.md`](docs/README.md).
