@@ -7,12 +7,12 @@ const criteria: Criterion[] = [
   { id: "c2", name: "Decisions", description: "", weight: 60, evidence: "defensa" },
 ];
 
-function submission(alias: string, perCriterion: [number, number][]): Submission {
+function submission(alias: string, perCriterion: [number, number][], askedCriteria: string[] = []): Submission {
   return {
     id: alias,
     alias,
     work: "",
-    questions: [],
+    questions: askedCriteria.map((criterionId, i) => ({ id: `q${i + 1}`, criterionId, question: "" })),
     answers: [],
     createdAt: "",
     answeredAt: "",
@@ -60,6 +60,18 @@ describe("studentGap", () => {
 
   it("never rewards explaining more than was submitted", () => {
     expect(studentGap(criteria, submission("a", [[0.2, 1], [0.5, 0.5]]))).toBe(0);
+  });
+
+  it("ignores criteria the defense never asked about", () => {
+    expect(studentGap(criteria, submission("a", [[1, 0], [1, 1]], ["c2"]))).toBe(0);
+  });
+
+  it("weighs only the asked criteria", () => {
+    expect(studentGap(criteria, submission("a", [[1, 0], [1, 0.5]], ["c2", "c2"]))).toBe(50);
+  });
+
+  it("uses every criterion when no question names one", () => {
+    expect(studentGap(criteria, submission("a", [[1, 0.5], [1, 0]], ["unknown"]))).toBe(80);
   });
 
   it("is null when the defense was not evaluated yet", () => {

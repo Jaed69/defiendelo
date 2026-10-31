@@ -34,13 +34,17 @@ export function givenAwayCriteria(criteria: Criterion[], scores: CriterionScore[
 
 /**
  * Weighted percentage of what the student submitted but could not explain in the defense.
+ * Only criteria the defense asked about count: the others were never put to the student.
+ * Submissions whose questions name no known criterion fall back to the whole rubric.
  * Null until the defense is evaluated.
  */
 export function studentGap(criteria: Criterion[], submission: Submission): number | null {
   if (!submission.evaluation) return null;
-  const total = totalWeight(criteria);
+  const asked = criteria.filter((c) => submission.questions.some((q) => q.criterionId === c.id));
+  const measured = asked.length > 0 ? asked : criteria;
+  const total = totalWeight(measured);
   if (total === 0) return 0;
-  const gap = criteria.reduce((sum, c) => {
+  const gap = measured.reduce((sum, c) => {
     const e = submission.evaluation!.perCriterion.find((p) => p.criterionId === c.id);
     if (!e) return sum;
     return sum + c.weight * Math.max(0, e.submissionScore - e.defenseScore);
