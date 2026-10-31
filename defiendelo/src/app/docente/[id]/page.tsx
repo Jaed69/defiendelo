@@ -7,6 +7,7 @@ import { AssignmentSheet, PrintSheetButton } from "@/app/components/assignment-s
 import { Waiting } from "@/app/components/waiting";
 import { assignmentSummary, givenAwayCriteria } from "@/domain/gap";
 import type { Assignment } from "@/domain/types";
+import { SessionConfigCard } from "./session-config";
 import { TeacherFrame, teacherHref, useTeacherAssignment } from "./teacher-frame";
 
 const STRESS_STEPS = [
@@ -29,7 +30,7 @@ function Score({ label, value, tone }: { label: string; value: number | null; to
 /** First teacher screen: the redesigned task, its test against the AI alone, and the link to share. */
 export default function TeacherTaskPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
-  const { assignment, setAssignment, teacherKey, error, setError } = useTeacherAssignment(id);
+  const { assignment, setAssignment, teacherKey, error, setError, load } = useTeacherAssignment(id);
   const [testing, setTesting] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -76,6 +77,8 @@ export default function TeacherTaskPage({ params }: { params: Promise<{ id: stri
               </Link>
             )}
           </section>
+
+          <SessionConfigCard id={id} teacherKey={teacherKey} assignment={assignment} load={load} setError={setError} />
 
           <section id="prueba" className="card grid gap-4 p-6">
             <h2 className="text-[1.375rem]">¿Cuánta nota saca la IA sola?</h2>

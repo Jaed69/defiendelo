@@ -184,7 +184,10 @@ h3 {
 }
 
 textarea,
-input[type="text"] {
+input[type="text"],
+input[type="number"],
+input[type="datetime-local"],
+select {
   width: 100%;
   background: var(--color-bg-surface);
   border: 1.5px solid var(--color-border-default);
@@ -200,6 +203,9 @@ input[type="text"]::placeholder {
 
 textarea:focus,
 input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="datetime-local"]:focus,
+select:focus,
 button:focus-visible,
 a:focus-visible,
 summary:focus-visible {

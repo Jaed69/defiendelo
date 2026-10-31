@@ -4,6 +4,7 @@ export const DEFAULT_SESSION: ClassSession = {
   method: "oral",
   deadline: null,
   questionsPerStudent: 2,
+  expectedStudents: 0,
   gradeScale: 20,
   passingGrade: 11,
   phase: "entregas",

@@ -8,6 +8,7 @@ const patch = z
     method: z.enum(["oral", "escrito", "papel"]),
     deadline: z.iso.datetime().nullable(),
     questionsPerStudent: z.number().int().min(1).max(5),
+    expectedStudents: z.number().int().min(0).max(500),
     gradeScale: z.number().int().min(1).max(100),
     passingGrade: z.number().min(0).max(100),
     phase: z.enum(["entregas", "defensas", "publicado"]),

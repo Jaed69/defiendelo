@@ -91,6 +91,8 @@ export interface ClassSession {
   /** ISO date; null means submissions stay open until the teacher closes them. */
   deadline: string | null;
   questionsPerStudent: number;
+  /** How many students the teacher expects; 0 means not set. Only used to show "X of N" while receiving. */
+  expectedStudents: number;
   gradeScale: number;
   /** Lowest passing grade on the same scale, set by the teacher. */
   passingGrade: number;

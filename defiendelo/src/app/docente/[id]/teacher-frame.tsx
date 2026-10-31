@@ -7,7 +7,7 @@ import { api } from "@/app/api-client";
 import { AppBar, Logo } from "@/app/components/brand";
 import type { Assignment } from "@/domain/types";
 
-export type TeacherSection = "tarea" | "entregas";
+export type TeacherSection = "tarea" | "entregas" | "evaluacion";
 
 /** Teacher-side data for one assignment, shared by both teacher screens. */
 export function useTeacherAssignment(id: string) {
@@ -27,10 +27,11 @@ export function useTeacherAssignment(id: string) {
 }
 
 export function teacherHref(id: string, teacherKey: string, section: TeacherSection) {
-  return `/docente/${id}${section === "entregas" ? "/entregas" : ""}?k=${teacherKey}`;
+  const path = { tarea: "", entregas: "/entregas", evaluacion: "/evaluacion" }[section];
+  return `/docente/${id}${path}?k=${teacherKey}`;
 }
 
-/** Header, title and the two-step switch between preparing the task and reviewing what came back. */
+/** Header, title and the three-step switch: prepare the task, receive what comes back, evaluate. */
 export function TeacherFrame({
   id,
   teacherKey,
@@ -76,6 +77,7 @@ export function TeacherFrame({
   const tabs: { section: TeacherSection; label: string }[] = [
     { section: "tarea", label: "1. Tu tarea" },
     { section: "entregas", label: `2. Entregas (${assignment.submissions.length})` },
+    { section: "evaluacion", label: "3. Evaluación" },
   ];
 
   return (
@@ -95,7 +97,7 @@ export function TeacherFrame({
           <span className="text-graphite">{assignment.subject}</span>
           <h1 className="max-w-[24ch] text-[clamp(2rem,4vw,3rem)]">{assignment.title}</h1>
         </div>
-        <nav aria-label="Secciones de la tarea" className="grid grid-cols-2 gap-1 rounded-[var(--radius-md)] bg-subtle p-1 sm:max-w-md">
+        <nav aria-label="Secciones de la tarea" className="grid grid-cols-3 gap-1 rounded-[var(--radius-md)] bg-subtle p-1 sm:max-w-xl">
           {tabs.map((tab) => {
             const current = tab.section === section;
             return (
