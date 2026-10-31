@@ -1,10 +1,13 @@
 import type { AssessmentAI, RedesignInput } from "@/ports/assessment-ai";
 import type { AssignmentStore } from "@/ports/assignment-store";
 import { reconcileEvaluation } from "@/domain/reconcile";
-import type { Assignment, Criterion, DefenseAnswer, Submission } from "@/domain/types";
+import { acceptsSubmissions, gradeQuestion, isLive, proposeQueue, questionsFor, sessionOf, studentStatus, studentView } from "@/domain/session";
+import type { Assignment, ClassSession, Criterion, DefenseAnswer, Submission } from "@/domain/types";
 
 export class NotFoundError extends Error {}
 export class ForbiddenError extends Error {}
+/** The action is not allowed in the current session phase (e.g. submitting after the deadline). */
+export class ConflictError extends Error {}
 
 function newId(): string {
   return crypto.randomUUID().slice(0, 8);
@@ -29,6 +32,10 @@ export interface PublicAssignment {
   statement: string;
   aiPolicy: string;
   criteria: Pick<Criterion, "id" | "name" | "description" | "weight" | "evidence">[];
+  session: Pick<ClassSession, "method" | "deadline" | "phase" | "questionsPerStudent">;
+  /** False until the teacher configures a live session; until then the defense is self-paced. */
+  live: boolean;
+  acceptsSubmissions: boolean;
 }
 
 export async function getForTeacher(store: AssignmentStore, id: string, teacherKey: string | null) {
@@ -37,6 +44,7 @@ export async function getForTeacher(store: AssignmentStore, id: string, teacherK
 
 export async function getForStudent(store: AssignmentStore, id: string): Promise<PublicAssignment> {
   const a = await load(store, id);
+  const { method, deadline, phase, questionsPerStudent } = sessionOf(a);
   return {
     id: a.id,
     title: a.title,
@@ -44,6 +52,9 @@ export async function getForStudent(store: AssignmentStore, id: string): Promise
     statement: a.redesign.statement,
     aiPolicy: a.redesign.aiPolicy,
     criteria: a.redesign.criteria.map(({ id, name, description, weight, evidence }) => ({ id, name, description, weight, evidence })),
+    session: { method, deadline, phase, questionsPerStudent },
+    live: isLive(a),
+    acceptsSubmissions: acceptsSubmissions(sessionOf(a), new Date()),
   };
 }
 
@@ -91,6 +102,7 @@ export async function startDefense(
   work: string,
 ): Promise<Submission> {
   const assignment = await load(store, id);
+  if (!acceptsSubmissions(sessionOf(assignment), new Date())) throw new ConflictError("Submissions are closed");
   const questions = await ai.defenseQuestions(assignment.redesign.statement, assignment.redesign.criteria, work);
   const submission: Submission = {
     id: newId(),
@@ -101,6 +113,7 @@ export async function startDefense(
     evaluation: null,
     createdAt: new Date().toISOString(),
     answeredAt: null,
+    token: crypto.randomUUID().replaceAll("-", ""),
   };
   // Re-read right before writing to shrink the window for concurrent submissions.
   const latest = await load(store, id);
@@ -114,21 +127,23 @@ export async function submitDefense(
   store: AssignmentStore,
   id: string,
   submissionId: string,
+  token: string | null,
   answers: DefenseAnswer[],
 ): Promise<Submission> {
   const assignment = await load(store, id);
-  const submission = assignment.submissions.find((s) => s.id === submissionId);
-  if (!submission) throw new NotFoundError("Submission not found");
+  const submission = ownSubmission(assignment, submissionId, token);
   if (submission.evaluation) return submission;
+  const live = isLive(assignment);
+  if (studentStatus(sessionOf(assignment), submission, live) !== "responder") throw new ConflictError("Not answering now");
   const evaluation = reconcileEvaluation(
     await ai.evaluateDefense(
       assignment.redesign.statement,
       assignment.redesign.criteria,
       submission.work,
-      submission.questions,
+      questionsFor(sessionOf(assignment), submission, live),
       answers,
     ),
-    submission.questions,
+    questionsFor(sessionOf(assignment), submission, live),
     answers,
   );
   const latest = await load(store, id);
@@ -151,4 +166,68 @@ export async function analyzeClass(ai: AssessmentAI, store: AssignmentStore, id:
   latest.insights = { clusters, generatedAt: new Date().toISOString() };
   await store.save(latest);
   return latest;
+}
+
+/** A wrong token answers 404 so it does not reveal which submissions exist. */
+function ownSubmission(assignment: Assignment, submissionId: string, token: string | null): Submission {
+  const submission = assignment.submissions.find((s) => s.id === submissionId);
+  if (!submission || !token || submission.token !== token) throw new NotFoundError("Submission not found");
+  return submission;
+}
+
+export async function getStudentView(store: AssignmentStore, id: string, submissionId: string, token: string | null) {
+  const assignment = await load(store, id);
+  return studentView(assignment, ownSubmission(assignment, submissionId, token), new Date());
+}
+
+/** Replaces the work until submissions close; questions are regenerated because they quote the work. */
+export async function replaceSubmission(
+  ai: AssessmentAI,
+  store: AssignmentStore,
+  id: string,
+  submissionId: string,
+  token: string | null,
+  work: string,
+) {
+  const assignment = await load(store, id);
+  ownSubmission(assignment, submissionId, token);
+  if (!acceptsSubmissions(sessionOf(assignment), new Date())) throw new ConflictError("Submissions are closed");
+  const questions = await ai.defenseQuestions(assignment.redesign.statement, assignment.redesign.criteria, work);
+  const latest = await load(store, id);
+  const target = ownSubmission(latest, submissionId, token);
+  target.work = work;
+  target.questions = questions;
+  await store.save(latest);
+}
+
+export async function updateSession(
+  store: AssignmentStore,
+  id: string,
+  teacherKey: string | null,
+  patch: Partial<ClassSession>,
+) {
+  const assignment = await loadAsTeacher(store, id, teacherKey);
+  const session = { ...sessionOf(assignment), ...patch };
+  if (session.phase !== "entregas" && session.queue.length === 0) session.queue = proposeQueue(assignment.submissions);
+  assignment.session = session;
+  await store.save(assignment);
+  return session;
+}
+
+/** With questionId scores that question (and may advance the oral queue); without it sets the final grade. */
+export async function gradeSubmission(
+  store: AssignmentStore,
+  id: string,
+  teacherKey: string | null,
+  submissionId: string,
+  score: number,
+  questionId?: string,
+) {
+  const assignment = await loadAsTeacher(store, id, teacherKey);
+  const submission = assignment.submissions.find((s) => s.id === submissionId);
+  if (!submission) throw new NotFoundError("Submission not found");
+  if (questionId) assignment.session = gradeQuestion(sessionOf(assignment), assignment.submissions, submissionId, questionId, score);
+  else submission.grade = score;
+  await store.save(assignment);
+  return { session: sessionOf(assignment), grade: submission.grade ?? null };
 }

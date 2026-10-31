@@ -15,6 +15,6 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
     const { id } = await params;
     const { alias, work } = body.parse(await request.json());
     const submission = await startDefense(assessmentAI(), assignmentStore(), id, alias, work);
-    return { id: submission.id, questions: submission.questions };
+    return { id: submission.id, token: submission.token };
   });
 }

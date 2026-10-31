@@ -72,6 +72,34 @@ export interface Submission {
   evaluation: Evaluation | null;
   createdAt: string;
   answeredAt: string | null;
+  /** Lets the student reconnect without an account; never shown to other students. */
+  token?: string;
+  /** Teacher score per question id, on the session grade scale. */
+  questionGrades?: Record<string, number>;
+  /** Final grade set by the teacher; students see it only once grades are published. */
+  grade?: number | null;
+}
+
+/** oral: one by one in front of the class; escrito: answered on the phone; papel: printed exam. */
+export type EvaluationMethod = "oral" | "escrito" | "papel";
+
+export type SessionPhase = "entregas" | "defensas" | "publicado";
+
+/** Live classroom session the teacher drives, Kahoot-like. */
+export interface ClassSession {
+  method: EvaluationMethod;
+  /** ISO date; null means submissions stay open until the teacher closes them. */
+  deadline: string | null;
+  questionsPerStudent: number;
+  gradeScale: number;
+  /** Lowest passing grade on the same scale, set by the teacher. */
+  passingGrade: number;
+  phase: SessionPhase;
+  /** Submission ids in presentation order; proposed by the system, edited by the teacher. */
+  queue: string[];
+  /** Submission presenting now (oral only). */
+  current: string | null;
+  currentQuestion: number;
 }
 
 export interface MisconceptionCluster {
@@ -99,4 +127,6 @@ export interface Assignment {
   submissions: Submission[];
   insights: ClassInsights | null;
   createdAt: string;
+  /** Missing on assignments created before sessions existed; read it through sessionOf(). */
+  session?: ClassSession;
 }
