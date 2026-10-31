@@ -1,18 +1,20 @@
 import { ClaudeAssessmentAI } from "@/adapters/claude-assessment-ai";
 import { DemoAssessmentAI } from "@/adapters/demo-assessment-ai";
+import { withFallback } from "@/adapters/fallback-assessment-ai";
 import { MemoryAssignmentStore } from "@/adapters/memory-assignment-store";
 import { OpenRouterAssessmentAI } from "@/adapters/openrouter-assessment-ai";
 import { UpstashAssignmentStore } from "@/adapters/upstash-assignment-store";
 import type { AssessmentAI } from "@/ports/assessment-ai";
 import type { AssignmentStore } from "@/ports/assignment-store";
 
-/** Provider order: Claude if configured, then OpenRouter, else offline demo responses. */
+/** Provider order: Claude if configured, then OpenRouter, else offline demo responses (also the fallback when a real call fails). */
 export function assessmentAI(): AssessmentAI {
-  if (process.env.ANTHROPIC_API_KEY) return new ClaudeAssessmentAI();
+  const demo = new DemoAssessmentAI();
+  if (process.env.ANTHROPIC_API_KEY) return withFallback(new ClaudeAssessmentAI(), demo);
   if (process.env.OPENROUTER_API_KEY) {
-    return new OpenRouterAssessmentAI(process.env.OPENROUTER_API_KEY, process.env.OPENROUTER_MODEL || undefined);
+    return withFallback(new OpenRouterAssessmentAI(process.env.OPENROUTER_API_KEY, process.env.OPENROUTER_MODEL || undefined), demo);
   }
-  return new DemoAssessmentAI();
+  return demo;
 }
 
 export function assignmentStore(): AssignmentStore {
