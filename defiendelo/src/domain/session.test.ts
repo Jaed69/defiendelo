@@ -111,14 +111,25 @@ describe("session", () => {
       expect(view.result).toBeNull();
     });
 
-    it("shows the evaluation as soon as the defense is answered", () => {
+    it("keeps the AI review in review until the teacher publishes: the teacher decides the grade", () => {
       const sub = submission("a");
       sub.answeredAt = "2026-10-31T11:00:00Z";
       sub.evaluation = { summary: "Explica bien", perCriterion: [] } as unknown as Submission["evaluation"];
       const view = studentView(selfPaced(sub), sub, NOW);
-      expect(view.status).toBe("publicado");
+      expect(view.status).toBe("evaluado");
       expect(view.questions).toEqual([]);
-      expect(view.result).toEqual({ grade: null, letter: null, perQuestion: [], evaluation: sub.evaluation, criteria: [], comment: null });
+      expect(view.result).toBeNull();
+    });
+
+    it("shows the result once the teacher publishes", () => {
+      const sub = submission("a");
+      sub.answeredAt = "2026-10-31T11:00:00Z";
+      sub.grade = 16;
+      sub.evaluation = { summary: "Explica bien", perCriterion: [] } as unknown as Submission["evaluation"];
+      const published = { ...selfPaced(sub), session: { ...DEFAULT_SESSION, phase: "publicado" } } as Assignment;
+      const view = studentView(published, sub, NOW);
+      expect(view.status).toBe("publicado");
+      expect(view.result).toMatchObject({ grade: 16, evaluation: sub.evaluation, criteria: [], comment: null });
     });
 
     it("still accepts submissions", () => {
