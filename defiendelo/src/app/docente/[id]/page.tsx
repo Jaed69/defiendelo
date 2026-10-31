@@ -8,7 +8,7 @@ import { AssignmentSheet, PrintSheetButton } from "@/app/components/assignment-s
 import { GapBar } from "@/app/components/gap-bar";
 import { Waiting } from "@/app/components/waiting";
 import { assignmentSummary, givenAwayCriteria, triage } from "@/domain/gap";
-import type { Assignment, Criterion } from "@/domain/types";
+import type { Assignment } from "@/domain/types";
 
 const ATTEND_FIRST = 5;
 const ATTENTION_GAP = 25;
@@ -27,16 +27,12 @@ const INSIGHT_STEPS = [
   { after: 25, text: "Escribiendo una actividad corta para cada uno. Ya casi." },
 ];
 
-function evidenceLabel(c: Criterion) {
-  return c.evidence === "defensa" ? "En la defensa" : "En la entrega";
-}
-
-function Kpi({ label, value, note, tone = "" }: { label: string; value: React.ReactNode; note: string; tone?: string }) {
+function Kpi({ label, value, note, tone = "" }: { label: string; value: React.ReactNode; note?: string; tone?: string }) {
   return (
     <div className="card grid content-start gap-1 p-5">
       <dt className="label text-graphite">{label}</dt>
       <dd className={`stat-value ${tone}`}>{value}</dd>
-      <dd className="text-[0.9375rem] text-graphite">{note}</dd>
+      {note && <dd className="text-[0.9375rem] text-graphite">{note}</dd>}
     </div>
   );
 }
@@ -97,38 +93,19 @@ export default function TeacherPage({ params }: { params: Promise<{ id: string }
   const toAttend = ranking.slice(0, ATTEND_FIRST).filter((r) => r.gap >= ATTENTION_GAP).length;
   const criterionName = (cid: string) => redesign.criteria.find((c) => c.id === cid)?.name ?? cid;
   const given = stress ? givenAwayCriteria(redesign.criteria, stress.redesigned.scores) : [];
-  const givenIds = new Set(given.map((c) => c.id));
 
   function copyLink() {
     void navigator.clipboard.writeText(studentLink);
     setCopied(true);
   }
 
-  const steps = [
-    { href: "#rediseno", label: "Revisa el rediseño", done: true },
-    { href: "#prueba", label: "Prueba con la IA sola", done: Boolean(stress) },
-    { href: "#enlace", label: "Comparte el enlace", done: submissions.length > 0 },
-    { href: "#atender", label: "Mira quién entendió", done: ranking.length > 0 },
-  ];
-
   return (
     <>
       <AppBar>
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-1">
-          <Logo />
-          <span className="hidden h-6 w-px bg-rule md:block" aria-hidden="true" />
-          <span className="text-graphite">
-            {assignment.subject} · <span className="font-bold text-ink">{assignment.title}</span>
-          </span>
-        </div>
-        <div className="flex flex-wrap items-center gap-3">
-          <button type="button" className="btn-secondary" onClick={copyLink}>
-            {copied ? "Enlace copiado" : "Copiar enlace para alumnos"}
-          </button>
-          <button type="button" className="btn" disabled={busy !== null || ranking.length === 0} onClick={() => run("insights")}>
-            {busy === "insights" ? "Analizando la clase…" : insights ? "Volver a analizar la clase" : "Analizar la clase"}
-          </button>
-        </div>
+        <Logo />
+        <button type="button" className="btn" onClick={copyLink}>
+          {copied ? "Enlace copiado" : "Copiar enlace para alumnos"}
+        </button>
       </AppBar>
       <span className="sr-only" role="status">
         {copied ? "Enlace copiado al portapapeles." : ""}
@@ -136,48 +113,27 @@ export default function TeacherPage({ params }: { params: Promise<{ id: string }
 
       <main id="contenido" tabIndex={-1} className="container-page grid gap-10 py-10 outline-none">
         <section className="grid gap-6">
-          <div className="grid gap-3">
-            <span className="chip chip-brand justify-self-start">Panel de la tarea</span>
+          <div className="grid gap-2">
+            <span className="text-graphite">{assignment.subject}</span>
             <h1 className="max-w-[24ch] text-[clamp(2rem,4vw,3rem)]">{assignment.title}</h1>
-            <p className="prose-measure text-graphite">{redesign.rationale}</p>
+            <p className="text-[0.9375rem] text-graphite">Guarda esta página: es solo para ti. A tus alumnos mándales el enlace.</p>
           </div>
-          <nav aria-label="Pasos de la tarea">
-            <ol className="steps">
-              {steps.map((step, i) => (
-                <li key={step.href}>
-                  <a href={step.href} className={`underline-offset-4 hover:underline ${step.done ? "step-done" : ""}`}>
-                    <span className="step-number" aria-hidden="true">
-                      {step.done ? "✓" : i + 1}
-                    </span>
-                    {step.label}
-                    {step.done && <span className="sr-only"> (hecho)</span>}
-                  </a>
-                </li>
-              ))}
-            </ol>
-          </nav>
           <dl className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             <Kpi
-              label="IA sola, tarea original"
-              value={aiOriginal === null ? "—" : `${aiOriginal}%`}
-              note={stress ? "Lo que sacaba sin ningún alumno." : "Corre la prueba para medirlo."}
+              label="Nota de la IA sola, tarea de siempre"
+              value={aiOriginal === null ? "—" : `${Math.round(aiOriginal)}%`}
               tone={stress ? "text-pen" : "text-graphite"}
             />
             <Kpi
-              label="IA sola, tarea rediseñada"
-              value={aiRedesigned === null ? "—" : `${aiRedesigned}%`}
-              note={stress ? "El resto se gana en la defensa." : "Corre la prueba para medirlo."}
+              label="Nota de la IA sola, tarea rediseñada"
+              value={aiRedesigned === null ? "—" : `${Math.round(aiRedesigned)}%`}
               tone={stress ? "text-success" : "text-graphite"}
             />
+            <Kpi label="Alumnos que entregaron" value={ranking.length} note={pending > 0 ? `${pending} respondiendo ahora` : undefined} />
             <Kpi
-              label="Defensas recibidas"
-              value={ranking.length}
-              note={pending > 0 ? `${pending} alumno(s) defendiendo ahora.` : "Se actualiza al recargar."}
-            />
-            <Kpi
-              label="Brecha promedio"
-              value={meanGap === null ? "—" : `${meanGap}%`}
-              note={meanGap === null ? "Aparece con la primera defensa." : `${toAttend} alumno(s) para atender primero.`}
+              label="No supieron explicar"
+              value={meanGap === null ? "—" : `${Math.round(meanGap)}%`}
+              note={toAttend > 0 ? `${toAttend} alumno(s) para atender primero` : undefined}
               tone={meanGap !== null && meanGap >= ATTENTION_GAP ? "text-pen" : ""}
             />
           </dl>
@@ -192,12 +148,10 @@ export default function TeacherPage({ params }: { params: Promise<{ id: string }
                   {busy === "refresh" ? "Actualizando…" : "Actualizar"}
                 </button>
               </div>
-              <p className="prose-measure text-graphite">
-                Brecha: cuánto de lo que el alumno entregó no pudo explicar en su defensa. La nota final la pones tú.
-              </p>
+              <p className="text-graphite">Brecha: lo que el alumno entregó pero no supo explicar.</p>
               {ranking.length === 0 ? (
                 <p className="rounded-[var(--radius-md)] bg-subtle p-5">
-                  Todavía no hay defensas. Comparte el enlace y vuelve en unos minutos.
+                  Todavía nadie entregó. Comparte el enlace.
                 </p>
               ) : (
                 <ol className="grid gap-3">
@@ -222,7 +176,7 @@ export default function TeacherPage({ params }: { params: Promise<{ id: string }
                               {attend ? "Atender primero" : "Explica lo que entregó"}
                             </span>
                             <span className={`ml-auto tabular-nums ${r.gap >= ATTENTION_GAP ? "font-bold text-pen" : "text-graphite"}`}>
-                              Brecha {r.gap}%
+                              Brecha {Math.round(r.gap)}%
                             </span>
                           </summary>
                           <div className="grid gap-4 border-t border-rule px-4 py-4 text-[0.9375rem]">
@@ -250,11 +204,7 @@ export default function TeacherPage({ params }: { params: Promise<{ id: string }
             </section>
 
             <section id="prueba" className="card grid gap-5 p-6 sm:p-8">
-              <h2>Prueba de estrés: ¿cuánta nota saca la IA sola?</h2>
-              <p className="prose-measure text-graphite">
-                Una IA resuelve la tarea sin ningún alumno detrás. Los criterios que se verifican en la defensa no se pueden delegar, así
-                que solo cuenta lo que la IA logra por escrito.
-              </p>
+              <h2>¿Cuánta nota saca la IA sola?</h2>
               {!stress && (
                 <div>
                   <button className="btn" disabled={busy !== null} onClick={() => run("stress")}>
@@ -269,17 +219,17 @@ export default function TeacherPage({ params }: { params: Promise<{ id: string }
                 <>
                   {given.length > 0 ? (
                     <p>
-                      Criterios que la IA todavía resuelve sola:{" "}
+                      La IA todavía resuelve sola:{" "}
                       {given.map((c, i) => (
                         <span key={c.id}>
                           {i > 0 && ", "}
                           <span className="pen-mark">{c.name}</span>
                         </span>
                       ))}
-                      . Considera moverlos a la defensa o bajar su peso.
+                      .
                     </p>
                   ) : (
-                    <p>Ningún criterio escrito queda regalado a la IA.</p>
+                    <p>La IA sola ya no aprueba ningún criterio escrito.</p>
                   )}
                   <details>
                     <summary className="btn-quiet cursor-pointer">Ver lo que entregó la IA</summary>
@@ -296,7 +246,6 @@ export default function TeacherPage({ params }: { params: Promise<{ id: string }
                 <h2>Tarea rediseñada</h2>
                 <PrintSheetButton sheetId="hoja-tarea" />
               </div>
-              <p className="text-graphite">Así la reciben tus alumnos. Puedes imprimirla o compartir el enlace.</p>
               <AssignmentSheet
                 id="hoja-tarea"
                 title={assignment.title}
@@ -310,16 +259,13 @@ export default function TeacherPage({ params }: { params: Promise<{ id: string }
 
           <aside className="grid gap-8" aria-label="Acciones de la clase">
             <section className="card grid gap-4 p-6">
-              <h2 className="text-[1.375rem]">Qué reforzar mañana</h2>
-              <p className="text-[0.9375rem] text-graphite">
-                Agrupamos los malentendidos de toda la clase y te sugerimos una actividad corta para cada uno.
-              </p>
-              {!insights && busy !== "insights" && (
-                <p className="rounded-[var(--radius-md)] bg-subtle p-4 text-[0.9375rem]">
-                  {ranking.length === 0
-                    ? "Aparece cuando lleguen las primeras defensas."
-                    : "Usa «Analizar la clase» arriba para agruparlos."}
-                </p>
+              <h2 className="text-[1.375rem]">Qué repasar en clase</h2>
+              {ranking.length === 0 ? (
+                <p className="text-[0.9375rem] text-graphite">Aparece cuando entreguen los alumnos.</p>
+              ) : (
+                <button type="button" className="btn justify-self-start" disabled={busy !== null} onClick={() => run("insights")}>
+                  {busy === "insights" ? "Analizando la clase…" : insights ? "Volver a analizar" : "Analizar la clase"}
+                </button>
               )}
               {busy === "insights" && <Waiting steps={INSIGHT_STEPS} expected="suele tardar menos de un minuto" />}
               {insights && insights.clusters.length === 0 && <p>No aparecieron malentendidos repetidos.</p>}
@@ -352,40 +298,6 @@ export default function TeacherPage({ params }: { params: Promise<{ id: string }
               <button type="button" className="btn-secondary justify-self-start" onClick={copyLink}>
                 {copied ? "Enlace copiado" : "Copiar enlace"}
               </button>
-              <p className="text-[0.9375rem] text-graphite">
-                Guarda la dirección de esta página: es tu acceso de docente y no la compartas con alumnos.
-              </p>
-            </section>
-
-            <section className="card grid gap-4 p-6">
-              <h2 className="text-[1.375rem]">Rúbrica rediseñada</h2>
-              <ul className="grid gap-4">
-                {redesign.criteria.map((c) => (
-                  <li key={c.id} className="grid gap-1.5 border-b border-rule pb-4 last:border-0 last:pb-0">
-                    <div className="flex items-baseline justify-between gap-3">
-                      <span className="font-bold">{c.name}</span>
-                      <span className="label tabular-nums">{c.weight}%</span>
-                    </div>
-                    <span className="text-[0.9375rem] text-graphite">{c.description}</span>
-                    <span className="flex flex-wrap gap-2">
-                      <span className={`chip ${c.evidence === "defensa" ? "chip-brand" : "chip-neutral"}`}>{evidenceLabel(c)}</span>
-                      {givenIds.has(c.id) && <span className="chip chip-danger">La IA lo resuelve sola</span>}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </section>
-
-            <section className="card grid gap-3 p-6">
-              <h2 className="text-[1.375rem]">Banco de la comunidad</h2>
-              <p className="text-[0.9375rem] text-graphite">
-                Próximamente: las preguntas de defensa y los malentendidos que validan docentes con experiencia quedan disponibles para
-                todos, por curso y nivel. Lo que sabe un docente que se jubila se queda en el sistema.
-              </p>
-              <ul className="grid gap-2 text-[0.9375rem]">
-                <li>Programación · búsqueda binaria · &ldquo;Cree que la lista no necesita estar ordenada&rdquo; · validado por 4 docentes</li>
-                <li>Matemática · funciones · &ldquo;Confunde dominio con rango al leer la gráfica&rdquo; · validado por 7 docentes</li>
-              </ul>
             </section>
           </aside>
         </div>
