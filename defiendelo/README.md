@@ -22,6 +22,7 @@ Put keys in `.env.local` (git-ignored). With no AI key the app runs in **demo mo
 | `OPENROUTER_MODEL` | No | OpenRouter model id. Default `z-ai/glm-5.3-flash` (very low cost, not free). Free `:free` models work but are slower and rate-limited |
 | `UPSTASH_REDIS_REST_URL` | For deploys | Shared storage across serverless instances |
 | `UPSTASH_REDIS_REST_TOKEN` | For deploys | Token for the URL above |
+| `KV_REST_API_URL` / `KV_REST_API_TOKEN` | Alternative | Names the Vercel Upstash integration injects; used when the `UPSTASH_*` pair is absent |
 
 Without Upstash, data lives in process memory: fine for `npm run dev`, but on Vercel instances do not share it.
 
