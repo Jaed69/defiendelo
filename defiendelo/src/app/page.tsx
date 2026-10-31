@@ -4,11 +4,10 @@ import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { api } from "./api-client";
 import { AppBar, Logo } from "./components/brand";
-import { ExampleGallery, useShowcaseSummaries } from "./components/example-gallery";
-import { HeroCarousel } from "./components/hero-carousel";
+import { ExamplePicker } from "./components/example-picker";
 import { FileDrop } from "./components/file-drop";
 import { Waiting } from "./components/waiting";
-import { EXAMPLES, type ExampleTask, exampleSubjectLabel } from "./examples";
+import { type ExampleTask, exampleSubjectLabel } from "./examples";
 
 const ORIGINAL_LIMIT = 8000;
 
@@ -18,8 +17,6 @@ const REDESIGN_STEPS = [
   { after: 14, text: "Moviendo esos puntos a decisiones que el alumno tiene que defender…" },
   { after: 24, text: "Armando la rúbrica nueva. Ya casi está." },
 ];
-
-const HERO_EXAMPLE = EXAMPLES.find((e) => e.id === "comunicacion-texto-argumentativo")!;
 
 const HOW = [
   ["Sube tu tarea", "PDF, Word o texto."],
@@ -35,7 +32,6 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [loaded, setLoaded] = useState("");
   const titleInput = useRef<HTMLInputElement>(null);
-  const summaries = useShowcaseSummaries();
 
   function loadExample(example: ExampleTask) {
     setForm({ title: example.title, subject: exampleSubjectLabel(example), original: example.original });
@@ -82,17 +78,10 @@ export default function Home() {
               <a href="#redisena" className="btn">
                 Rediseñar mi tarea
               </a>
-              <button
-                type="button"
-                className="btn-quiet"
-                onClick={() => loadExample(HERO_EXAMPLE)}
-              >
-                Probar con un ejemplo
-              </button>
             </div>
             <p className="text-[0.9375rem] text-graphite">Gratis y sin registro.</p>
           </div>
-          <HeroCarousel />
+          <ExamplePicker onUse={loadExample} />
         </section>
 
         <section id="como-funciona" className="container-page grid gap-8 py-12">
@@ -114,7 +103,6 @@ export default function Home() {
           </ol>
         </section>
 
-        <ExampleGallery summaries={summaries} onUse={loadExample} />
 
         <section id="redisena" className="container-page grid gap-8 pb-20 pt-12">
           <h2>Rediseña una tarea</h2>
