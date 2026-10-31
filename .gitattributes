@@ -1,2 +1,5 @@
-# Generated documents must not get line-ending conversion.
+# Binary files must not get line-ending conversion.
 *.pdf binary
+*.png binary
+*.pptx binary
+*.pen binary
