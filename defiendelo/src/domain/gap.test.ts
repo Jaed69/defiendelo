@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { aiObtainableScore, averageGap, givenAwayCriteria, studentGap, triage } from "./gap";
+import { aiObtainableScore, assignmentSummary, averageGap, givenAwayCriteria, studentGap, triage } from "./gap";
 import type { Criterion, Submission } from "./types";
 
 const criteria: Criterion[] = [
@@ -91,5 +91,28 @@ describe("averageGap", () => {
 
   it("is null when nobody has defended yet", () => {
     expect(averageGap([])).toBeNull();
+  });
+});
+
+describe("assignmentSummary", () => {
+  const redesign = { statement: "", aiPolicy: "", rationale: "", criteria, originalCriteria: [{ ...criteria[0], weight: 100 }] };
+
+  it("reports the AI-alone scores before and after the redesign, defenses and mean gap", () => {
+    const stress = {
+      ranAt: "",
+      original: { aiAnswer: "", scores: [{ criterionId: "c1", score: 1, reason: "" }] },
+      redesigned: { aiAnswer: "", scores: [{ criterionId: "c1", score: 0.5, reason: "" }] },
+    };
+    const submissions = [submission("Ana", [[1, 1], [1, 1]]), submission("Bruno", [[1, 0], [1, 0]])];
+    expect(assignmentSummary({ redesign, stress, submissions })).toEqual({ aiOriginal: 100, aiRedesigned: 20, defenses: 2, meanGap: 50 });
+  });
+
+  it("leaves the AI scores and the gap empty before the stress test and the first defense", () => {
+    expect(assignmentSummary({ redesign, stress: null, submissions: [] })).toEqual({
+      aiOriginal: null,
+      aiRedesigned: null,
+      defenses: 0,
+      meanGap: null,
+    });
   });
 });

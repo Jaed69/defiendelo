@@ -1,4 +1,4 @@
-import type { Criterion, CriterionScore, Submission } from "./types";
+import type { Assignment, Criterion, CriterionScore, Submission } from "./types";
 
 /** Score at or above which a criterion is considered "given away" to an AI working alone. */
 export const GIVEN_AWAY_THRESHOLD = 0.7;
@@ -65,4 +65,24 @@ export function triage(criteria: Criterion[], submissions: Submission[]): Triage
 export function averageGap(entries: TriageEntry[]): number | null {
   if (entries.length === 0) return null;
   return Math.round(entries.reduce((sum, e) => sum + e.gap, 0) / entries.length);
+}
+
+export interface AssignmentSummary {
+  /** AI-alone score on the original task; null before the stress test. */
+  aiOriginal: number | null;
+  /** AI-alone score on the redesigned task; null before the stress test. */
+  aiRedesigned: number | null;
+  defenses: number;
+  meanGap: number | null;
+}
+
+/** The headline numbers of an assignment: how much an AI gets alone, before and after, and how the class defended. */
+export function assignmentSummary({ redesign, stress, submissions }: Pick<Assignment, "redesign" | "stress" | "submissions">): AssignmentSummary {
+  const ranking = triage(redesign.criteria, submissions);
+  return {
+    aiOriginal: stress ? aiObtainableScore(redesign.originalCriteria, stress.original.scores) : null,
+    aiRedesigned: stress ? aiObtainableScore(redesign.criteria, stress.redesigned.scores) : null,
+    defenses: ranking.length,
+    meanGap: averageGap(ranking),
+  };
 }
