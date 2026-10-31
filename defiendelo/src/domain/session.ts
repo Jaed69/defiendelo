@@ -74,6 +74,9 @@ export interface StudentView {
   deadline: string | null;
   gradeScale: number;
   status: StudentStatus;
+  /** The student's own work and whether they may still replace it (only before submissions close). */
+  work: string;
+  canReplace: boolean;
   /** Aliases in presentation order (oral); no other student data leaves the server. */
   queue: string[];
   position: number | null;
@@ -89,7 +92,7 @@ export interface StudentView {
   } | null;
 }
 
-export function studentView(assignment: Assignment, submission: Submission): StudentView {
+export function studentView(assignment: Assignment, submission: Submission, now: Date): StudentView {
   const session = sessionOf(assignment);
   const status = studentStatus(session, submission);
   const questions = questionsFor(session, submission);
@@ -103,6 +106,8 @@ export function studentView(assignment: Assignment, submission: Submission): Stu
     deadline: session.deadline,
     gradeScale: session.gradeScale,
     status,
+    work: submission.work,
+    canReplace: acceptsSubmissions(session, now),
     queue: oral ? session.queue.map((id) => aliasOf(id) ?? "") : [],
     position: oral && position !== -1 ? position + 1 : null,
     presenting: oral ? aliasOf(session.current) : null,

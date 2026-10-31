@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import { acceptsSubmissions, DEFAULT_SESSION, gradeQuestion, proposeQueue, studentStatus, studentView } from "./session";
 import type { Assignment, ClassSession, Submission } from "./types";
 
+const NOW = new Date("2026-10-31T12:00:00Z");
+
 function submission(id: string, createdAt = "2026-10-31T10:00:00Z"): Submission {
   return {
     id,
@@ -59,15 +61,22 @@ describe("session", () => {
   it("hides the grade until published and never leaks other students' data", () => {
     const subs = [submission("a"), submission("b")];
     subs[1].grade = 18;
-    const live = studentView(assignment({ phase: "defensas", queue: ["a", "b"], current: "b" }, subs), subs[1]);
+    const live = studentView(assignment({ phase: "defensas", queue: ["a", "b"], current: "b" }, subs), subs[1], NOW);
     expect(live.result).toBeNull();
     expect(live.queue).toEqual(["alias-a", "alias-b"]);
     expect(JSON.stringify(live)).not.toContain("token-a");
 
-    const turn = studentView(assignment({ phase: "defensas", queue: ["a", "b"], current: "a", currentQuestion: 1 }, subs), subs[0]);
+    const turn = studentView(assignment({ phase: "defensas", queue: ["a", "b"], current: "a", currentQuestion: 1 }, subs), subs[0], NOW);
     expect(turn.question).toEqual({ number: 2, total: 2, text: "Pregunta 2 de a" });
 
-    const published = studentView(assignment({ phase: "publicado" }, subs), subs[1]);
+    const published = studentView(assignment({ phase: "publicado" }, subs), subs[1], NOW);
     expect(published.result?.grade).toBe(18);
+  });
+
+  it("lets the student replace their work only while submissions are open", () => {
+    const sub = submission("a");
+    expect(studentView(assignment({}, [sub]), sub, NOW).canReplace).toBe(true);
+    expect(studentView(assignment({ deadline: "2026-10-31T11:00:00Z" }, [sub]), sub, NOW).canReplace).toBe(false);
+    expect(studentView(assignment({ phase: "defensas" }, [sub]), sub, NOW).canReplace).toBe(false);
   });
 });

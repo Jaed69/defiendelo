@@ -352,6 +352,7 @@ export default function StudentPage({ params }: { params: Promise<{ id: string }
   const [alias, setAlias] = useState("");
   const [work, setWork] = useState("");
   const [busy, setBusy] = useState(false);
+  const [editing, setEditing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -386,6 +387,16 @@ export default function StudentPage({ params }: { params: Promise<{ id: string }
     setBusy(true);
     setError(null);
     try {
+      if (editing && saved) {
+        await api(`/api/assignments/${id}/submissions/${saved.sid}`, {
+          method: "PUT",
+          headers: { "x-student-token": saved.token },
+          body: JSON.stringify({ work }),
+        });
+        await refresh();
+        setEditing(false);
+        return;
+      }
       const result = await api<{ id: string; token: string }>(`/api/assignments/${id}/submissions`, {
         method: "POST",
         body: JSON.stringify({ alias, work }),
@@ -515,31 +526,35 @@ export default function StudentPage({ params }: { params: Promise<{ id: string }
           </Notice>
         )}
 
-        {!view && assignment.acceptsSubmissions && (
+        {((!view && assignment.acceptsSubmissions) || (editing && status === "entregado")) && (
           <section className="grid gap-6">
             <div className="grid gap-2">
-              <h2>Tu entrega</h2>
-              <p className="prose-measure text-graphite">{METHOD_HINT[method]}</p>
+              <h2>{editing ? "Cambiar mi entrega" : "Tu entrega"}</h2>
+              <p className="prose-measure text-graphite">
+                {editing ? "Tu nueva versión reemplaza a la anterior. Las preguntas se harán sobre esta versión." : METHOD_HINT[method]}
+              </p>
             </div>
             <form onSubmit={submit} className="grid gap-6">
-              <div className="grid gap-2">
-                <label htmlFor="alias" className="font-bold">
-                  Apodo
-                </label>
-                <span id="alias-hint" className="text-[0.9375rem] text-graphite">
-                  Usa un apodo, no tu nombre. No guardamos datos personales.
-                </span>
-                <input
-                  id="alias"
-                  type="text"
-                  required
-                  maxLength={40}
-                  autoComplete="off"
-                  aria-describedby="alias-hint"
-                  value={alias}
-                  onChange={(e) => setAlias(e.target.value)}
-                />
-              </div>
+              {!editing && (
+                <div className="grid gap-2">
+                  <label htmlFor="alias" className="font-bold">
+                    Apodo
+                  </label>
+                  <span id="alias-hint" className="text-[0.9375rem] text-graphite">
+                    Usa un apodo, no tu nombre. No guardamos datos personales.
+                  </span>
+                  <input
+                    id="alias"
+                    type="text"
+                    required
+                    maxLength={40}
+                    autoComplete="off"
+                    aria-describedby="alias-hint"
+                    value={alias}
+                    onChange={(e) => setAlias(e.target.value)}
+                  />
+                </div>
+              )}
               <div className="grid gap-3">
                 <label htmlFor="work" className="font-bold">
                   Tu trabajo
@@ -570,20 +585,42 @@ export default function StudentPage({ params }: { params: Promise<{ id: string }
               )}
               <div className="grid gap-4">
                 <button className="btn w-full" disabled={busy}>
-                  {busy ? "Entregando…" : "Entregar mi trabajo"}
+                  {busy ? "Entregando…" : editing ? "Guardar mi nueva versión" : "Entregar mi trabajo"}
                 </button>
+                {editing && !busy && (
+                  <button type="button" className="btn-secondary w-full" onClick={() => setEditing(false)}>
+                    Cancelar, dejar la entrega anterior
+                  </button>
+                )}
                 {busy && <Waiting steps={SUBMIT_STEPS} expected="suele tardar cerca de un minuto" />}
               </div>
             </form>
           </section>
         )}
 
-        {status === "entregado" && (
+        {status === "entregado" && !editing && (
           <>
             <Notice chip="Entregado ✓" title={`Listo, ${view!.alias}`}>
               {METHOD_HINT[method]} Puedes cerrar esta pestaña y volver con el mismo enlace.
             </Notice>
             <Deadline deadline={deadline} />
+            <details className="card p-5">
+              <summary className="btn-quiet cursor-pointer">Ver lo que entregaste</summary>
+              <pre className="mt-3 max-h-80 overflow-auto whitespace-pre-wrap font-mono text-[0.9375rem]">{view!.work}</pre>
+            </details>
+            {view!.canReplace && (
+              <button
+                type="button"
+                className="btn-secondary justify-self-start"
+                onClick={() => {
+                  setWork(view!.work);
+                  setError(null);
+                  setEditing(true);
+                }}
+              >
+                Cambiar mi entrega
+              </button>
+            )}
           </>
         )}
 

@@ -173,7 +173,27 @@ function ownSubmission(assignment: Assignment, submissionId: string, token: stri
 
 export async function getStudentView(store: AssignmentStore, id: string, submissionId: string, token: string | null) {
   const assignment = await load(store, id);
-  return studentView(assignment, ownSubmission(assignment, submissionId, token));
+  return studentView(assignment, ownSubmission(assignment, submissionId, token), new Date());
+}
+
+/** Replaces the work until submissions close; questions are regenerated because they quote the work. */
+export async function replaceSubmission(
+  ai: AssessmentAI,
+  store: AssignmentStore,
+  id: string,
+  submissionId: string,
+  token: string | null,
+  work: string,
+) {
+  const assignment = await load(store, id);
+  ownSubmission(assignment, submissionId, token);
+  if (!acceptsSubmissions(sessionOf(assignment), new Date())) throw new ConflictError("Submissions are closed");
+  const questions = await ai.defenseQuestions(assignment.redesign.statement, assignment.redesign.criteria, work);
+  const latest = await load(store, id);
+  const target = ownSubmission(latest, submissionId, token);
+  target.work = work;
+  target.questions = questions;
+  await store.save(latest);
 }
 
 export async function updateSession(

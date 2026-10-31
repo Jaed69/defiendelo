@@ -16,7 +16,7 @@ Objective: the student uploads their work and is then evaluated according to the
 | Phase | Screen | In Figma |
 | --- | --- | --- |
 | entregas | Entrega: statement, method, deadline countdown, alias, file/paste | yes (+ method, deadline) |
-| entregas, already submitted | Entregado ✓ + countdown (replacing the file is not built yet) | no |
+| entregas, already submitted | Entregado ✓ + countdown, see own work, "Cambiar mi entrega" until close | no |
 | orden / defensas | Sala: queue of aliases, own position, "Ahora: X" | no |
 | own turn, oral | Te toca: alias + current question | no |
 | own turn, escrito digital | Defensa (existing one-question-at-a-time) | yes |
@@ -35,6 +35,7 @@ Objective: the student uploads their work and is then evaluated according to the
 | --- | --- | --- |
 | Student | `POST /api/assignments/[id]/submissions` `{alias, work}` | 409 if closed; returns `{id, token}` |
 | Student | `GET /api/assignments/[id]/submissions/[sid]` + `x-student-token` | `StudentView`, polled every 3 s; 404 on bad token |
+| Student | `PUT /api/assignments/[id]/submissions/[sid]` + token `{work}` | replaces the work and regenerates questions; 409 once closed |
 | Student | `POST /api/assignments/[id]/submissions/[sid]` + token `{answers}` | written defense, only in `escrito` + `defensas` |
 | Teacher | `PATCH /api/assignments/[id]/session` + `x-teacher-key` | partial `ClassSession`; leaving `entregas` with an empty queue proposes it by arrival |
 | Teacher | `POST /api/assignments/[id]/session` + key `{submissionId, questionId?, score}` | scores a question (oral: advances question, then next ungraded student; grade = average) or sets the final grade |
@@ -46,3 +47,4 @@ The teacher UI for these endpoints is the teammate's; this branch only adds the 
 - L1 (2026-10-31, user): answers above (S2–S6). Figma PNGs reviewed: `Alumno/Entrega`, `Defensa`, `Resultado` cover the old instant flow; queue, turn and grade screens are missing.
 - L2 (user): "Celular o papel" — the teacher picks; written is a third method value (`escrito` on the phone, `papel` printed), not a separate flag.
 - L3 (user): "Mejor ve programando y luego vemos como queda el merge" — implemented domain (`session.ts`, 5 tests), API and the student page by status. Evidence: vitest 55/55, tsc clean, eslint 0 errors; demo-mode browser run at 375 px: submit → "Entregado" with countdown → queue "n.º 3 de 3, ahora defiende ana" → "¡Te toca!" with live question after grading ana and bruno → "Ya te evaluaron" → publish → 16/20 with per-question scores. API checks: late submit 409, written answer before opening 409, bad token 404, bad teacher key 403, written defense evaluates. Fixed: polling kept running after publish.
+- L4 (user): "El alumno no puede editar su entrega o volver a subir otra" — added "Cambiar mi entrega" (prefilled, alias kept) while submissions are open; questions are regenerated from the new work. Evidence: vitest 6/6 in session.test.ts; browser: submit v1 → change → v2 saved; API: questions quote v2, bad token 404, after close 409 and `canReplace: false`.
