@@ -17,6 +17,7 @@ Proyecto para **DSC HACK 2026 · Educación 2036**.
 └── docs/                    Documentación del proyecto
     ├── propuesta/           Propuesta enviada al hackathon y presentación del pitch
     ├── investigacion/       Informes con la evidencia que sustenta el problema y la solución
+    ├── validacion/          Conversaciones y pruebas con usuarios reales
     ├── diseno/              Diseño de las pantallas (Pencil) y capturas
     └── flujo-sintetico/     Datos para probar el flujo completo a mano
 ```
@@ -186,11 +187,20 @@ Análisis completo, con supuestos y riesgos, en [Más valor para Defiéndelo](do
 
 ## 🧪 Validación con usuarios
 
-**Estado:** el MVP está desplegado y probado con datos sintéticos (9 tareas de 8 cursos, con clases simuladas que ya pasaron por el pipeline real de IA). Todavía **no tenemos resultados con docentes ni alumnos reales**.
+**Usuario:** docente de secundaria. Conversamos por Meet con C., docente de un colegio público donde los docentes no usan IA de forma habitual, pero sus alumnos sí, y probó la plataforma.
 
-Plan de validación (sin menores de edad):
+| | |
+| --- | --- |
+| **Qué asumíamos** | Que los alumnos resolvían todas sus tareas con IA y no les quedaba el aprendizaje. |
+| **Qué aprendimos** | La IA siempre va a estar presente, y los alumnos deben ser calificados por sus soluciones y no solo por sus habilidades. Al docente le gustó: no sintió que la IA le estuviera haciendo todo, sino que era una nueva forma de calificar. |
+| **Dónde se trabó** | Primero pensó que era una plataforma para el alumno. Le resultó fácil de usar, pero se trabó porque veía muchas formas en la pantalla. |
+| **Qué cambiamos** | Redujimos el ruido visual de la tarea rediseñada: menos íconos, cajas y etiquetas, y solo destaca el paso de la defensa ([PR #24](https://github.com/Jaed69/defiendelo/pull/24)). |
 
-- **Con quién:** 1 o 2 docentes universitarios, 1 docente novel y de 5 a 10 estudiantes.
+Registro completo en [`docs/validacion/`](docs/validacion/). Es un solo docente: el siguiente paso es ampliar la muestra.
+
+Próximos pasos (sin menores de edad):
+
+- **Con quién:** más docentes de secundaria, al menos un docente novel, y de 5 a 10 estudiantes.
 - **Guion para el docente:** ¿Cómo sabes hoy quién entendió y quién solo entregó? ¿Cuánto tiempo te toma? ¿Qué parte de esto usarías mañana?
 - **Qué medimos:** la brecha entre lo entregado y lo explicado, el porcentaje de sugerencias de la IA que el docente cambia, el tiempo de revisión y si la IA sola saca menos de la mitad de la nota en la tarea rediseñada.
 
@@ -249,6 +259,7 @@ Más detalle técnico en [`defiendelo/README.md`](defiendelo/README.md). Para re
 | [Recorrido de la demo](docs/propuesta/defiendelo-pitch.pptx) | Capturas paso a paso de la aplicación. |
 | [Educación 2036: oportunidades](docs/investigacion/educacion-2036-oportunidades.md) | Las cuatro grietas del reto y la evidencia detrás de la que elegimos. |
 | [Más valor para Defiéndelo](docs/investigacion/mas-valor-para-defiendelo.md) | Evidencia de aprendizaje, carga docente, regulación y caso de negocio. |
+| [Validación con usuarios](docs/validacion/) | Registro de la conversación y prueba con un docente de secundaria. |
 | [Diseño](docs/diseno/) | Flujos y pantallas en Pencil. |
 
 Índice completo en [`docs/README.md`](docs/README.md).

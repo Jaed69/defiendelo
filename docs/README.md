@@ -6,6 +6,7 @@ Material de apoyo del proyecto: la propuesta presentada, la investigación que l
 | --- | --- |
 | [`propuesta/`](propuesta/) | Propuesta enviada a DSC HACK 2026 (`propuesta-dsc-hack-2026.pdf`), pitch para el jurado de 3 minutos (`defiendelo-pitch-jurado.pptx`, con guion en las notas del orador) y recorrido de la demo (`defiendelo-pitch.pptx`). |
 | [`investigacion/`](investigacion/) | Informes de investigación con sus fuentes. |
+| [`validacion/`](validacion/) | Conversaciones y pruebas con usuarios reales: qué asumíamos, qué aprendimos y qué cambiamos. |
 | [`diseno/`](diseno/) | Archivo de diseño de los flujos (`defiendelo-flujo.pen`, se abre con [Pencil](https://pen.dev)) y capturas de las pantallas. |
 | [`flujo-sintetico/`](flujo-sintetico/) | Tarea, trabajos de tres alumnos y respuestas de defensa para recorrer el flujo completo a mano, sin claves de IA. |
 
