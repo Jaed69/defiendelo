@@ -1,9 +1,12 @@
-import type { Assignment, ClassSession, DefenseQuestion, Evaluation, EvaluationMethod, SessionPhase, Submission } from "./types";
+import { isGraded } from "./grading";
+import type { Assignment, ClassSession, DefenseQuestion, Evaluation, EvaluationMethod, GradingSystem, Letter, SessionPhase, Submission } from "./types";
 
 export const DEFAULT_SESSION: ClassSession = {
   method: "oral",
   deadline: null,
   questionsPerStudent: 2,
+  // Defiéndelo targets Peruvian secondary schools first; universities switch to "numerica".
+  grading: "literal",
   gradeScale: 20,
   passingGrade: 11,
   phase: "entregas",
@@ -58,10 +61,27 @@ export function gradeQuestion(
     const sum = questions.reduce((total, q) => total + submission.questionGrades![q.id], 0);
     submission.grade = Math.round((sum / questions.length) * 10) / 10;
   }
+  if (pending !== -1) return session.method === "oral" && session.current === submissionId ? { ...session, currentQuestion: pending } : session;
+  return advancePast(session, submissions, submissionId);
+}
+
+/** Sets the final grade (numeric) or letter (literal); in oral mode the next ungraded student is called. */
+export function setFinalGrade(
+  session: ClassSession,
+  submissions: Submission[],
+  submissionId: string,
+  value: { grade: number } | { letter: Letter },
+): ClassSession {
+  const submission = submissions.find((s) => s.id === submissionId)!;
+  if ("letter" in value) submission.letter = value.letter;
+  else submission.grade = value.grade;
+  return advancePast(session, submissions, submissionId);
+}
+
+function advancePast(session: ClassSession, submissions: Submission[], submissionId: string): ClassSession {
   if (session.method !== "oral" || session.current !== submissionId) return session;
-  if (pending !== -1) return { ...session, currentQuestion: pending };
   const after = session.queue.slice(session.queue.indexOf(submissionId) + 1);
-  const next = after.find((id) => submissions.find((s) => s.id === id)?.grade == null) ?? null;
+  const next = after.find((id) => !isGraded(submissions.find((s) => s.id === id)!)) ?? null;
   return { ...session, current: next, currentQuestion: 0 };
 }
 
@@ -71,7 +91,7 @@ export function studentStatus(session: ClassSession, submission: Submission, liv
   if (!live) return submission.answeredAt ? "publicado" : "responder";
   if (session.phase === "publicado") return "publicado";
   if (session.phase === "entregas") return "entregado";
-  if (submission.grade != null || (session.method === "escrito" && submission.answeredAt)) return "evaluado";
+  if (isGraded(submission) || (session.method === "escrito" && submission.answeredAt)) return "evaluado";
   if (session.method === "papel") return "papel";
   if (session.method === "escrito") return "responder";
   return session.current === submission.id ? "turno" : "en_cola";
@@ -82,6 +102,7 @@ export interface StudentView {
   method: EvaluationMethod;
   phase: SessionPhase;
   deadline: string | null;
+  grading: GradingSystem;
   gradeScale: number;
   passingGrade: number;
   status: StudentStatus;
@@ -98,6 +119,7 @@ export interface StudentView {
   questions: DefenseQuestion[];
   result: {
     grade: number | null;
+    letter: Letter | null;
     perQuestion: { question: string; score: number | null }[];
     evaluation: Evaluation | null;
   } | null;
@@ -116,6 +138,7 @@ export function studentView(assignment: Assignment, submission: Submission, now:
     method: session.method,
     phase: session.phase,
     deadline: session.deadline,
+    grading: session.grading,
     gradeScale: session.gradeScale,
     passingGrade: session.passingGrade,
     status,
@@ -133,6 +156,7 @@ export function studentView(assignment: Assignment, submission: Submission, now:
       status === "publicado"
         ? {
             grade: submission.grade ?? null,
+            letter: submission.letter ?? null,
             // Without a live session the teacher grades nothing per question, so there is nothing to list.
             perQuestion: live ? questions.map((q) => ({ question: q.question, score: submission.questionGrades?.[q.id] ?? null })) : [],
             evaluation: submission.evaluation,

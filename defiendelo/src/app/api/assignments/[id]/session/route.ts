@@ -8,6 +8,7 @@ const patch = z
     method: z.enum(["oral", "escrito", "papel"]),
     deadline: z.iso.datetime().nullable(),
     questionsPerStudent: z.number().int().min(1).max(5),
+    grading: z.enum(["literal", "numerica"]),
     gradeScale: z.number().int().min(1).max(100),
     passingGrade: z.number().min(0).max(100),
     phase: z.enum(["entregas", "defensas", "publicado"]),
@@ -17,11 +18,14 @@ const patch = z
   })
   .partial();
 
-const grade = z.object({
-  submissionId: z.string().max(10),
-  questionId: z.string().max(10).optional(),
-  score: z.number().min(0).max(100),
-});
+const grade = z.intersection(
+  z.object({ submissionId: z.string().max(10) }),
+  z.union([
+    z.object({ questionId: z.string().max(10), score: z.number().min(0).max(100) }),
+    z.object({ grade: z.number().min(0).max(100) }),
+    z.object({ letter: z.enum(["AD", "A", "B", "C"]) }),
+  ]),
+);
 
 /** Teacher drives the live session: configure, close submissions, reorder, call a student, publish. */
 export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
@@ -31,11 +35,11 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
   });
 }
 
-/** Teacher scores one question (advances the oral queue when done) or sets the final grade. */
+/** Teacher scores one question (advances the oral queue when done) or sets the final grade or letter. */
 export async function POST(request: Request, { params }: { params: Promise<{ id: string }> }) {
   return handle(async () => {
     const { id } = await params;
-    const { submissionId, questionId, score } = grade.parse(await request.json());
-    return gradeSubmission(assignmentStore(), id, teacherKey(request), submissionId, score, questionId);
+    const { submissionId, ...input } = grade.parse(await request.json());
+    return gradeSubmission(assignmentStore(), id, teacherKey(request), submissionId, input);
   });
 }

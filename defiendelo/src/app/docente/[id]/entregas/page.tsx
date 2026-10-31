@@ -7,6 +7,8 @@ import { classSummary } from "@/app/class-summary";
 import { Waiting } from "@/app/components/waiting";
 import { triage } from "@/domain/gap";
 import type { Assignment } from "@/domain/types";
+import { isLive, sessionOf } from "@/domain/session";
+import { SessionPanel } from "./session-panel";
 import { TeacherFrame, teacherHref, useTeacherAssignment } from "../teacher-frame";
 
 const ATTEND_FIRST = 5;
@@ -29,11 +31,18 @@ export default function TeacherSubmissionsPage({ params }: { params: Promise<{ i
   const { redesign, submissions, insights } = assignment;
   const ranking = triage(redesign.criteria, submissions);
   const needsHelp = (i: number) => i < ATTEND_FIRST && ranking[i].gap >= ATTENTION_GAP;
-  const summary = classSummary({
-    handedIn: ranking.length,
-    needHelp: ranking.filter((_, i) => needsHelp(i)).map((r) => r.alias),
-    answering: submissions.filter((s) => !s.evaluation).length,
-  });
+  // Oral and paper defenses produce no AI gap, so the summary only counts who handed in.
+  const gradedByTeacher = isLive(assignment) && sessionOf(assignment).method !== "escrito";
+  const handed = submissions.length;
+  const summary = gradedByTeacher
+    ? handed === 0
+      ? "Todavía nadie entregó."
+      : `${handed === 1 ? "1 alumno entregó" : `${handed} alumnos entregaron`}.`
+    : classSummary({
+        handedIn: ranking.length,
+        needHelp: ranking.filter((_, i) => needsHelp(i)).map((r) => r.alias),
+        answering: submissions.filter((s) => !s.evaluation).length,
+      });
   const criterionName = (cid: string) => redesign.criteria.find((c) => c.id === cid)?.name ?? cid;
 
   async function run(kind: "insights" | "refresh") {
@@ -59,6 +68,8 @@ export default function TeacherSubmissionsPage({ params }: { params: Promise<{ i
           {busy === "refresh" ? "Actualizando…" : "Actualizar"}
         </button>
       </div>
+
+      <SessionPanel assignment={assignment} teacherKey={teacherKey} onChange={setAssignment} reload={load} />
 
       <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_24rem]">
         <section id="atender" className="card grid gap-4 p-6 sm:p-8">

@@ -78,10 +78,18 @@ export interface Submission {
   questionGrades?: Record<string, number>;
   /** Final grade set by the teacher; students see it only once grades are published. */
   grade?: number | null;
+  /** Final letter set by the teacher when the session uses the literal scale. */
+  letter?: Letter | null;
 }
 
 /** oral: one by one in front of the class; escrito: answered on the phone; papel: printed exam. */
 export type EvaluationMethod = "oral" | "escrito" | "papel";
+
+/** Peruvian secondary school scale: logro destacado, logro esperado, en proceso, en inicio. */
+export type Letter = "AD" | "A" | "B" | "C";
+
+/** literal: AD/A/B/C (secondary school); numerica: 0..gradeScale with a passing grade (university). */
+export type GradingSystem = "literal" | "numerica";
 
 export type SessionPhase = "entregas" | "defensas" | "publicado";
 
@@ -91,6 +99,8 @@ export interface ClassSession {
   /** ISO date; null means submissions stay open until the teacher closes them. */
   deadline: string | null;
   questionsPerStudent: number;
+  grading: GradingSystem;
+  /** Numeric scale only. */
   gradeScale: number;
   /** Lowest passing grade on the same scale, set by the teacher. */
   passingGrade: number;

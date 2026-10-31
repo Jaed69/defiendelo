@@ -7,6 +7,8 @@ import { AssignmentSheet, PrintSheetButton } from "@/app/components/assignment-s
 import { Waiting } from "@/app/components/waiting";
 import { assignmentSummary, givenAwayCriteria } from "@/domain/gap";
 import type { Assignment } from "@/domain/types";
+import { EvaluationSettings } from "./evaluation-settings";
+import { RedesignEditor } from "./redesign-editor";
 import { TeacherFrame, teacherHref, useTeacherAssignment } from "./teacher-frame";
 
 const STRESS_STEPS = [
@@ -32,6 +34,7 @@ export default function TeacherTaskPage({ params }: { params: Promise<{ id: stri
   const { assignment, setAssignment, teacherKey, error, setError } = useTeacherAssignment(id);
   const [testing, setTesting] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [editing, setEditing] = useState(false);
 
   if (!assignment) return <TeacherFrame id={id} teacherKey={teacherKey} assignment={null} section="tarea" error={error} />;
 
@@ -56,6 +59,8 @@ export default function TeacherTaskPage({ params }: { params: Promise<{ id: stri
     <TeacherFrame id={id} teacherKey={teacherKey} assignment={assignment} section="tarea" error={error}>
       <div className="grid items-start gap-8 lg:grid-cols-[24rem_minmax(0,1fr)]">
         <div className="grid gap-8">
+          <EvaluationSettings assignment={assignment} teacherKey={teacherKey} onSaved={setAssignment} />
+
           <section id="enlace" className="card grid gap-4 p-6">
             <h2 className="text-[1.375rem]">Compártela con tus alumnos</h2>
             <code className="break-all rounded-[var(--radius-md)] bg-subtle px-3 py-2 font-mono text-sm">{studentLink}</code>
@@ -119,16 +124,35 @@ export default function TeacherTaskPage({ params }: { params: Promise<{ id: stri
         <section id="rediseno" className="card grid gap-5 p-4 sm:p-8">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <h2>Tarea rediseñada</h2>
-            <PrintSheetButton sheetId="hoja-tarea" />
+            {!editing && (
+              <div className="flex flex-wrap gap-2">
+                <button type="button" className="btn-secondary" onClick={() => setEditing(true)}>
+                  Editar
+                </button>
+                <PrintSheetButton sheetId="hoja-tarea" />
+              </div>
+            )}
           </div>
-          <AssignmentSheet
-            id="hoja-tarea"
-            title={assignment.title}
-            subject={assignment.subject}
-            statement={redesign.statement}
-            aiPolicy={redesign.aiPolicy}
-            criteria={redesign.criteria}
-          />
+          {editing ? (
+            <RedesignEditor
+              assignment={assignment}
+              teacherKey={teacherKey}
+              onCancel={() => setEditing(false)}
+              onSaved={(next) => {
+                setAssignment(next);
+                setEditing(false);
+              }}
+            />
+          ) : (
+            <AssignmentSheet
+              id="hoja-tarea"
+              title={assignment.title}
+              subject={assignment.subject}
+              statement={redesign.statement}
+              aiPolicy={redesign.aiPolicy}
+              criteria={redesign.criteria}
+            />
+          )}
         </section>
       </div>
     </TeacherFrame>

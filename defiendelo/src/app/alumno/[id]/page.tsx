@@ -23,6 +23,7 @@ import {
   UsersIcon,
 } from "@/app/components/icons";
 import { Waiting } from "@/app/components/waiting";
+import { LETTER_LABEL } from "@/domain/grading";
 import type { PublicAssignment } from "@/application/use-cases";
 import type { StudentView } from "@/domain/session";
 import type { Evaluation, EvaluationMethod } from "@/domain/types";
@@ -408,7 +409,16 @@ function Result({ view, criterionName }: { view: StudentView; criterionName: (id
         <h2 className="label flex items-center gap-1.5 text-graphite">
           <StarIcon className="size-4" /> Tu nota
         </h2>
-        {result.grade == null ? (
+        {view.grading === "literal" && result.letter ? (
+          <div className="grid justify-items-center gap-2">
+            <span
+              className={`grid size-36 place-items-center rounded-full font-display text-6xl font-extrabold ${result.letter === "A" || result.letter === "AD" ? "bg-success-subtle text-success" : "bg-danger-subtle text-pen"}`}
+            >
+              {result.letter}
+            </span>
+            <span className="font-bold">{LETTER_LABEL[result.letter]}</span>
+          </div>
+        ) : result.grade == null ? (
           <p className="text-graphite">Sin nota todavía.</p>
         ) : (
           <Ring value={result.grade} total={scale} size={144} tone={passed(result.grade) ? "var(--color-text-success)" : "var(--color-text-danger)"}>
@@ -420,7 +430,7 @@ function Result({ view, criterionName }: { view: StudentView; criterionName: (id
         )}
       </div>
 
-      {result.perQuestion.length > 0 && (
+      {result.perQuestion.some((q) => q.score != null) && (
         <ul className="card grid divide-y divide-[var(--color-border-default)] p-0" aria-label="Nota por pregunta">
           {result.perQuestion.map((q, i) => (
             <li key={i} className="flex items-start gap-3 p-4">
