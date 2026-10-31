@@ -93,7 +93,7 @@ export function ExampleGallery({ onUse }: { onUse: (example: ExampleTask) => voi
               {summary && <AiBeforeAfter summary={summary} />}
               <div className="mt-auto flex flex-wrap items-center gap-3">
                 {ready && (
-                  <Link href={`/docente/${ready.id}?k=${ready.teacherKey}`} className="btn">
+                  <Link href={`/docente/${ready.id}/entregas?k=${ready.teacherKey}`} className="btn">
                     Ver el resultado
                   </Link>
                 )}
