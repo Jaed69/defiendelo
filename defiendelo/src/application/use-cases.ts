@@ -1,8 +1,9 @@
 import type { AssessmentAI, RedesignInput } from "@/ports/assessment-ai";
 import type { AssignmentStore } from "@/ports/assignment-store";
 import { reconcileEvaluation } from "@/domain/reconcile";
-import { acceptsSubmissions, gradeQuestion, isLive, proposeQueue, questionsFor, sessionOf, studentStatus, studentView } from "@/domain/session";
-import type { Assignment, ClassSession, Criterion, DefenseAnswer, Submission } from "@/domain/types";
+import { rubricProblem } from "@/domain/grading";
+import { acceptsSubmissions, gradeQuestion, isLive, setFinalGrade, proposeQueue, questionsFor, sessionOf, studentStatus, studentView } from "@/domain/session";
+import type { Assignment, ClassSession, Criterion, DefenseAnswer, Letter, Redesign, Submission } from "@/domain/types";
 
 export class NotFoundError extends Error {}
 export class ForbiddenError extends Error {}
@@ -208,26 +209,56 @@ export async function updateSession(
 ) {
   const assignment = await loadAsTeacher(store, id, teacherKey);
   const session = { ...sessionOf(assignment), ...patch };
-  if (session.phase !== "entregas" && session.queue.length === 0) session.queue = proposeQueue(assignment.submissions);
+  if (session.phase !== "entregas") {
+    // Keep the teacher's order, drop unknown ids and append anyone who handed in after it was proposed.
+    const ids = new Set(assignment.submissions.map((s) => s.id));
+    const kept = session.queue.filter((sid) => ids.has(sid));
+    session.queue = [...kept, ...proposeQueue(assignment.submissions).filter((sid) => !kept.includes(sid))];
+  }
   assignment.session = session;
   await store.save(assignment);
-  return session;
+  return assignment;
 }
 
-/** With questionId scores that question (and may advance the oral queue); without it sets the final grade. */
-export async function gradeSubmission(
-  store: AssignmentStore,
-  id: string,
-  teacherKey: string | null,
-  submissionId: string,
-  score: number,
-  questionId?: string,
-) {
+export type TeacherGrade = { questionId: string; score: number } | { grade: number } | { letter: Letter };
+
+/** A question score (may advance the oral queue), a final numeric grade or a final letter. */
+export async function gradeSubmission(store: AssignmentStore, id: string, teacherKey: string | null, submissionId: string, input: TeacherGrade) {
   const assignment = await loadAsTeacher(store, id, teacherKey);
   const submission = assignment.submissions.find((s) => s.id === submissionId);
   if (!submission) throw new NotFoundError("Submission not found");
-  if (questionId) assignment.session = gradeQuestion(sessionOf(assignment), assignment.submissions, submissionId, questionId, score);
-  else submission.grade = score;
+  const session = sessionOf(assignment);
+  assignment.session =
+    "questionId" in input
+      ? gradeQuestion(session, assignment.submissions, submissionId, input.questionId, input.score)
+      : setFinalGrade(session, assignment.submissions, submissionId, input);
   await store.save(assignment);
-  return { session: sessionOf(assignment), grade: submission.grade ?? null };
+  return assignment;
+}
+
+export class InvalidInputError extends Error {}
+
+/**
+ * The teacher edits what the AI generated. A changed statement or rubric makes the stress test stale,
+ * so it is cleared and can be run again.
+ */
+export async function updateRedesign(
+  store: AssignmentStore,
+  id: string,
+  teacherKey: string | null,
+  patch: Partial<Pick<Redesign, "statement" | "aiPolicy">> & { criteria?: (Omit<Criterion, "id"> & { id?: string })[] },
+) {
+  const assignment = await loadAsTeacher(store, id, teacherKey);
+  const { redesign } = assignment;
+  const before = JSON.stringify([redesign.statement, redesign.criteria]);
+  if (patch.criteria) {
+    const problem = rubricProblem(patch.criteria);
+    if (problem) throw new InvalidInputError(problem);
+    redesign.criteria = patch.criteria.map(({ id: cid, name, description, weight, evidence }) => ({ id: cid ?? newId(), name, description, weight, evidence }));
+  }
+  if (patch.statement !== undefined) redesign.statement = patch.statement;
+  if (patch.aiPolicy !== undefined) redesign.aiPolicy = patch.aiPolicy;
+  if (JSON.stringify([redesign.statement, redesign.criteria]) !== before) assignment.stress = null;
+  await store.save(assignment);
+  return assignment;
 }

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod/v4";
-import { ConflictError, ForbiddenError, NotFoundError } from "@/application/use-cases";
+import { ConflictError, ForbiddenError, InvalidInputError, NotFoundError } from "@/application/use-cases";
 
 export function teacherKey(request: Request): string | null {
   return request.headers.get("x-teacher-key");
@@ -19,6 +19,9 @@ export async function handle(run: () => Promise<unknown>): Promise<NextResponse>
     }
     if (error instanceof ForbiddenError) {
       return NextResponse.json({ error: "Clave de docente inválida" }, { status: 403 });
+    }
+    if (error instanceof InvalidInputError) {
+      return NextResponse.json({ error: error.message }, { status: 400 });
     }
     if (error instanceof ConflictError) {
       return NextResponse.json({ error: "Esto no se puede hacer en este momento de la sesión." }, { status: 409 });

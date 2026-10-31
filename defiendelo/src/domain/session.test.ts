@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { acceptsSubmissions, DEFAULT_SESSION, gradeQuestion, isLive, proposeQueue, studentStatus, studentView } from "./session";
+import { acceptsSubmissions, DEFAULT_SESSION, gradeQuestion, isLive, proposeQueue, setFinalGrade, studentStatus, studentView } from "./session";
 import type { Assignment, ClassSession, Submission } from "./types";
 
 const NOW = new Date("2026-10-31T12:00:00Z");
@@ -43,6 +43,15 @@ describe("session", () => {
     s = gradeQuestion(s, subs, "a", "q2", 17);
     expect(subs[0].grade).toBe(15.5);
     expect(s).toMatchObject({ current: "c", currentQuestion: 0 });
+  });
+
+  it("records a letter and calls the next student who has no grade yet", () => {
+    const subs = [submission("a"), submission("b"), submission("c")];
+    subs[1].letter = "A";
+    const s = setFinalGrade({ ...DEFAULT_SESSION, phase: "defensas", queue: ["a", "b", "c"], current: "a" }, subs, "a", { letter: "AD" });
+    expect(subs[0].letter).toBe("AD");
+    expect(s).toMatchObject({ current: "c", currentQuestion: 0 });
+    expect(studentStatus(s, subs[0])).toBe("evaluado");
   });
 
   it("derives the student status from phase and method", () => {
@@ -99,7 +108,7 @@ describe("session", () => {
       const view = studentView(selfPaced(sub), sub, NOW);
       expect(view.status).toBe("publicado");
       expect(view.questions).toEqual([]);
-      expect(view.result).toEqual({ grade: null, perQuestion: [], evaluation: sub.evaluation });
+      expect(view.result).toEqual({ grade: null, letter: null, perQuestion: [], evaluation: sub.evaluation });
     });
 
     it("still accepts submissions", () => {
