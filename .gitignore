@@ -1,0 +1,14 @@
+# Local agent and editor tooling
+.atl/
+odd/
+.claude/
+.vscode/
+.idea/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Office lock files
+~$*
