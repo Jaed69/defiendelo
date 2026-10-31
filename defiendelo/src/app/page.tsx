@@ -92,7 +92,7 @@ export default function Home() {
             </div>
             <p className="text-[0.9375rem] text-graphite">Gratis y sin registro.</p>
           </div>
-          <HeroCarousel summaries={summaries} />
+          <HeroCarousel />
         </section>
 
         <section id="como-funciona" className="container-page grid gap-8 py-12">
