@@ -1,9 +1,13 @@
-# Local agent and editor tooling
-.atl/
-odd/
+# Local agent and editor tooling (repository root only)
+/.atl/
+/odd/
 .claude/
 .vscode/
 .idea/
+
+# Secrets: environment files anywhere, except the documented examples
+.env*
+!.env.example
 
 # Operating system files
 .DS_Store
