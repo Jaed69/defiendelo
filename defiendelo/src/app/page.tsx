@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { api } from "./api-client";
+import { AppBar, Logo, TeacherNote } from "./components/brand";
 import { FileDrop } from "./components/file-drop";
 import { Waiting } from "./components/waiting";
 
@@ -21,6 +22,62 @@ const EXAMPLE = {
   original:
     "Escribe en Python una función que reciba una lista ordenada de números y un valor, y devuelva la posición del valor o -1 si no está. Incluye comentarios y tres casos de prueba.",
 };
+
+const HOW = [
+  ["Sube tu tarea", "PDF, Word o texto. La que ya usas con tus alumnos."],
+  ["Revisa el rediseño", "La IA sigue permitida; la nota pasa a las decisiones y a la defensa."],
+  ["Comparte el enlace", "Cada alumno entrega y responde preguntas sobre su propio trabajo."],
+  ["Mira quién entendió", "Ves la brecha de cada alumno y qué reforzar en la próxima clase."],
+];
+
+const SAMPLE_CODE = [
+  "def binary_search(arr, target):",
+  "    low, high = 0, len(arr) - 1",
+  "    while low <= high:",
+  "        mid = low + (high - low) // 2",
+  "        if arr[mid] < target:",
+  "            low = mid + 1",
+];
+
+/** The hero's example: a corrected submission, showing the product's whole argument at a glance. */
+function CorrectedSheet() {
+  return (
+    <figure className="card grid-paper relative grid min-w-0 grid-cols-[minmax(0,1fr)] gap-6 overflow-hidden p-6 sm:p-8" aria-label="Ejemplo: entrega de un alumno corregida por Defiéndelo">
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <span className="label text-graphite">Entrega de Bruno, 4.º de secundaria</span>
+        <span className="chip chip-danger">Brecha 64%</span>
+      </div>
+      <div className="relative">
+        <pre className="overflow-x-auto rounded-[var(--radius-md)] bg-subtle px-5 py-4 font-mono text-[0.875rem] leading-6 sm:text-[0.9375rem]">
+          {SAMPLE_CODE.join("\n")}
+        </pre>
+        <span className="absolute right-3 top-[5.5rem] hidden xl:block">
+          <TeacherNote>¿y por qué + 1?</TeacherNote>
+        </span>
+      </div>
+      <div className="grid gap-2">
+        <span className="label text-brand-text">Pregunta de defensa</span>
+        <p className="font-bold">¿Por qué mueves low a mid + 1 y no a mid? ¿Qué pasaría con una lista de 2 elementos?</p>
+        <p className="flex flex-wrap items-center gap-x-6 gap-y-1">
+          <span className="italic text-graphite">&ldquo;no sé, lo hizo ChatGPT&rdquo;</span>
+          <TeacherNote>no lo puede explicar</TeacherNote>
+        </p>
+      </div>
+      <figcaption className="grid gap-4 sm:grid-cols-2">
+        <div className="card grid gap-1 p-5 shadow-none">
+          <span className="label text-graphite">IA sola, tarea original</span>
+          <span className="stat-value text-pen">100%</span>
+          <span className="text-[0.9375rem] text-graphite">Saca la nota completa sin ningún alumno.</span>
+        </div>
+        <div className="card grid gap-1 p-5 shadow-none">
+          <span className="label text-graphite">IA sola, tarea rediseñada</span>
+          <span className="stat-value text-success">20%</span>
+          <span className="text-[0.9375rem] text-graphite">El resto se gana en la defensa.</span>
+        </div>
+      </figcaption>
+    </figure>
+  );
+}
 
 export default function Home() {
   const router = useRouter();
@@ -45,95 +102,155 @@ export default function Home() {
   }
 
   return (
-    <main>
-      <section>
-        <p className="font-display text-lg font-bold text-pen">Defiéndelo</p>
-        <h1 className="mt-3 max-w-[18ch]">Que la nota mida lo que entendiste, no lo que escribió la IA.</h1>
-        <p className="prose-measure mt-5 text-graphite">
-          Pega una tarea que ya usas. La rediseñamos para que la IA esté permitida, comprobamos cuánta nota
-          saca la IA sola, y cada alumno defiende su propia entrega. Tú ves quién entendió y qué reforzar mañana.
-        </p>
-        <ol className="steps mt-6" aria-label="Cómo funciona">
-          {["Sube o pega tu tarea", "Revisa la versión rediseñada", "Comparte el enlace", "Mira quién entendió"].map((step, i) => (
-            <li key={step}>
-              <span>
-                <span className="step-number" aria-hidden="true">
-                  {i + 1}
-                </span>
-                {step}
-              </span>
-            </li>
-          ))}
-        </ol>
-      </section>
+    <>
+      <AppBar>
+        <Logo />
+        <nav aria-label="Principal" className="flex flex-wrap items-center gap-x-6">
+          <span className="hidden sm:inline">
+            <a href="#como-funciona" className="btn-quiet">
+              Cómo funciona
+            </a>
+          </span>
+          <a href="#redisena" className="btn-secondary">
+            Rediseñar una tarea
+          </a>
+        </nav>
+      </AppBar>
 
-      <section>
-        <div className="flex flex-wrap items-baseline justify-between gap-3">
-          <h2>Rediseña una tarea</h2>
-          <button type="button" className="btn-quiet" onClick={() => setForm(EXAMPLE)}>
-            Usar una tarea de ejemplo
-          </button>
-        </div>
-        <form onSubmit={create} className="mt-6 grid gap-5">
-          <label className="grid gap-1.5">
-            <span className="font-bold">Título</span>
-            <input
-              type="text"
-              required
-              maxLength={120}
-              value={form.title}
-              onChange={(e) => setForm({ ...form, title: e.target.value })}
-            />
-          </label>
-          <label className="grid gap-1.5">
-            <span className="font-bold">Curso o materia</span>
-            <input
-              type="text"
-              required
-              maxLength={80}
-              value={form.subject}
-              onChange={(e) => setForm({ ...form, subject: e.target.value })}
-            />
-          </label>
-          <div className="grid gap-1.5">
-            <label htmlFor="original" className="font-bold">
-              Tarea original
-            </label>
-            <span id="original-hint" className="text-sm text-graphite">
-              Tal como se la das hoy a tus alumnos. Puedes pegarla o subir el documento.
-            </span>
-            <FileDrop
-              limit={ORIGINAL_LIMIT}
-              hint="PDF, Word (.docx) o texto. Se lee en tu dispositivo."
-              onText={(original) => setForm((f) => ({ ...f, original }))}
-            />
-            <textarea
-              id="original"
-              required
-              minLength={20}
-              maxLength={ORIGINAL_LIMIT}
-              rows={9}
-              aria-describedby="original-hint original-count"
-              value={form.original}
-              onChange={(e) => setForm({ ...form, original: e.target.value })}
-            />
-            <span id="original-count" className="text-right text-sm tabular-nums text-graphite">
-              {form.original.length.toLocaleString("es")} / {ORIGINAL_LIMIT.toLocaleString("es")} caracteres
-            </span>
-          </div>
-          {error && (
-            <p role="alert" className="font-bold text-pen">
-              {error}
+      <main id="contenido" tabIndex={-1} className="outline-none">
+        <section className="container-page grid grid-cols-[minmax(0,1fr)] items-center gap-12 py-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,40rem)] lg:gap-16 lg:py-20">
+          <div className="grid justify-items-start gap-6">
+            <span className="chip chip-highlight">Para docentes de secundaria</span>
+            <h1 className="max-w-[15ch]">Que la nota mida lo que entendiste, no lo que escribió la IA.</h1>
+            <p className="prose-measure max-w-[36rem] text-[1.1875rem] leading-[1.6] text-graphite">
+              Sube una tarea que ya usas. La rediseñamos para que la IA esté permitida pero no alcance, comprobamos cuánta nota saca la IA
+              sola y cada alumno defiende su propia entrega.
             </p>
-          )}
-          <div>
-            <button className="btn" disabled={busy}>
-              {busy ? "Rediseñando la tarea…" : "Rediseñar la tarea"}
-            </button>
-            {busy && <Waiting steps={REDESIGN_STEPS} expected="suele tardar menos de un minuto" />}
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+              <a href="#redisena" className="btn">
+                Rediseñar mi tarea
+              </a>
+              <button
+                type="button"
+                className="btn-quiet"
+                onClick={() => {
+                  setForm(EXAMPLE);
+                  document.getElementById("redisena")?.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
+                Ver un ejemplo con búsqueda binaria
+              </button>
+            </div>
+            <p className="max-w-[32rem] text-[0.9375rem] text-graphite">
+              Sin registro. Los archivos se leen en tu dispositivo y no se suben a ningún servidor.
+            </p>
           </div>
-        </form>
-      </section>
-    </main>
+          <CorrectedSheet />
+        </section>
+
+        <section id="como-funciona" className="container-page grid gap-8 py-12">
+          <h2>Cómo funciona</h2>
+          <ol className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4" aria-label="Cómo funciona">
+            {HOW.map(([title, desc], i) => (
+              <li key={title} className="card grid content-start gap-3 p-6 shadow-none">
+                <span className="steps">
+                  <span className="step-filled inline-flex items-center gap-3 font-bold">
+                    <span className="step-number" aria-hidden="true">
+                      {i + 1}
+                    </span>
+                    {title}
+                  </span>
+                </span>
+                <span className="text-[0.9375rem] text-graphite">{desc}</span>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <section id="redisena" className="container-page grid gap-8 pb-20 pt-12">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div className="grid gap-2">
+              <h2>Rediseña una tarea</h2>
+              <p className="text-graphite">Tarda menos de un minuto. Después puedes editar todo.</p>
+            </div>
+            <button type="button" className="btn-quiet" onClick={() => setForm(EXAMPLE)}>
+              Usar una tarea de ejemplo
+            </button>
+          </div>
+          <form onSubmit={create} className="card grid gap-6 p-6 sm:p-8">
+            <div className="grid gap-6 md:grid-cols-2">
+              <label className="grid gap-2">
+                <span className="font-bold">Título</span>
+                <input
+                  type="text"
+                  required
+                  maxLength={120}
+                  placeholder="Ej. Fotosíntesis en casa"
+                  value={form.title}
+                  onChange={(e) => setForm({ ...form, title: e.target.value })}
+                />
+              </label>
+              <label className="grid gap-2">
+                <span className="font-bold">Curso o materia</span>
+                <input
+                  type="text"
+                  required
+                  maxLength={80}
+                  placeholder="Ej. Ciencia y Tecnología, 3.º"
+                  value={form.subject}
+                  onChange={(e) => setForm({ ...form, subject: e.target.value })}
+                />
+              </label>
+            </div>
+            <div className="grid gap-3">
+              <label htmlFor="original" className="font-bold">
+                Tarea original
+              </label>
+              <span id="original-hint" className="sr-only">
+                Tal como se la das hoy a tus alumnos. Puedes subir el documento o pegar el texto.
+              </span>
+              <FileDrop
+                limit={ORIGINAL_LIMIT}
+                title="Arrastra aquí tu PDF o Word"
+                hint="También sirve un archivo de texto. Se lee en tu dispositivo: no se sube a ningún servidor."
+                onText={(original) => setForm((f) => ({ ...f, original }))}
+              />
+              <div className="flex items-center gap-3 text-graphite" aria-hidden="true">
+                <span className="h-px flex-1 bg-rule" />
+                <span className="label">o pega el texto</span>
+                <span className="h-px flex-1 bg-rule" />
+              </div>
+              <textarea
+                id="original"
+                required
+                minLength={20}
+                maxLength={ORIGINAL_LIMIT}
+                rows={7}
+                aria-describedby="original-hint original-count"
+                value={form.original}
+                onChange={(e) => setForm({ ...form, original: e.target.value })}
+              />
+              <span id="original-count" className="text-right text-[0.9375rem] tabular-nums text-graphite">
+                {form.original.length.toLocaleString("es")} / {ORIGINAL_LIMIT.toLocaleString("es")} caracteres
+              </span>
+            </div>
+            {error && (
+              <p role="alert" className="font-bold text-pen">
+                {error}
+              </p>
+            )}
+            <div className="grid gap-4">
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+                <button className="btn" disabled={busy}>
+                  {busy ? "Rediseñando la tarea…" : "Rediseñar la tarea"}
+                </button>
+                <span className="text-[0.9375rem] text-graphite">Después verás la versión nueva, su rúbrica y la prueba con la IA sola.</span>
+              </div>
+              {busy && <Waiting steps={REDESIGN_STEPS} expected="suele tardar menos de un minuto" />}
+            </div>
+          </form>
+        </section>
+      </main>
+    </>
   );
 }

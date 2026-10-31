@@ -2,6 +2,7 @@
 
 import { use, useCallback, useEffect, useRef, useState } from "react";
 import { api } from "@/app/api-client";
+import { AppBar, Logo, TeacherNote } from "@/app/components/brand";
 import { FileDrop } from "@/app/components/file-drop";
 import { GapBar } from "@/app/components/gap-bar";
 import { Waiting } from "@/app/components/waiting";
@@ -28,9 +29,9 @@ const EVALUATION_STEPS = [
 type Stage = "submit" | "defend" | "done";
 
 const STAGES: { id: Stage; label: string }[] = [
-  { id: "submit", label: "Tu entrega" },
-  { id: "defend", label: "Tu defensa" },
-  { id: "done", label: "Tu resultado" },
+  { id: "submit", label: "Entrega" },
+  { id: "defend", label: "Defensa" },
+  { id: "done", label: "Resultado" },
 ];
 
 /** Spoken time is coarse on purpose: screen readers hear each minute, then the last 30 and 10 seconds. */
@@ -38,6 +39,33 @@ function spokenTime(seconds: number) {
   if (seconds === 30 || seconds === 10) return `Quedan ${seconds} segundos.`;
   if (seconds > 0 && seconds % 60 === 0) return `Quedan ${seconds / 60} minutos.`;
   return null;
+}
+
+/** Remaining time as a ring that empties; the digits inside are the visible clock. */
+function TimerRing({ left, total, children }: { left: number; total: number; children: React.ReactNode }) {
+  const r = 34;
+  const length = 2 * Math.PI * r;
+  const urgent = left < 60;
+  return (
+    <div className="relative grid size-20 shrink-0 place-items-center">
+      <svg width="80" height="80" viewBox="0 0 80 80" className="absolute inset-0 -rotate-90" aria-hidden="true">
+        <circle cx="40" cy="40" r={r} fill="none" stroke="var(--color-bg-subtle)" strokeWidth="6" />
+        <circle
+          cx="40"
+          cy="40"
+          r={r}
+          fill="none"
+          stroke={urgent ? "var(--color-text-danger)" : "var(--color-bg-brand)"}
+          strokeWidth="6"
+          strokeLinecap="round"
+          strokeDasharray={length}
+          strokeDashoffset={length * (1 - left / total)}
+          className="transition-[stroke-dashoffset] duration-1000 ease-linear"
+        />
+      </svg>
+      {children}
+    </div>
+  );
 }
 
 export default function StudentPage({ params }: { params: Promise<{ id: string }> }) {
@@ -120,17 +148,27 @@ export default function StudentPage({ params }: { params: Promise<{ id: string }
     if (stage === "defend") questionHeading.current?.focus();
   }, [current, stage]);
 
+  const header = (
+    <AppBar>
+      <Logo />
+      <span className="chip chip-neutral">Alumno</span>
+    </AppBar>
+  );
+
   if (!assignment) {
     return (
-      <main>
-        {error ? (
-          <p role="alert" className="font-bold text-pen">
-            {error}
-          </p>
-        ) : (
-          <p className="text-graphite">Cargando la tarea…</p>
-        )}
-      </main>
+      <>
+        {header}
+        <main id="contenido" tabIndex={-1} className="container-page py-12 outline-none">
+          {error ? (
+            <p role="alert" className="font-bold text-pen">
+              {error}
+            </p>
+          ) : (
+            <p className="text-graphite">Cargando la tarea…</p>
+          )}
+        </main>
+      </>
     );
   }
 
@@ -141,219 +179,244 @@ export default function StudentPage({ params }: { params: Promise<{ id: string }
   const isLast = current === questions.length - 1;
   const answered = questions.filter((q) => (answers[q.id] ?? "").trim()).length;
   const stageIndex = STAGES.findIndex((s) => s.id === stage);
+  const gapOf = (p: Evaluation["perCriterion"][number]) => p.submissionScore - p.defenseScore;
+  const widestGap = evaluation?.perCriterion.filter((p) => gapOf(p) >= 0.25).sort((a, b) => gapOf(b) - gapOf(a))[0]?.criterionId;
 
   return (
-    <main>
-      <nav aria-label="Pasos">
-        <ol className="steps mb-8">
-          {STAGES.map((s, i) => (
-            <li key={s.id}>
-              <span aria-current={s.id === stage ? "step" : undefined}>
-                <span className="step-number" aria-hidden="true">
-                  {i < stageIndex ? "✓" : i + 1}
+    <>
+      {header}
+      <main id="contenido" tabIndex={-1} className="mx-auto grid w-full max-w-2xl gap-8 px-4 py-8 outline-none sm:px-6 sm:py-10">
+        <nav aria-label="Pasos" className="card px-4 py-2 shadow-none">
+          <ol className="steps justify-between gap-x-2">
+            {STAGES.map((s, i) => (
+              <li key={s.id}>
+                <span aria-current={s.id === stage ? "step" : undefined} className={i < stageIndex ? "step-done" : ""}>
+                  <span className="step-number" aria-hidden="true">
+                    {i < stageIndex ? "✓" : i + 1}
+                  </span>
+                  {s.label}
                 </span>
-                {s.label}
-              </span>
-            </li>
-          ))}
-        </ol>
-      </nav>
+              </li>
+            ))}
+          </ol>
+        </nav>
 
-      <section>
-        <p className="font-display font-bold text-pen">{assignment.subject}</p>
-        <h1 className="mt-2">{assignment.title}</h1>
-        {stage === "submit" ? (
-          <>
-            <p className="prose-measure mt-5 whitespace-pre-line">{assignment.statement}</p>
-            <p className="prose-measure mt-4 border-l-4 border-ink pl-4 font-bold">{assignment.aiPolicy}</p>
-          </>
-        ) : (
-          <details className="mt-4">
-            <summary className="btn-quiet cursor-pointer">Ver el enunciado de la tarea</summary>
-            <p className="prose-measure mt-3 whitespace-pre-line">{assignment.statement}</p>
-          </details>
+        <section className="grid gap-4">
+          <span className="chip chip-brand justify-self-start">{assignment.subject}</span>
+          <h1 className="text-[clamp(1.75rem,6vw,2.5rem)]">{assignment.title}</h1>
+          {stage === "submit" ? (
+            <div className="card grid gap-4 p-5 sm:p-6">
+              <p className="prose-measure whitespace-pre-line">{assignment.statement}</p>
+              <p className="rounded-[var(--radius-md)] border-l-4 border-brand bg-brand-subtle p-4 font-bold">
+                <span className="label block text-brand-text">Sobre la IA</span>
+                {assignment.aiPolicy}
+              </p>
+            </div>
+          ) : (
+            <details>
+              <summary className="btn-quiet cursor-pointer">Ver el enunciado de la tarea</summary>
+              <p className="prose-measure mt-3 whitespace-pre-line">{assignment.statement}</p>
+            </details>
+          )}
+        </section>
+
+        {stage === "submit" && (
+          <section className="grid gap-6">
+            <div className="grid gap-2">
+              <h2>Tu entrega</h2>
+              <p className="prose-measure text-graphite">
+                Cuando entregues, te haremos unas preguntas sobre tu trabajo. Tendrás {DEFENSE_SECONDS / 60} minutos para responderlas.
+              </p>
+            </div>
+            <form onSubmit={startDefense} className="grid gap-6">
+              <div className="grid gap-2">
+                <label htmlFor="alias" className="font-bold">
+                  Apodo
+                </label>
+                <span id="alias-hint" className="text-[0.9375rem] text-graphite">
+                  Usa un apodo, no tu nombre. No guardamos datos personales.
+                </span>
+                <input
+                  id="alias"
+                  type="text"
+                  required
+                  maxLength={40}
+                  autoComplete="off"
+                  aria-describedby="alias-hint"
+                  value={alias}
+                  onChange={(e) => setAlias(e.target.value)}
+                />
+              </div>
+              <div className="grid gap-3">
+                <label htmlFor="work" className="font-bold">
+                  Tu trabajo
+                </label>
+                <span id="work-hint" className="text-[0.9375rem] text-graphite">
+                  Pega tu trabajo o súbelo como archivo.
+                </span>
+                <FileDrop
+                  limit={WORK_LIMIT}
+                  title="Sube tu archivo"
+                  hint="PDF, Word (.docx), texto o código (.py, .js, .java…)."
+                  onText={setWork}
+                />
+                <textarea
+                  id="work"
+                  required
+                  minLength={20}
+                  maxLength={WORK_LIMIT}
+                  rows={10}
+                  aria-describedby="work-hint work-count"
+                  className="font-mono text-[0.9375rem]"
+                  value={work}
+                  onChange={(e) => setWork(e.target.value)}
+                />
+                <span id="work-count" className="text-right text-[0.9375rem] tabular-nums text-graphite">
+                  {work.length.toLocaleString("es")} / {WORK_LIMIT.toLocaleString("es")} caracteres
+                </span>
+              </div>
+              {error && (
+                <p role="alert" className="font-bold text-pen">
+                  {error}
+                </p>
+              )}
+              <div className="grid gap-4">
+                <button className="btn w-full" disabled={busy}>
+                  {busy ? "Preparando tus preguntas…" : "Entregar y empezar mi defensa"}
+                </button>
+                {busy && <Waiting steps={QUESTION_STEPS} expected="suele tardar cerca de un minuto" />}
+              </div>
+            </form>
+          </section>
         )}
-      </section>
 
-      {stage === "submit" && (
-        <section>
-          <h2>Tu entrega</h2>
-          <p className="prose-measure mt-2 text-graphite">
-            Cuando entregues, te haremos unas preguntas sobre tu trabajo. Tendrás {DEFENSE_SECONDS / 60} minutos para responderlas.
-          </p>
-          <form onSubmit={startDefense} className="mt-6 grid gap-5">
-            <div className="grid gap-1.5">
-              <label htmlFor="alias" className="font-bold">
-                Apodo
-              </label>
-              <span id="alias-hint" className="text-sm text-graphite">
-                Usa un apodo, no tu nombre. No guardamos datos personales.
-              </span>
-              <input
-                id="alias"
-                type="text"
-                required
-                maxLength={40}
-                autoComplete="off"
-                aria-describedby="alias-hint"
-                value={alias}
-                onChange={(e) => setAlias(e.target.value)}
-              />
+        {stage === "defend" && question && (
+          <section className="grid gap-5">
+            <div className="flex items-center justify-between gap-4">
+              <div className="grid gap-1">
+                <p className="label text-graphite">
+                  Pregunta {current + 1} de {questions.length}
+                </p>
+                {!extended && (
+                  <button
+                    type="button"
+                    className="btn-quiet justify-self-start"
+                    onClick={() => {
+                      setExtended(true);
+                      setSecondsLeft((s) => s + EXTRA_SECONDS);
+                      setAnnouncement(`Agregamos ${EXTRA_SECONDS / 60} minutos.`);
+                    }}
+                  >
+                    Necesito más tiempo
+                  </button>
+                )}
+              </div>
+              <TimerRing left={secondsLeft} total={DEFENSE_SECONDS + (extended ? EXTRA_SECONDS : 0)}>
+                <p className={`relative font-display text-lg font-bold tabular-nums ${secondsLeft < 60 ? "text-pen" : ""}`} aria-hidden="true">
+                  {minutes}:{seconds}
+                </p>
+              </TimerRing>
             </div>
-            <div className="grid gap-1.5">
-              <label htmlFor="work" className="font-bold">
-                Tu trabajo
-              </label>
-              <span id="work-hint" className="text-sm text-graphite">
-                Pega tu trabajo o súbelo como archivo.
-              </span>
-              <FileDrop
-                limit={WORK_LIMIT}
-                hint="PDF, Word (.docx), texto o código (.py, .js, .java…)."
-                onText={setWork}
-              />
-              <textarea
-                id="work"
-                required
-                minLength={20}
-                maxLength={WORK_LIMIT}
-                rows={12}
-                aria-describedby="work-hint work-count"
-                value={work}
-                onChange={(e) => setWork(e.target.value)}
-              />
-              <span id="work-count" className="text-right text-sm tabular-nums text-graphite">
-                {work.length.toLocaleString("es")} / {WORK_LIMIT.toLocaleString("es")} caracteres
-              </span>
+            <p className="sr-only" aria-live="polite">
+              {announcement}
+            </p>
+            <div className="flex gap-1.5" aria-hidden="true">
+              {questions.map((q, i) => (
+                <span
+                  key={q.id}
+                  className={`h-2 flex-1 rounded-full ${i === current ? "bg-brand" : (answers[q.id] ?? "").trim() ? "bg-inverse" : "bg-subtle"}`}
+                />
+              ))}
             </div>
+
+            <div className="grid gap-3">
+              <span className="chip chip-brand justify-self-start">Sobre tu trabajo</span>
+              <h2 ref={questionHeading} tabIndex={-1} className="outline-none">
+                {question.question}
+              </h2>
+              <p id="answer-hint" className="prose-measure text-graphite">
+                Responde con tus palabras, en 2 a 4 oraciones. Ctrl + Enter pasa a la siguiente.
+              </p>
+            </div>
+            <textarea
+              className="ruled min-h-[12rem] rounded-[var(--radius-lg)]"
+              rows={6}
+              maxLength={4000}
+              aria-label={`Tu respuesta a la pregunta ${current + 1}`}
+              aria-describedby={`answer-hint${pasteBlocked ? " paste-note" : ""}`}
+              value={answers[question.id] ?? ""}
+              onChange={(e) => setAnswers({ ...answers, [question.id]: e.target.value })}
+              onPaste={(e) => {
+                e.preventDefault();
+                setPasteBlocked(true);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+                  e.preventDefault();
+                  if (isLast) void sendDefense();
+                  else setCurrent((c) => c + 1);
+                }
+              }}
+            />
+            {pasteBlocked && (
+              <p id="paste-note" role="status" className="rounded-[var(--radius-md)] bg-highlight-subtle p-3 text-[0.9375rem] font-bold">
+                En la defensa no se puede pegar texto: queremos leer tu explicación, escrita por ti.
+              </p>
+            )}
+
+            <div className="flex flex-wrap items-center gap-3">
+              {current > 0 && (
+                <button type="button" className="btn-secondary" onClick={() => setCurrent((c) => c - 1)}>
+                  Anterior
+                </button>
+              )}
+              {isLast ? (
+                <button type="button" className="btn flex-1" disabled={busy} onClick={() => void sendDefense()}>
+                  {busy ? "Revisando tu defensa…" : `Enviar mi defensa (${answered} de ${questions.length} respondidas)`}
+                </button>
+              ) : (
+                <button type="button" className="btn flex-1" onClick={() => setCurrent((c) => c + 1)}>
+                  Siguiente pregunta
+                </button>
+              )}
+            </div>
+            {busy && <Waiting steps={EVALUATION_STEPS} expected="suele tardar menos de un minuto" />}
             {error && (
               <p role="alert" className="font-bold text-pen">
                 {error}
               </p>
             )}
-            <div>
-              <button className="btn" disabled={busy}>
-                {busy ? "Preparando tus preguntas…" : "Entregar y empezar mi defensa"}
-              </button>
-              {busy && <Waiting steps={QUESTION_STEPS} expected="suele tardar cerca de un minuto" />}
+          </section>
+        )}
+
+        {stage === "done" && evaluation && (
+          <section className="grid gap-6">
+            <div className="grid gap-3">
+              <span className="chip chip-success justify-self-start">Defensa enviada</span>
+              <h2>Lo que defendiste</h2>
+              <p className="prose-measure">{evaluation.summary}</p>
             </div>
-          </form>
-        </section>
-      )}
-
-      {stage === "defend" && question && (
-        <section>
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className="font-bold text-graphite">
-              Pregunta {current + 1} de {questions.length}
-            </p>
-            <div className="flex flex-wrap items-center gap-3">
-              <p
-                className={`font-display text-xl font-bold tabular-nums ${secondsLeft < 60 ? "text-pen" : ""}`}
-                aria-hidden="true"
-              >
-                {minutes}:{seconds}
-              </p>
-              {!extended && (
-                <button
-                  type="button"
-                  className="btn-quiet"
-                  onClick={() => {
-                    setExtended(true);
-                    setSecondsLeft((s) => s + EXTRA_SECONDS);
-                    setAnnouncement(`Agregamos ${EXTRA_SECONDS / 60} minutos.`);
-                  }}
-                >
-                  Necesito más tiempo
-                </button>
-              )}
-            </div>
-          </div>
-          <p className="sr-only" aria-live="polite">
-            {announcement}
-          </p>
-          <div className="mt-3 flex gap-1.5" aria-hidden="true">
-            {questions.map((q, i) => (
-              <span
-                key={q.id}
-                className={`h-1.5 flex-1 rounded-full ${i === current ? "bg-pen" : (answers[q.id] ?? "").trim() ? "bg-ink" : "bg-ink-soft"}`}
-              />
-            ))}
-          </div>
-
-          <h2 ref={questionHeading} tabIndex={-1} className="mt-6 outline-none">
-            {question.question}
-          </h2>
-          <p id="answer-hint" className="prose-measure mt-2 text-graphite">
-            Responde con tus palabras, en 2 a 4 oraciones. Ctrl + Enter pasa a la siguiente.
-          </p>
-          <textarea
-            className="mt-4"
-            rows={6}
-            maxLength={4000}
-            aria-label={`Tu respuesta a la pregunta ${current + 1}`}
-            aria-describedby={`answer-hint${pasteBlocked ? " paste-note" : ""}`}
-            value={answers[question.id] ?? ""}
-            onChange={(e) => setAnswers({ ...answers, [question.id]: e.target.value })}
-            onPaste={(e) => {
-              e.preventDefault();
-              setPasteBlocked(true);
-            }}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
-                e.preventDefault();
-                if (isLast) void sendDefense();
-                else setCurrent((c) => c + 1);
-              }
-            }}
-          />
-          {pasteBlocked && (
-            <p id="paste-note" role="status" className="mt-2 text-sm font-bold">
-              En la defensa no se puede pegar texto: queremos leer tu explicación, escrita por ti.
-            </p>
-          )}
-
-          <div className="mt-6 flex flex-wrap items-center gap-4">
-            {current > 0 && (
-              <button type="button" className="btn-outline" onClick={() => setCurrent((c) => c - 1)}>
-                Anterior
-              </button>
-            )}
-            {isLast ? (
-              <button type="button" className="btn" disabled={busy} onClick={() => void sendDefense()}>
-                {busy ? "Revisando tu defensa…" : `Enviar mi defensa (${answered} de ${questions.length} respondidas)`}
-              </button>
-            ) : (
-              <button type="button" className="btn" onClick={() => setCurrent((c) => c + 1)}>
-                Siguiente pregunta
-              </button>
-            )}
-          </div>
-          {busy && <Waiting steps={EVALUATION_STEPS} expected="suele tardar menos de un minuto" />}
-          {error && (
-            <p role="alert" className="mt-4 font-bold text-pen">
-              {error}
-            </p>
-          )}
-        </section>
-      )}
-
-      {stage === "done" && evaluation && (
-        <section>
-          <h2>Lo que defendiste</h2>
-          <p className="prose-measure mt-3">{evaluation.summary}</p>
-          <ul className="mt-6 grid gap-6">
-            {evaluation.perCriterion.map((p) => (
-              <li key={p.criterionId} className="grid gap-2">
-                <h3>{criterionName(p.criterionId)}</h3>
-                <GapBar submitted={p.submissionScore} explained={p.defenseScore} />
-                {p.misconception && <p className="pen-mark">{p.misconception}</p>}
-              </li>
-            ))}
-          </ul>
-          <p className="mt-8 text-sm text-graphite">Tu profesor revisa esto y pone la nota final.</p>
-        </section>
-      )}
-    </main>
+            <ul className="grid gap-4">
+              {evaluation.perCriterion.map((p) => (
+                <li key={p.criterionId} className="card grid gap-3 p-5">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <h3>{criterionName(p.criterionId)}</h3>
+                    {p.criterionId === widestGap && <TeacherNote>¡revisa este!</TeacherNote>}
+                  </div>
+                  <GapBar submitted={p.submissionScore} explained={p.defenseScore} />
+                  {p.misconception && (
+                    <p className="rounded-[var(--radius-md)] border-l-4 border-pen bg-danger-subtle p-4 text-[0.9375rem]">
+                      <span className="label block text-pen">Para repasar</span>
+                      {p.misconception}
+                    </p>
+                  )}
+                </li>
+              ))}
+            </ul>
+            <p className="text-[0.9375rem] text-graphite">Tu profesor revisa esto y pone la nota final.</p>
+          </section>
+        )}
+      </main>
+    </>
   );
 }
