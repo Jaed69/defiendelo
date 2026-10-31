@@ -138,10 +138,15 @@ function printSheet(sheetId: string) {
   window.print();
 }
 
-export function PrintSheetButton({ sheetId }: { sheetId: string }) {
+/** `quiet` is a text action for tight rows (the student page); the default is a secondary button. */
+export function PrintSheetButton({ sheetId, quiet = false }: { sheetId: string; quiet?: boolean }) {
   return (
-    <button type="button" className="btn-secondary inline-flex items-center gap-2" onClick={() => printSheet(sheetId)}>
-      <PrinterIcon /> Imprimir tarea
+    <button
+      type="button"
+      className={quiet ? "flex min-h-11 items-center gap-2 font-bold text-brand-text" : "btn-secondary inline-flex items-center gap-2"}
+      onClick={() => printSheet(sheetId)}
+    >
+      <PrinterIcon /> {quiet ? "Imprimir" : "Imprimir tarea"}
     </button>
   );
 }
