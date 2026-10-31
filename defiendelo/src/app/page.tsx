@@ -3,8 +3,9 @@
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { api } from "./api-client";
-import { AppBar, Logo, TeacherNote } from "./components/brand";
-import { ExampleGallery } from "./components/example-gallery";
+import { AppBar, Logo } from "./components/brand";
+import { ExampleGallery, useShowcaseSummaries } from "./components/example-gallery";
+import { HeroCarousel } from "./components/hero-carousel";
 import { FileDrop } from "./components/file-drop";
 import { Waiting } from "./components/waiting";
 import { EXAMPLES, type ExampleTask, exampleSubjectLabel } from "./examples";
@@ -27,33 +28,6 @@ const HOW = [
   ["Mira quién entendió", "Y qué repasar en clase."],
 ];
 
-/** The hero's example: a student who handed in AI work and cannot explain it. */
-function CorrectedSheet() {
-  return (
-    <figure className="card grid-paper relative grid min-w-0 grid-cols-[minmax(0,1fr)] gap-6 overflow-hidden p-6 sm:p-8" aria-label="Ejemplo: un alumno defiende su tarea">
-      <span className="label text-graphite">Texto argumentativo · Comunicación, 4.º</span>
-      <div className="grid gap-2">
-        <span className="label text-brand-text">Pregunta al alumno</span>
-        <p className="font-display text-xl font-bold leading-snug">¿Por qué elegiste estar a favor y no en contra?</p>
-        <p className="flex flex-wrap items-center gap-x-6 gap-y-1">
-          <span className="text-lg italic text-graphite">&ldquo;No sé, lo hizo ChatGPT.&rdquo;</span>
-          <TeacherNote>no lo puede explicar</TeacherNote>
-        </p>
-      </div>
-      <figcaption className="grid gap-4 sm:grid-cols-2">
-        <div className="card grid gap-1 p-5 shadow-none">
-          <span className="label text-graphite">Nota de la IA sola, tarea de siempre</span>
-          <span className="stat-value text-pen">100%</span>
-        </div>
-        <div className="card grid gap-1 p-5 shadow-none">
-          <span className="label text-graphite">Nota de la IA sola, tarea rediseñada</span>
-          <span className="stat-value text-success">22%</span>
-        </div>
-      </figcaption>
-    </figure>
-  );
-}
-
 export default function Home() {
   const router = useRouter();
   const [form, setForm] = useState({ title: "", subject: "", original: "" });
@@ -61,6 +35,7 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [loaded, setLoaded] = useState("");
   const titleInput = useRef<HTMLInputElement>(null);
+  const summaries = useShowcaseSummaries();
 
   function loadExample(example: ExampleTask) {
     setForm({ title: example.title, subject: exampleSubjectLabel(example), original: example.original });
@@ -117,7 +92,7 @@ export default function Home() {
             </div>
             <p className="text-[0.9375rem] text-graphite">Gratis y sin registro.</p>
           </div>
-          <CorrectedSheet />
+          <HeroCarousel summaries={summaries} />
         </section>
 
         <section id="como-funciona" className="container-page grid gap-8 py-12">
@@ -139,7 +114,7 @@ export default function Home() {
           </ol>
         </section>
 
-        <ExampleGallery onUse={loadExample} />
+        <ExampleGallery summaries={summaries} onUse={loadExample} />
 
         <section id="redisena" className="container-page grid gap-8 pb-20 pt-12">
           <h2>Rediseña una tarea</h2>
