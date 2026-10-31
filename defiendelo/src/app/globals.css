@@ -425,3 +425,40 @@ summary:focus-visible {
     transition: none !important;
   }
 }
+
+/* Printing a task sheet: the sheet is copied into #print-root and everything else is left off the page. */
+#print-root {
+  display: none;
+}
+
+@media print {
+  @page {
+    margin: 12mm;
+  }
+
+  html.printing-sheet body > :not(#print-root) {
+    display: none !important;
+  }
+
+  html.printing-sheet #print-root {
+    display: block;
+  }
+
+  html.printing-sheet,
+  html.printing-sheet body {
+    background: white;
+  }
+
+  .sheet-doc {
+    border: 0;
+  }
+
+  .sheet-doc li {
+    break-inside: avoid;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
