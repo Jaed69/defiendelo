@@ -10,7 +10,7 @@ import { ExamplePicker, exampleIntro } from "./components/example-picker";
 import { FileDrop } from "./components/file-drop";
 import { FileTextIcon, UsersIcon } from "./components/icons";
 import { Waiting } from "./components/waiting";
-import { type ExampleTask, exampleSubjectLabel } from "./examples";
+import { type ExampleTask, examplePdf, exampleSubjectLabel } from "./examples";
 import { exampleFor } from "./ready-example";
 
 const ORIGINAL_LIMIT = 8000;
@@ -131,6 +131,7 @@ export default function Home() {
                   limit={ORIGINAL_LIMIT}
                   title="Sube tu PDF o Word"
                   hint="o pega el texto abajo"
+                  attached={example ? examplePdf(example) : null}
                   onText={(original) => setForm((f) => ({ ...f, original }))}
                 />
                 <textarea

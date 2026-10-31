@@ -3,76 +3,57 @@
 import { useId } from "react";
 import { type StatementBlock, parseStatement } from "@/app/statement-format";
 import type { Criterion } from "@/domain/types";
-import {
-  AlertIcon,
-  BranchIcon,
-  InboxIcon,
-  ListIcon,
-  MicIcon,
-  PenIcon,
-  PrinterIcon,
-  QuestionIcon,
-  SearchIcon,
-  ShieldCheckIcon,
-  SparklesIcon,
-} from "./icons";
+import { ListIcon, MicIcon, PenIcon, PrinterIcon } from "./icons";
 
 type Step = Extract<StatementBlock, { kind: "step" }>;
 
-// First match wins, so a step titled "Tabla de verificación de la IA" reads as verification, not as AI use.
-const STEP_KINDS = [
-  { pattern: /defens|sustent|oral|conversaci|entrevista|en vivo/i, Icon: MicIcon, live: true },
-  { pattern: /verific|contrast/i, Icon: ShieldCheckIcon, live: false },
-  { pattern: /(?<!\p{L})ia(?!\p{L})|inteligencia artificial|chatbot/iu, Icon: SparklesIcon, live: false },
-  { pattern: /redac|escrib|monograf|informe|texto|correo/i, Icon: PenIcon, live: false },
-  { pattern: /decisi|bitácora|registr|elige|descart|selecci/i, Icon: BranchIcon, live: false },
-  { pattern: /explora|investig|experiment|indaga|busca|lee /i, Icon: SearchIcon, live: false },
-];
+// The defense step is the only one that stands out: it is where the grade is decided.
+const LIVE = /defens|sustent|oral|conversaci|entrevista|en vivo/i;
 
-function stepKind(step: Step) {
+function isLive(step: Step) {
   // A title says what the step is about; without one, its opening clause does.
-  const about = step.title ?? step.text.split(/[,.:;]/)[0];
-  return STEP_KINDS.find((k) => k.pattern.test(about)) ?? { Icon: ListIcon, live: false };
+  return LIVE.test(step.title ?? step.text.split(/[,.:;]/)[0]);
+}
+
+/** One label per block, small and quiet: the text carries the content, not boxes and icons. */
+function Label({ children, tone = "neutral" }: { children: React.ReactNode; tone?: "neutral" | "brand" | "danger" }) {
+  const color = tone === "brand" ? "text-brand-text" : tone === "danger" ? "text-pen" : "text-graphite";
+  return <span className={`label ${color}`}>{children}</span>;
 }
 
 function Steps({ steps }: { steps: Step[] }) {
   return (
-    <ol className="sheet-steps grid gap-5">
+    <ol className="sheet-steps grid gap-4">
       {steps.map((step) => {
-        const { Icon, live } = stepKind(step);
+        const live = isLive(step);
+        // Skip the chip when the title already says it is graded live.
+        const chip = live && !/califica|en vivo/i.test(step.title ?? "");
         return (
-          <li
-            key={step.number}
-            className={`relative grid grid-cols-[2.5rem_minmax(0,1fr)] gap-4 ${live ? "rounded-[var(--radius-md)] bg-brand-subtle p-3 -mx-3" : ""}`}
-          >
-            <span className="grid size-10 place-items-center rounded-full bg-brand font-display text-lg font-bold text-white" aria-hidden="true">
+          <li key={step.number} className="grid grid-cols-[2rem_minmax(0,1fr)] gap-3">
+            <span
+              className={`grid size-8 place-items-center rounded-full font-display font-bold ${
+                live ? "bg-brand text-white" : "border border-rule text-ink"
+              }`}
+              aria-hidden="true"
+            >
               {step.number}
             </span>
-            {step.title ? (
-              <div className="grid gap-1.5 pt-1.5">
+            <div className="grid gap-1 pt-1">
+              {step.title && (
                 <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-bold">
-                  <Icon className="text-brand-text" />
+                  {live && <MicIcon className="size-4 text-brand-text" />}
                   <span>
                     <span className="sr-only">Paso {step.number}: </span>
                     {step.title}
                   </span>
-                  {live && <span className="chip chip-brand">Se califica en la defensa</span>}
                 </p>
-                <p className="leading-relaxed">{step.text}</p>
-              </div>
-            ) : (
-              // The numbered circle already says which step it is, so an untitled step gets no made-up title.
-              <div className="grid gap-1.5 pt-2">
-                {live && <span className="chip chip-brand justify-self-start">Se califica en la defensa</span>}
-                <p className="grid grid-cols-[1.25rem_minmax(0,1fr)] gap-2 leading-relaxed">
-                  <Icon className="mt-0.5 text-brand-text" />
-                  <span>
-                    <span className="sr-only">Paso {step.number}: </span>
-                    {step.text}
-                  </span>
-                </p>
-              </div>
-            )}
+              )}
+              {chip && <span className="chip chip-brand justify-self-start">Se califica en la defensa</span>}
+              <p className="leading-relaxed text-graphite">
+                {!step.title && <span className="sr-only">Paso {step.number}: </span>}
+                {step.text}
+              </p>
+            </div>
           </li>
         );
       })}
@@ -92,25 +73,16 @@ function Blocks({ blocks }: { blocks: StatementBlock[] }) {
     if (Array.isArray(group)) return <Steps key={i} steps={group} />;
     if (group.kind === "question") {
       return (
-        <div key={i} className="grid gap-2 rounded-[var(--radius-lg)] border-2 border-ink bg-highlight-subtle p-5">
-          <span className="label flex items-center gap-2">
-            <QuestionIcon /> Pregunta central
-          </span>
+        <div key={i} className="grid gap-1 border-l-4 border-brand pl-4">
+          <Label tone="brand">Pregunta central</Label>
           <p className="font-display text-xl font-bold leading-snug">{group.text}</p>
         </div>
       );
     }
     if (group.kind === "note") {
-      const important = group.label === "Importante";
-      const NoteIcon = important ? AlertIcon : InboxIcon;
       return (
-        <div
-          key={i}
-          className={`grid gap-1.5 rounded-[var(--radius-md)] border-l-4 p-4 ${important ? "border-pen bg-danger-subtle" : "border-ink bg-subtle"}`}
-        >
-          <span className={`label flex items-center gap-2 ${important ? "text-pen" : ""}`}>
-            <NoteIcon /> {group.label}
-          </span>
+        <div key={i} className="grid gap-1">
+          <Label tone={group.label === "Importante" ? "danger" : "neutral"}>{group.label}</Label>
           <p className="leading-relaxed">{group.text}</p>
         </div>
       );
@@ -197,10 +169,8 @@ export function AssignmentSheet({
       <div className="grid gap-6 px-4 py-6 sm:px-8">
         <Blocks blocks={parseStatement(statement)} />
 
-        <div className="grid gap-1.5 rounded-[var(--radius-md)] border-l-4 border-brand bg-brand-subtle p-4">
-          <span className="label flex items-center gap-2 text-brand-text">
-            <SparklesIcon /> Uso de la IA
-          </span>
+        <div className="grid gap-1 border-t border-rule pt-5">
+          <Label>Uso de la IA</Label>
           <p className="leading-relaxed">{aiPolicy}</p>
         </div>
 

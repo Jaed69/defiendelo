@@ -18,8 +18,28 @@ function UploadIcon() {
   );
 }
 
-/** Lets a person drop or pick a document; its text is read in the browser and handed to the form field. */
-export function FileDrop({ limit, title, hint, onText }: { limit: number; title: string; hint: string; onText: (text: string) => void }) {
+export interface AttachedFile {
+  name: string;
+  href: string;
+}
+
+/**
+ * Lets a person drop or pick a document; its text is read in the browser and handed to the form field.
+ * `attached` shows a document already loaded (a ready-made example) instead of the last upload.
+ */
+export function FileDrop({
+  limit,
+  title,
+  hint,
+  attached,
+  onText,
+}: {
+  limit: number;
+  title: string;
+  hint: string;
+  attached?: AttachedFile | null;
+  onText: (text: string) => void;
+}) {
   const inputId = useId();
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   const [dragging, setDragging] = useState(false);
@@ -66,7 +86,15 @@ export function FileDrop({ limit, title, hint, onText }: { limit: number; title:
           role={status.kind === "error" ? "alert" : "status"}
         >
           {status.kind === "reading" && `Leyendo «${status.name}» en tu dispositivo; el archivo no se sube a ningún servidor.`}
-          {(status.kind === "done" || status.kind === "error") && status.message}
+          {status.kind !== "reading" && attached && (
+            <>
+              PDF de ejemplo cargado:{" "}
+              <a href={attached.href} target="_blank" rel="noopener" className="font-bold text-brand-text underline">
+                {attached.name}
+              </a>
+            </>
+          )}
+          {!attached && (status.kind === "done" || status.kind === "error") && status.message}
         </p>
       </div>
       <input

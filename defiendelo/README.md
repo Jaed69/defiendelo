@@ -48,3 +48,11 @@ Students use an alias; no personal data or audio is stored. The teacher dashboar
 ```bash
 npm test
 ```
+
+## Example PDFs
+
+Each example task ships as a PDF in `public/ejemplos/`, shown as already loaded when a teacher picks the example. The text comes from `src/app/examples.ts`; after editing an example, rebuild them (needs Python with `reportlab`). A test checks that each PDF reads back as its task.
+
+```bash
+npm run examples:pdf
+```
