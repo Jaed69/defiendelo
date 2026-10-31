@@ -504,6 +504,8 @@ export default function StudentPage({ params }: { params: Promise<{ id: string }
   const [fromFile, setFromFile] = useState(false);
   const [showText, setShowText] = useState(false);
   const [showWork, setShowWork] = useState(false);
+  // null = default: open before submitting, folded afterwards.
+  const [sheetToggle, setSheetToggle] = useState<boolean | null>(null);
   const [busy, setBusy] = useState(false);
   const [editing, setEditing] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -620,7 +622,8 @@ export default function StudentPage({ params }: { params: Promise<{ id: string }
   const stepIndex = !view ? 0 : status === "publicado" || status === "evaluado" ? 2 : 1;
   const showForm = (!view && assignment.acceptsSubmissions) || (editing && status === "entregado");
   // A file that hit the length limit was cut: open its text so the student checks the end.
-  const textVisible = source === "texto" || showText || (fromFile && work.length >= WORK_LIMIT);
+  const sheetOpen = sheetToggle ?? !view;
+  const textVisible =source === "texto" || showText || (fromFile && work.length >= WORK_LIMIT);
 
   return (
     <>
@@ -637,26 +640,30 @@ export default function StudentPage({ params }: { params: Promise<{ id: string }
             </span>
             {(!view || status === "entregado") && <Deadline deadline={deadline} />}
           </div>
-          <details open={!view} className="group">
-            <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 font-bold text-brand-text">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <button
+              type="button"
+              aria-expanded={sheetOpen}
+              aria-controls="hoja-tarea"
+              onClick={() => setSheetToggle(!sheetOpen)}
+              className="flex min-h-11 items-center gap-2 font-bold text-brand-text"
+            >
               <EyeIcon className="size-5" />
-              <span className="group-open:hidden">Ver la tarea</span>
-              <span className="hidden group-open:inline">Ocultar la tarea</span>
-            </summary>
-            <div className="mt-2 grid gap-3">
-              <AssignmentSheet
-                id="hoja-tarea"
-                title={assignment.title}
-                subject={assignment.subject}
-                statement={assignment.statement}
-                aiPolicy={assignment.aiPolicy}
-                criteria={assignment.criteria}
-              />
-              <div>
-                <PrintSheetButton sheetId="hoja-tarea" />
-              </div>
-            </div>
-          </details>
+              {sheetOpen ? "Ocultar la tarea" : "Ver la tarea"}
+            </button>
+            <PrintSheetButton sheetId="hoja-tarea" quiet />
+          </div>
+          {/* Always rendered so it can be printed while folded; only the sheet itself is cloned for printing. */}
+          <div className={sheetOpen ? "" : "hidden"}>
+            <AssignmentSheet
+              id="hoja-tarea"
+              title={assignment.title}
+              subject={assignment.subject}
+              statement={assignment.statement}
+              aiPolicy={assignment.aiPolicy}
+              criteria={assignment.criteria}
+            />
+          </div>
         </section>
 
         {!view && !assignment.acceptsSubmissions && <StateCard icon={<LockIcon className={BIG_ICON} />} tone="neutral" title="Entregas cerradas" />}
