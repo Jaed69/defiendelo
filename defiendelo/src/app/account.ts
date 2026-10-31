@@ -1,6 +1,8 @@
 "use client";
 
 const KEY = "defiendelo:code";
+// Set by /entrar when "Recordar en este dispositivo" is unchecked: lives only while the tab is open.
+const TAB_KEY = "defiendelo:code:tab";
 
 /**
  * The PROFE- or ALUM- code this device remembers. Stored only on the device the person chose
@@ -9,7 +11,7 @@ const KEY = "defiendelo:code";
 export function savedAccountCode(): string | null {
   if (typeof window === "undefined") return null;
   try {
-    return window.localStorage.getItem(KEY);
+    return window.sessionStorage.getItem(TAB_KEY) ?? window.localStorage.getItem(KEY);
   } catch {
     return null;
   }
@@ -26,6 +28,7 @@ export function rememberAccountCode(code: string) {
 export function forgetAccountCode() {
   try {
     window.localStorage.removeItem(KEY);
+    window.sessionStorage.removeItem(TAB_KEY);
   } catch {
     // Nothing stored.
   }
