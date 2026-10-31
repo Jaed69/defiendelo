@@ -169,3 +169,34 @@ export const UsersIcon = (p: IconProps) => (
     <path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6.5 6.5 0 0 1 3.5 6" />
   </Icon>
 );
+
+export const ChevronUpIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="m6 15 6-6 6 6" />
+  </Icon>
+);
+
+export const ChevronDownIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="m6 9 6 6 6-6" />
+  </Icon>
+);
+
+export const ChevronLeftIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="m15 6-6 6 6 6" />
+  </Icon>
+);
+
+export const ChevronRightIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="m9 6 6 6-6 6" />
+  </Icon>
+);
+
+export const CalendarIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="3.5" y="5" width="17" height="15.5" rx="2" />
+    <path d="M3.5 10h17M8 3v4M16 3v4" />
+  </Icon>
+);

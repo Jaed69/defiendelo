@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { api } from "@/app/api-client";
-import { CheckIcon, MicIcon } from "@/app/components/icons";
+import { CheckIcon, ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon, MicIcon } from "@/app/components/icons";
 import { gradeReport, isGraded, LETTER_LABEL, LETTERS, suggestGrade, suggestLetter } from "@/domain/grading";
 import { isLive, questionsFor, sessionOf } from "@/domain/session";
 import type { Assignment, ClassSession, Letter, Submission } from "@/domain/types";
@@ -67,8 +67,8 @@ function GradeControl({
 
   if (session.grading === "literal") {
     return (
-      <div className="grid gap-1">
-        <div role="group" aria-label={`Nota de ${submission.alias}`} className="grid grid-cols-4 gap-1">
+      <div className="grid justify-items-end gap-1">
+        <div role="group" aria-label={`Nota de ${submission.alias}`} className="inline-grid grid-cols-4 gap-1">
           {LETTERS.map((l) => {
             const chosen = submission.letter === l;
             return (
@@ -78,14 +78,14 @@ function GradeControl({
                 title={LETTER_LABEL[l]}
                 aria-pressed={chosen}
                 onClick={() => onGrade({ letter: l })}
-                className={`relative min-h-11 rounded-[var(--radius-sm)] border-2 font-display font-bold ${chosen ? "border-brand bg-brand text-white" : suggestion === l ? "border-brand text-brand-text" : "border-rule"}`}
+                className={`size-11 cursor-pointer rounded-[var(--radius-md)] border-2 font-display font-bold ${chosen ? "border-brand bg-brand text-white" : suggestion === l ? "border-dashed border-brand bg-brand-subtle text-brand-text" : "border-rule bg-surface hover:border-ink"}`}
               >
                 {l}
               </button>
             );
           })}
         </div>
-        {suggestion && !submission.letter && <span className="text-sm text-graphite">Sugerida por la defensa: {suggestion}</span>}
+        {suggestion && !submission.letter && <span className="text-sm text-graphite">Sugerida: {suggestion}</span>}
       </div>
     );
   }
@@ -104,13 +104,13 @@ function GradeControl({
         max={session.gradeScale}
         step="0.5"
         aria-label={`Nota de ${submission.alias}`}
-        placeholder={suggestion != null ? String(suggestion) : "—"}
-        className="w-20 rounded-[var(--radius-md)] border-[1.5px] border-rule bg-surface px-3 py-2 text-right tabular-nums"
+        placeholder={suggestion != null ? String(suggestion) : undefined}
+        className="min-h-11! w-24! py-2! text-right"
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />
       <span className="text-graphite">/ {session.gradeScale}</span>
-      <button className="btn-secondary min-h-11! px-3!" disabled={value === "" || Number(value) === submission.grade}>
+      <button className="btn-secondary btn-sm" disabled={value === "" || Number(value) === submission.grade}>
         Guardar
       </button>
     </form>
@@ -231,7 +231,8 @@ export function SessionPanel({
             const question = current ? questions[session.currentQuestion] : null;
             return (
               <li key={s.id} className={`grid gap-3 rounded-[var(--radius-md)] border-2 p-3 ${current ? "border-brand bg-brand-subtle" : "border-rule"}`}>
-                <div className="flex flex-wrap items-center gap-3">
+                {/* Phone: name and order arrows on top, grade and "Llamar" below. Wider: one row. */}
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
                   <span className="w-6 text-right tabular-nums text-graphite">{i + 1}</span>
                   <span className="min-w-0 flex-1 font-bold">
                     {s.alias}
@@ -244,26 +245,27 @@ export function SessionPanel({
                       <span className="ml-2 font-normal text-graphite">{s.answeredAt ? "· respondió" : "· respondiendo"}</span>
                     )}
                   </span>
-                  {oral && !current && !isGraded(s) && (
-                    <button type="button" className="btn-quiet" disabled={busy} onClick={() => void send("PATCH", { current: s.id, currentQuestion: 0 })}>
-                      Llamar
-                    </button>
-                  )}
                   {oral && (
-                    <span className="flex">
-                      <button type="button" className="btn-quiet px-2" aria-label={`Subir a ${s.alias}`} disabled={busy || i === 0} onClick={() => move(i, -1)}>
-                        ↑
+                    <span className="ml-auto flex gap-1 sm:order-last sm:ml-0">
+                      <button type="button" className="btn-icon" aria-label={`Subir a ${s.alias}`} disabled={busy || i === 0} onClick={() => move(i, -1)}>
+                        <ChevronUpIcon />
                       </button>
-                      <button
-                        type="button"
-                        className="btn-quiet px-2"
-                        aria-label={`Bajar a ${s.alias}`}
-                        disabled={busy || i === ordered.length - 1}
-                        onClick={() => move(i, 1)}
-                      >
-                        ↓
+                      <button type="button" className="btn-icon" aria-label={`Bajar a ${s.alias}`} disabled={busy || i === ordered.length - 1} onClick={() => move(i, 1)}>
+                        <ChevronDownIcon />
                       </button>
                     </span>
+                  )}
+                  {(session.phase !== "entregas" || oral) && (
+                    <div className="flex w-full flex-wrap items-start gap-2 sm:w-auto sm:justify-end">
+                      {session.phase !== "entregas" && (
+                        <GradeControl session={session} submission={s} suggestion={suggestion} onGrade={(input) => void send("POST", { submissionId: s.id, ...input })} />
+                      )}
+                      {oral && !current && !isGraded(s) && (
+                        <button type="button" className="btn-secondary btn-sm" disabled={busy} onClick={() => void send("PATCH", { current: s.id, currentQuestion: 0 })}>
+                          <MicIcon className="size-4" /> Llamar
+                        </button>
+                      )}
+                    </div>
                   )}
                 </div>
 
@@ -273,29 +275,25 @@ export function SessionPanel({
                       Pregunta {session.currentQuestion + 1} de {questions.length}
                     </span>
                     <p className="font-display text-lg font-bold">{question.question}</p>
-                    <div className="flex gap-2">
+                    <div className="grid grid-cols-2 gap-2 sm:flex">
                       <button
                         type="button"
-                        className="btn-quiet"
+                        className="btn-secondary btn-sm"
                         disabled={busy || session.currentQuestion === 0}
                         onClick={() => void send("PATCH", { currentQuestion: session.currentQuestion - 1 })}
                       >
-                        ← Anterior
+                        <ChevronLeftIcon className="size-4" /> Anterior
                       </button>
                       <button
                         type="button"
-                        className="btn-quiet"
+                        className="btn-secondary btn-sm"
                         disabled={busy || session.currentQuestion >= questions.length - 1}
                         onClick={() => void send("PATCH", { currentQuestion: session.currentQuestion + 1 })}
                       >
-                        Siguiente pregunta →
+                        Siguiente <ChevronRightIcon className="size-4" />
                       </button>
                     </div>
                   </div>
-                )}
-
-                {session.phase !== "entregas" && (
-                  <GradeControl session={session} submission={s} suggestion={suggestion} onGrade={(input) => void send("POST", { submissionId: s.id, ...input })} />
                 )}
 
                 <details>

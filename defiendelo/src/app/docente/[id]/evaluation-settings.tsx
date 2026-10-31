@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { api } from "@/app/api-client";
-import { MicIcon, PhoneIcon, PrinterIcon } from "@/app/components/icons";
+import { CalendarIcon, MicIcon, PhoneIcon, PrinterIcon } from "@/app/components/icons";
 import { isLive, sessionOf } from "@/domain/session";
 import type { Assignment, EvaluationMethod, GradingSystem } from "@/domain/types";
 
@@ -22,6 +22,61 @@ function toLocalInput(iso: string | null) {
   if (!iso) return "";
   const d = new Date(iso);
   return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+}
+
+/** Today, tomorrow or in a week, at 23:59 local time, as datetime-local values. */
+function deadlinePresets(now: Date) {
+  const at = (days: number) => {
+    const d = new Date(now);
+    d.setDate(d.getDate() + days);
+    d.setHours(23, 59, 0, 0);
+    return toLocalInput(d.toISOString());
+  };
+  return [
+    { label: "Sin plazo", value: "" },
+    { label: "Hoy, 23:59", value: at(0) },
+    { label: "Mañana, 23:59", value: at(1) },
+    { label: "En una semana", value: at(7) },
+  ];
+}
+
+function DeadlinePicker({ value, onChange }: { value: string; onChange: (value: string) => void }) {
+  const presets = deadlinePresets(new Date());
+  const [custom, setCustom] = useState(value !== "" && !presets.some((p) => p.value === value));
+  const option = (selected: boolean) =>
+    `chip min-h-11 cursor-pointer gap-1.5 border-2 px-4 ${selected ? "border-brand bg-brand-subtle text-brand-text" : "border-rule bg-surface text-ink"}`;
+  return (
+    <fieldset className="grid gap-3">
+      <legend className="mb-2 font-bold">Plazo de entrega</legend>
+      <div className="flex flex-wrap gap-2">
+        {presets.map((p) => (
+          <button
+            key={p.label}
+            type="button"
+            aria-pressed={!custom && value === p.value}
+            className={option(!custom && value === p.value)}
+            onClick={() => {
+              setCustom(false);
+              onChange(p.value);
+            }}
+          >
+            {p.label}
+          </button>
+        ))}
+        <button type="button" aria-pressed={custom} className={option(custom)} onClick={() => setCustom(true)}>
+          <CalendarIcon className="size-4" /> Otra fecha
+        </button>
+      </div>
+      {custom && (
+        <input type="datetime-local" aria-label="Fecha y hora de cierre" required value={value} onChange={(e) => onChange(e.target.value)} />
+      )}
+      <p className="text-sm text-graphite" aria-live="polite">
+        {value
+          ? `Cierra el ${new Date(value).toLocaleString("es", { weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" })}.`
+          : "Tú cierras las entregas cuando quieras."}
+      </p>
+    </fieldset>
+  );
 }
 
 function Segmented<T extends string>({
@@ -118,61 +173,40 @@ export function EvaluationSettings({
       <form onSubmit={save} className="grid gap-5">
         <Segmented label="Nota" options={GRADINGS} value={form.grading} onChange={(grading) => set({ grading })} />
         {form.grading === "numerica" && (
-          <div className="grid grid-cols-2 gap-3">
+          <fieldset className="grid grid-cols-2 gap-3">
+            <legend className="sr-only">Escala numérica</legend>
             <label className="grid gap-1.5">
               <span className="font-bold">Nota máxima</span>
-              <input
-                type="number"
-                min={1}
-                max={100}
-                required
-                className="w-full rounded-[var(--radius-md)] border-[1.5px] border-rule bg-surface px-4 py-3"
-                value={form.gradeScale}
-                onChange={(e) => set({ gradeScale: Number(e.target.value) })}
-              />
+              <input type="number" min={1} max={100} required value={form.gradeScale} onChange={(e) => set({ gradeScale: Number(e.target.value) })} />
             </label>
             <label className="grid gap-1.5">
-              <span className="font-bold">Mínima para aprobar</span>
+              <span className="font-bold">Para aprobar</span>
               <input
                 type="number"
                 min={0}
                 max={100}
                 step="0.5"
                 required
-                className="w-full rounded-[var(--radius-md)] border-[1.5px] border-rule bg-surface px-4 py-3"
                 value={form.passingGrade}
                 onChange={(e) => set({ passingGrade: Number(e.target.value) })}
               />
             </label>
-          </div>
+          </fieldset>
         )}
         <fieldset disabled={locked} className="grid gap-5 disabled:opacity-60">
           <Segmented label="Defensa" options={METHODS} value={form.method} onChange={(method) => set({ method })} />
-          <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_9rem]">
-            <label className="grid gap-1.5">
-              <span className="font-bold">Plazo de entrega</span>
-              <input
-                type="datetime-local"
-                className="w-full rounded-[var(--radius-md)] border-[1.5px] border-rule bg-surface px-4 py-3"
-                value={form.deadline}
-                onChange={(e) => set({ deadline: e.target.value })}
-              />
-              <span className="text-sm text-graphite">Vacío: tú cierras las entregas.</span>
-            </label>
-            <label className="grid content-start gap-1.5">
-              <span className="font-bold">Preguntas</span>
-              <input
-                type="number"
-                min={1}
-                max={5}
-                required
-                className="w-full rounded-[var(--radius-md)] border-[1.5px] border-rule bg-surface px-4 py-3"
-                value={form.questionsPerStudent}
-                onChange={(e) => set({ questionsPerStudent: Number(e.target.value) })}
-              />
-              <span className="text-sm text-graphite">por alumno</span>
-            </label>
-          </div>
+          <DeadlinePicker value={form.deadline} onChange={(deadline) => set({ deadline })} />
+          <label className="grid max-w-[12rem] gap-1.5">
+            <span className="font-bold">Preguntas por alumno</span>
+            <input
+              type="number"
+              min={1}
+              max={5}
+              required
+              value={form.questionsPerStudent}
+              onChange={(e) => set({ questionsPerStudent: Number(e.target.value) })}
+            />
+          </label>
         </fieldset>
         {error && (
           <p role="alert" className="font-bold text-pen">

@@ -71,7 +71,9 @@ export default function TeacherSubmissionsPage({ params }: { params: Promise<{ i
 
       <SessionPanel assignment={assignment} teacherKey={teacherKey} onChange={setAssignment} reload={load} />
 
-      <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_24rem]">
+      {/* Gaps and class insights come from the AI-evaluated written defense; oral and paper have none. */}
+      {!gradedByTeacher && (
+        <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_24rem]">
         <section id="atender" className="card grid gap-4 p-6 sm:p-8">
           <h2>Tus alumnos</h2>
           {ranking.length === 0 ? (
@@ -145,7 +147,8 @@ export default function TeacherSubmissionsPage({ params }: { params: Promise<{ i
             </ul>
           )}
         </section>
-      </div>
+        </div>
+      )}
     </TeacherFrame>
   );
 }
