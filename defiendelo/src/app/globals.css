@@ -118,10 +118,115 @@ a:focus-visible {
 }
 
 .btn-quiet {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
   color: var(--ink);
   font-weight: 700;
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+.btn,
+.btn-outline {
+  min-height: 2.75rem;
+  cursor: pointer;
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  border: 2px solid var(--ink);
+  border-radius: 6px;
+  padding: 0.55rem 1.1rem;
+  font-weight: 700;
+  background: white;
+}
+
+.btn-outline:hover {
+  background: var(--ink-soft);
+}
+
+/* The file input is visually hidden; its label is the visible control, so focus shows there. */
+.drop:has(input:focus-visible) .btn-outline {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.drop {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  border: 2px dashed var(--rule);
+  border-radius: 8px;
+  padding: 1rem;
+  background: white;
+}
+
+.drop-active {
+  border-color: var(--ink);
+  background: var(--ink-soft);
+}
+
+.waiting {
+  border-left: 4px solid var(--ink);
+  padding-left: 1rem;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 10;
+  background: var(--ink);
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* Where the person is in a flow; the current step is the one in ink, done steps get a check. */
+.steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  font-size: 0.9375rem;
+  color: var(--graphite);
+}
+
+.steps > li > a,
+.steps > li > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+}
+
+.steps .step-number {
+  display: inline-grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 999px;
+  border: 2px solid currentColor;
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+.steps [aria-current="step"] {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.steps [aria-current="step"] .step-number {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: white;
 }
 
 /* Teacher's red-pen mark, used only for gaps and given-away criteria. */

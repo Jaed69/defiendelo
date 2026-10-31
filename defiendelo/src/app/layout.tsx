@@ -14,7 +14,12 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="es">
       <body className={`${display.variable} ${body.variable}`}>
-        <div className="sheet">{children}</div>
+        <a href="#contenido" className="skip-link">
+          Saltar al contenido
+        </a>
+        <div className="sheet" id="contenido" tabIndex={-1}>
+          {children}
+        </div>
       </body>
     </html>
   );

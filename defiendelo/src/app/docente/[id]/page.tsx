@@ -3,10 +3,25 @@
 import { useSearchParams } from "next/navigation";
 import { use, useCallback, useEffect, useState } from "react";
 import { api } from "@/app/api-client";
+import { Waiting } from "@/app/components/waiting";
 import { aiObtainableScore, givenAwayCriteria, triage } from "@/domain/gap";
 import type { Assignment, Criterion } from "@/domain/types";
 
 const ATTEND_FIRST = 5;
+
+const STRESS_STEPS = [
+  { after: 0, text: "La IA está leyendo la tarea original…" },
+  { after: 20, text: "Resolviendo la tarea original sin ningún alumno detrás…" },
+  { after: 45, text: "Ahora resuelve la versión rediseñada…" },
+  { after: 75, text: "Corrigiendo las dos versiones con sus rúbricas…" },
+  { after: 105, text: "Sumando cuánta nota sacó en cada una. Ya casi." },
+];
+
+const INSIGHT_STEPS = [
+  { after: 0, text: "Leyendo las defensas de la clase…" },
+  { after: 10, text: "Agrupando malentendidos parecidos…" },
+  { after: 25, text: "Escribiendo una actividad corta para cada uno. Ya casi." },
+];
 
 function evidenceLabel(c: Criterion) {
   return c.evidence === "defensa" ? "En la defensa" : "En la entrega";
@@ -42,7 +57,17 @@ export default function TeacherPage({ params }: { params: Promise<{ id: string }
   }
 
   if (!assignment) {
-    return <main>{error ? <p className="text-pen">{error}</p> : <p className="text-graphite">Cargando…</p>}</main>;
+    return (
+      <main>
+        {error ? (
+          <p role="alert" className="font-bold text-pen">
+            {error}
+          </p>
+        ) : (
+          <p className="text-graphite">Cargando tu tarea…</p>
+        )}
+      </main>
+    );
   }
 
   const { redesign, stress, submissions, insights } = assignment;
@@ -57,9 +82,29 @@ export default function TeacherPage({ params }: { params: Promise<{ id: string }
         <p className="font-display font-bold text-pen">{assignment.subject}</p>
         <h1 className="mt-2">{assignment.title}</h1>
         <p className="prose-measure mt-4 text-graphite">{redesign.rationale}</p>
+        <nav aria-label="Pasos de la tarea" className="mt-6">
+          <ol className="steps">
+            {[
+              { href: "#rediseno", label: "Revisa el rediseño", done: true },
+              { href: "#prueba", label: "Prueba con la IA sola", done: Boolean(stress) },
+              { href: "#enlace", label: "Comparte el enlace", done: submissions.length > 0 },
+              { href: "#atender", label: "Mira quién entendió", done: ranking.length > 0 },
+            ].map((step, i) => (
+              <li key={step.href}>
+                <a href={step.href} className="underline-offset-4 hover:underline">
+                  <span className="step-number" aria-hidden="true">
+                    {step.done ? "✓" : i + 1}
+                  </span>
+                  {step.label}
+                  {step.done && <span className="sr-only"> (hecho)</span>}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
       </section>
 
-      <section>
+      <section id="rediseno">
         <h2>Tarea rediseñada</h2>
         <p className="prose-measure mt-4 whitespace-pre-line">{redesign.statement}</p>
         <p className="prose-measure mt-4 border-l-4 border-ink pl-4 font-bold">{redesign.aiPolicy}</p>
@@ -87,7 +132,7 @@ export default function TeacherPage({ params }: { params: Promise<{ id: string }
         </table>
       </section>
 
-      <section>
+      <section id="prueba">
         <h2>Prueba de estrés: ¿cuánta nota saca la IA sola?</h2>
         <p className="prose-measure mt-3 text-graphite">
           Una IA resuelve la tarea sin ningún alumno detrás. Los criterios que se verifican en la defensa no se pueden
@@ -97,6 +142,9 @@ export default function TeacherPage({ params }: { params: Promise<{ id: string }
           <button className="btn mt-5" disabled={busy !== null} onClick={() => run("stress")}>
             {busy === "stress" ? "La IA está resolviendo las dos versiones…" : "Probar la tarea con la IA sola"}
           </button>
+        )}
+        {busy === "stress" && (
+          <Waiting steps={STRESS_STEPS} expected="suele tardar unos 2 minutos; puedes compartir el enlace mientras" />
         )}
         {stress && (
           <>
@@ -139,12 +187,12 @@ export default function TeacherPage({ params }: { params: Promise<{ id: string }
         )}
       </section>
 
-      <section>
+      <section id="enlace">
         <h2>Enlace para tus alumnos</h2>
         <div className="mt-4 flex flex-wrap items-center gap-3">
           <code className="break-all rounded bg-ink-soft px-3 py-2 text-sm">{studentLink}</code>
           <button
-            className="btn-quiet"
+            className="btn-outline"
             onClick={() => {
               void navigator.clipboard.writeText(studentLink);
               setCopied(true);
@@ -152,13 +200,16 @@ export default function TeacherPage({ params }: { params: Promise<{ id: string }
           >
             {copied ? "Enlace copiado" : "Copiar enlace"}
           </button>
+          <span className="sr-only" role="status">
+            {copied ? "Enlace copiado al portapapeles." : ""}
+          </span>
         </div>
         <p className="mt-3 text-sm text-graphite">
           Guarda la dirección de esta página: es tu acceso de docente y no la compartas con alumnos.
         </p>
       </section>
 
-      <section>
+      <section id="atender">
         <div className="flex flex-wrap items-baseline justify-between gap-3">
           <h2>A quién atender esta semana</h2>
           <button className="btn-quiet" disabled={busy !== null} onClick={() => run("refresh")}>
@@ -213,6 +264,7 @@ export default function TeacherPage({ params }: { params: Promise<{ id: string }
         <button className="btn mt-5" disabled={busy !== null || ranking.length === 0} onClick={() => run("insights")}>
           {busy === "insights" ? "Analizando la clase…" : insights ? "Volver a analizar la clase" : "Analizar la clase"}
         </button>
+        {busy === "insights" && <Waiting steps={INSIGHT_STEPS} expected="suele tardar menos de un minuto" />}
         {insights && insights.clusters.length === 0 && <p className="mt-5">No aparecieron malentendidos repetidos.</p>}
         {insights && insights.clusters.length > 0 && (
           <ul className="mt-6 grid gap-6">
@@ -243,7 +295,11 @@ export default function TeacherPage({ params }: { params: Promise<{ id: string }
         </ul>
       </section>
 
-      {error && <p className="mt-6 text-pen">{error}</p>}
+      {error && (
+        <p role="alert" className="sticky bottom-4 mt-6 rounded-md border-2 border-pen bg-white p-4 font-bold text-pen">
+          {error}
+        </p>
+      )}
     </main>
   );
 }
