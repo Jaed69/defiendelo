@@ -1,7 +1,7 @@
 import { z } from "zod/v4";
-import { startDefense } from "@/application/use-cases";
-import { assessmentAI, assignmentStore } from "@/composition";
-import { handle } from "../../../http";
+import { remember, startDefense } from "@/application/use-cases";
+import { aiForTask, assignmentStore } from "@/composition";
+import { accountCode, handle } from "../../../http";
 
 export const maxDuration = 60;
 
@@ -14,7 +14,9 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
   return handle(async () => {
     const { id } = await params;
     const { alias, work } = body.parse(await request.json());
-    const submission = await startDefense(assessmentAI(), assignmentStore(), id, alias, work);
-    return { id: submission.id, token: submission.token };
+    const store = assignmentStore();
+    const submission = await startDefense(aiForTask, store, id, alias, work);
+    const code = await remember(store, "alumno", accountCode(request), { assignmentId: id, submissionId: submission.id, token: submission.token! });
+    return { id: submission.id, token: submission.token, code };
   });
 }

@@ -1,0 +1,437 @@
+{
+ "exampleId": "arte-indigenismo",
+ "redesign": {
+  "statement": "El objetivo de esta tarea es analizar la obra «El varayoc de Chinchero» de José Sabogal. Sin embargo, en un entorno donde la Inteligencia Artificial (IA) puede generar resúmenes, descripciones e interpretaciones competentes, el valor de la tarea no reside en la calidad de la ejecución, sino en la solidez del juicio crítico y la autonomía intelectual del estudiante. Su rol es utilizar la IA como un asistente de investigación, pero usted debe demostrar que toma las decisiones académicas finales.",
+  "aiPolicy": "El uso de IA está permitido para tareas de apoyo: generación de borradores inicial, búsqueda de información complementaria sobre el movimiento indigenista, y sugerencias de estructura. Sin embargo, la IA no puede tomar decisiones académicas por el estudiante. Usted debe someter y justificar: 1) sus elecciones argumentales sobre la obra; 2) las hipótesis académicas que descartó al abordarla; y 3) la corrección o refinamiento de cualquier contenido generado por IA respecto al contexto histórico o artístico.",
+  "criteria": [
+   {
+    "id": "c1",
+    "name": "Justificación de la Elección Analítica",
+    "description": "Justificar por qué eligió enfocarse en un elemento visual específico (color, textura, composición) de la obra y cómo esa elección altera la comprensión del Indigenismo en la pieza. Se valorará la coherencia y profundidad de su decisión.",
+    "weight": 30,
+    "evidence": "defensa"
+   },
+   {
+    "id": "c2",
+    "name": "Descarte de Hipótesis (Argumentos Alternativos)",
+    "description": "Presentar al menos dos interpretaciones o marcos teóricos alternativos sobre la obra (ej. una crítica formalista versus una sociológica) y justificar por qué usted descarta una de ellas en favor de la propuesta final.",
+    "weight": 30,
+    "evidence": "defensa"
+   },
+   {
+    "id": "c3",
+    "name": "Verificación y Refinamiento de IA",
+    "description": "Proporcionar un ejemplo de una afirmación generada por IA sobre el Indigenismo peruano y, demostrando dominio del tema, refutarla, corrigirla o refinarla, explicando la inexactitud del modelo.",
+    "weight": 20,
+    "evidence": "defensa"
+   },
+   {
+    "id": "c4",
+    "name": "Síntesis Argumentativa Fundamentada",
+    "description": "Presentar su tesis final, la cual debe ser la convergencia de sus decisiones y análisis, demostrando una voz propia y una perspectiva única sobre la obra.",
+    "weight": 20,
+    "evidence": "defensa"
+   }
+  ],
+  "originalCriteria": [
+   {
+    "id": "o1",
+    "name": "Análisis Formal de la Obra",
+    "description": "Descripción detallada de los elementos visuales de «El varayoc de Chinchero» (color, composición, técnica).",
+    "weight": 30,
+    "evidence": "entrega"
+   },
+   {
+    "id": "o2",
+    "name": "Contextualización Histórico-Artística",
+    "description": "Explicación clara de la relación de la obra con las características del movimiento Indigenista.",
+    "weight": 35,
+    "evidence": "entrega"
+   },
+   {
+    "id": "o3",
+    "name": "Profundidad de la Interpretación Personal",
+    "description": "Calidad y originalidad de la interpretación personal del alumno sobre el significado de la obra.",
+    "weight": 25,
+    "evidence": "entrega"
+   },
+   {
+    "id": "o4",
+    "name": "Coherencia y Estructura Formal",
+    "description": "Claridad expositiva, gramática y organización del texto en una página.",
+    "weight": 10,
+    "evidence": "entrega"
+   }
+  ],
+  "rationale": "El cambio se orientó a transitar de la evaluación de la *capacidad de respuesta* (que la IA domina) a la evaluación del *juicio crítico* y el *proceso de pensamiento* (que es propio del estudiante). Al requerir que el estudiante justifique sus elecciones, descarte alternativas e identifique fallas en la IA, la calificación se enfoca estrictamente en su capacidad analítica y su dominio del contenido, garantizando que la 'defensa' del trabajo sea el eje de la calificación."
+ },
+ "stress": {
+  "original": {
+   "aiAnswer": "**Análisis de la obra «El varayoc de Chinchero» de José Sabogal**\nArte y Cultura – 4.º de secundaria\n\n**Descripción de los elementos visuales**\n\n«El varayoc de Chinchero» (1925) es un óleo sobre tela que retrata a una autoridad campesina quechua del pueblo de Chinchero, en Cusco. El varayoc aparece de cuerpo entero, de pie, sosteniendo su vara de mando con ambas manos, símbolo de su autoridad comunal.\n\nEn cuanto al color, Sabogal emplea una paleta de tonos cálidos y terrosos: ocres, marrones, rojos oscuros y grises, que evocan la tierra andina y la atmósfera sobria del altiplano. La ropa del personaje —poncho, chullo y otras prendas tejidas— se destaca con colores profundos, mientras el fondo es más apagado, casi neutro, para que la figura principal concentre toda la atención.\n\nLa composición es vertical, sencilla y centrada: el varayoc ocupa el eje del cuadro, con una postura firme y digna. No hay muchos elementos decorativos; el retrato es directo y monumental, lo que transmite solemnidad y respeto. La técnica es el óleo, con pinceladas firmes y un dibujo sólido, de formas simples y contornos definidos, sin buscar la perfección fotográfica sino la fuerza expresiva del personaje.\n\n**Relación con el movimiento indigenista**\n\nJosé Sabogal fue una figura central del indigenismo peruano, junto con la generación de artistas reunidos en el Instituto de Arte Peruano. Este movimiento buscaba valorar al hombre andino, su cultura y sus tradiciones, rechazando la idea de que el arte peruano debía imitar únicamente los modelos europeos.\n\nEsta obra es un ejemplo claro de esa propuesta: el protagonista no es un personaje mitológico ni un retrato de la élite, sino un comunero quechua, representado con dignidad y grandeza, casi como un retrato oficial de una autoridad ancestral. Sabogal retrata la vara de mando como símbolo de la organización comunitaria andina, vigente desde la época prehispánica. De este modo, la pintura reivindica la identidad del indígena como sujeto central de la nación peruana, no como elemento folclórico o decorativo.\n\n**Mi interpretación personal**\n\nLo que más me impacta de esta obra es la dignidad con la que Sabogal representa al varayoc. El personaje mira casi de frente, con seriedad y firmeza, y parece más fuerte por la sencillez del fondo: no necesita nada más que su presencia y su vara de mando. Me parece que el pintor nos está diciendo que la autoridad verdadera viene del respeto de la comunidad, no del lujo o el poder económico.\n\nTambién me parece importante que esta obra se haya pintado hace casi cien años, en un contexto en que los pueblos andinos eran marginados. Hoy, que en el Perú seguimos debatiendo sobre la discriminación y la valoración de la diversidad cultural, la obra sigue siendo vigente. Para mí, Sabogal no solo pintó a un hombre de Chinchero: pintó una forma de entender el Perú, donde lo andino es raíz y no folklore. Por eso, esta obra me hace valorar más las tradiciones de nuestros pueblos originarios y reflexionar sobre cuánto hemos avanzado y cuánto falta aún.",
+   "scores": [
+    {
+     "criterionId": "o1",
+     "score": 0.9,
+     "reason": "Describe con precisión color, composición vertical y centrada, y la técnica del óleo, aunque podría profundizar en la luz y el detalle pictórico."
+    },
+    {
+     "criterionId": "o2",
+     "score": 0.9,
+     "reason": "Explica con claridad el vínculo de la obra con el indigenismo: revalorización del andino y rechazo a los modelos europeos."
+    },
+    {
+     "criterionId": "o3",
+     "score": 0.8,
+     "reason": "Interpretación personal reflexiva y pertinente sobre dignidad y vigencia, aunque con planteamientos algo convencionales."
+    },
+    {
+     "criterionId": "o4",
+     "score": 0.95,
+     "reason": "Texto claro, bien organizado en secciones, con gramática correcta y extensión adecuada a una página."
+    }
+   ]
+  },
+  "redesigned": {
+   "aiAnswer": "**Arte y Cultura – 4.º de secundaria**\n**Análisis de la obra «El varayoc de Chinchero», José Sabogal**\n\nEstudiante: [nombre] — Fecha: ______\n\n**1. Análisis de la obra**\n\n*Identificación.* Óleo sobre tela pintado en 1925 por José Sabogal (1888–1956), artista central del indigenismo peruano.\n\n*Descripción y análisis formal.* El cuadro muestra a un varayoc —autoridad tradicional de la comunidad de Chinchero, Cusco, que porta la vara de mando— de pie, de frente y mirando al espectador. La vara, vertical, ordena la composición: el cuerpo entero se organiza a su alrededor. La paleta es sobria (tierras, ocres, grises, un fondo verde pálido), la luz es pareja y la figura gana dignidad por su monumentalidad, casi escultórica.\n\n*Contexto.* La obra pertenece al proyecto indigenista de los años veinte. Sabogal colaboró con la revista *Amauta*, dirigida por José Carlos Mariátegui, y compartía su propósito: construir un arte peruano que reconociera lo andino, frente a la imitación de los modelos europeos.\n\n*Interpretación.* Sabogal retrata al varayoc con el código visual reservado a los retratos de poder (virreyes, próceres): frontalidad, serenidad, jerarquía. Con esa decisión propone una inversión: el líder de una comunidad andina es sujeto de respeto y figura central de la nación. Como lectura crítica, añado que esa monumentalización también idealiza al personaje: lo vuelve emblema colectivo más que individuo concreto. Mantengo ambas ideas como conclusión.\n\n**2. Justificación de mis decisiones académicas**\n\n- Usé la IA para un borrador inicial, pero no acepté su texto tal cual: lo verifiqué con la cronología y los textos sobre Sabogal del Museo de Arte de Lima (MALI), revisados en clase y en su web.\n- Corregí dos errores del borrador: la IA daba como fecha 1926 y como técnica «temple»; los registros consultados confirman 1925 y óleo sobre tela.\n- Descarté dos interpretaciones que la IA propuso (una sobre una «luz sagrada» y otra sobre un «ritual en el fondo») porque no se sostienen en lo que efectivamente se ve en el cuadro.\n- Mantuve, en cambio, la comparación con los retratos de poder y la crítica a la idealización, ideas que propuse yo y ajusté al revisar el análisis formal.\n- La información contextual (indigenismo, *Amauta*, Mariátegui) se sustenta en el material del curso; la selección de argumentos y la conclusión final son decisiones mías, no del asistente.",
+   "scores": [
+    {
+     "criterionId": "c1",
+     "score": 0.5,
+     "reason": "El análisis se centra implícitamente en la composición (la vara vertical y la frontalidad), pero no justifica explícitamente por qué eligió ese elemento ni explica cómo esa elección modifica la comprensión del Indigenismo."
+    },
+    {
+     "criterionId": "c2",
+     "score": 0.4,
+     "reason": "Descarta dos lecturas alternativas con un criterio verificable (no corresponden a lo visible en la obra), pero son afirmaciones fácticas débiles, no marcos teóricos sustantivos como se pide (formalista, sociológico)."
+    },
+    {
+     "criterionId": "c3",
+     "score": 0.9,
+     "reason": "Ejemplo claro y correcto de refinamiento: detecta errores factuales de la IA (fecha y técnica), los corrige con fuentes verificables (MALI) y explica el criterio de verificación."
+    },
+    {
+     "criterionId": "c4",
+     "score": 0.75,
+     "reason": "La tesis final articula una doble lectura propia (inversión del código del retrato de poder y crítica a la idealización) con voz personal, aunque la síntesis queda enunciada más que desarrollada argumentativamente."
+    }
+   ]
+  },
+  "ranAt": "2026-10-31T05:04:00.097Z"
+ },
+ "insights": {
+  "clusters": [
+   {
+    "label": "Descarte de hipótesis alternativas sin contrastar marcos teóricos",
+    "criterionId": "c2",
+    "studentAliases": [
+     "Dani",
+     "Franco",
+     "Cami"
+    ],
+    "quotes": [
+     "Pensé también que podía ser una pintura sobre la pobreza del campo, pero lo descarté porque no se ve triste ni sufriendo, está de pie, serio y con su vara.",
+     "Consideré la formalista y la sociológica. Elegí la de resistencia cultural porque es la más completa.",
+     "Creo que la sociológica, porque la vara es de autoridad. No conocía la formalista."
+    ],
+    "suggestion": "Actividad 'Tribunal de hipótesis' (15 min): en tríos, cada estudiante defiende su hipótesis descartada como si fuera su tesis final (2 min por turno). Los otros dos, con la segunda lectura exigida en mano, deben formular una objeción teórica específica (no perceptiva) y proponer qué evidencia visual del cuadro la refutaría realmente. El estudiante cierra explicando qué criterio teórico —no solo visual— sustenta su descarte final."
+   },
+   {
+    "label": "Tesis final sin convergencia: suma de ideas, anécdotas sueltas o contradicción con lo descartado",
+    "criterionId": "c4",
+    "studentAliases": [
+     "Dani",
+     "Franco",
+     "Cami"
+    ],
+    "quotes": [
+     "Mi tesis es que Sabogal pinta al varayoc como una autoridad con dignidad propia, no como algo exótico. En la versión de hoy pondría el celular en la mano junto a la vara, y el fondo seguiría sin detalles para que se vea que la autoridad sigue siendo él.",
+     "Las dos ideas van juntas, la resistencia cultural y la diversidad. Mi tesis es que la obra representa la identidad del Perú.",
+     "Que el cuadro muestra que el varayoc es una autoridad en su comunidad. No sé bien cómo se relaciona con el color."
+    ],
+    "suggestion": "Actividad 'De inventario a tesis' (12 min): cada estudiante escribe en tarjetas sus tres ideas clave (elemento visual, hipótesis conservada, hallazgo contemporáneo). Luego formula una sola oración tesis que las conecte con un verbo de argumentación (establece, revela, reconfigura) y subraye el elemento visual elegido como evidencia central. En parejas se leen mutuamente y detectan qué idea quedó fuera de la oración, reescribiéndola una vez."
+   },
+   {
+    "label": "Verificación de IA reducida a confirmar información en internet",
+    "criterionId": "c3",
+    "studentAliases": [
+     "Franco"
+    ],
+    "quotes": [
+     "Revisé la información sobre Sabogal en internet y estaba correcta, no tuve que corregir nada."
+    ],
+    "suggestion": "Actividad 'Caza del error sutil' (10 min): el docente proyecta tres afirmaciones de IA sobre el Indigenismo peruano (una correcta, una con imprecisión histórica, una con simplificación conceptual). En parejas, los estudiantes las contrastan con las lecturas del curso y redactan una corrección fundamentada que cite la fuente. Se cierra mostrando qué señales delatoras usaron (fechas, atribución de intenciones, generalización del término 'indígena')."
+   },
+   {
+    "label": "Justificación de la elección analítica sin conexión con el significado indigenista",
+    "criterionId": "c1",
+    "studentAliases": [
+     "Franco"
+    ],
+    "quotes": [
+     "La composición, porque es la que transmite la monumentalidad de la figura."
+    ],
+    "suggestion": "Actividad 'Del rasgo al efecto' (10 min): se proyecta el cuadro dividido en tres zonas (figura, fondo, atributos). Cada estudiante elige un elemento visual y completa la cadena: 'elegí X porque genera Y en el espectador, y ese efecto reconfigura la comprensión del Indigenismo en Z'. Luego, en ronda rápida, cada uno nombra qué se perdería de la lectura indigenista si su elemento no existiera, forzando la conexión entre elección y significado."
+   }
+  ]
+ },
+ "students": [
+  {
+   "alias": "Dani",
+   "work": "Lo primero que vi es que el varayoc ocupa casi todo el cuadro y está de frente, mirando serio, como si posara para una foto oficial. Lleva su vara de autoridad en la mano y su poncho y chullo con colores tierra, ocres y rojos apagados. El fondo es un paisaje andino con cerros, pero casi no tiene detalles, entonces toda la atención va a él.\n\nLa técnica es óleo y las pinceladas son gruesas, se nota que no buscaba que pareciera una foto.\n\nEl indigenismo fue un movimiento de los años 20 que quería mostrar al indígena como parte central del Perú, no como algo exótico. Sabogal pinta al varayoc con dignidad, como autoridad de su comunidad, no como pobre o triste.\n\nMi interpretación: me hizo pensar en el presidente de la comunidad de mis abuelos, que también usa vara en las fiestas. Creo que si se pintara hoy tendría que salir con celular en el bolsillo, porque las autoridades de las comunidades ahora también se organizan por WhatsApp, pero siguen siendo respetadas.",
+   "questions": [
+    {
+     "id": "q1",
+     "criterionId": "c1",
+     "question": "En su entrega aparecen dos elementos visuales posibles de análisis: el fondo casi sin detalles («toda la atención va a él») y los colores del poncho y del chullo, pero no se indica cuál fue el foco elegido. ¿Cuál de los dos tomó usted como eje de su análisis, por qué lo prefirió sobre el otro, y cómo ese foco cambia la manera de entender el Indigenismo en la obra?"
+    },
+    {
+     "id": "q2",
+     "criterionId": "c1",
+     "question": "Primero usted escribe que el varayoc está «como si posara para una foto oficial» y más adelante que «no buscaba que pareciera una foto». Explique cómo sostiene ambas afirmaciones a la vez y cuál decisión del pintor —la pose frontal o las pinceladas gruesas— pesa más en su lectura final."
+    },
+    {
+     "id": "q3",
+     "criterionId": "c2",
+     "question": "La lectura de la dignidad («como autoridad de su comunidad, no como pobre o triste») es la única interpretación que figura en su entrega. ¿Qué otra lectura o marco teórico consideró antes de quedarse con esta —por ejemplo, una formalista sobre la pose monumental o una sociológica sobre el significado de la vara— y qué evidencia concreta del cuadro lo llevó a descartarla?"
+    },
+    {
+     "id": "q4",
+     "criterionId": "c3",
+     "question": "Su entrega afirma que el indigenismo fue «un movimiento de los años 20» con cierto propósito. ¿Qué afirmación exacta le dio la IA sobre el Indigenismo o sobre este cuadro, qué le corrigió o precisó usted al redactar ese párrafo, y cómo verificó ese ajuste antes de mantener el dato?"
+    },
+    {
+     "id": "q5",
+     "criterionId": "c4",
+     "question": "La entrega cierra con la idea del varayoc actual «con celular en el bolsillo» porque las autoridades «se organizan por WhatsApp», pero no enuncia una tesis. Formule su tesis final sobre la obra y explique qué decisiones pictóricas concretas tomaría en ese «varayoc de hoy» —dónde ubicaría el celular, qué haría con el fondo o los colores— para que la idea se sostenga visualmente y no solo como anécdota."
+    }
+   ],
+   "answers": [
+    {
+     "questionId": "q1",
+     "answer": "El fondo sin detalles, porque es lo que hace que el varayoc parezca tan importante: no hay nada que te distraiga. Eso muestra lo que buscaba el indigenismo, poner al indígena en el centro y no como parte del paisaje."
+    },
+    {
+     "questionId": "q2",
+     "answer": "La pose es de foto oficial, como un retrato de autoridad, pero la pintura no es realista por las pinceladas. Para mí pesa más la pose, porque es la que le da la dignidad; las pinceladas son el estilo de Sabogal."
+    },
+    {
+     "questionId": "q3",
+     "answer": "Pensé también que podía ser una pintura sobre la pobreza del campo, pero lo descarté porque no se ve triste ni sufriendo, está de pie, serio y con su vara. Si fuera sobre la pobreza lo habría pintado de otra forma."
+    },
+    {
+     "questionId": "q4",
+     "answer": "La IA me dijo que el indigenismo empezó en los años 30. Lo verifiqué en una página del Museo de Arte de Lima y en mi libro, y decía que Sabogal ya pintaba esto en los años 20, entonces lo corregí."
+    },
+    {
+     "questionId": "q5",
+     "answer": "Mi tesis es que Sabogal pinta al varayoc como una autoridad con dignidad propia, no como algo exótico. En la versión de hoy pondría el celular en la mano junto a la vara, y el fondo seguiría sin detalles para que se vea que la autoridad sigue siendo él."
+    }
+   ],
+   "evaluation": {
+    "summary": "Tu defensa muestra que sí piensas por tu cuenta: elegiste el fondo vacío como eje y lo conectaste con el proyecto indigenista de centrar al indígena, resolviste bien la aparente contradicción entre la pose de «foto oficial» y las pinceladas expresivas, y detectaste y corregiste un error factual de la IA sobre la década del indigenismo verificándolo con fuentes. Sin embargo, el punto más débil fue el descarte de hipótesis: solo planteaste una lectura alternativa (la pobreza) y la descartaste de forma circular, sin comparar dos marcos teóricos como pide la tarea; además, tu tesis final repite lo que ya decía tu entrega y no llega a integrar tu mejor idea, la del varayoc actual con celular y WhatsApp, que con decisiones pictóricas más trabajadas podría haber sido una tesis original y tuya. En futuras defensas, formula explícitamente dos lecturas en competencia y haz que tu tesis recoja todo el recorrido, incluida tu intuición contemporánea.",
+    "perCriterion": [
+     {
+      "criterionId": "c1",
+      "submissionScore": 0.5,
+      "defenseScore": 0.6,
+      "evidenceQuote": "El fondo sin detalles, porque es lo que hace que el varayoc parezca tan importante: no hay nada que te distraiga. Eso muestra lo que buscaba el indigenismo, poner al indígena en el centro y no como parte del paisaje.",
+      "misconception": null
+     },
+     {
+      "criterionId": "c2",
+      "submissionScore": 0.3,
+      "defenseScore": 0.3,
+      "evidenceQuote": "Pensé también que podía ser una pintura sobre la pobreza del campo, pero lo descarté porque no se ve triste ni sufriendo, está de pie, serio y con su vara. Si fuera sobre la pobreza lo habría pintado de otra forma.",
+      "misconception": "El estudiante descarta la lectura alternativa con un razonamiento circular (la obra no es sobre pobreza porque no se ve pobre), sin contrastar marcos teóricos ni citar la segunda lectura exigida."
+     },
+     {
+      "criterionId": "c3",
+      "submissionScore": 0.4,
+      "defenseScore": 0.6,
+      "evidenceQuote": "La IA me dijo que el indigenismo empezó en los años 30. Lo verifiqué en una página del Museo de Arte de Lima y en mi libro, y decía que Sabogal ya pintaba esto en los años 20, entonces lo corregí.",
+      "misconception": null
+     },
+     {
+      "criterionId": "c4",
+      "submissionScore": 0.4,
+      "defenseScore": 0.5,
+      "evidenceQuote": "Mi tesis es que Sabogal pinta al varayoc como una autoridad con dignidad propia, no como algo exótico. En la versión de hoy pondría el celular en la mano junto a la vara, y el fondo seguiría sin detalles para que se vea que la autoridad sigue siendo él.",
+      "misconception": "La tesis enunciada repite la lectura de la entrega y no integra la idea contemporánea del celular/WhatsApp, que queda como anécdota separada de la tesis final."
+     }
+    ]
+   }
+  },
+  {
+   "alias": "Franco",
+   "work": "Análisis de \"El varayoc de Chinchero\" (José Sabogal)\n\nElementos visuales: la obra presenta una composición vertical y frontal en la que la figura del alcalde vara ocupa el primer plano, transmitiendo monumentalidad y solemnidad. La paleta cromática se basa en tonos terrosos, ocres y rojos, propios del paisaje andino. La técnica es óleo sobre lienzo, con pinceladas expresivas y un dibujo de contornos marcados.\n\nRelación con el indigenismo: Sabogal fue el principal exponente del indigenismo pictórico peruano, movimiento que buscó revalorar la cultura andina como fundamento de la identidad nacional. La obra dignifica al poblador andino al representarlo como autoridad tradicional, en oposición a la mirada colonial y costumbrista.\n\nInterpretación personal: considero que la obra constituye un poderoso símbolo de resistencia cultural, pues afirma la vigencia de las formas de organización comunal andinas y nos invita a reflexionar sobre la diversidad que define al Perú.",
+   "questions": [
+    {
+     "id": "q1",
+     "criterionId": "c1",
+     "question": "En la sección «Elementos visuales» usted da el mismo peso a la composición («composición vertical y frontal»), al color («tonos terrosos, ocres y rojos») y a la técnica («óleo sobre lienzo»), sin comprometerse con uno solo como pide la consigna. ¿Cuál de esos tres elementos es el eje real de su análisis y por qué lo privilegió sobre los otros dos para comprender el Indigenismo de la obra?"
+    },
+    {
+     "id": "q2",
+     "criterionId": "c1",
+     "question": "Usted afirma que los «tonos terrosos, ocres y rojos» son «propios del paisaje andino». ¿Por qué decidió explicar la paleta desde el paisaje y no desde la vestimenta o la figura del varayoc, y cómo esa lectura del color sostiene su afirmación de que la obra dignifica al poblador andino?"
+    },
+    {
+     "id": "q3",
+     "criterionId": "c2",
+     "question": "Su párrafo final sostiene que la obra «constituye un poderoso símbolo de resistencia cultural», pero en el texto no aparece ninguna lectura alternativa sopesada, como exigía la consigna. ¿Qué dos interpretaciones contrapuestas consideró para esta obra —por ejemplo, una formalista centrada en la composición y una sociológica sobre el cargo de autoridad— y qué argumento concreto lo llevó a descartar una de ellas?"
+    },
+    {
+     "id": "q4",
+     "criterionId": "c3",
+     "question": "En «Relación con el indigenismo» usted escribe que «Sabogal fue el principal exponente del indigenismo pictórico peruano, movimiento que buscó revalorar la cultura andina como fundamento de la identidad nacional», afirmación de tono genérico. La consigna pedía verificar y refinar una afirmación generada por IA sobre el Indigenismo peruano: ¿cuál afirmación de su trabajo tomó de una IA, qué comprobó usted al respecto y qué corrigió, precisó o matizó antes de mantenerla?"
+    },
+    {
+     "id": "q5",
+     "criterionId": "c4",
+     "question": "Su cierre reúne dos argumentos distintos: «la vigencia de las formas de organización comunal andinas» (resistencia cultural) y «la diversidad que define al Perú». ¿Cuál de los dos es realmente su tesis final y cómo convergen en ella el elemento visual que eligió y la hipótesis que descartó?"
+    }
+   ],
+   "answers": [
+    {
+     "questionId": "q1",
+     "answer": "La composición, porque es la que transmite la monumentalidad de la figura."
+    },
+    {
+     "questionId": "q2",
+     "answer": "Porque el paisaje andino tiene esos colores. Eso muestra la relación del poblador con su tierra."
+    },
+    {
+     "questionId": "q3",
+     "answer": "Consideré la formalista y la sociológica. Elegí la de resistencia cultural porque es la más completa."
+    },
+    {
+     "questionId": "q4",
+     "answer": "Revisé la información sobre Sabogal en internet y estaba correcta, no tuve que corregir nada."
+    },
+    {
+     "questionId": "q5",
+     "answer": "Las dos ideas van juntas, la resistencia cultural y la diversidad. Mi tesis es que la obra representa la identidad del Perú."
+    }
+   ],
+   "evaluation": {
+    "summary": "Tu entrega muestra una lectura correcta de la obra y tu defensa identifica la composición como eje, lo cual es un buen punto de partida. Sin embargo, tus respuestas se quedaron en el primer paso: dijiste qué elegiste, pero no profundizaste en por qué esa elección cambia la lectura del Indigenismo; nombraste las dos interpretaciones, pero no explicaste con argumentos concretos por qué descartaste una; y sobre la IA, contestaste que 'no tuve que corregir nada', cuando la consigna pedía justamente refinar una afirmación, pues incluso tu frase sobre Sabogal es genérica y admite matices (por ejemplo, el papel de otros artistas del movimiento). Tu tesis final mezcla varias ideas sin decidir cuál manda ni cómo conecta con la composición que elegiste. Para la próxima defensa, prepara respuestas que expliquen tus decisiones con evidencia concreta de la obra: eso es lo que distingue un análisis propio de uno asistido.",
+    "perCriterion": [
+     {
+      "criterionId": "c1",
+      "submissionScore": 0.3,
+      "defenseScore": 0.3,
+      "evidenceQuote": "La composición, porque es la que transmite la monumentalidad de la figura.",
+      "misconception": "Cree que mencionar la monumentalidad de la figura justifica por sí solo la elección del elemento visual, sin conectarla con el significado indigenista de la obra."
+     },
+     {
+      "criterionId": "c2",
+      "submissionScore": 0.3,
+      "defenseScore": 0.3,
+      "evidenceQuote": "Consideré la formalista y la sociológica. Elegí la de resistencia cultural porque es la más completa.",
+      "misconception": "Confunde 'resistencia cultural' —su tesis final— con una de las dos interpretaciones contrapuestas que debía sopesar y descartar."
+     },
+     {
+      "criterionId": "c3",
+      "submissionScore": 0.3,
+      "defenseScore": 0.3,
+      "evidenceQuote": "Revisé la información sobre Sabogal en internet y estaba correcta, no tuve que corregir nada.",
+      "misconception": "Cree que verificar una afirmación de IA consiste solo en comprobarla en internet y confirmarla, no en refutarla, corregirla o refinarla con dominio del tema."
+     },
+     {
+      "criterionId": "c4",
+      "submissionScore": 0.4,
+      "defenseScore": 0.3,
+      "evidenceQuote": "Las dos ideas van juntas, la resistencia cultural y la diversidad. Mi tesis es que la obra representa la identidad del Perú.",
+      "misconception": "Cree que una tesis se forma sumando todas las ideas sin establecer jerarquía ni explicar cómo converge el análisis visual en ella."
+     }
+    ]
+   }
+  },
+  {
+   "alias": "Cami",
+   "work": "El cuadro es de José Sabogal y muestra a un hombre andino con una vara. Los colores son marrones y rojos. Está pintado con óleo.\n\nEl indigenismo es un movimiento que valora a los indígenas. Sabogal es el pintor más importante del indigenismo.\n\nMi interpretación es que el cuadro muestra la cultura andina y que debemos valorarla. Me gustó porque los colores son bonitos.",
+   "questions": [
+    {
+     "id": "q1",
+     "criterionId": "c1",
+     "question": "En su entrega anota «Los colores son marrones y rojos» y cierra con «Me gustó porque los colores son bonitos». Si el color fue su elemento de análisis, ¿por qué lo eligió y no la composición o la textura, y qué cambia en la comprensión del Indigenismo de esta obra al leerla desde esos tonos y no desde otro elemento?"
+    },
+    {
+     "id": "q2",
+     "criterionId": "c1",
+     "question": "La frase «porque los colores son bonitos» expresa gusto personal, no un argumento académico. ¿Qué propiedad concreta del uso de esos marrones y rojos dentro del cuadro sostiene su elección, y qué le respondería a quien diga que usted solo escribió que le agradó la imagen?"
+    },
+    {
+     "id": "q3",
+     "criterionId": "c2",
+     "question": "Su texto ofrece una sola lectura («el cuadro muestra la cultura andina y que debemos valorarla») sin contrastar otras. Frente a una lectura sociológica que vería en la vara que usted menciona un símbolo de autoridad comunal del varayoc, y una lectura formalista centrada en la factura y la paleta, ¿cuál de las dos descarta y por qué prevalece su interpretación?"
+    },
+    {
+     "id": "q4",
+     "criterionId": "c3",
+     "question": "Dos frases de su entrega suenan a salida directa de un chatbot: «El indigenismo es un movimiento que valora a los indígenas» y «Sabogal es el pintor más importante del indigenismo». Si le pedimos corregir o refinar una de las dos, ¿cuál elige, qué tiene de imprecisa y cómo la reformularía con base en lo que usted mismo investigó?"
+    },
+    {
+     "id": "q5",
+     "criterionId": "c4",
+     "question": "Su tesis final («el cuadro muestra la cultura andina y que debemos valorarla») podría aplicarse a casi cualquier imagen andina. ¿Cuál es su afirmación específica para «El varayoc de Chinchero» y cómo se desprende de las decisiones que tomó a lo largo del trabajo: el elemento visual que eligió y la lectura que descartó?"
+    }
+   ],
+   "answers": [
+    {
+     "questionId": "q1",
+     "answer": "Elegí el color porque es lo primero que se ve. Los marrones y rojos hacen que se vea andino."
+    },
+    {
+     "questionId": "q2",
+     "answer": "Los colores son de la tierra y de la ropa del varayoc. Es verdad que puse que me gustó, pero también tiene que ver con la cultura."
+    },
+    {
+     "questionId": "q3",
+     "answer": "Creo que la sociológica, porque la vara es de autoridad. No conocía la formalista."
+    },
+    {
+     "questionId": "q4",
+     "answer": "La de que Sabogal es el más importante, porque no sé si es el más importante. Diría que fue uno de los pintores principales del indigenismo."
+    },
+    {
+     "questionId": "q5",
+     "answer": "Que el cuadro muestra que el varayoc es una autoridad en su comunidad. No sé bien cómo se relaciona con el color."
+    }
+   ],
+   "evaluation": {
+    "summary": "En la defensa lograste el momento más sólido del trabajo: detectaste que «Sabogal es el pintor más importante del indigenismo» era una afirmación arriesgada y la moderaste a «uno de los pintores principales». Ese instinto crítico de no repetir sin verificar es justo lo que la tarea busca, y es una buena señal. Sin embargo, las demás respuestas quedaron en declaraciones generales: elegiste el color «porque es lo primero que se ve», sin señalar qué propiedad concreta de los marrones y rojos en esta obra sostiene tu análisis. El punto más delicado fue el descarte de hipótesis: mencionaste que la vara «es de autoridad» como razón para descartar la lectura sociológica, pero ese argumento pertenece a la lectura sociológica, no la refuta. Además, tu tesis final («el varayoc es una autoridad en su comunidad») es precisamente la lectura que dijiste descartar, y tú mismo reconociste no saber cómo conectarla con el color. Antes de rendir de nuevo, te sugiero dos cosas: primero, elegir un elemento visual y describir con precisión qué hace ese elemento en el cuadro (dónde está, qué efecto produce); segundo, escribir tu tesis como una frase que solo pueda aplicarse a esta obra y no a cualquier imagen andina. Las piezas del puzzle ya están sobre la mesa; el siguiente paso es que las conectes tú.",
+    "perCriterion": [
+     {
+      "criterionId": "c1",
+      "submissionScore": 0.3,
+      "defenseScore": 0.3,
+      "evidenceQuote": "Elegí el color porque es lo primero que se ve. Los marrones y rojos hacen que se vea andino.",
+      "misconception": null
+     },
+     {
+      "criterionId": "c2",
+      "submissionScore": 0,
+      "defenseScore": 0.3,
+      "evidenceQuote": "Creo que la sociológica, porque la vara es de autoridad. No conocía la formalista.",
+      "misconception": "Descarta la lectura sociológica citando como razón precisamente el argumento central de esa lectura (la vara como símbolo de autoridad), y admite no conocer la formalista."
+     },
+     {
+      "criterionId": "c3",
+      "submissionScore": 0,
+      "defenseScore": 0.6,
+      "evidenceQuote": "La de que Sabogal es el más importante, porque no sé si es el más importante. Diría que fue uno de los pintores principales del indigenismo.",
+      "misconception": null
+     },
+     {
+      "criterionId": "c4",
+      "submissionScore": 0.3,
+      "defenseScore": 0.3,
+      "evidenceQuote": "Que el cuadro muestra que el varayoc es una autoridad en su comunidad. No sé bien cómo se relaciona con el color.",
+      "misconception": "Su tesis final reproduce la lectura sociológica que declaró haber descartado y él mismo reconoce no poder conectarla con el elemento visual que eligió."
+     }
+    ]
+   }
+  }
+ ]
+}

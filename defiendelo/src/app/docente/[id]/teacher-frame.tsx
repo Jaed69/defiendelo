@@ -4,12 +4,13 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { api } from "@/app/api-client";
+import { AccountChip } from "@/app/components/account-chip";
 import { AppBar, Logo } from "@/app/components/brand";
 import type { Assignment } from "@/domain/types";
 
 export type TeacherSection = "tarea" | "entregas";
 
-/** Teacher-side data for one assignment, shared by both teacher screens. */
+/** Teacher-side data for one assignment, shared by every teacher screen. */
 export function useTeacherAssignment(id: string) {
   const teacherKey = useSearchParams().get("k") ?? "";
   const [assignment, setAssignment] = useState<Assignment | null>(null);
@@ -30,7 +31,27 @@ export function teacherHref(id: string, teacherKey: string, section: TeacherSect
   return `/docente/${id}${section === "entregas" ? "/entregas" : ""}?k=${teacherKey}`;
 }
 
-/** Header, title and the two-step switch between preparing the task and reviewing what came back. */
+/** "Comunicación, 4.º de secundaria" → "Comunicación · 4.º de secundaria", as the screens show it. */
+export function subjectLine(subject: string) {
+  const at = subject.lastIndexOf(", ");
+  return at === -1 ? subject : `${subject.slice(0, at)} · ${subject.slice(at + 2)}`;
+}
+
+export function studentLinkFor(id: string) {
+  return typeof window === "undefined" ? `/alumno/${id}` : `${window.location.origin}/alumno/${id}`;
+}
+
+/** App bar shared by the teacher screens: the logo and this device's code. */
+export function TeacherBar() {
+  return (
+    <AppBar>
+      <Logo />
+      <AccountChip />
+    </AppBar>
+  );
+}
+
+/** Header, title and the switch between preparing the task and reviewing what came back. */
 export function TeacherFrame({
   id,
   teacherKey,
@@ -46,27 +67,19 @@ export function TeacherFrame({
   error: string | null;
   children?: React.ReactNode;
 }) {
-  const [copied, setCopied] = useState(false);
-  const studentLink = typeof window === "undefined" ? "" : `${window.location.origin}/alumno/${id}`;
-
-  function copyLink() {
-    void navigator.clipboard.writeText(studentLink);
-    setCopied(true);
-  }
-
   if (!assignment) {
     return (
       <>
-        <AppBar>
-          <Logo />
-        </AppBar>
+        <TeacherBar />
         <main id="contenido" tabIndex={-1} className="container-page py-12 outline-none">
           {error ? (
             <p role="alert" className="font-bold text-pen">
               {error}
             </p>
           ) : (
-            <p className="text-graphite">Cargando tu tarea…</p>
+            <p className="text-graphite" role="status">
+              Cargando tu tarea…
+            </p>
           )}
         </main>
       </>
@@ -80,36 +93,29 @@ export function TeacherFrame({
 
   return (
     <>
-      <AppBar>
-        <Logo />
-        <button type="button" className="btn" onClick={copyLink}>
-          {copied ? "Enlace copiado" : "Copiar enlace para alumnos"}
-        </button>
-      </AppBar>
-      <span className="sr-only" role="status">
-        {copied ? "Enlace copiado al portapapeles." : ""}
-      </span>
-
-      <main id="contenido" tabIndex={-1} className="container-page grid gap-8 py-8 outline-none sm:py-10">
-        <div className="grid gap-2">
-          <span className="text-graphite">{assignment.subject}</span>
-          <h1 className="max-w-[24ch] text-[clamp(2rem,4vw,3rem)]">{assignment.title}</h1>
+      <TeacherBar />
+      <main id="contenido" tabIndex={-1} className="container-page grid gap-6 py-7 outline-none sm:py-9">
+        <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
+          <div className="grid min-w-0 gap-1">
+            <span className="text-[0.9375rem] text-graphite">{subjectLine(assignment.subject)}</span>
+            <h1 className="max-w-[28ch] text-[clamp(1.875rem,4vw,2.75rem)]">{assignment.title}</h1>
+          </div>
+          <nav aria-label="Secciones de la tarea" className="grid grid-cols-2 gap-1 rounded-[var(--radius-pill)] bg-subtle p-1 max-sm:w-full">
+            {tabs.map((tab) => {
+              const current = tab.section === section;
+              return (
+                <Link
+                  key={tab.section}
+                  href={teacherHref(id, teacherKey, tab.section)}
+                  aria-current={current ? "page" : undefined}
+                  className={`flex min-h-11 items-center justify-center rounded-[var(--radius-pill)] px-4 text-center text-[0.9375rem] font-bold ${current ? "bg-surface text-ink shadow-sm" : "text-graphite hover:text-ink"}`}
+                >
+                  {tab.label}
+                </Link>
+              );
+            })}
+          </nav>
         </div>
-        <nav aria-label="Secciones de la tarea" className="grid grid-cols-2 gap-1 rounded-[var(--radius-md)] bg-subtle p-1 sm:max-w-md">
-          {tabs.map((tab) => {
-            const current = tab.section === section;
-            return (
-              <Link
-                key={tab.section}
-                href={teacherHref(id, teacherKey, tab.section)}
-                aria-current={current ? "page" : undefined}
-                className={`flex min-h-12 items-center justify-center rounded-[var(--radius-sm)] px-3 text-center font-bold ${current ? "bg-surface text-ink shadow-sm" : "text-graphite hover:text-ink"}`}
-              >
-                {tab.label}
-              </Link>
-            );
-          })}
-        </nav>
 
         {children}
 

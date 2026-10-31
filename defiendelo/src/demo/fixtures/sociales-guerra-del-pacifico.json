@@ -1,0 +1,443 @@
+{
+ "exampleId": "sociales-guerra-del-pacifico",
+ "redesign": {
+  "statement": "Elabora una monografía de 4 páginas sobre las causas y consecuencias de la Guerra del Pacífico (1879-1884) para el Perú, trabajando con asistencia de inteligencia artificial generativa. En esta tarea, el uso de IA está permitido y es esperado: puedes emplear un chatbot para explorar ideas, armar esquemas, redactar borradores o revisar el estilo. La IA será tu asistente, no tu autora: la calificación premia tus decisiones, tus verificaciones y tu capacidad de sustentar tu propio trabajo, no la pulidez del texto que una IA puede producir sola. Tu entrega consta de cuatro partes. (1) Bitácora de decisiones: registra al menos cinco decisiones que tomaste (qué causas o consecuencias priorizaste, qué enfoque elegiste, qué fuentes seleccionaste, qué estructura adoptaste) y, para cada una, al menos una alternativa que descartaste con el motivo concreto del descarte; incluye también las sugerencias de la IA que decidiste no seguir y por qué. (2) Tabla de verificación de la IA: elige al menos cinco afirmaciones relevantes generadas por la IA (fechas, causas, cifras, nombres, interpretaciones) y contrástalas con al menos tres fuentes confiables, por ejemplo obras de historiadores peruanos como Jorge Basadre, documentos primarios como el Tratado de Ancón, o publicaciones de repositorios universitarios o del Estado peruano; indica si cada afirmación se confirmó, se corrigió o se descartó, y qué cambio introdujiste en tu monografía como resultado. (3) Monografía final, de máximo 4 páginas, con introducción, desarrollo y conclusiones, citando únicamente las fuentes que tú verificaste y señalando con claridad en qué partes usaste apoyo de la IA; la redacción impecable por sí sola no otorga gran puntaje, lo que más puntúa es el juicio histórico demostrado. (4) Sustentación en vivo: tu docente conversará contigo sobre tu propio trabajo, te preguntará por qué elegiste ese enfoque y no otro, por qué descartaste las alternativas que figuran en tu bitácora, cómo verificaste los datos de la IA y qué errores o imprecisiones detectaste; debes poder explicar cualquier pasaje de tu monografía que se te solicite. No se trata de memorizar el texto, sino de comprender y justificar tus decisiones. Importante: presentar texto de IA sin verificación, no poder explicar tus propias decisiones o no dar razón de tus descartes afecta directamente tu calificación.",
+  "aiPolicy": "IA permitida con registro de uso",
+  "criteria": [
+   {
+    "id": "c1",
+    "name": "Bitácora de decisiones y alternativas descartadas",
+    "description": "La bitácora registra al menos cinco decisiones propias del proceso (enfoque, prioridades temáticas, fuentes, estructura) y las alternativas descartadas con razones específicas, incluidas las sugerencias de la IA que no aceptó y el motivo del rechazo.",
+    "weight": 15,
+    "evidence": "entrega"
+   },
+   {
+    "id": "c2",
+    "name": "Verificación documentada del output de la IA",
+    "description": "El estudiante contrasta al menos cinco afirmaciones generadas por la IA con tres o más fuentes confiables, en una tabla que registra el resultado (confirmado, corregido o descartado) y los cambios aplicados al texto final.",
+    "weight": 20,
+    "evidence": "entrega"
+   },
+   {
+    "id": "c3",
+    "name": "Sustentación: explicación de decisiones y descartes",
+    "description": "En la conversación en vivo, el estudiante explica con sus propias palabras por qué tomó cada decisión clave y por qué descartó las alternativas; responde réplicas y preguntas sobre su bitácora sin limitarse a leerla.",
+    "weight": 25,
+    "evidence": "defensa"
+   },
+   {
+    "id": "c4",
+    "name": "Sustentación: dominio del contenido y de la verificación",
+    "description": "En la sustentación, el estudiante demuestra manejo del tema histórico, describe cómo verificó los datos de la IA, identifica de primera mano sus errores o imprecisiones y justifica las correcciones aplicadas; puede explicar cualquier pasaje de su monografía que se le solicite.",
+    "weight": 30,
+    "evidence": "defensa"
+   },
+   {
+    "id": "c5",
+    "name": "Coherencia del producto final y transparencia del uso de IA",
+    "description": "La monografía final mantiene coherencia entre decisiones, fuentes y conclusiones, cita solo fuentes verificadas por el estudiante y declara dónde se usó IA. La calidad de redacción que una IA puede producir por sí sola recibe poco peso.",
+    "weight": 10,
+    "evidence": "entrega"
+   }
+  ],
+  "originalCriteria": [
+   {
+    "id": "o1",
+    "name": "Estructura y extensión",
+    "description": "La monografía presenta introducción, desarrollo y conclusiones claramente organizados y alcanza la extensión solicitada de cuatro páginas.",
+    "weight": 25,
+    "evidence": "entrega"
+   },
+   {
+    "id": "o2",
+    "name": "Precisión del contenido histórico",
+    "description": "El texto explica correctamente las causas y consecuencias de la Guerra del Pacífico para el Perú, con datos, fechas y procesos pertinentes.",
+    "weight": 35,
+    "evidence": "entrega"
+   },
+   {
+    "id": "o3",
+    "name": "Fuentes y citación",
+    "description": "Utiliza al menos tres fuentes pertinentes y las cita de acuerdo con el formato indicado por el docente.",
+    "weight": 25,
+    "evidence": "entrega"
+   },
+   {
+    "id": "o4",
+    "name": "Redacción y presentación",
+    "description": "La escritura es clara, cohesiva y con ortografía cuidada; el documento cumple las normas de presentación establecidas.",
+    "weight": 15,
+    "evidence": "entrega"
+   }
+  ],
+  "rationale": "El rediseño mantiene la monografía como producto, pero traslada el peso de la nota a evidencias que una IA no puede fabricar sola: la bitácora de decisiones con alternativas descartadas, la verificación documentada del contenido generado por la IA y, sobre todo, la sustentación en vivo (55 % del peso), donde el estudiante debe explicar sus elecciones, reconocer errores de la IA y defender sus correcciones. La calidad de redacción ejecutiva se devalúa deliberadamente (10 %). El contraste con la rúbrica original, centrada en el producto escrito, muestra el desplazamiento del foco de evaluación hacia el criterio histórico del estudiante."
+ },
+ "stress": {
+  "original": {
+   "aiAnswer": "# Monografía: Causas y consecuencias de la Guerra del Pacífico (1879-1884) para el Perú\n\n## Introducción\n\nLa Guerra del Pacífico fue el conflicto más significativo en la historia republicana del Perú. Enfrentó a Chile contra la alianza de Perú y Bolivia entre 1879 y 1884, y dejó consecuencias territoriales, económicas y sociales que marcaron al país durante décadas. El presente trabajo tiene como objetivo identificar las principales causas del conflicto y analizar sus consecuencias para el Perú.\n\n## Desarrollo\n\n### Causas del conflicto\n\nLa causa principal fue la disputa por los territorios ricos en salitre y guano del desierto de Atacama. Según Bonilla (1979), la bonanza del guano había creado en el Perú una economía dependiente de la exportación de recursos naturales, lo que hizo que la zona de Tarapacá fuera de interés estratégico y económico vital.\n\nUn detonante fue el impuesto aplicado por Bolivia a la Compañía de Salitres y Ferrocarril de Antofagasta, de capital chileno, lo que provocó la ocupación chilena de Antofagasta en febrero de 1879. Perú, ligado a Bolivia por un tratado secreto de alianza defensiva de 1873, entró al conflicto.\n\nAsimismo, Basadre (1983) sostiene que existían rivalidades de largo plazo por el control comercial y marítimo del Pacífico sur, en un contexto de inestabilidad política interna en los tres países.\n\n### Principales acontecimientos\n\nLa guerra se desarrolló en tres etapas: la campaña marítima (combates de Iquique y Angamos, donde murió el almirante Miguel Grau en 1879), la campaña terrestre de Tarapacá y Tacna-Arica, y finalmente la ocupación de Lima en 1881 y la campaña de la Breña, dirigida por Andrés Avelino Cáceres.\n\n### Consecuencias para el Perú\n\nLas consecuencias fueron profundas:\n\n1. **Territoriales:** La pérdida de Tarapacá y, mediante el Tratado de Ancón (1883), la entrega temporal de Tacna y Arica, cuya posesión definitiva se definió en 1929.\n2. **Económicas:** La destrucción de las salitreras de Tarapacá, la quiebra fiscal y el inicio de una larga crisis financiera, agravada por la deuda externa.\n3. **Sociales y políticas:** La ocupación de Lima generó resistencia y patrioticismo, pero también un período de inestabilidad política, con la reconstrucción nacional como tarea central, como señala Burga y Flores Galindo (1987).\n\n## Conclusiones\n\nLa Guerra del Pacífico fue el resultado de una disputa por recursos naturales en un contexto de rivalidades regionales. Para el Perú, sus consecuencias fueron devastadoras: pérdida territorial, colapso económico y una crisis política prolongada. Sin embargo, también fortaleció el sentimiento nacional, personificado en héroes como Miguel Grau y los defensores de la Breña. Comprender este conflicto permite reflexionar sobre la importancia de la gestión de los recursos naturales y de la estabilidad institucional en el desarrollo del país.\n\n## Referencias\n\n- Basadre, J. (1983). *Historia de la República del Perú*. Lima: Editorial Universitaria.\n- Bonilla, H. (1979). *El futuro del pasado en la historia latinoamericana*. Lima: IEP.\n- Burga, M. y Flores Galindo, A. (1987). *Apogeo y crisis de la República aristocrática*. Lima: Ediciones Rikchay Perú.\n\n---\n\n**Nota:** El tema fue trabajado en formato de monografía con estructura académica (introducción, desarrollo con citas, conclusiones y referencias bibliográficas).",
+   "scores": [
+    {
+     "criterionId": "o1",
+     "score": 0.6,
+     "reason": "La estructura (introducción, desarrollo, conclusiones) es clara y completa, pero el volumen de texto resulta visiblemente inferior a cuatro páginas."
+    },
+    {
+     "criterionId": "o2",
+     "score": 0.9,
+     "reason": "Explica causas, hitos y consecuencias con fechas y datos correctos (1873, 1879, 1881, Ancón 1883, 1929), aunque con desarrollo breve y alguna simplificación."
+    },
+    {
+     "criterionId": "o3",
+     "score": 0.9,
+     "reason": "Usa tres fuentes pertinentes (Bonilla, Basadre, Burga y Flores Galindo) citadas en el texto y referenciadas en formato APA coherente."
+    },
+    {
+     "criterionId": "o4",
+     "score": 0.85,
+     "reason": "Redacción clara, cohesiva y bien presentada, con un desliz léxico ('patrioticismo' en vez de 'patriotismo')."
+    }
+   ]
+  },
+  "redesigned": {
+   "aiAnswer": "**Monografía: La Guerra del Pacífico (1879–1884)**\n**Nombre del estudiante: [Nombre] — 5.º de secundaria — Ciencias Sociales**\n\n---\n\n**1. Bitácora de decisiones**\n\n1. **Enfoque:** elegí un enfoque causes-consecuencias en tres ejes (económico, territorial, social). *Alternativa descartada:* un enfoque narrativo-militar, porque habría extendido demasiado la parte de batallas y reducido el análisis.\n2. **Causas priorizadas:** el impuesto de los diez centavos y los tratados de 1874. *Alternativa descartada:* la carrera armamentista, por considerar que era contexto y no causa directa.\n3. **Fuentes:** Basadre, el Tratado de Ancón y el tratado de 1929. *Alternativa descartada:* páginas web divulgativas, por falta de rigor.\n4. **Estructura:** introducción, tres secciones temáticas y conclusiones. *Descarté* la cronología pura porque repetiría datos.\n5. **Sugerencia de la IA no seguida:** propuso incluir un anexo con mapas; lo descarté por límite de páginas.\n\n---\n\n**2. Tabla de verificación de la IA**\n\n| Afirmación de la IA | Fuente consultada | Resultado | Cambio en la monografía |\n|---|---|---|---|\n| La guerra empezó en 1879 | Basadre, *Historia de la República* | Confirmada | Ninguno |\n| El impuesto de los diez centavos fue un detonante | Tratados y documentos diplomáticos | Confirmada | Se mantuvo |\n| El Tratado de Ancón es de 1883 | Texto del tratado | Confirmada | Se mantuvo |\n| El salitre generaba grandes ingresos fiscales | Repositorio universitario | Confirmada | Se precisó la cifra |\n| Chile ocupó Lima en 1881 | Basadre | Confirmada | Ninguno |\n\n---\n\n**3. Monografía final**\n\n**Introducción.** La Guerra del Pacífico enfrentó a Perú y Bolivia con Chile entre 1879 y 1884. Este trabajo analiza sus causas y consecuencias para el Perú, con apoyo de inteligencia artificial para el borrador inicial y la revisión de estilo.\n\n**Desarrollo.** Las causas fueron económicas y diplomáticas. La riqueza salitrera de Atacama y el impuesto de los diez centavos, que Chile consideró violatorio del tratado de 1874, precipitaron el conflicto. Tras la ocupación de Lima en 1881, la resistencia continuó en la Breña. El Tratado de Ancón (1883) puso fin formal a la guerra. Las consecuencias fueron profundas: el Perú perdió Tarapacá y quedó dividida la región de Tacna y Arica, cuya soberanía se definió recién en 1929; la economía salitrera colapsó y el país entró en una larga crisis que impulsó la reconstrucción nacional.\n\n**Conclusiones.** La guerra redefinió la economía y el territorio peruanos. La pérdida del salitre obligó a diversificar la economía y la derrota impulsó reformas militares y educativas.\n\n**Nota de uso de IA:** usé un chatbot para el esquema, el borrador y la corrección de estilo; la verificación de datos y las decisiones fueron mías.\n\n---\n\n**4. Sustentación en vivo:** disponible para conversar sobre el trabajo.",
+   "scores": [
+    {
+     "criterionId": "c1",
+     "score": 0.75,
+     "reason": "Registra cinco decisiones con alternativa descartada y motivo concreto, incluida una sugerencia de IA rechazada; cumple el mínimo, pero los motivos son breves y el único rechazo a la IA trata un asunto menor (un anexo de mapas)."
+    },
+    {
+     "criterionId": "c2",
+     "score": 0.5,
+     "reason": "La tabla presenta cinco afirmaciones con resultado y cambio aplicado, pero las fuentes están vagamente identificadas, todas las afirmaciones se dan por confirmadas sin hallazgo crítico y la supuesta precisión de la cifra salitrera no se especifica."
+    },
+    {
+     "criterionId": "c3",
+     "score": 0,
+     "reason": "No hay evidencia escrita de la sustentación en vivo: la entrega solo declara disponibilidad para conversar, sin demostrar explicación de decisiones, manejo de réplicas ni justificación de los descartes."
+    },
+    {
+     "criterionId": "c4",
+     "score": 0,
+     "reason": "Sin registro de la defensa no puede acreditarse el dominio del tema ni de la verificación; no consta que el estudiante explique pasajes, describa su proceso de contraste ni identifique errores de la IA."
+    },
+    {
+     "criterionId": "c5",
+     "score": 0.5,
+     "reason": "Declara el uso de IA y mantiene hechos coherentes con la tabla, pero no cita en el texto las fuentes verificadas, no desarrolla los tres ejes anunciados en la bitácora y queda muy por debajo de la extensión esperada de la monografía."
+    }
+   ]
+  },
+  "ranAt": "2026-10-31T05:39:06.826Z"
+ },
+ "insights": {
+  "clusters": [
+   {
+    "label": "Verificación de la IA sin ubicar los datos en las fuentes citadas",
+    "criterionId": "c4",
+    "studentAliases": [
+     "Sebas"
+    ],
+    "quotes": [
+     "«Lo verifiqué en internet. No recuerdo en qué parte de los libros estaba.»",
+     "«Creo que Tarapacá se perdió y Tacna y Arica quedaron ocupadas. No revisé el texto del tratado.»",
+     "«Puse 1884 porque así figura en las fuentes. No sé exactamente qué pasó en 1884.»"
+    ],
+    "suggestion": "Actividad «Ficha de rastreo» (12-14 min): cada estudiante elige una afirmación de su tabla de verificación y debe ubicarla en una de las fuentes que citó (Basadre, Contreras y Cueto o Klarén) o constatar que no aparece. Completa una ficha breve con obra, capítulo o página, cita textual y el cambio que aplicaría en su monografía. Tres o cuatro voluntarios leen su ficha en voz alta; el docente pregunta a cada uno: «¿en qué lugar exacto de la fuente está el dato y qué harías si no estuviera?». Cierra con una regla anotada en la pizarra: una afirmación solo cuenta como verificada cuando puede señalarse su ubicación precisa en la fuente."
+   },
+   {
+    "label": "Confusión entre causa del estallido y factor del desenlace",
+    "criterionId": "c3",
+    "studentAliases": [
+     "Sebas"
+    ],
+    "quotes": [
+     "«No recuerdo el tomo. La puse como causa militar porque la marina chilena era más fuerte.»",
+     "«Me pareció que por tipos se entendía mejor. No evaluó otro orden.»"
+    ],
+    "suggestion": "Ejercicio de clasificación «Causa, desenlace o consecuencia» (10-12 min): el docente proyecta seis afirmaciones breves (por ejemplo, la superioridad naval chilena, la crisis fiscal peruana previa a 1879, la ocupación de Tacna y Arica, el Tratado de Ancón). En parejas, los estudiantes las clasifican como causa del estallido, factor que explica el desenlace o consecuencia, y justifican cada caso con una oración. Luego cada estudiante reescribe la afirmación problemática de su propia monografía situándola en el momento correcto del proceso y la sustenta a su pareja, respondiendo una réplica del docente o de la otra pareja."
+   }
+  ]
+ },
+ "students": [
+  {
+   "alias": "Andrea",
+   "work": "Introducción: elegí este tema porque soy de Tacna y en mi familia todavía se habla del \"cautiverio\", los casi 50 años en que Tacna estuvo bajo Chile.\n\nCausas: la principal fue económica, por el guano y sobre todo el salitre del desierto de Atacama. Bolivia subió un impuesto de 10 centavos a la compañía chilena de salitre en 1878 y Chile ocupó Antofagasta. El Perú tenía un tratado secreto de alianza con Bolivia de 1873, por eso entró a la guerra. Otra causa fue que el Perú estaba en crisis económica y con una marina más débil.\n\nConsecuencias: el Perú perdió Tarapacá para siempre, y Tacna y Arica quedaron en manos de Chile. Tacna regresó en 1929 por el Tratado de Lima y Arica se quedó en Chile. Hubo crisis económica, destrucción de haciendas y saqueo de Lima, como la Biblioteca Nacional.\n\nFuentes: 1) Jorge Basadre, Historia de la República del Perú. 2) Un artículo de El Comercio sobre la reincorporación de Tacna. 3) Lo que cuenta mi abuela que le contaba su papá. La de Basadre explica más las causas económicas y el artículo se centra en el patriotismo.\n\nConclusión: la guerra todavía se siente en Tacna, cada 28 de agosto con la procesión de la bandera.",
+   "questions": [
+    {
+     "id": "q1",
+     "criterionId": "c3",
+     "question": "En tus causas escribes \"la principal fue económica, por el guano y sobre todo el salitre del desierto de Atacama\". ¿Por qué le diste ese primer lugar y qué dato concreto de Basadre lo sostiene? ¿Llegaste a considerar otro orden, por ejemplo empezar por el tratado secreto de 1873, y por qué lo dejaste después?"
+    },
+    {
+     "id": "q2",
+     "criterionId": "c4",
+     "question": "Afirmas que \"Bolivia subió un impuesto de 10 centavos a la compañía chilena de salitre en 1878\". ¿En cuál de tus fuentes confirmaste la cifra y el año, y qué imprecisión o exceso detectaste en lo que la IA te entregó primero, si es que hubo alguna?"
+    },
+    {
+     "id": "q3",
+     "criterionId": "c4",
+     "question": "Tu frase \"el Perú tenía un tratado secreto de alianza con Bolivia de 1873, por eso entró a la guerra\" presenta la entrada del Perú como efecto directo del tratado. ¿Qué encontraste en tu lectura sobre si el tratado obligaba al Perú a entrar de inmediato o si hubo intentos de mantenerse al margen, y por qué decidiste mantener esa redacción?"
+    },
+    {
+     "id": "q4",
+     "criterionId": "c4",
+     "question": "Tu texto pasa del saqueo de Lima directo a \"Tacna regresó en 1929 por el Tratado de Lima\", sin mencionar el Tratado de Ancón ni el plebiscito previsto. ¿Puedes explicar en pocas frases qué dispuso Ancón de 1883 sobre Tarapacá, Tacna y Arica, y por qué tu monografía de 4 páginas omite ese tramo?"
+    },
+    {
+     "id": "q5",
+     "criterionId": "c3",
+     "question": "Tienes como fuentes \"un artículo de El Comercio sobre la reincorporación de Tacna\" y \"lo que cuenta mi abuela que le contaba su papá\". ¿Qué función distinta cumplió cada una en tu monografía y cómo decidiste si el recuerdo familiar podía citarse como fuente verificada o solo usarte como motivación personal en la introducción?"
+    }
+   ],
+   "answers": [
+    {
+     "questionId": "q1",
+     "answer": "Lo puse primero porque Basadre explica que Chile y las compañías querían el salitre, y que el impuesto fue la chispa, no la causa de fondo. Pensé empezar por el tratado de 1873, pero el tratado no explica por qué Chile quería esos territorios, solo por qué entró el Perú."
+    },
+    {
+     "questionId": "q2",
+     "answer": "Lo confirmé en Basadre y en el artículo de El Comercio. La IA me dijo primero que el impuesto era de 1879, y lo corregí porque fue en 1878; la guerra empezó en 1879."
+    },
+    {
+     "questionId": "q3",
+     "answer": "Encontré que el Perú intentó mediar: mandó a José Antonio de Lavalle a Chile a negociar. Chile le pidió que se declare neutral y el Perú no podía, por el tratado, y ahí Chile le declaró la guerra. Mi frase lo simplifica mucho, la corregiría diciendo que el tratado hizo imposible la neutralidad."
+    },
+    {
+     "questionId": "q4",
+     "answer": "El Tratado de Ancón de 1883 le dio Tarapacá a Chile para siempre, y Tacna y Arica quedaban con Chile por diez años y después un plebiscito decidiría. El plebiscito nunca se hizo, por eso recién en 1929 se resolvió. Lo omití por espacio, pero es importante porque explica los 50 años del cautiverio."
+    },
+    {
+     "questionId": "q5",
+     "answer": "El artículo me sirvió para la parte de 1929 y lo que se vive hoy en Tacna. Lo de mi abuela no es una fuente verificada, porque es un recuerdo; por eso lo usé en la introducción y en la conclusión, como motivación, no para fechas ni datos."
+    }
+   ],
+   "evaluation": {
+    "summary": "Tu sustentación fue lo más sólido del trabajo: respondiste con tus propias palabras, sin leer nada, y con criterio histórico real. Destacan tres momentos: distinguiste la «chispa» del impuesto de la causa de fondo del salitre; explicaste con precisión el Tratado de Ancón, el plebiscito nunca realizado y la vía hacia 1929; y detectaste de primera mano un error de la IA (el año del impuesto, 1879 en vez de 1878) verificándolo en Basadre y El Comercio. También fuiste honesto al reconocer que tu frase sobre el tratado de 1873 simplificaba la entrada del Perú a la guerra, y muy acertado al tratar el recuerdo de tu abuela como motivación personal y no como fuente verificable. Lo pendiente está en la entrega escrita: no se observa la bitácora con tus cinco decisiones y descartes ni la tabla de verificación de la IA, y tu monografía no declara en qué partes usaste IA; además, el recuerdo familiar aparece en la lista de «Fuentes» y falta el tramo de Ancón, que tú mismo dijiste que era importante. Traslada al documento las correcciones que ya demostraste saber hacer y completa esos dos componentes: la comprensión ya la mostraste en la defensa, ahora el texto debe acompañarla. La calificación final la definirá tu docente con todos estos elementos.",
+    "perCriterion": [
+     {
+      "criterionId": "c1",
+      "submissionScore": 0,
+      "defenseScore": 0.6,
+      "evidenceQuote": "q1: «Pensé empezar por el tratado de 1873, pero el tratado no explica por qué Chile quería esos territorios, solo por qué entró el Perú.» — q5: «Lo de mi abuela no es una fuente verificada, porque es un recuerdo».",
+      "misconception": null
+     },
+     {
+      "criterionId": "c2",
+      "submissionScore": 0,
+      "defenseScore": 0.6,
+      "evidenceQuote": "q2: «Lo confirmé en Basadre y en el artículo de El Comercio. La IA me dijo primero que el impuesto era de 1879, y lo corregí porque fue en 1878; la guerra empezó en 1879.»",
+      "misconception": null
+     },
+     {
+      "criterionId": "c3",
+      "submissionScore": 0.4,
+      "defenseScore": 1,
+      "evidenceQuote": "q1: «Lo puse primero porque Basadre explica que Chile y las compañías querían el salitre, y que el impuesto fue la chispa, no la causa de fondo.» — q5: «El artículo me sirvió para la parte de 1929 y lo que se vive hoy en Tacna... como motivación, no para fechas ni datos.»",
+      "misconception": null
+     },
+     {
+      "criterionId": "c4",
+      "submissionScore": 0.5,
+      "defenseScore": 1,
+      "evidenceQuote": "q3: «Mi frase lo simplifica mucho, la corregiría diciendo que el tratado hizo imposible la neutralidad.» — q4: «El Tratado de Ancón de 1883 le dio Tarapacá a Chile para siempre, y Tacna y Arica quedaban con Chile por diez años y después un plebiscito decidiría. El plebiscito nunca se hizo».",
+      "misconception": null
+     },
+     {
+      "criterionId": "c5",
+      "submissionScore": 0.4,
+      "defenseScore": 0.6,
+      "evidenceQuote": "q5: «Lo de mi abuela no es una fuente verificada, porque es un recuerdo; por eso lo usé en la introducción y en la conclusión, como motivación, no para fechas ni datos.»",
+      "misconception": null
+     }
+    ]
+   }
+  },
+  {
+   "alias": "Sebas",
+   "work": "MONOGRAFÍA: CAUSAS Y CONSECUENCIAS DE LA GUERRA DEL PACÍFICO (1879-1884)\n\nIntroducción\nLa Guerra del Pacífico constituye uno de los acontecimientos más trascendentales de la historia republicana del Perú. El presente trabajo analiza sus causas y consecuencias.\n\n1. Causas\n1.1 Causas económicas: la disputa por los recursos salitreros y guaneros del desierto de Atacama, de gran valor en el mercado internacional (Contreras y Cueto, 2013).\n1.2 Causas políticas: el impuesto de diez centavos por quintal de salitre establecido por Bolivia en 1878, que vulneraba el tratado de 1874, y el Tratado de Alianza Defensiva entre Perú y Bolivia de 1873.\n1.3 Causas militares: la superioridad naval chilena tras la adquisición de los blindados Cochrane y Blanco Encalada (Basadre, 1983).\n\n2. Consecuencias\n2.1 Territoriales: pérdida definitiva de Tarapacá mediante el Tratado de Ancón (1883) y ocupación de Tacna y Arica.\n2.2 Económicas: colapso fiscal y pérdida de los ingresos salitreros.\n2.3 Sociales: destrucción de infraestructura y profunda crisis de identidad nacional (Klarén, 2004).\n\nConclusiones\nLa Guerra del Pacífico evidenció la fragilidad del Estado peruano y dejó secuelas que marcaron el desarrollo del país durante el siglo XX.\n\nReferencias: Basadre, J. (1983). Historia de la República del Perú. Contreras, C. y Cueto, M. (2013). Historia del Perú contemporáneo. Klarén, P. (2004). Nación y sociedad en la historia del Perú.",
+   "questions": [
+    {
+     "id": "q1",
+     "criterionId": "c3",
+     "question": "Organizaste la sección de causas en tres rubros: económicas, políticas y militares. ¿Qué otra forma de ordenarlas evaluaste al armar el esquema, por ejemplo un orden cronológico, y qué razón concreta tuvo tu descarte? Si esa tipología salió de una sugerencia de la IA, dime qué ajustaste tú y qué dejó igual."
+    },
+    {
+     "id": "q2",
+     "criterionId": "c4",
+     "question": "En la causa política afimas que el impuesto de diez centavos por quintal de salitre de 1878 «vulneraba el tratado de 1874». ¿Con cuál de tus tres fuentes verificaste ese punto, en qué parte de la obra lo encontraste, y qué dato exacto de la IA contrastaste para confirmarlo o corregirlo?"
+    },
+    {
+     "id": "q3",
+     "criterionId": "c4",
+     "question": "En consecuencias territoriales escribes «pérdida definitiva de Tarapacá mediante el Tratado de Ancón (1883) y ocupación de Tacna y Arica». El tratado no dispuso lo mismo para ambos territorios. ¿Cómo comprobaste esa diferencia al contrastar el texto del tratado, y qué precisión introdujiste en tu monografía como resultado de esa verificación?"
+    },
+    {
+     "id": "q4",
+     "criterionId": "c3",
+     "question": "Respaldas la superioridad naval chilena con «(Basadre, 1983)». ¿En qué tomo o capítulo de esa obra encontraste el dato sobre el Cochrane y el Blanco Encalada, y por qué la clasificaste como «causa militar» de la guerra y no como factor que explica su desenlace? Si te replico que es más bien consecuencia de decisiones previas, ¿qué responderías?"
+    },
+    {
+     "id": "q5",
+     "criterionId": "c4",
+     "question": "Tu título fija el periodo en 1879-1884, pero tu desarrollo termina en el Tratado de Ancón de 1883. ¿Qué ocurrió entre 1883 y 1884 que justificó cerrar ahí tu periodo, y cuál de las tres fuentes citadas te sirvió para sostener esa elección? Menciona también qué alternativa de periodización descartaste."
+    }
+   ],
+   "answers": [
+    {
+     "questionId": "q1",
+     "answer": "Me pareció que por tipos se entendía mejor. No evalué otro orden."
+    },
+    {
+     "questionId": "q2",
+     "answer": "Lo verifiqué en internet. No recuerdo en qué parte de los libros estaba."
+    },
+    {
+     "questionId": "q3",
+     "answer": "Creo que Tarapacá se perdió y Tacna y Arica quedaron ocupadas. No revisé el texto del tratado."
+    },
+    {
+     "questionId": "q4",
+     "answer": "No recuerdo el tomo. La puse como causa militar porque la marina chilena era más fuerte."
+    },
+    {
+     "questionId": "q5",
+     "answer": "Puse 1884 porque así figura en las fuentes. No sé exactamente qué pasó en 1884."
+    }
+   ],
+   "evaluation": {
+    "summary": "Se nota el esfuerzo de armar un texto ordenado y con historiadores serios en las referencias, y tus intuiciones históricas no van mal: por ejemplo, distinguiste bien que Tarapacá se perdió definitivamente mientras Tacna y Arica quedaron en otra situación. Ahora, lo central de esta tarea estaba en el proceso, y ahí hay vacíos importantes: tu entrega no incluye la bitácora de decisiones ni la tabla de verificación de la IA, y la monografía no declara en qué partes usaste apoyo de IA. En la sustentación, además, no pudiste ubicar ningún dato en Basadre ni en tus otras fuentes y dijiste haber verificado «en internet»; también reconoces no haber leído el texto del Tratado de Ancón. Para la siguiente oportunidad: reconstruye tu bitácora con descartes concretos (por ejemplo, qué orden alternativo de las causas evaluaste y por qué lo dejaste), contrasta cinco afirmaciones de la IA con páginas o capítulos específicos —incluido el texto mismo del tratado—, averigua qué se acordó en 1884 con Bolivia para justificar tu periodización, y declara con franqueza qué te dio la IA. Eso, y no la pulidez del texto, es lo que demuestra tu juicio histórico.",
+    "perCriterion": [
+     {
+      "criterionId": "c1",
+      "submissionScore": 0,
+      "defenseScore": 0,
+      "evidenceQuote": "No hay evidencia textual: en la entrega no consta la bitácora de decisiones y en la sustentación no se registraron respuestas para este criterio.",
+      "misconception": null
+     },
+     {
+      "criterionId": "c2",
+      "submissionScore": 0,
+      "defenseScore": 0,
+      "evidenceQuote": "No hay evidencia textual: en la entrega no consta la tabla de verificación de la IA y en la sustentación no se registraron respuestas para este criterio.",
+      "misconception": null
+     },
+     {
+      "criterionId": "c3",
+      "submissionScore": 0,
+      "defenseScore": 0.3,
+      "evidenceQuote": "q1: «Me pareció que por tipos se entendía mejor. No evaluó otro orden.» | q4: «No recuerdo el tomo. La puse como causa militar porque la marina chilena era más fuerte.»",
+      "misconception": "Confunde un factor que explica el desenlace de la guerra (la superioridad naval chilena) con una causa de su estallido, y no logra responder la réplica del docente."
+     },
+     {
+      "criterionId": "c4",
+      "submissionScore": 0,
+      "defenseScore": 0.3,
+      "evidenceQuote": "q2: «Lo verifiqué en internet. No recuerdo en qué parte de los libros estaba.» | q3: «Creo que Tarapacá se perdió y Tacna y Arica quedaron ocupadas. No revisé el texto del tratado.» | q5: «Puse 1884 porque así figura en las fuentes. No sé exactamente qué pasó en 1884.»",
+      "misconception": "Considera que «verificar en internet» equivale a contrastar los datos con las fuentes que él mismo citó (Basadre, Contreras y Cueto, Klarén), de las cuales no puede ubicar ningún dato concreto."
+     },
+     {
+      "criterionId": "c5",
+      "submissionScore": 0.2,
+      "defenseScore": 0,
+      "evidenceQuote": "No hay evidencia textual en la sustentación; en la entrega, la monografía no contiene ninguna declaración de dónde se usó IA.",
+      "misconception": null
+     }
+    ]
+   }
+  },
+  {
+   "alias": "Pía",
+   "work": "La Guerra del Pacífico fue entre Perú, Bolivia y Chile de 1879 a 1884.\n\nCausas: Chile quería el salitre y Bolivia le puso un impuesto. Perú tenía un tratado con Bolivia y entró a la guerra.\n\nHéroes: Miguel Grau en el combate de Angamos y Francisco Bolognesi en Arica, que dijo que iba a pelear hasta quemar el último cartucho.\n\nConsecuencias: el Perú perdió territorios y Lima fue ocupada.\n\nFuentes: Wikipedia, mi libro de Ciencias Sociales y un video de YouTube.\n\nConclusión: fue una guerra muy triste para el Perú pero tuvimos grandes héroes.",
+   "questions": [
+    {
+     "id": "q1",
+     "criterionId": "c4",
+     "question": "En tu apartado de causas escribes: 'Chile quería el salitre y Bolivia le puso un impuesto'. Sin leer tu monografía, dime en tres frases: ¿a qué empresa o actividad se aplicó ese impuesto, de cuánto era por quintal de salitre y qué hizo Chile cuando Bolivia remató los bienes de esa empresa? Luego señala cuál de tus tres fuentes te dio esos datos y cómo comprobaste la cifra exacta."
+    },
+    {
+     "id": "q2",
+     "criterionId": "c4",
+     "question": "Tu texto dice: 'Perú tenía un tratado con Bolivia y entró a la guerra'. ¿Qué tratado era, en qué año se firmó y por qué su existencia llevó a Chile a declararle la guerra al Perú? Tu frase omite una característica importante de ese tratado: dime cuál es y justifica por qué decidiste omitirla o incluir la versión abreviada."
+    },
+    {
+     "id": "q3",
+     "criterionId": "c4",
+     "question": "Escribes que Bolognesi 'dijo que iba a pelear hasta quemar el último cartucho'. Esa frase tiene versiones y transcripciones distintas según la fuente. ¿En qué situación exacta la pronunció, a quién se la respondió y qué texto exacto fijaste en tu monografía? Explícame qué hiciste para descartar que fuera apócrifa y con cuál de tus tres fuentes la contrastaste."
+    },
+    {
+     "id": "q4",
+     "criterionId": "c4",
+     "question": "En consecuencias afirmas: 'el Perú perdió territorios y Lima fue ocupada'. ¿Qué territorios perdió exactamente y qué tratado fijó esa pérdida? ¿Qué estipuló ese tratado sobre Tacna y Arica? Además, tu primera línea fecha la guerra hasta 1884: justifica por qué no pusiste 1883 y qué dice cada una de tus fuentes sobre esa fecha."
+    },
+    {
+     "id": "q5",
+     "criterionId": "c3",
+     "question": "Tu conclusión es 'fue una guerra muy triste para el Perú pero tuvimos grandes héroes', un cierre valorativo, mientras tu sección de consecuencias solo menciona la pérdida de territorios y la ocupación de Lima. ¿Qué otras consecuencias económicas, sociales o políticas evaluaste incluir y por qué las descartaste? Justifica por qué preferiste cerrar con lo heroico en lugar de un balance de las consecuencias para el país."
+    }
+   ],
+   "answers": [
+    {
+     "questionId": "q1",
+     "answer": "El impuesto era a una compañía chilena de salitre en Antofagasta, de 10 centavos, creo que por quintal. Cuando Bolivia quiso rematar sus bienes, Chile ocupó Antofagasta. Lo saqué de mi libro de Sociales."
+    },
+    {
+     "questionId": "q2",
+     "answer": "Era un tratado de alianza con Bolivia de 1873. Creo que era secreto, y eso lo omití porque no sabía que era importante."
+    },
+    {
+     "questionId": "q3",
+     "answer": "La dijo en Arica antes de la batalla, cuando un oficial chileno le pidió que se rindiera. La saqué de mi libro y no la contrasté con otras fuentes."
+    },
+    {
+     "questionId": "q4",
+     "answer": "Se perdió Tarapacá por el Tratado de Ancón. Sobre Tacna y Arica no me acuerdo bien qué decía. Puse 1884 porque así decía Wikipedia."
+    },
+    {
+     "questionId": "q5",
+     "answer": "No evalué otras consecuencias, solo puse las que estaban en mi libro. Cerré con los héroes porque es lo que más me gustó del tema."
+    }
+   ],
+   "evaluation": {
+    "summary": "Se reconoce el punto de partida: en la sustentación identificaste el impuesto de 10 centavos por quintal sobre la compañía salitrera de Antofagasta, la ocupación chilena tras el remate, el tratado de alianza de 1873 y el contexto de la respuesta de Bolognesi. El problema es que la entrega no contiene las partes que la tarea pide evaluar: no hay bitácora de decisiones, ni tabla de verificación de la IA, ni una monografía con introducción, desarrollo y conclusiones, y tampoco declara dónde usaste IA. Ninguna de tus tres fuentes fue contrastada, como lo reconociste en la sustentación, y tus decisiones se justifican con frases como «así decía Wikipedia» o «es lo que más me gustó del tema», que no muestran juicio histórico. Tampoco pudiste explicar qué estipuló el Tratado de Ancón sobre Tacna y Arica ni la diferencia entre 1883 (Ancón) y 1884 (Pacto de Tregua). Para avanzar concretamente: redacta la bitácora con cinco decisiones y el motivo específico de cada descarte, incluidas las sugerencias de la IA que no seguiste; contrasta cinco afirmaciones con fuentes verificables, como Basadre o el texto mismo del Tratado de Ancón, anotando qué cambiaste; completa la monografía citando solo esas fuentes y declarando el uso de IA; y ensaya explicar cada pasaje con tus propias palabras. Los datos básicos ya los tienes; lo que falta es el trabajo de decidir, verificar y sustentar que convierte esa información en un trabajo tuyo.",
+    "perCriterion": [
+     {
+      "criterionId": "c1",
+      "submissionScore": 0,
+      "defenseScore": 0.3,
+      "evidenceQuote": "«No evalué otras consecuencias, solo puse las que estaban en mi libro. Cerré con los héroes porque es lo que más me gustó del tema.»",
+      "misconception": null
+     },
+     {
+      "criterionId": "c2",
+      "submissionScore": 0,
+      "defenseScore": 0.3,
+      "evidenceQuote": "«La saqué de mi libro y no la contrasté con otras fuentes.» / «Puse 1884 porque así decía Wikipedia.»",
+      "misconception": null
+     },
+     {
+      "criterionId": "c3",
+      "submissionScore": 0,
+      "defenseScore": 0.3,
+      "evidenceQuote": "«Cerré con los héroes porque es lo que más me gustó del tema.» / «Eso lo omití porque no sabía que era importante.»",
+      "misconception": null
+     },
+     {
+      "criterionId": "c4",
+      "submissionScore": 0.2,
+      "defenseScore": 0.4,
+      "evidenceQuote": "«El impuesto era a una compañía chilena de salitre en Antofagasta, de 10 centavos, creo que por quintal. Cuando Bolivia quiso rematar sus bienes, Chile ocupó Antofagasta.» / «Sobre Tacna y Arica no me acuerdo bien qué decía.»",
+      "misconception": null
+     },
+     {
+      "criterionId": "c5",
+      "submissionScore": 0.1,
+      "defenseScore": 0.2,
+      "evidenceQuote": "«Consecuencias: el Perú perdió territorios y Lima fue ocupada.» / «Puse 1884 porque así decía Wikipedia.»",
+      "misconception": null
+     }
+    ]
+   }
+  }
+ ]
+}

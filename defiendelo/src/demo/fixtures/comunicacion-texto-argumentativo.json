@@ -1,0 +1,403 @@
+{
+ "exampleId": "comunicacion-texto-argumentativo",
+ "redesign": {
+  "statement": "Pregunta central: ¿debería prohibirse el uso del celular durante el horario escolar en los colegios del Perú? En esta tarea trabajarás con ayuda de una IA generativa, pero tu nota dependerá de las decisiones que TÚ tomes y de tu capacidad de defenderlas. Fase 1 — Exploración: pide a una IA (u otras fuentes) argumentos a favor y en contra, y datos sobre el uso de celulares en colegios peruanos. Guarda capturas o copias de sus respuestas. Fase 2 — Decisión y posicionamiento: elige tu tesis, descarta al menos dos posibles tesis alternativas y explica por qué las descartaste. Selecciona solo los argumentos y evidencias que realmente sostengan tu postura; verifica cada dato (autor, fuente, fecha) y corrige cualquier error que la IA haya cometido, documentando qué corregiste y por qué. Fase 3 — Redacción: escribe tu texto argumentativo (400 palabras). Puedes apoyarte en la IA, pero debes registrar qué partes son tuyas y qué partes modificaste o rechazaste. Fase 4 — Defensa oral (obligatoria, se califica en vivo): tu docente te pedirá explicar tu tesis, por qué la elegiste frente a otras, de dónde sale cada evidencia y qué cambiaste del borrador de la IA; deberás improvisar una respuesta a un contraargumento nuevo que no aparece en tu texto. Entrega: el texto final, el registro de decisiones (tesis descartadas, evidencias verificadas, correcciones a la IA) y tus respuestas de la defensa oral. No se calificará la fluidez del texto en sí, sino la calidad de tus decisiones y tu capacidad de sustentarlas.",
+  "aiPolicy": "Uso de IA permitido y esperado en todas las fases, con registro obligatorio de lo generado, lo corregido y lo descartado. La nota se concentra en la defensa oral y en el registro de decisiones; un texto impecable producido solo por IA no garantiza una nota alta.",
+  "criteria": [
+   {
+    "id": "c1",
+    "name": "Defensa oral: sustentación de tesis y decisiones",
+    "description": "En la evaluación en vivo, el estudiante explica por qué eligió su tesis frente a las alternativas descartadas, justifica cada argumento con sus propias palabras y responde a un contraargumento nuevo presentado por el docente.",
+    "weight": 35,
+    "evidence": "defensa"
+   },
+   {
+    "id": "c2",
+    "name": "Verificación y corrección del contenido generado por IA",
+    "description": "El estudiante presenta el registro de las respuestas de la IA, identifica los errores o datos imprecisos que contenían, documenta cómo verificó cada evidencia (fuente, autor, fecha) y explica las correcciones realizadas.",
+    "weight": 25,
+    "evidence": "defensa"
+   },
+   {
+    "id": "c3",
+    "name": "Registro de decisiones: alternativas descartadas y razones",
+    "description": "Documento entregado donde se evidencian al menos dos tesis alternativas descartadas, los argumentos de la IA que se rechazaron y las razones de cada descarte, explicados con criterio propio.",
+    "weight": 15,
+    "evidence": "entrega"
+   },
+   {
+    "id": "c4",
+    "name": "Refutación de contraargumento en vivo",
+    "description": "Durante la defensa oral, el estudiante improvisa una refutación razonada a un contraargumento nuevo que no estaba en su texto, mostrando dominio real del tema y no memorización.",
+    "weight": 15,
+    "evidence": "defensa"
+   },
+   {
+    "id": "c5",
+    "name": "Estructura argumentativa del texto final",
+    "description": "El texto final presenta tesis clara, argumentos conectados a la postura personal y una conclusión coherente; se evalúa la organización del propio estudiante, no la calidad estilística del texto.",
+    "weight": 10,
+    "evidence": "entrega"
+   }
+  ],
+  "originalCriteria": [
+   {
+    "id": "o1",
+    "name": "Tesis clara y postura definida",
+    "description": "El texto plantea una tesis explícita sobre la prohibición del celular en el horario escolar y mantiene una postura coherente.",
+    "weight": 25,
+    "evidence": "entrega"
+   },
+   {
+    "id": "o2",
+    "name": "Argumentos y evidencias",
+    "description": "Presenta al menos dos argumentos desarrollados con evidencias pertinentes que sostienen la tesis.",
+    "weight": 30,
+    "evidence": "entrega"
+   },
+   {
+    "id": "o3",
+    "name": "Contraargumento y refutación",
+    "description": "Incluye un contraargumento relevante y lo refuta de manera razonada.",
+    "weight": 25,
+    "evidence": "entrega"
+   },
+   {
+    "id": "o4",
+    "name": "Cohesión, redacción y extensión",
+    "description": "El texto respeta la extensión de 400 palabras, usa conectores adecuados y presenta redacción clara, con ortografía y gramática correctas.",
+    "weight": 20,
+    "evidence": "entrega"
+   }
+  ],
+  "rationale": "La tarea mantiene la pregunta original pero desplaza la calificación hacia la defensa oral y el registro de decisiones: el estudiante puede usar IA libremente, pero debe sustentar en vivo su tesis, verificar evidencias y refutar un contraargumento nuevo, de modo que un texto generado íntegramente por IA no basta para aprobar. El 75 % del peso es defensa; los criterios de entrega valoran solo el registro de decisiones y la estructura propia del texto."
+ },
+ "stress": {
+  "original": {
+   "aiAnswer": "# ¿Debería prohibirse el uso del celular durante el horario escolar en los colegios del Perú?\n\nEn los últimos años, el celular se ha convertido en una herramienta constante en la vida de los estudiantes. Sin embargo, su presencia en las aulas genera un debate importante: ¿ayuda o perjudica el aprendizaje? Ante esta pregunta, sostengo que sí debería prohibirse el uso del celular durante el horario escolar en los colegios del Perú, pues su uso sin control afecta la concentración y el rendimiento académico de los estudiantes.\n\nEl primer argumento a favor de la prohibición es la distracción que provoca este dispositivo. Estudios de la Unesco (2023) señalan que la presencia de celulares en el aula reduce la capacidad de atención de los estudiantes y que los países que han restringido su uso, como Francia, han observado mejoras en la concentración. En el Perú, donde los resultados de las pruebas PISA evidencian dificultades en comprensión lectora y matemática, resulta necesario eliminar factores que resten tiempo y atención al estudio. Un estudiante que revisa sus redes sociales en clase pierde explicaciones clave que luego le cuesta recuperar.\n\nEl segundo argumento es la desigualdad que puede generar el celular entre estudiantes. No todos los alumnos cuentan con equipos modernos o con acceso a datos móviles; esto puede crear comparaciones y exclusión dentro del aula. Además, el uso del celular para copiar en evaluaciones afecta la honestidad académica y perjudica a quienes sí se esfuerzan por aprender. Una prohibición clara y equitativa evita estas situaciones y promueve un ambiente de estudio más justo.\n\nCabe señalar que algunos sostienen que el celular es una herramienta educativa útil, pues permite buscar información, usar aplicaciones de aprendizaje y comunicarse en emergencias. Sin embargo, este argumento no invalida la prohibición: los colegios cuentan con salas de computación y proyectores para integrar la tecnología de manera supervisada, y las emergencias pueden atenderse a través de la secretaría del colegio o de teléfonos disponibles para ello. Lo que se propone no es eliminar la tecnología, sino regularla: el problema no es el dispositivo, sino su uso libre y sin supervisión durante las horas de clase.\n\nEn conclusión, considero que el uso del celular debería prohibirse durante el horario escolar en los colegios del Perú, ya que la evidencia demuestra que su uso indiscriminado afecta la concentración, el rendimiento y la igualdad entre estudiantes. Al mismo tiempo, los colegios pueden aprovechar la tecnología con reglas claras y en momentos adecuados. De esta manera se protegería el aprendizaje y se formaría a estudiantes más enfocados, sin renunciar a los beneficios de las herramientas digitales fuera del aula.\n\n**Referencias**\n- Unesco (2023). *Informe global sobre la tecnología en la educación*. París: Unesco.\n- Ministerio de Educación del Perú (2020). *Normas sobre el uso de dispositivos móviles en las instituciones educativas*. Lima: Minedu.",
+   "scores": [
+    {
+     "criterionId": "o1",
+     "score": 1,
+     "reason": "El texto establece una tesis clara desde el inicio y mantiene una postura firme y coherente a lo largo de todo el escrito."
+    },
+    {
+     "criterionId": "o2",
+     "score": 1,
+     "reason": "Se presentan dos argumentos sólidos (distracción e inequidad) respaldados por evidencias, como datos de la Unesco y referencias a evaluaciones nacionales."
+    },
+    {
+     "criterionId": "o3",
+     "score": 1,
+     "reason": "Se identifica un contraargumento común sobre la utilidad de la tecnología, el cual es refutado mediante una propuesta de regulación y uso controlado."
+    },
+    {
+     "criterionId": "o4",
+     "score": 1,
+     "reason": "El texto cumple con la extensión solicitada, presenta una redacción formal, argumentos bien conectados y una ortografía impecable."
+    }
+   ]
+  },
+  "redesigned": {
+   "aiAnswer": "**Texto argumentativo**\n\n**¿Debe prohibirse el celular en el horario escolar?**\n\nSí, debería prohibirse el uso del celular durante las clases en los colegios peruanos, porque afecta la atención, facilita el ciberacoso y fomenta comparaciones sociales dañinas.\n\nPrimero, el celular dispersa la atención. Estudios de la Universidad de Texas (Ward et al., 2017) muestran que la sola presencia del celular reduce la capacidad de concentración, incluso si está apagado. Sin el aparato a la vista, los estudiantes rinden mejor.\n\nSegundo, el celular facilita el ciberacoso. En el Perú, la encuesta ENDES 2023 señala que aproximadamente uno de cada diez estudiantes de secundaria reporta haber sufrido ciberbullying. Prohibir el celular en clase reduce una vía directa de agresión durante la jornada escolar.\n\nTercero, el celular intensifica la comparación social y la autoestima dañada entre adolescentes, quienes son especialmente vulnerables a la presión de redes sociales. Un descanso diario del dispositivo protege el bienestar emocional.\n\nAlgunos sostienen que el celular es una herramienta educativa valiosa. Sin embargo, los colegios peruanos cuentan con recursos como proyectores y laboratorios de computación; además, el uso pedagógico puede hacerse bajo supervisión con dispositivos institucionales. Otros afirman que prohibir atenta contra la autonomía estudiantil, pero los menores de edad están bajo responsabilidad del colegio, que puede regular el uso de objetos durante las clases, como ya lo hace con otros artículos.\n\nEn conclusión, prohibir el celular en el horario escolar protege la atención, la convivencia y la salud emocional de los estudiantes, sin impedir que la tecnología se use con fines pedagógicos supervisados.\n\n**Registro de decisiones**\n\n*Tesis descartadas:* (1) \"Permitir el celular con fines educativos\": descartada porque exigiría condiciones tecnológicas que no todos los colegios peruanos cumplen. (2) \"Regulación sin prohibición total\": descartada por ser difícil de supervisar en la práctica.\n\n*Evidencias verificadas:* El estudio de Ward et al. (2017, Universidad de Texas, revista Journal of the Association for Consumer Research) fue verificado; existe y dice lo señalado. El dato de la ENDES fue corregido: la IA inicialmente afirmó que \"uno de cada cuatro\" adolescentes sufrió ciberbullying; al revisar el INEI encontré cifras menores, por lo que ajusté el dato y su fuente.\n\n*Correcciones a la IA:* La IA propuso una cita de la UNESCO sin año ni página; la rechacé por no poder verificarla y la reemplacé por el estudio de Texas. También eliminé un párrafo con ejemplos de otros países (Francia) porque no eran directamente aplicables al Perú.\n\n*Partes propias y modificadas:* La introducción y la conclusión las redacté yo a partir de borradores de la IA; los tres párrafos centrales los modifiqué para ajustarlos a las evidencias verificadas.\n\n**Respuestas de la defensa oral**\n\n1. *Tesis:* Prohibición del celular en clases porque daña atención, convivencia y bienestar.\n2. *Elección frente a otras:* Las alternativas eran poco realistas o difíciles de fiscalizar en colegios con pocos recursos.\n3. *Origen de las evidencias:* Ward et al. (2017, Estados Unidos) y la ENDES 2023 (INEI, Perú), ambas verificadas en fuentes primarias.\n4. *Cambios al borrador:* Corregí el dato de ciberbullying y eliminé la cita no verificable de la UNESCO.\n5. *Posible contraargumento nuevo (por ejemplo, emergencias familiares):* Respondería que el colegio puede habilitar canales de comunicación oficial entre la familia y la administración, de modo que los padres contacten a sus hijos sin necesidad del celular personal en el aula.",
+   "scores": [
+    {
+     "criterionId": "c1",
+     "score": 0.6,
+     "reason": "Las respuestas escritas de la defensa cubren tesis, alternativas y evidencias, pero son muy breves y no puede verificarse la sustentación real en vivo ni la justificación con palabras propias."
+    },
+    {
+     "criterionId": "c2",
+     "score": 0.75,
+     "reason": "Documenta verificación de Ward et al. (2017), la corrección del dato de ENDES y el rechazo de la cita UNESCO, aunque no incluye las capturas ni el registro textual de las respuestas originales de la IA."
+    },
+    {
+     "criterionId": "c3",
+     "score": 0.85,
+     "reason": "Presenta dos tesis alternativas descartadas con razones propias y rechazos argumentados a la IA (cita UNESCO, ejemplos de Francia), aunque las justificaciones podrían ser más desarrolladas."
+    },
+    {
+     "criterionId": "c4",
+     "score": 0.5,
+     "reason": "Ofrece una respuesta plausible al contraargumento de emergencias familiares, pero al estar anticipada por escrito no evidencia la improvisación en vivo ni dominio frente a un contraargumento imprevisto."
+    },
+    {
+     "criterionId": "c5",
+     "score": 0.9,
+     "reason": "El texto final presenta tesis clara, tres argumentos con evidencia conectados a la postura, refutación de objeciones y conclusión coherente con estructura bien organizada."
+    }
+   ]
+  },
+  "ranAt": "2026-10-31T05:38:31.836Z"
+ },
+ "insights": {
+  "clusters": [
+   {
+    "label": "La Informalidad y Arbitrariedad en la Citación de Fuentes",
+    "criterionId": "c2",
+    "studentAliases": [
+     "Diego",
+     "Rosa"
+    ],
+    "quotes": [
+     "Lo encontré en internet. No recuerdo el capítulo exacto, pero el informe habla de la tecnología en la educación.",
+     "No sé qué estudio era, era un video de TikTok. No lo verifiqué, creí que era verdad porque lo decía un profesor."
+    ],
+    "suggestion": "Realizar una 'Ronda de Verificación Cruzada' de 10 minutos: El docente presenta una afirmación polémica relacionada con el tema (ej. 'El celular reduce la capacidad de atención'). Los estudiantes, en grupos, deben identificar inmediatamente los elementos faltantes de la fuente (autor, año, metodología) y proponer qué bases de datos académicas (Google Scholar, Dialnet, etc.) utilizarían para corroborar o refutar la afirmación."
+   }
+  ]
+ },
+ "students": [
+  {
+   "alias": "Camila",
+   "work": "No hay que prohibir el celular, hay que enseñar a usarlo.\n\nMi tesis es que prohibirlo del todo en los colegios del Perú no soluciona el problema de la distracción, porque el problema no es el aparato sino que nadie nos enseña a usarlo para estudiar.\n\nPrimer argumento: en mi salón de 4.° B hicimos una encuesta a 28 compañeros y 21 dijeron que usan el celular para buscar palabras o ver videos de la clase que no entendieron. Si lo prohíben, se pierde eso.\n\nSegundo argumento: en mi colegio ya se probó guardarlo en una caja en la puerta y a la semana la gente traía un segundo celular viejo para entregarlo. La prohibición se burla fácil.\n\nContraargumento: dicen que el celular distrae y que hay estudios de que bajan las notas. Es cierto que en recreo todos están en TikTok, pero eso pasa porque no hay reglas claras dentro del aula. Un acuerdo de \"celular boca abajo salvo cuando el profe lo pide\" funciona mejor que prohibir.\n\nConclusión: prohibirlo es más fácil para el colegio, pero no nos prepara. Prefiero reglas claras y que se use para aprender.",
+   "questions": [
+    {
+     "id": "q1",
+     "criterionId": "c1",
+     "question": "En tu primer argumento citas una encuesta propia: \"hicimos una encuesta a 28 compañeros y 21 dijeron que usan el celular para buscar palabras o ver videos de la clase\". Explica cómo la aplicaste: qué preguntas exactas hiciste, cómo registraste las respuestas y por qué decidiste que esos 21 casos sostienen tu tesis y no solo una preferencia de tus amigos."
+    },
+    {
+     "id": "q2",
+     "criterionId": "c2",
+     "question": "Tu contraargumento dice \"hay estudios de que bajan las notas\", pero no mencionas ningún estudio con autor, año ni fuente. Cuando preparaste este texto, ¿buscaste algún estudio real sobre celulares y rendimiento escolar? Dime cuál fue, quién lo publicó y qué decía exactamente, o explica por qué dejaste esa frase sin verificar."
+    },
+    {
+     "id": "q3",
+     "criterionId": "c2",
+     "question": "En tu segundo argumento afirmas que \"a la semana la gente traía un segundo celular viejo para entregarlo\". ¿De dónde sacaste esa información: la viviste, te la contaron o la leyiste en alguna parte? ¿Cómo comprobarías que eso ocurre en la mayoría de colegios y no solo en el tuyo antes de usarlo como evidencia general para el Perú?"
+    },
+    {
+     "id": "q4",
+     "criterionId": "c4",
+     "question": "Imagina que el MINEDU aprueba mañana una prohibición total y, en colegios donde se aplicó con control estricto, las notas mejoraron. Tu texto dice que \"el problema no es el aparato sino que nadie nos enseña a usarlo\". Responde ahora mismo: ¿por qué seguirías defendiendo tu tesis frente a ese resultado, o admitirías que la prohibición funciona?"
+    },
+    {
+     "id": "q5",
+     "criterionId": "c1",
+     "question": "Tu conclusión dice que prohibir \"es más fácil para el colegio, pero no nos prepara\". ¿Por qué descartaste la tesis contraria, es decir, prohibir totalmente, y también descartaste alguna posición intermedia que hayas considerado? Explica qué te hizo quedarte con \"reglas claras\" y no con otra opción."
+    }
+   ],
+   "answers": [
+    {
+     "questionId": "q1",
+     "answer": "Hice un formulario de Google con dos preguntas: si usan el celular para estudiar y para qué, con opciones y un espacio libre. Lo mandé al grupo del salón, no solo a mis amigas, y contestaron 28 de 32. Sé que es solo mi salón, por eso no digo que pasa en todo el Perú, solo que en mi aula la mayoría ya lo usa para aprender."
+    },
+    {
+     "questionId": "q2",
+     "answer": "Busqué, pero no encontré el estudio exacto; esa frase me la dio la IA sin fuente. La dejé como lo que dicen los que están a favor de prohibir, no como un dato mío. Para la versión final tendría que encontrar la fuente o sacarla."
+    },
+    {
+     "questionId": "q3",
+     "answer": "Lo viví, pasó en mi colegio el año pasado y lo comentaban los auxiliares. No puedo decir que pasa en la mayoría de colegios; para eso tendría que preguntar en otros colegios o buscar noticias. En el texto lo uso como un ejemplo de que la prohibición se puede burlar, no como una estadística."
+    },
+    {
+     "questionId": "q4",
+     "answer": "Si las notas mejoran de verdad, tendría que aceptar que la prohibición ayuda en esos colegios. Pero preguntaría si mejoraron porque quitaron el celular o porque pusieron más control, que es lo que yo propongo. Igual cambiaría mi conclusión: no diría que prohibir nunca funciona."
+    },
+    {
+     "questionId": "q5",
+     "answer": "Descarté prohibir porque ya lo probamos y lo burlaron. Pensé en una intermedia, permitirlo solo en el recreo, pero la descarté porque el problema que veo es en clase. Me quedé con reglas claras porque es lo único que he visto funcionar, con una profesora que lo hace así."
+    }
+   ],
+   "evaluation": {
+    "summary": "Has demostrado una capacidad excepcional para la reflexión crítica y la autocrítica en tu defensa. Tu tesis es sólida y logras justificar tus decisiones con lógica y experiencias concretas. En el proceso de defensa, manejaste de manera excelente los contraargumentos inesperados, demostrando un dominio profundo del tema. Tu principal área de mejora radica en la metodología: es fundamental que la verificación de la información (citas, estudios) sea rigurosa y documentada, especialmente cuando utilizas fuentes de IA. Continúa fortaleciendo tu rigor académico en la búsqueda de fuentes primarias.",
+    "perCriterion": [
+     {
+      "criterionId": "c1",
+      "submissionScore": 1,
+      "defenseScore": 1,
+      "evidenceQuote": "\"Si las notas mejoran de verdad, tendría que aceptar que la prohibición ayuda en esos colegios. Pero preguntaría si mejoraron porque quitaron el celular o porque pusieron más control, que es lo que yo propongo.\"",
+      "misconception": null
+     },
+     {
+      "criterionId": "c2",
+      "submissionScore": 0.8,
+      "defenseScore": 0.6,
+      "evidenceQuote": "\"Busqué, pero no encontré el estudio exacto; esa frase me la dio la IA sin fuente. La dejé como lo que dicen los que están a favor de prohibir, no como un dato mío.\"",
+      "misconception": null
+     },
+     {
+      "criterionId": "c3",
+      "submissionScore": 1,
+      "defenseScore": 1,
+      "evidenceQuote": "\"Descarté prohibir porque ya lo probamos y lo burlaron. Pensé en una intermedia, permitirlo solo en el recreo, pero la descarté porque el problema que veo es en clase.\"",
+      "misconception": null
+     },
+     {
+      "criterionId": "c4",
+      "submissionScore": 1,
+      "defenseScore": 1,
+      "evidenceQuote": "\"Si las notas mejoran de verdad, tendría que aceptar que la prohibición ayuda en esos colegios. Pero preguntaría si mejoraron porque quitaron el celular o porque pusieron más control, que es lo que yo propongo.\"",
+      "misconception": null
+     },
+     {
+      "criterionId": "c5",
+      "submissionScore": 1,
+      "defenseScore": 1,
+      "evidenceQuote": "La conclusión dice que prohibir 'es más fácil para el colegio, pero no nos prepara.' Prefiero reglas claras y que se use para aprender.\"",
+      "misconception": null
+     }
+    ]
+   }
+  },
+  {
+   "alias": "Diego",
+   "work": "El uso del celular en las instituciones educativas: una reflexión necesaria\n\nEn la era digital actual, el teléfono móvil se ha convertido en una herramienta omnipresente en la vida de los adolescentes. Sin embargo, su presencia en las aulas genera un intenso debate. En el presente texto sostengo que el uso del celular durante el horario escolar debería restringirse de manera significativa en los colegios del Perú.\n\nEn primer lugar, diversos estudios internacionales evidencian que la mera presencia del celular reduce la capacidad de concentración y afecta el rendimiento académico. La UNESCO, en su Informe de Seguimiento de la Educación en el Mundo 2023, advirtió que el uso excesivo de dispositivos se asocia con un menor desempeño.\n\nEn segundo lugar, el celular favorece el ciberacoso y la exposición a contenidos inadecuados dentro del entorno escolar, lo cual afecta el bienestar emocional de los estudiantes.\n\nCiertamente, algunos sostienen que el celular es una herramienta pedagógica valiosa. No obstante, dicha función puede cumplirse mediante dispositivos institucionales con fines exclusivamente educativos.\n\nEn conclusión, restringir el uso del celular no implica rechazar la tecnología, sino priorizar el aprendizaje y el bienestar de los estudiantes.",
+   "questions": [
+    {
+     "id": "q1",
+     "criterionId": "c1",
+     "question": "Tu texto sostiene que el celular 'debería restringirse de manera significativa', lo cual es una posición intermedia entre prohibición total y libertad de uso. ¿Por qué elegiste esta tesis y no una prohibición total ni el uso libre con fines pedagógicos? Explica qué ventaja concreta viste en esta posición frente a esas alternativas."
+    },
+    {
+     "id": "q2",
+     "criterionId": "c2",
+     "question": "En tu segundo párrafo citas 'la UNESCO, en su Informe de Seguimiento de la Educación en el Mundo 2023'. ¿Cómo verificaste ese dato: qué capítulo o sección del informe consultaste, quién lo publica y qué dice exactamente sobre celulares y desempeño? ¿La IA te dio primero alguna versión incorrecta de esa cita que tuviste que corregir?"
+    },
+    {
+     "id": "q3",
+     "criterionId": "c2",
+     "question": "Tu texto afirma que 'diversos estudios internacionales evidencian que la mera presencia del celular reduce la capacidad de concentración', sin nombrar ninguno. ¿Qué estudio o estudios específicos encontraste al verificar esa afirmación, en qué país o revista se publicaron y por qué decidiste dejarla formulada de manera tan general?"
+    },
+    {
+     "id": "q4",
+     "criterionId": "c4",
+     "question": "Un contraargumento nuevo que no aparece en tu texto: en muchas zonas rurales del Perú, el celular del estudiante es el único dispositivo con internet, y los 'dispositivos institucionales' que propones podrían no existir por falta de presupuesto. ¿Cómo responderías a esta objeción sin contradecir tu tesis? Responde ahora mismo."
+    },
+    {
+     "id": "q5",
+     "criterionId": "c1",
+     "question": "El párrafo sobre ciberacoso y 'contenidos inadecuados' no tiene ninguna evidencia citada. ¿Rechazaste alguna evidencia de la IA sobre este punto, o la IA no te dio ninguna confiable? Y en cualquiera de los dos casos, ¿por qué mantuviste ese argumento en el texto final?"
+    }
+   ],
+   "answers": [
+    {
+     "questionId": "q1",
+     "answer": "Porque es más equilibrada, no es ni muy extrema ni muy permisiva. Me pareció la posición más razonable."
+    },
+    {
+     "questionId": "q2",
+     "answer": "Lo encontré en internet. No recuerdo el capítulo exacto, pero el informe habla de la tecnología en la educación."
+    },
+    {
+     "questionId": "q3",
+     "answer": "Son estudios que se mencionan mucho, no recuerdo uno en específico. Lo dejé general porque es algo conocido."
+    },
+    {
+     "questionId": "q4",
+     "answer": "Bueno, en ese caso se podría permitir el celular en esas zonas, pero solo para fines educativos. No sé cómo se controlaría."
+    },
+    {
+     "questionId": "q5",
+     "answer": "No rechacé nada, lo dejé porque es un problema real que sale en las noticias."
+    }
+   ],
+   "evaluation": {
+    "summary": "El texto escrito demuestra una alta capacidad de estructuración argumentativa y claridad en el posicionamiento. Sin embargo, en la defensa oral, el estudiante presentó debilidades significativas en la justificación de sus decisiones y en la documentación de la investigación. Se notó una falta de profundidad al explicar la elección de la tesis frente a alternativas, y falló en demostrar el proceso crítico de verificación de fuentes (UNESCO y otros estudios), limitándose a referencias vagas o a la percepción personal, lo cual impide acreditar la solidez de los argumentos presentados.",
+    "perCriterion": [
+     {
+      "criterionId": "c1",
+      "submissionScore": 0.9,
+      "defenseScore": 0.3,
+      "evidenceQuote": "Porque es más equilibrada, no es ni muy extrema ni muy permisiva. Me pareció la posición más razonable.",
+      "misconception": null
+     },
+     {
+      "criterionId": "c2",
+      "submissionScore": 0.7,
+      "defenseScore": 0.3,
+      "evidenceQuote": "Lo encontré en internet. No recuerdo el capítulo exacto, pero el informe habla de la tecnología en la educación.",
+      "misconception": "No recuerdo el capítulo exacto"
+     },
+     {
+      "criterionId": "c3",
+      "submissionScore": 0.5,
+      "defenseScore": 0.3,
+      "evidenceQuote": "No sé cómo se controlaría.",
+      "misconception": null
+     },
+     {
+      "criterionId": "c4",
+      "submissionScore": 0.6,
+      "defenseScore": 0.4,
+      "evidenceQuote": "Bueno, en ese caso se podría permitir el celular en esas zonas, pero solo para fines educativos. No sé cómo se controlaría.",
+      "misconception": null
+     },
+     {
+      "criterionId": "c5",
+      "submissionScore": 0.95,
+      "defenseScore": 0.7,
+      "evidenceQuote": "No rechacé nada, lo dejé porque es un problema real que sale en las noticias.",
+      "misconception": null
+     }
+    ]
+   }
+  },
+  {
+   "alias": "Rosa",
+   "work": "Yo pienso que el celular si se debe prohibir en el colegio porque distrae mucho.\n\nArgumento 1: cuando el profesor explica, varios están chateando y después no saben qué hay que hacer de tarea y me preguntan a mí.\n\nArgumento 2: hay estudios que dicen que el celular baja las notas, lo vi en un video.\n\nAlgunos dicen que sirve para buscar información, pero para eso está la biblioteca y los libros.\n\nEn conclusión el celular se debe prohibir porque los alumnos se distraen y no aprenden.",
+   "questions": [
+    {
+     "id": "q1",
+     "criterionId": "c1",
+     "question": "En tu texto escribes: «hay estudios que dicen que el celular baja las notas, lo vi en un video». En la defensa necesito que me expliques: ¿qué estudio específico era, quién lo realizó, en qué año y en qué país? Si solo viste un video, ¿cómo verificaste que el dato del video era real?"
+    },
+    {
+     "id": "q2",
+     "criterionId": "c2",
+     "question": "Tu único evidencia externa es «lo vi en un video». ¿Qué respuesta te dio la IA cuando le pediste datos sobre el uso de celulares en colegios peruanos, y por qué decidiste no usar ninguno de esos datos en tu texto final?"
+    },
+    {
+     "id": "q3",
+     "criterionId": "c1",
+     "question": "Tu tarea exigía descartar al menos dos tesis alternativas antes de elegir la tuya. Dime cuáles fueron esas dos tesis alternativas que consideraste y cuál fue la razón concreta por la que las descartaste, con tus propias palabras."
+    },
+    {
+     "id": "q4",
+     "criterionId": "c4",
+     "question": "En tu texto rechazas el uso del celular para buscar información diciendo que «para eso está la biblioteca». Imagina un contraargumento nuevo: en muchas zonas rurales del Perú la biblioteca del colegio es pequeña o no tiene libros actualizados, y el celular es el único acceso a información que tienen los estudiantes. ¿Cómo responderías a eso ahora, sin leer tu texto?"
+    },
+    {
+     "id": "q5",
+     "criterionId": "c1",
+     "question": "Tu argumento 1 es tu propia experiencia: «varios están chateando y después me preguntan a mí». ¿Por qué elegiste este argumento personal como tu primer argumento en lugar de algún dato o estudio que la IA te hubiera dado? ¿Consideraste usar otro argumento y lo descartaste?"
+    }
+   ],
+   "answers": [
+    {
+     "questionId": "q1",
+     "answer": "No sé qué estudio era, era un video de TikTok. No lo verifiqué, creí que era verdad porque lo decía un profesor."
+    },
+    {
+     "questionId": "q2",
+     "answer": "No usé IA para este texto, lo escribí yo sola. Por eso solo tengo lo del video."
+    },
+    {
+     "questionId": "q3",
+     "answer": "No pensé en otras tesis, la verdad. Creo que podría ser dejarlo usar solo para la clase, pero no lo pensé cuando escribí."
+    },
+    {
+     "questionId": "q4",
+     "answer": "Ahí tendrían razón, si no hay biblioteca el celular sirve. Tal vez diría que se use solo para buscar información con permiso del profesor."
+    },
+    {
+     "questionId": "q5",
+     "answer": "Lo elegí porque es lo que yo veo todos los días, y es lo que más me molesta. No consideré otro."
+    }
+   ],
+   "evaluation": {
+    "summary": "Si bien tu escrito presenta una postura clara y una estructura argumentativa identificable, el proceso de su defensa revela serios vacíos en la metodología de la tarea. Específicamente, mostraste falta de profundidad en la selección de tesis (no se descartaron alternativas) y una incapacidad para sustentar tus afirmaciones con evidencia verifiable. Se requiere trabajar en el pensamiento crítico y en la capacidad de investigar y documentar las fuentes, incluso cuando se utilizan herramientas de IA, para alcanzar el nivel de análisis exigido en la universidad. Te invito a abordar estas habilidades en futuras evaluaciones, enfocándote no solo en *lo que* dices, sino en *cómo* lo sabes.",
+    "perCriterion": [
+     {
+      "criterionId": "c1",
+      "submissionScore": 0.4,
+      "defenseScore": 0.1,
+      "evidenceQuote": "No sé qué estudio era, era un video de TikTok. No lo verifiqué, creí que era verdad porque lo decía un profesor.",
+      "misconception": "El estudiante confunde la experiencia anecdótica personal con evidencia académica válida y no comprende la necesidad de verificación de fuentes."
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -11,6 +11,8 @@ export interface ExampleTask {
   subject: string;
   level: string;
   topic: string;
+  /** What kind of task it is, the premise the redesign changes: an essay, a reading quiz, a lab report… */
+  kind: string;
   title: string;
   /** The task as teachers usually hand it out today. */
   original: string;
@@ -26,6 +28,7 @@ const PISA_2025_PERU = "https://larepublica.pe/sociedad/2026/09/08/peru-retroced
 export const EXAMPLES: ExampleTask[] = [
   {
     id: "comunicacion-texto-argumentativo",
+    kind: "Ensayo argumentativo",
     subject: "Comunicación",
     level: "4.º de secundaria",
     topic: "Texto argumentativo",
@@ -38,6 +41,7 @@ export const EXAMPLES: ExampleTask[] = [
   },
   {
     id: "comunicacion-comprension-lectora",
+    kind: "Cuestionario de lectura",
     subject: "Comunicación",
     level: "3.º de secundaria",
     topic: "Comprensión lectora",
@@ -50,6 +54,7 @@ export const EXAMPLES: ExampleTask[] = [
   },
   {
     id: "matematica-funcion-lineal",
+    kind: "Problema",
     subject: "Matemática",
     level: "3.º de secundaria",
     topic: "Función lineal",
@@ -66,6 +71,7 @@ export const EXAMPLES: ExampleTask[] = [
   },
   {
     id: "sociales-guerra-del-pacifico",
+    kind: "Monografía",
     subject: "Ciencias Sociales",
     level: "5.º de secundaria",
     topic: "Historia del Perú",
@@ -78,6 +84,7 @@ export const EXAMPLES: ExampleTask[] = [
   },
   {
     id: "ciencia-informe-indagacion",
+    kind: "Informe de laboratorio",
     subject: "Ciencia y Tecnología",
     level: "2.º de secundaria",
     topic: "Indagación científica",
@@ -89,6 +96,7 @@ export const EXAMPLES: ExampleTask[] = [
   },
   {
     id: "ingles-festival",
+    kind: "Redacción",
     subject: "Inglés",
     level: "2.º de secundaria",
     topic: "Simple present",
@@ -105,6 +113,7 @@ export const EXAMPLES: ExampleTask[] = [
   },
   {
     id: "dpcc-residuos",
+    kind: "Proyecto",
     subject: "Desarrollo Personal, Ciudadanía y Cívica",
     level: "3.º de secundaria",
     topic: "Participación ciudadana",
@@ -116,6 +125,7 @@ export const EXAMPLES: ExampleTask[] = [
   },
   {
     id: "programacion-busqueda-binaria",
+    kind: "Ejercicio de código",
     subject: "Programación",
     level: "4.º de secundaria",
     topic: "Búsqueda binaria",
@@ -127,6 +137,7 @@ export const EXAMPLES: ExampleTask[] = [
   },
   {
     id: "arte-indigenismo",
+    kind: "Análisis de una obra",
     subject: "Arte y Cultura",
     level: "4.º de secundaria",
     topic: "Indigenismo peruano",

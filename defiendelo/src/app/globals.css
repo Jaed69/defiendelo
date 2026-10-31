@@ -1,21 +1,25 @@
 @import "tailwindcss";
 
-/* Tokens mirror the Figma variables (file vJbFealOdYHmWfiR8SumcH): squared notebook, blue ballpoint, teacher's red pen. */
+/*
+ * Tokens mirror the Pencil variables (design/defiendelo-flujo.pen, board "Sistema visual"): warm paper
+ * instead of glaring white, blue ballpoint, terracotta pen instead of alarm red, honey highlighter.
+ * Every text/background pair keeps at least 4.5:1 contrast.
+ */
 :root {
   --ink-900: #141b34;
-  --ink-600: #4a5578;
-  --ink-200: #d9e4f2;
-  --ink-100: #eef3fa;
-  --paper: #fdfdfb;
+  --ink-600: #4f5568;
+  --ink-200: #e2ddd1;
+  --ink-100: #eeebe3;
+  --paper: #f6f4ee;
   --blue-700: #1b2f8f;
   --blue-600: #2340b8;
-  --blue-100: #e4e9fb;
-  --red-600: #d7263d;
-  --red-100: #fce6e9;
-  --yellow-300: #f5e642;
-  --yellow-100: #fdf8c9;
+  --blue-100: #e7ecfb;
+  --red-600: #b8461f;
+  --red-100: #fbe9df;
+  --yellow-300: #e9b949;
+  --yellow-100: #fbf0d4;
   --green-700: #187a4c;
-  --green-100: #ddf2e6;
+  --green-100: #dcf0e3;
 
   --color-bg-page: var(--paper);
   --color-bg-surface: #ffffff;
@@ -27,6 +31,7 @@
   --color-bg-danger-subtle: var(--red-100);
   --color-bg-highlight: var(--yellow-300);
   --color-bg-highlight-subtle: var(--yellow-100);
+  --color-bg-success: var(--green-700);
   --color-bg-success-subtle: var(--green-100);
   --color-bg-inverse: var(--ink-900);
   --color-text-primary: var(--ink-900);
@@ -38,10 +43,13 @@
   --color-border-strong: var(--ink-900);
   --color-grid-line: var(--ink-200);
 
-  --radius-sm: 6px;
-  --radius-md: 10px;
+  /* Shapes: 8 for chips and small tags, 12 for fields, 16 for cards, pills for buttons. */
+  --radius-sm: 8px;
+  --radius-md: 12px;
   --radius-lg: 16px;
-  --shadow-card: 0 2px 4px rgb(20 27 52 / 0.06), 0 12px 32px -4px rgb(20 27 52 / 0.1);
+  --radius-pill: 999px;
+  /* Hairline cards: a 1px rule does the separating, the shadow only lifts. */
+  --shadow-card: 0 1px 2px rgb(20 27 52 / 0.04), 0 8px 24px -12px rgb(20 27 52 / 0.12);
 }
 
 @theme inline {
@@ -54,6 +62,8 @@
   --color-highlight: var(--color-bg-highlight);
   --color-highlight-subtle: var(--color-bg-highlight-subtle);
   --color-success-subtle: var(--color-bg-success-subtle);
+  --color-success-fill: var(--color-bg-success);
+  --color-brand-strong: var(--color-bg-brand-strong);
   --color-inverse: var(--color-bg-inverse);
   --color-ink: var(--color-text-primary);
   --color-graphite: var(--color-text-secondary);
@@ -77,8 +87,16 @@ body {
   background: var(--color-bg-page);
   color: var(--color-text-primary);
   font-family: var(--font-body), system-ui, sans-serif;
-  font-size: 1.0625rem;
+  font-size: 1rem;
   line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Codes, grades and counters: same family, tabular digits. */
+.font-mono,
+code {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
 }
 
 h1,
@@ -125,6 +143,25 @@ h3 {
   font-weight: 700;
 }
 
+/* Uppercase micro-label above a value ("TU NOTA", "LA IA SUGIERE"); never below 14px for readability. */
+.eyebrow {
+  font-size: 0.875rem;
+  line-height: 1.3;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+/* The big step counter of the written defense: "02 /04". */
+.counter {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
 .prose-measure {
   max-width: 68ch;
 }
@@ -155,8 +192,8 @@ h3 {
 .grid-paper {
   background-color: var(--color-bg-surface);
   background-image:
-    linear-gradient(to right, rgb(217 228 242 / 0.7) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(217 228 242 / 0.7) 1px, transparent 1px);
+    linear-gradient(to right, rgb(226 221 209 / 0.7) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(226 221 209 / 0.7) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
@@ -164,7 +201,7 @@ h3 {
 .ruled {
   background-color: var(--color-bg-surface);
   background-image:
-    linear-gradient(to right, transparent 35px, rgb(215 38 61 / 0.6) 35px, rgb(215 38 61 / 0.6) 37px, transparent 37px),
+    linear-gradient(to right, transparent 35px, rgb(184 70 31 / 0.5) 35px, rgb(184 70 31 / 0.5) 37px, transparent 37px),
     repeating-linear-gradient(to bottom, transparent 0, transparent 31px, var(--color-grid-line) 31px, var(--color-grid-line) 32px);
   background-attachment: local;
   line-height: 32px;
@@ -193,7 +230,7 @@ select {
   width: 100%;
   min-height: 3rem;
   background: var(--color-bg-surface);
-  border: 1.5px solid var(--color-border-default);
+  border: 1px solid var(--color-border-default);
   border-radius: var(--radius-md);
   padding: 0.75rem 1rem;
   color: var(--color-text-primary);
@@ -237,6 +274,14 @@ summary:focus-visible {
   outline-offset: 2px;
 }
 
+/* An active field gets the only 2px border on the page. */
+textarea:focus,
+input[type="text"]:focus,
+select:focus {
+  border-color: var(--color-bg-brand);
+  box-shadow: inset 0 0 0 1px var(--color-bg-brand);
+}
+
 /* Buttons: Primary for the one main action, Secondary for alternatives, Quiet for links. */
 .btn,
 .btn-secondary,
@@ -247,10 +292,17 @@ summary:focus-visible {
   gap: 0.5rem;
   min-height: 3rem;
   padding: 0.75rem 1.5rem;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-pill);
   font-weight: 700;
   cursor: pointer;
-  transition: background-color 120ms ease;
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+
+.btn:active:not(:disabled),
+.btn-secondary:active:not(:disabled) {
+  transform: scale(0.98);
 }
 
 .btn {
@@ -273,8 +325,8 @@ summary:focus-visible {
   place-items: center;
   width: 2.75rem;
   height: 2.75rem;
-  border-radius: var(--radius-md);
-  border: 2px solid var(--color-border-default);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border-default);
   background: var(--color-bg-surface);
   color: var(--color-text-primary);
   cursor: pointer;
@@ -302,13 +354,28 @@ summary:focus-visible {
 .btn-secondary,
 .btn-outline {
   background: var(--color-bg-surface);
+  color: var(--color-text-brand);
+  border: 2px solid var(--color-bg-brand);
+}
+
+/* White button on a full-bleed color moment (sent, your turn). */
+.btn-inverse {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  background: white;
   color: var(--color-text-primary);
-  border: 2px solid var(--color-border-strong);
+  border: 2px solid white;
 }
 
 .btn-secondary:hover,
 .btn-outline:hover {
-  background: var(--color-bg-subtle);
+  background: var(--color-bg-brand-subtle);
 }
 
 .btn-quiet {
@@ -325,8 +392,9 @@ summary:focus-visible {
 .chip {
   display: inline-flex;
   align-items: center;
-  border-radius: 999px;
-  padding: 0.25rem 0.75rem;
+  gap: 0.4rem;
+  border-radius: var(--radius-sm);
+  padding: 0.25rem 0.625rem;
   font-size: 0.875rem;
   line-height: 1.4;
   font-weight: 700;
@@ -354,8 +422,48 @@ summary:focus-visible {
 }
 
 .chip-highlight {
-  background: var(--color-bg-highlight);
+  background: var(--color-bg-highlight-subtle);
   color: var(--color-text-primary);
+}
+
+/* Status dot inside a chip: color plus text, never color alone. */
+.chip-dot::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.chip-highlight.chip-dot::before {
+  background: var(--color-bg-highlight);
+}
+
+/* Fixed bottom action bar on phones (submit, next question). */
+.bottom-bar {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  background: var(--color-bg-surface);
+  border-top: 1px solid var(--color-border-default);
+  padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom));
+}
+
+/* Short, calm entrance for content that just arrived; disabled with reduced motion below. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise {
+  animation: rise 220ms ease-out both;
 }
 
 /* Toggle used to filter a list; pressed state is filled brand blue. */
@@ -364,8 +472,8 @@ summary:focus-visible {
   align-items: center;
   min-height: 2.75rem;
   padding: 0.375rem 1rem;
-  border: 1.5px solid var(--color-border-default);
-  border-radius: 999px;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-pill);
   background: var(--color-bg-surface);
   color: var(--color-text-primary);
   font-weight: 700;
@@ -405,7 +513,7 @@ summary:focus-visible {
 }
 
 .drop-active {
-  background: #d3dcf8;
+  background: #d6def8;
   border-style: solid;
 }
 

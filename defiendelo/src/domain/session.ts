@@ -1,4 +1,4 @@
-import { isGraded } from "./grading";
+import { type CriterionMark, criterionMarks, isGraded } from "./grading";
 import type { Assignment, ClassSession, DefenseQuestion, Evaluation, EvaluationMethod, GradingSystem, Letter, SessionPhase, Submission } from "./types";
 
 export const DEFAULT_SESSION: ClassSession = {
@@ -88,6 +88,7 @@ function advancePast(session: ClassSession, submissions: Submission[], submissio
 export type StudentStatus = "entregado" | "en_cola" | "turno" | "responder" | "papel" | "evaluado" | "publicado";
 
 export function studentStatus(session: ClassSession, submission: Submission, live = true): StudentStatus {
+  if (submission.redoRequested && !submission.answeredAt) return "responder";
   if (!live) return submission.answeredAt ? "publicado" : "responder";
   if (session.phase === "publicado") return "publicado";
   if (session.phase === "entregas") return "entregado";
@@ -117,11 +118,16 @@ export interface StudentView {
   question: { number: number; total: number; text: string } | null;
   /** Written defense questions, only while the student has to answer them. */
   questions: DefenseQuestion[];
+  /** The teacher asked to explain the work again. */
+  redoRequested: boolean;
   result: {
     grade: number | null;
     letter: Letter | null;
     perQuestion: { question: string; score: number | null }[];
     evaluation: Evaluation | null;
+    /** How the grade was built from the rubric: AI suggestion and teacher points per criterion. */
+    criteria: CriterionMark[];
+    comment: string | null;
   } | null;
 }
 
@@ -152,6 +158,7 @@ export function studentView(assignment: Assignment, submission: Submission, now:
         ? { number: session.currentQuestion + 1, total: questions.length, text: questions[session.currentQuestion].question }
         : null,
     questions: status === "responder" ? questions : [],
+    redoRequested: Boolean(submission.redoRequested),
     result:
       status === "publicado"
         ? {
@@ -160,6 +167,8 @@ export function studentView(assignment: Assignment, submission: Submission, now:
             // Without a live session the teacher grades nothing per question, so there is nothing to list.
             perQuestion: live ? questions.map((q) => ({ question: q.question, score: submission.questionGrades?.[q.id] ?? null })) : [],
             evaluation: submission.evaluation,
+            criteria: criterionMarks(session, assignment.redesign.criteria, submission),
+            comment: submission.comment?.trim() || null,
           }
         : null,
   };

@@ -1,153 +1,212 @@
 "use client";
 
 import Link from "next/link";
-import { use, useState } from "react";
+import { use, useCallback, useEffect, useRef, useState } from "react";
 import { api } from "@/app/api-client";
-import { classSummary } from "@/app/class-summary";
-import { Waiting } from "@/app/components/waiting";
-import { triage } from "@/domain/gap";
-import type { Assignment } from "@/domain/types";
+import { classSummary, sessionLine } from "@/app/class-summary";
+import { CheckIcon, ClipboardCheckIcon, CopyIcon, UsersIcon } from "@/app/components/icons";
+import { isGraded } from "@/domain/grading";
 import { isLive, sessionOf } from "@/domain/session";
-import { SessionPanel } from "./session-panel";
-import { TeacherFrame, teacherHref, useTeacherAssignment } from "../teacher-frame";
+import type { Assignment } from "@/domain/types";
+import { studentLinkFor, TeacherFrame, teacherHref, useTeacherAssignment } from "../teacher-frame";
+import { OralPanel } from "./oral-panel";
+import { PaperPanel } from "./paper-panel";
+import { OpenSubmissions, type PanelProps } from "./session-panel";
+import { reviewOrder, WrittenReview } from "./written-review";
 
-const ATTEND_FIRST = 5;
-const ATTENTION_GAP = 25;
+const POLL_MS = 5000;
 
-const INSIGHT_STEPS = [
-  { after: 0, text: "Leyendo las defensas de la clase…" },
-  { after: 10, text: "Agrupando malentendidos parecidos…" },
-  { after: 25, text: "Escribiendo una actividad corta para cada uno. Ya casi." },
-];
+const AI_DOES = ["Sugiere un nivel por criterio y te muestra la evidencia.", "Agrupa los errores repetidos de la clase."];
+const AI_DOES_NOT = ["No decide la nota: decides tú.", "No detecta si usaron IA.", "No lee emociones, voz ni cara.", "No guarda el archivo original."];
 
-/** Second teacher screen: who handed in, who needs help and with what, and what to go over in class. */
+function CrossIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" aria-hidden="true" className="mt-1 shrink-0">
+      <path d="M6 6l12 12M18 6L6 18" />
+    </svg>
+  );
+}
+
+/** What the AI does and does not do, said once above the students. */
+function AiLimits() {
+  return (
+    <section className="card grid gap-4 p-4 sm:grid-cols-2 sm:p-5" aria-label="Qué hace y qué no hace la IA">
+      <div className="grid content-start gap-2">
+        <h2 className="text-[1rem] text-success">Lo que hace la IA</h2>
+        <ul className="grid gap-1.5 text-[0.9375rem]">
+          {AI_DOES.map((t) => (
+            <li key={t} className="flex gap-2">
+              <CheckIcon size={16} className="mt-1 text-success" /> {t}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="grid content-start gap-2">
+        <h2 className="text-[1rem] text-pen">Lo que no hace</h2>
+        <ul className="grid gap-1.5 text-[0.9375rem]">
+          {AI_DOES_NOT.map((t) => (
+            <li key={t} className="flex gap-2 text-ink">
+              <span className="text-pen">
+                <CrossIcon />
+              </span>
+              {t}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+function EmptyClass({ assignment, teacherKey, busy, onSimulate }: { assignment: Assignment; teacherKey: string; busy: boolean; onSimulate: () => void }) {
+  const [copied, setCopied] = useState(false);
+  const live = isLive(assignment);
+  return (
+    <section className="card grid justify-items-start gap-4 p-6 sm:p-8" aria-labelledby="vacio-titulo">
+      <h2 id="vacio-titulo" className="text-[1.5rem]">
+        Todavía nadie entregó
+      </h2>
+      {assignment.demo ? (
+        <>
+          <p className="prose-measure text-graphite">
+            Esta tarea es un ejemplo. Simula su clase: alumnos inventados entregan, responden sus preguntas y la IA sugiere su nota, al instante.
+          </p>
+          <button type="button" className="btn" disabled={busy} onClick={onSimulate}>
+            <UsersIcon size={18} /> {busy ? "Simulando…" : "Simular entregas de la clase"}
+          </button>
+        </>
+      ) : (
+        <p className="prose-measure text-graphite">Comparte el enlace con tus alumnos. Sus entregas aparecen aquí solas.</p>
+      )}
+      {live ? (
+        <button
+          type="button"
+          className="btn-secondary"
+          onClick={() => {
+            void navigator.clipboard?.writeText(studentLinkFor(assignment.id));
+            setCopied(true);
+          }}
+        >
+          <CopyIcon size={18} /> {copied ? "Enlace copiado" : "Copiar enlace para alumnos"}
+        </button>
+      ) : (
+        <Link href={`${teacherHref(assignment.id, teacherKey, "tarea")}#evaluacion`} className="btn-secondary">
+          Elegir cómo evaluar
+        </Link>
+      )}
+    </section>
+  );
+}
+
+/** D5 · Entregas: who handed in, the evidence behind each grade, and what to go over in class. */
 export default function TeacherSubmissionsPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const { assignment, setAssignment, teacherKey, error, setError, load } = useTeacherAssignment(id);
-  const [busy, setBusy] = useState<"insights" | "refresh" | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [analyzing, setAnalyzing] = useState(false);
+  const busyRef = useRef(false);
+
+  const live = assignment ? isLive(assignment) : false;
+  const phase = assignment ? sessionOf(assignment).phase : "entregas";
+
+  // Students keep handing in and answering while the teacher has this open; never poll over a pending change.
+  useEffect(() => {
+    if (!assignment || phase === "publicado") return;
+    const timer = setInterval(() => {
+      if (!busyRef.current && document.visibilityState === "visible") void load().catch(() => {});
+    }, POLL_MS);
+    return () => clearInterval(timer);
+  }, [assignment, load, phase]);
+
+  const call = useCallback(
+    async (path: string, method: "PATCH" | "POST", body?: object) => {
+      busyRef.current = true;
+      setBusy(true);
+      setError(null);
+      try {
+        const next = await api<Assignment>(path, { method, teacherKey, body: body ? JSON.stringify(body) : undefined });
+        setAssignment(next);
+        return next;
+      } catch (e) {
+        setError((e as Error).message);
+        return null;
+      } finally {
+        busyRef.current = false;
+        setBusy(false);
+      }
+    },
+    [setAssignment, setError, teacherKey],
+  );
 
   if (!assignment) return <TeacherFrame id={id} teacherKey={teacherKey} assignment={null} section="entregas" error={error} />;
 
-  const { redesign, submissions, insights } = assignment;
-  const ranking = triage(redesign.criteria, submissions);
-  const needsHelp = (i: number) => i < ATTEND_FIRST && ranking[i].gap >= ATTENTION_GAP;
-  // Oral and paper defenses produce no AI gap, so the summary only counts who handed in.
-  const gradedByTeacher = isLive(assignment) && sessionOf(assignment).method !== "escrito";
-  const handed = submissions.length;
-  const summary = gradedByTeacher
-    ? handed === 0
-      ? "Todavía nadie entregó."
-      : `${handed === 1 ? "1 alumno entregó" : `${handed} alumnos entregaron`}.`
-    : classSummary({
-        handedIn: ranking.length,
-        needHelp: ranking.filter((_, i) => needsHelp(i)).map((r) => r.alias),
-        answering: submissions.filter((s) => !s.evaluation).length,
-      });
-  const criterionName = (cid: string) => redesign.criteria.find((c) => c.id === cid)?.name ?? cid;
+  const session = sessionOf(assignment);
+  const { submissions } = assignment;
+  const send: PanelProps["send"] = (method, body) => call(`/api/assignments/${id}/session`, method, body);
+  const simulate = () => void call(`/api/assignments/${id}/demo`, "POST");
+  const props: PanelProps = { assignment, teacherKey, session, send, busy };
 
-  async function run(kind: "insights" | "refresh") {
-    setBusy(kind);
+  async function analyze() {
+    setAnalyzing(true);
     setError(null);
     try {
-      if (kind === "refresh") await load();
-      else setAssignment(await api<Assignment>(`/api/assignments/${id}/insights`, { method: "POST", teacherKey }));
+      setAssignment(await api<Assignment>(`/api/assignments/${id}/insights`, { method: "POST", teacherKey }));
     } catch (e) {
       setError((e as Error).message);
     } finally {
-      setBusy(null);
+      setAnalyzing(false);
     }
   }
 
+  const written = !live || session.method === "escrito";
+  const { toReview, answering, needsHelp } = reviewOrder(assignment);
+  const summary = written
+    ? classSummary({
+        handedIn: submissions.length,
+        needHelp: submissions.filter(needsHelp).map((s) => s.alias),
+        answering: answering.length,
+      })
+    : submissions.length === 0
+      ? "Todavía nadie entregó."
+      : `${submissions.length === 1 ? "1 alumno entregó" : `${submissions.length} alumnos entregaron`}.`;
+  const pending = written ? toReview.length : submissions.filter((s) => !isGraded(s)).length;
+  const open = live && session.phase === "entregas";
+
   return (
     <TeacherFrame id={id} teacherKey={teacherKey} assignment={assignment} section="entregas" error={error}>
-      <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2">
-        <p className="text-[1.25rem] font-bold" role="status">
-          {summary}
+      <div className="grid gap-3">
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+          <p className="text-[1.1875rem] font-bold" role="status">
+            {summary}
+          </p>
+          {!open && pending > 0 && session.phase !== "publicado" && (
+            <span className="chip chip-highlight chip-dot">
+              {pending} {written ? (pending === 1 ? "nota por revisar" : "notas por revisar") : pending === 1 ? "nota por poner" : "notas por poner"}
+            </span>
+          )}
+        </div>
+        <p className="inline-flex flex-wrap items-center gap-x-3 gap-y-1 justify-self-start rounded-[var(--radius-pill)] border border-rule bg-surface px-4 py-1.5 text-[0.9375rem]">
+          <ClipboardCheckIcon size={18} className="text-graphite" />
+          {live ? sessionLine(session) : "Todavía no elegiste cómo evaluar"}
+          <Link href={`${teacherHref(id, teacherKey, "tarea")}&cambiar=1#evaluacion`} className="inline-flex min-h-9 items-center font-bold text-brand-text hover:underline">
+            {live ? "Cambiar" : "Elegir"}
+          </Link>
         </p>
-        <button className="btn-quiet" disabled={busy !== null} onClick={() => run("refresh")}>
-          {busy === "refresh" ? "Actualizando…" : "Actualizar"}
-        </button>
       </div>
 
-      <SessionPanel assignment={assignment} teacherKey={teacherKey} onChange={setAssignment} reload={load} />
-
-      {/* Gaps and class insights come from the AI-evaluated written defense; oral and paper have none. */}
-      {!gradedByTeacher && (
-        <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_24rem]">
-        <section id="atender" className="card grid gap-4 p-6 sm:p-8">
-          <h2>Tus alumnos</h2>
-          {ranking.length === 0 ? (
-            <Link href={teacherHref(id, teacherKey, "tarea")} className="btn-secondary justify-self-start">
-              Ver el enlace para compartir
-            </Link>
-          ) : (
-            <ol className="grid gap-3">
-              {ranking.map((r, i) => {
-                const evaluation = submissions.find((x) => x.id === r.submissionId)!.evaluation!;
-                const gaps = evaluation.perCriterion.filter((p) => p.misconception);
-                const help = needsHelp(i);
-                return (
-                  <li key={r.submissionId} className={`rounded-[var(--radius-md)] border-2 ${help ? "border-pen" : "border-rule"}`}>
-                    <details>
-                      <summary className="flex min-h-14 cursor-pointer flex-wrap items-center gap-x-4 gap-y-1 px-4 py-3">
-                        <span className="text-[1.0625rem] font-bold">{r.alias}</span>
-                        {help && <span className="chip chip-danger">Necesita ayuda</span>}
-                      </summary>
-                      <div className="grid gap-3 border-t border-rule px-4 py-4">
-                        {gaps.length === 0 ? (
-                          <p>Explicó bien lo que entregó.</p>
-                        ) : (
-                          <>
-                            <p className="label text-pen">No supo explicar</p>
-                            <ul className="grid gap-3">
-                              {gaps.map((p) => (
-                                <li key={p.criterionId} className="grid gap-1">
-                                  <span className="font-bold">{criterionName(p.criterionId)}</span>
-                                  <span>{p.misconception}</span>
-                                  {p.evidenceQuote && <span className="italic text-graphite">&ldquo;{p.evidenceQuote}&rdquo;</span>}
-                                </li>
-                              ))}
-                            </ul>
-                          </>
-                        )}
-                      </div>
-                    </details>
-                  </li>
-                );
-              })}
-            </ol>
-          )}
-        </section>
-
-        <section className="card grid gap-4 p-6">
-          <h2 className="text-[1.375rem]">Qué repasar en clase</h2>
-          {ranking.length === 0 ? (
-            <p className="text-graphite">Aparece cuando entreguen los alumnos.</p>
-          ) : (
-            <button type="button" className="btn justify-self-start" disabled={busy !== null} onClick={() => run("insights")}>
-              {busy === "insights" ? "Analizando la clase…" : insights ? "Volver a analizar" : "Analizar la clase"}
-            </button>
-          )}
-          {busy === "insights" && <Waiting steps={INSIGHT_STEPS} expected="suele tardar menos de un minuto" />}
-          {insights && insights.clusters.length === 0 && <p>No aparecieron errores repetidos.</p>}
-          {insights && insights.clusters.length > 0 && (
-            <ul className="grid gap-6">
-              {insights.clusters.map((c) => (
-                <li key={c.label} className="grid gap-2">
-                  <h3 className="text-[1.0625rem]">
-                    {c.label} <span className="font-normal text-graphite">({c.studentAliases.length === 1 ? "1 alumno" : `${c.studentAliases.length} alumnos`})</span>
-                  </h3>
-                  {c.quotes[0] && <p className="italic text-graphite">&ldquo;{c.quotes[0]}&rdquo;</p>}
-                  <details className="rounded-[var(--radius-md)] bg-highlight-subtle">
-                    <summary className="cursor-pointer px-4 py-3 font-bold">Ver actividad de 10 minutos</summary>
-                    <p className="px-4 pb-4">{c.suggestion}</p>
-                  </details>
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
-        </div>
+      {submissions.length === 0 ? (
+        <EmptyClass assignment={assignment} teacherKey={teacherKey} busy={busy} onSimulate={simulate} />
+      ) : open ? (
+        <OpenSubmissions {...props} onSimulate={assignment.demo ? simulate : undefined} />
+      ) : session.method === "oral" && live ? (
+        <OralPanel {...props} />
+      ) : session.method === "papel" && live ? (
+        <PaperPanel {...props} />
+      ) : (
+        <>
+          <AiLimits />
+          <WrittenReview {...props} onAnalyze={() => void analyze()} analyzing={analyzing} />
+        </>
       )}
     </TeacherFrame>
   );

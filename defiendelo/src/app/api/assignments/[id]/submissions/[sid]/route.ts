@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 import { getStudentView, replaceSubmission, submitDefense } from "@/application/use-cases";
-import { assessmentAI, assignmentStore } from "@/composition";
+import { aiForTask, assignmentStore } from "@/composition";
 import { handle, studentToken } from "../../../../http";
 
 export const maxDuration = 60;
@@ -24,7 +24,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
   return handle(async () => {
     const { id, sid } = await params;
     const { work } = z.object({ work: z.string().trim().min(20).max(20000) }).parse(await request.json());
-    await replaceSubmission(assessmentAI(), assignmentStore(), id, sid, studentToken(request), work);
+    await replaceSubmission(aiForTask, assignmentStore(), id, sid, studentToken(request), work);
     return { ok: true };
   });
 }
@@ -33,7 +33,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
   return handle(async () => {
     const { id, sid } = await params;
     const { answers } = body.parse(await request.json());
-    const submission = await submitDefense(assessmentAI(), assignmentStore(), id, sid, studentToken(request), answers);
+    const submission = await submitDefense(aiForTask, assignmentStore(), id, sid, studentToken(request), answers);
     return { evaluation: submission.evaluation };
   });
 }

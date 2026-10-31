@@ -19,10 +19,20 @@ function submission(id: string, createdAt = "2026-10-31T10:00:00Z"): Submission 
 }
 
 function assignment(session: Partial<ClassSession>, submissions: Submission[]): Assignment {
-  return { submissions, session: { ...DEFAULT_SESSION, ...session } } as Assignment;
+  return { submissions, session: { ...DEFAULT_SESSION, ...session }, redesign: { criteria: [] } } as unknown as Assignment;
 }
 
 describe("session", () => {
+  it("asks the student to answer again when the teacher requests it, until they answer", () => {
+    const s = submission("a");
+    s.redoRequested = true;
+    const session: ClassSession = { ...DEFAULT_SESSION, method: "escrito", phase: "publicado" };
+    expect(studentStatus(session, s)).toBe("responder");
+    expect(studentView(assignment(session, [s]), s, NOW).redoRequested).toBe(true);
+    s.answeredAt = "2026-10-31T12:30:00Z";
+    expect(studentStatus(session, s)).toBe("publicado");
+  });
+
   it("accepts submissions only while open and before the deadline", () => {
     const now = new Date("2026-10-31T12:00:00Z");
     expect(acceptsSubmissions(DEFAULT_SESSION, now)).toBe(true);
@@ -91,7 +101,7 @@ describe("session", () => {
   });
 
   describe("without a session configured by the teacher", () => {
-    const selfPaced = (sub: Submission) => ({ submissions: [sub] }) as unknown as Assignment;
+    const selfPaced = (sub: Submission) => ({ submissions: [sub], redesign: { criteria: [] } }) as unknown as Assignment;
 
     it("lets the student answer every question right after handing in", () => {
       const sub = submission("a");
@@ -108,7 +118,7 @@ describe("session", () => {
       const view = studentView(selfPaced(sub), sub, NOW);
       expect(view.status).toBe("publicado");
       expect(view.questions).toEqual([]);
-      expect(view.result).toEqual({ grade: null, letter: null, perQuestion: [], evaluation: sub.evaluation });
+      expect(view.result).toEqual({ grade: null, letter: null, perQuestion: [], evaluation: sub.evaluation, criteria: [], comment: null });
     });
 
     it("still accepts submissions", () => {

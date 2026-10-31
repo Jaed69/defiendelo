@@ -1,0 +1,425 @@
+{
+ "exampleId": "dpcc-residuos",
+ "redesign": {
+  "statement": "A partir de la problemática de la gestión de residuos en nuestro entorno escolar, su misión es desarrollar una propuesta de mejora integral. Para ello, usted debe utilizar herramientas de Inteligencia Artificial (IA) como copiloto en el proceso, pero su nota dependerá de su capacidad crítica y su toma de decisiones. Su trabajo debe ser un diálogo entre la capacidad de la IA para generar ideas y su juicio humano para validarlas y ejecutarlas. Su entrega escrita debe ser un borrador técnico, pero la evaluación final se realizará en una entrevista (defensa). Proceda de la siguiente manera: 1. Utilice al menos una IA generativa (ej. ChatGPT, Gemini) para que le proponga tres escenarios de reducción de basura y tres acciones específicas para cada uno. 2. Analice rigurosamente las opciones generadas por la IA. No las copie. Debe seleccionar ÚNICAMENTE UNA estrategia de IA como base, y proponer tres acciones finales que hayan sido, al menos, modificadas sustancialmente por su propio criterio. 3. Desarrolle una sección de 'Descarte y Justificación' donde explique por qué descartó las 6 alternativas de la IA (3 escenarios y 3 acciones rechazadas). 4. Presente la estrategia final, indicando responsables y métricas. Finalmente, prepare la defensa oral respondiendo a las preguntas: ¿Qué decisiones críticas tomó en el proceso? ¿Cómo verifió que la salida de la IA era viable en nuestro contexto escolar? ¿Qué alternativas de IA considera más o menos útiles para problemas sociales?",
+  "aiPolicy": "Usted puede utilizar herramientas de IA generativa para la lluvia de ideas, la redacción de borradores, la generación de alternativas y la investigación inicial. Debe declarar explícitamente qué prompts utilizó, qué salidas de IA seleccionó y, fundamentalmente, explicar detalladamente por qué modificó, aceptó o descartó cada sugerencia de la IA. La ejecución de la calidad de la IA en sí no es el foco de la evaluación.",
+  "criteria": [
+   {
+    "id": "c1",
+    "name": "Análisis Crítico de la IA y Descarte",
+    "description": "Explicación fundamentada de por qué se descartaron las alternativas generadas por la IA (escenarios y acciones), demostrando un análisis de viabilidad y contexto local.",
+    "weight": 35,
+    "evidence": "defensa"
+   },
+   {
+    "id": "c2",
+    "name": "Justificación de Decisiones Críticas",
+    "description": "Capacidad para explicar las decisiones clave tomadas: por qué se eligió una estrategia sobre otras (incluyendo la de la IA) y qué alternativas se descartaron y por qué.",
+    "weight": 30,
+    "evidence": "defensa"
+   },
+   {
+    "id": "c3",
+    "name": "Integración de la IA y Proceso",
+    "description": "Evidencia en el documento de cómo se utilizó la IA (ejemplos de prompts y salidas), y la claridad en cómo el proceso humano intervino para refinar el output de la IA.",
+    "weight": 15,
+    "evidence": "entrega"
+   },
+   {
+    "id": "c4",
+    "name": "Coherencia de la Estrategia Final",
+    "description": "Claridad y lógica de la propuesta final (acciones, responsabilidades y métricas), demostrando que la selección final es robusta y bien argumentada.",
+    "weight": 20,
+    "evidence": "entrega"
+   }
+  ],
+  "originalCriteria": [
+   {
+    "id": "o1",
+    "name": "Identificación del Problema",
+    "description": "Claridad y pertinencia de la descripción de la situación de la basura en el colegio.",
+    "weight": 20,
+    "evidence": "entrega"
+   },
+   {
+    "id": "o2",
+    "name": "Viabilidad de las Acciones",
+    "description": "Nivel de concreción y factibilidad de las tres acciones propuestas en el entorno escolar.",
+    "weight": 35,
+    "evidence": "entrega"
+   },
+   {
+    "id": "o3",
+    "name": "Definición de Roles y Métricas",
+    "description": "Claridad en los responsables de la propuesta y la solidez del sistema de medición de resultados.",
+    "weight": 30,
+    "evidence": "entrega"
+   },
+   {
+    "id": "o4",
+    "name": "Organización y Presentación",
+    "description": "Calidad formal del informe, uso adecuado de lenguaje y estructura lógica.",
+    "weight": 15,
+    "evidence": "entrega"
+   }
+  ],
+  "rationale": "La calificación se ha movido del mero 'producto' a la 'metacognición'. En lugar de juzgar la calidad de las ideas, se juzga la calidad del pensamiento: la habilidad del estudiante para interactuar, cuestionar y validar la información generada automáticamente, cumpliendo con la exigencia de la autonomía humana."
+ },
+ "stress": {
+  "original": {
+   "aiAnswer": "**Propuesta para reducir la basura en el colegio**\n\n**Curso:** Desarrollo Personal, Ciudadanía y Cívica – 3.º de secundaria\n\n**1. Descripción del problema**\n\nEn nuestro colegio se genera mucha basura todos los días, sobre todo envases de plástico, botellas, papeles y restos de comida del refrigerio. Muchos estudiantes botan sus residuos al piso o mezclan todos los desechos en un solo tacho, aunque existan recipientes para reciclar. Esto provoca pasillos sucios, malos olores cerca de los tachos, atrae moscas y mosquitos, y hace que materiales que se podrían reciclar terminen en el mismo basurero. Además, el personal de limpieza tiene más trabajo y el colegio gasta dinero en bolsas y limpieza extra.\n\n**2. Tres acciones concretas**\n\n**Acción 1: Campaña de separación de residuos.** Colocar tachos codificados por colores (orgánicos, reciclables y residuos comunes) en el patio, las aulas y la cantina, con carteles claros que expliquen qué va en cada uno. Se harán charlas breves en las horas de tutoría para explicar cómo separar correctamente.\n\n**Acción 2: Uso de botellas y recipientes reutilizables.** Promover que cada estudiante traiga su botella recargable y su recipiente reusable para el refrigerio, en lugar de botellas desechables y bolsas de plástico. El colegio puede instalar una pileta accesible para recargar agua.\n\n**Acción 3: Brigada ecológica estudiantil.** Formar una brigada de estudiantes voluntarios de cada sección que, por turnos, supervisen los puntos de basura, recuerden a sus compañeros cómo separar yorganicen una campaña de reciclaje mensual, como la recolección de papel y botellas para venderlas a recicladores locales y financiar materiales del mismo colegio.\n\n**3. Participantes**\n\n- **Estudiantes:** cumplen las normas de separación, usan botellas reutilizables y apoyan la brigada ecológica.\n- **Brigada ecológica:** supervisa y promueve las acciones entre los compañeros.\n- **Profesores y tutores:** refuerzan las explicaciones en tutoría y acompañan las campañas.\n- **Personal de limpieza:** informa sobre los errores más comunes en la separación y apoya el mantenimiento de los tachos.\n- **Dirección del colegio:** autoriza la compra de tachos, las charlas y la campaña mensual de reciclaje.\n\n**4. Cómo mediremos si la propuesta funcionó**\n\n- **Peso de la basura:** pesar los residuos recolectados al final de cada semana durante un mes antes de iniciar la propuesta y otro mes después. Si la cantidad total baja al menos un 30 %, la propuesta está funcionando.\n- **Porcentaje de residuos bien separados:** revisar una vez por semana los tachos y registrar cuántos están correctamente separados. La meta es que al menos el 70 % de los tachos cumplan la separación después de dos meses.\n- **Cantidad de botellas desechables:** contar las botellas de plástico desechables en el basurero una vez por semana; la meta es reducirlas a la mitad.\n- **Encuesta breve:** aplicar una encuesta corta a estudiantes al inicio y al final del trimestre para saber si cambiaron sus hábitos y si conocen las normas de separación.\n\nCon estos indicadores, podremos evaluar cada mes los avances, corregir lo que no funcione y presentar los resultados a toda la comunidad educativa.",
+   "scores": [
+    {
+     "criterionId": "o1",
+     "score": 0.9,
+     "reason": "Describe con claridad tipos de residuos, conductas problemáticas y consecuencias concretas en el colegio."
+    },
+    {
+     "criterionId": "o2",
+     "score": 0.85,
+     "reason": "Las tres acciones son específicas y factibles, aunque falta detalle en tiempos y recursos necesarios."
+    },
+    {
+     "criterionId": "o3",
+     "score": 0.9,
+     "reason": "Roles bien asignados y sistema de medición sólido con línea base, frecuencias y metas cuantificables."
+    },
+    {
+     "criterionId": "o4",
+     "score": 0.85,
+     "reason": "Estructura lógica y lenguaje adecuado, con un error de digitación que resta pulcritud."
+    }
+   ]
+  },
+  "redesigned": {
+   "aiAnswer": "# Propuesta de mejora integral para la gestión de residuos escolares\n\n**Curso:** Desarrollo Personal, Ciudadanía y Cívica – 3.º de secundaria\n**Producto:** Borrador técnico\n\n## 1. Propuestas generadas con IA\n\nConsulté una IA generativa, que propuso cuatro escenarios de reducción de basura: (a) campaña de reciclaje con tachos diferenciados, (b) compostaje de residuos orgánicos del kiosco, (c) prohibición total de plásticos de un solo uso, y (d) programa de intercambio de útiles reciclados; además, sugirió seis acciones: talleres de sensibilización, brigadas ecológicas, murales informativos, competencias entre aulas, app de registro de residuos y reducción de impresiones.\n\n## 2. Estrategia seleccionada\n\nElegí el escenario (a) como base, con tres acciones finales modificadas sustancialmente con mi criterio:\n\n1. **Tachos diferenciados ubicados según estudio propio:** en lugar de distribuirlos uniformemente, los ubicaremos donde la observación en recreos muestra mayor acumulación (kiosco y pasillo del patio).\n2. **Brigadas ecológicas rotativas por aula:** cambié la idea original de brigadas fijas para que todos los estudiantes participen al menos una vez al mes, evitando que recaiga en pocos voluntarios.\n3. **Competencia mensual entre aulas con premiación simbólica:** modifiqué la propuesta para que el premio sea un reconocimiento en la hora del discurso y puntos para el campeonato interno, pues la IA sugería premios materiales que la escuela no puede financiar.\n\n## 3. Descarte y justificación\n\n- **Compostaje:** requiere área, mantenimiento y capacitación que no tenemos; riesgo de malos olores y abandono.\n- **Prohibición total de plásticos:** impracticable sin reglamento formal y consenso de las familias; generaría conflicto.\n- **Intercambio de útiles:** poco vinculado a la basura diaria del colegio; logística compleja.\n- **Murales informativos:** la información sola no cambia conductas; impacto débil y temporal.\n- **App de registro:** pocos estudiantes tienen celular permanente en el colegio; excluye a muchos.\n- **Reducción de impresiones:** depende de decisiones administrativas, no del estudiantado.\n\n## 4. Estrategia final, responsables y métricas\n\n| Acción | Responsable | Métrica |\n|---|---|---|\n| Tachos diferenciados en zonas críticas | Brigada + conserje | Kg. de residuos clasificados por semana |\n| Brigadas rotativas por aula | Profesor a cargo y delegados | % de estudiantes participantes al mes |\n| Competencia mensual entre aulas | Municipio escolar | Reducción del 20 % de residuos en basureros comunes en un semestre |\n\n## 5. Preparación de la defensa\n\n**Decisiones críticas:** priorizar viabilidad sobre ambición; adaptar las acciones de la IA a la realidad de mi colegio.\n\n**Verificación de viabilidad:** observé los recreos durante una semana, consulté al conserje sobre recursos disponibles y verifiqué que las acciones no requieran presupuesto adicional.\n\n**Alternativas de IA para problemas sociales:** la IA es útil para generar ideas y organizar información, pero menos útil para conocer el contexto local; ese juicio solo puede darlo quien conoce la comunidad.\n\n---\n*Nota: este documento fue elaborado íntegramente con asistencia de una IA generativa, según lo permitido por la consigna.*",
+   "scores": [
+    {
+     "criterionId": "c1",
+     "score": 0.8,
+     "reason": "Descarta seis alternativas con razones de viabilidad y contexto local concretas, aunque no aborda todas las acciones generadas (p. ej., talleres) ni profundiza el análisis de cada rechazo."
+    },
+    {
+     "criterionId": "c2",
+     "score": 0.7,
+     "reason": "Justifica las modificaciones y la priorización de viabilidad, pero la elección de la estrategia base se explica de forma implícita y las respuestas para la defensa son esquemáticas."
+    },
+    {
+     "criterionId": "c3",
+     "score": 0.4,
+     "reason": "Solo resume de manera general la salida de la IA sin mostrar prompts ni ejemplos reales, y la nota final ('elaborado íntegramente con asistencia de una IA') contradice la intervención humana que se afirma en el cuerpo del documento."
+    },
+    {
+     "criterionId": "c4",
+     "score": 0.8,
+     "reason": "La propuesta final es clara y lógica, con acciones, responsables y métricas en tabla; las métricas son razonables aunque algunas poco precisas en su forma de medición."
+    }
+   ]
+  },
+  "ranAt": "2026-10-31T05:38:39.428Z"
+ },
+ "insights": {
+  "clusters": [
+   {
+    "label": "Desconocimiento del rol obligatorio de la IA",
+    "criterionId": "c3",
+    "studentAliases": [
+     "Leo",
+     "Majo"
+    ],
+    "quotes": [
+     "«No hice esa parte porque no usé la IA.»",
+     "«No usé la IA para esto, lo pensé yo.»",
+     "Defensa: 'No hice la parte de las seis alternativas.'"
+    ],
+    "suggestion": "Actividad de 10 minutos: 'IA como Copiloto'. El docente mostrará dos ejemplos: una solución generada por IA y una solución manual, preguntando a los estudiantes: ¿Qué proceso les ahorró la IA? ¿Qué valor único aporta la IA (cantidad, diversidad)? Luego, se les pedirá que escriban en un minuto el 'mejor prompt' para resolver un problema escolar simple."
+   },
+   {
+    "label": "Falta de rigor conceptual y estructural",
+    "criterionId": "c1",
+    "studentAliases": [
+     "Gabo",
+     "Majo"
+    ],
+    "quotes": [
+     "«La app la descarté primero porque en el colegio no dejan usar celular.»",
+     "«La línea base sería el primer mes... No fijé una meta exacta.»",
+     "«La app la descarté primero... Las multas también, porque la mayoría no trae plata.»"
+    ],
+    "suggestion": "Actividad de 15 minutos: 'Diferenciando Conceptos'. Se proyectarán en la pizarra pares de términos confusos (Ej: 'Escenario' vs 'Acción'; 'Línea Base' vs 'Periodos de Tiempo'; 'Requisito' vs 'Idea'). Se pedirá a los estudiantes que, por turnos, definan el concepto y proporcionen un ejemplo concreto del contexto de residuos escolar para cada término."
+   },
+   {
+    "label": "Baja capacidad de evaluación de la viabilidad contextual",
+    "criterionId": "c1",
+    "studentAliases": [
+     "Gabo"
+    ],
+    "quotes": [
+     "«La app la descarté primero porque en el colegio no dejan usar celular.»",
+     "«Las multas también, porque la mayoría no trae plata y la dirección no lo iba a aceptar.»"
+    ],
+    "suggestion": "Actividad de 10 minutos: 'Filtro de Realidad Escolar'. Se presentarán tres soluciones a problemas de gestión de residuos (una viable, una imposible por costos, y una imposible por normativa escolar). Los estudiantes, en parejas, deberán votar y justificar por qué dos de las opciones son inviables en el contexto de su colegio en menos de 90 segundos."
+   }
+  ]
+ },
+ "students": [
+  {
+   "alias": "Gabo",
+   "work": "Problema: en el recreo el patio queda lleno de botellas y envolturas. Con mi grupo contamos durante una semana lo que se vende en el quiosco: más o menos 140 botellas de plástico por día. Casi todas terminan en el tacho general o en el piso, porque solo hay 3 tachos para 900 alumnos.\n\nAcciones:\n1. Pedir al quiosco que venda agua en bidón y que cada alumno traiga su tomatodo. Ya conversamos con la señora del quiosco y dijo que lo prueba si la dirección la apoya.\n2. Poner un tacho solo para botellas al lado del quiosco y venderlas a un reciclador del barrio. Lo que se gane va a la fiesta de promoción.\n3. Turnos por sección para revisar el patio 5 minutos al final del recreo.\n\nQuiénes participan: el municipio escolar, la señora del quiosco, los tutores y un reciclador de la asociación del mercado.\nCómo medimos: volver a contar las botellas por día después de un mes. La meta es bajar de 140 a 70.\nSi mis compañeros no participan, empezaríamos solo con 4.° y lo mostraríamos en formación con los números.",
+   "questions": [
+    {
+     "id": "q1",
+     "criterionId": "c1",
+     "question": "En su borrador, la sección 'Acciones' solo presenta las tres decisiones finales y no se evidencia ninguna alternativa de la IA descartada, aunque la tarea exigía justificar el descarte de seis. Cuénteme: ¿qué escenarios le propuso la IA, cuál descartó primero y qué condición específica de nuestro colegio hizo inviable ese escenario?"
+    },
+    {
+     "id": "q2",
+     "criterionId": "c1",
+     "question": "En la acción 2 escribió que las botellas se 'venderán a un reciclador del barrio' y, más abajo, menciona a 'un reciclador de la asociación del mercado'. ¿Cómo verificó que esa persona realmente compra botellas en nuestra zona, a qué precio acordó venderlas y qué compromisos concretos quedaron pendientes con ella?"
+    },
+    {
+     "id": "q3",
+     "criterionId": "c2",
+     "question": "Sobre la primera acción anotó: 'Ya conversamos con la señora del quiosco y dijo que lo prueba si la dirección la apoya'. ¿Qué le propuso exactamente a la señora del quiosco y qué condición le puso? ¿Por qué eligió el sistema del bidón como estrategia base en lugar de las otras opciones que le generó la IA?"
+    },
+    {
+     "id": "q4",
+     "criterionId": "c2",
+     "question": "Su meta es 'bajar de 140 a 70' botellas por día. ¿Por qué fijó la meta en 70 y no en otro valor? Si el quiosco empieza a vender en bidones, las botellas dejarán de entrar al colegio: ¿cómo distinguiría, en su conteo, ese efecto del verdadero cambio de hábitos de los alumnos?"
+    },
+    {
+     "id": "q5",
+     "criterionId": "c2",
+     "question": "Al final escribió: 'Si mis compañeros no participan, empezaríamos solo con 4.° y lo mostraríamos en formación con los números'. ¿Por qué eligió 4.° como piloto y no otro grado? ¿Qué datos concretos, medidos por usted mismo, presentaría en la formación al primer mes para demostrar que el piloto funciona?"
+    }
+   ],
+   "answers": [
+    {
+     "questionId": "q1",
+     "answer": "La IA me propuso cosas como una app para reportar basura, un concurso de reciclaje entre salones, compostaje y multas. La app la descarté primero porque en el colegio no dejan usar celular. Las multas también, porque la mayoría no trae plata y la dirección no lo iba a aceptar."
+    },
+    {
+     "questionId": "q2",
+     "answer": "Al reciclador lo conoce mi tío, que vende en el mercado, y lo fui a ver con él. Nos dijo que paga como 80 céntimos por kilo de botellas limpias. Quedó pendiente que venga una vez por semana, eso todavía no está confirmado."
+    },
+    {
+     "questionId": "q3",
+     "answer": "Le propusimos vender agua en bidón y vasos reutilizables en vez de botellas. Ella dijo que sí, pero solo si la dirección lo aprueba, porque vende menos. Elegí el bidón porque ataca de dónde salen las botellas; los tachos o las campañas solo las juntan después."
+    },
+    {
+     "questionId": "q4",
+     "answer": "70 es la mitad; me pareció una meta que se puede ver. Es verdad que si el quiosco deja de vender botellas el número baja solo; por eso contaría también las botellas que traen de afuera, en la puerta y en el patio, para ver si cambia el hábito y no solo el quiosco."
+    },
+    {
+     "questionId": "q5",
+     "answer": "4.° porque es mi grado y conocemos a los tutores, así que es más fácil organizarnos. Presentaría cuántas botellas contamos por día en el patio de 4.° antes y después, y cuántos traen su tomatodo; esos datos los contaríamos nosotros mismos."
+    }
+   ],
+   "evaluation": {
+    "summary": "¡Felicidades! Tu estrategia final es concreta y está bien pensada: mediste 140 botellas diarias, propones el bidón y el tomatodo, el tacho de botellas con venta al reciclador y los turnos de vigilancia, con responsables y una meta clara (bajar a 70). En la defensa demostraste pensamiento crítico real: verificaste el precio del reciclador (80 céntimos por kilo), reconociste lo que falta confirmar (su visita semanal) y hasta identificaste que tu conteo podría reflejar el cambio del quiosco y no el de los alumnos, proponiendo contar también las botellas que entran de afuera. Sin embargo, hay una brecha importante: tu entrega no incluye evidencia del uso de la IA (ni prompts ni salidas) ni la sección de 'Descarte y Justificación' de las seis alternativas, que era un requisito central y el criterio de mayor peso. En la defensa solo recordaste algunas ideas de la IA de manera general y no explicaste cómo modificaste sustancialmente lo que te sugirió. Te recomiendo incorporar al borrador los intercambios con la IA, justificar con condiciones concretas del colegio el descarte de cada alternativa, explicar por qué la meta es 70 y confirmar el compromiso semanal del reciclador. La propuesta es buena; ahora necesita que el documento muestre el proceso crítico que tú sí demostraste oralmente.",
+    "perCriterion": [
+     {
+      "criterionId": "c1",
+      "submissionScore": 0.3,
+      "defenseScore": 0.5,
+      "evidenceQuote": "«La app la descarté primero porque en el colegio no dejan usar celular. Las multas también, porque la mayoría no trae plata y la dirección no lo iba a aceptar.»",
+      "misconception": "Al reconstruir la salida de la IA mezcla 'escenarios' con acciones puntuales («una app para reportar basura, un concurso de reciclaje entre salones, compostaje y multas»), lo que sugiere que no trabajó con la estructura pedida de tres escenarios con tres acciones cada uno."
+     },
+     {
+      "criterionId": "c2",
+      "submissionScore": 0.3,
+      "defenseScore": 0.8,
+      "evidenceQuote": "«Elegí el bidón porque ataca de dónde salen las botellas; los tachos o las campañas solo las juntan después.» / «Es verdad que si el quiosco deja de vender botellas el número baja solo; por eso contaría también las botellas que traen de afuera, en la puerta y en el patio»",
+      "misconception": null
+     },
+     {
+      "criterionId": "c3",
+      "submissionScore": 0,
+      "defenseScore": 0.3,
+      "evidenceQuote": "«La IA me propuso cosas como una app para reportar basura, un concurso de reciclaje entre salones, compostaje y multas.»",
+      "misconception": null
+     },
+     {
+      "criterionId": "c4",
+      "submissionScore": 0.6,
+      "defenseScore": 0.6,
+      "evidenceQuote": "«Nos dijo que paga como 80 céntimos por kilo de botellas limpias. Quedó pendiente que venga una vez por semana, eso todavía no está confirmado.» / «Presentaría cuántas botellas contamos por día en el patio de 4.° antes y después, y cuántos traen su tomatodo»",
+      "misconception": null
+     }
+    ]
+   }
+  },
+  {
+   "alias": "Majo",
+   "work": "Propuesta: \"Mi colegio, libre de residuos\"\n\nProblema: la generación excesiva de residuos sólidos en la institución educativa constituye un problema ambiental que afecta la salud y el bienestar de la comunidad educativa.\n\nAcciones:\n1. Implementar un programa de segregación en la fuente mediante contenedores diferenciados por colores (plástico, papel, orgánico), según la normativa técnica peruana.\n2. Desarrollar campañas de sensibilización ambiental a través de talleres, afiches y publicaciones en redes sociales.\n3. Promover el uso de materiales reutilizables como tomatodos y loncheras ecológicas.\n\nParticipantes: directivos, docentes, estudiantes, padres de familia y personal de limpieza, con el apoyo del municipio escolar y la municipalidad distrital.\n\nIndicadores de evaluación: porcentaje de reducción de residuos generados, nivel de participación de la comunidad educativa y cantidad de material reciclado, medidos de forma mensual.",
+   "questions": [
+    {
+     "id": "q1",
+     "criterionId": "c2",
+     "question": "Su entrega muestra solo el resultado final, no el proceso. De las tres estrategias que le propuso la IA, ¿cuál tomó como base para construir las acciones que aparecen en su lista (segregación en fuente, campañas y materiales reutilizables), y qué dos cambios concretos introdujo usted respecto a la versión que le dio la IA antes de dejarla como propuesta final?"
+    },
+    {
+     "id": "q2",
+     "criterionId": "c2",
+     "question": "En la acción 1 usted escribe \"según la normativa técnica peruana\". ¿Qué norma o documento peruano específico consultó para definir esas categorías y colores, y por qué decidió usar solo tres contenedores cuando la segregación podría exigir más categorías? Si puede, mencione el nombre exacto de la norma."
+    },
+    {
+     "id": "q3",
+     "criterionId": "c1",
+     "question": "El ejercicio exigía descartar seis alternativas de la IA con justificación. En la defensa necesito esa parte que no aparece en el borrador: elija la alternativa descartada que más le había gustado y explique por qué la dejó fuera citando una condición concreta de su colegio (presupuesto, espacio físico, número de personal de limpieza o normas internas), no una razón genérica."
+    },
+    {
+     "id": "q4",
+     "criterionId": "c1",
+     "question": "La acción 2 incluye \"publicaciones en redes sociales\". ¿Qué verificación hizo antes de mantener ese canal en un colegio con menores de edad (por ejemplo, quién administraría las cuentas o si existe autorización para publicar imágenes de estudiantes), y qué cambio propuso usted si esa verificación resultaba negativa?"
+    },
+    {
+     "id": "q5",
+     "criterionId": "c1",
+     "question": "Su indicador dice \"porcentaje de reducción de residuos generados... medidos de forma mensual\". ¿Cómo definiría la línea base en su institución: quién pesará o registrará los residuos, con qué instrumento, y qué meta porcentual concreta fijó? Justifique por qué esa meta es alcanzable en su contexto y no un número inventado."
+    }
+   ],
+   "answers": [
+    {
+     "questionId": "q1",
+     "answer": "Tomé como base la segregación en la fuente. No recuerdo exactamente qué cambié, creo que agregué lo de los tomatodos."
+    },
+    {
+     "questionId": "q2",
+     "answer": "Es la norma técnica peruana de colores, no recuerdo el número exacto. Usé tres porque son los más comunes."
+    },
+    {
+     "questionId": "q3",
+     "answer": "No hice la parte de las seis alternativas. Creo que había una de compostaje, pero no recuerdo por qué la dejé."
+    },
+    {
+     "questionId": "q4",
+     "answer": "No lo verifiqué. Creo que las redes las podría manejar el municipio escolar con permiso de la dirección."
+    },
+    {
+     "questionId": "q5",
+     "answer": "La línea base sería el primer mes. Lo pesaría el personal de limpieza. No fijé una meta exacta."
+    }
+   ],
+   "evaluation": {
+    "summary": "Tu borrador deja una base ordenada: el problema está bien planteado y las acciones, participantes e indicadores mensuales se leen con claridad; ese orden es un buen punto de partida. Lo que aún no aparece es el corazón de la misión: el diálogo con la IA y tu criterio para validarla. En el documento no hay prompts ni descarte de las seis alternativas, y en la defensa no recordaste qué cambiaste de la propuesta de la IA, ni el nombre de la norma que citaste, y reconociste no haber hecho el descarte ni verificado el uso de redes sociales con menores de edad. La buena noticia es que puedes reconstruirlo hoy: anota los tres escenarios y las nueve acciones que te dio la IA, marca cuál elegiste y justifica cada descarte con una condición real de tu colegio (presupuesto, espacio, personal de limpieza); busca el nombre exacto de la norma peruana de segregación por colores; define tu línea base con un pesaje inicial a cargo del personal de limpieza y fija una meta concreta (por ejemplo, reducir 15 % en seis meses); y decide quién administraría las redes y qué canal alternativo usar sin autorización de imágenes. Tus respuestas fueron honestas, y esa honestidad es justamente el primer paso del análisis crítico que pide la tarea.",
+    "perCriterion": [
+     {
+      "criterionId": "c1",
+      "submissionScore": 0,
+      "defenseScore": 0.2,
+      "evidenceQuote": "Defensa: 'No hice la parte de las seis alternativas. Creo que había una de compostaje, pero no recuerdo por qué la dejé'; 'No lo verifiqué'; 'La línea base sería el primer mes... No fijé una meta exacta'. Entrega: no existe la sección de 'Descarte y Justificación' ni mención alguna a las alternativas generadas por la IA.",
+      "misconception": "Confunde la línea base (un valor de referencia medido, por ejemplo kilos promedio registrados) con un periodo de tiempo ('el primer mes')."
+     },
+     {
+      "criterionId": "c2",
+      "submissionScore": 0.2,
+      "defenseScore": 0.3,
+      "evidenceQuote": "Defensa: 'Tomé como base la segregación en la fuente. No recuerdo exactamente qué cambié, creo que agregué lo de los tomatodos'; 'Es la norma técnica peruana de colores, no recuerdo el número exacto. Usé tres porque son los más comunes'. Entrega: la única referencia justificativa es 'según la normativa técnica peruana', sin explicar por qué se eligió esa estrategia frente a otras.",
+      "misconception": null
+     },
+     {
+      "criterionId": "c3",
+      "submissionScore": 0,
+      "defenseScore": 0,
+      "evidenceQuote": "Entrega: el documento presenta solo el resultado final ('Acciones: 1. Implementar un programa de segregación en la fuente mediante contenedores diferenciados por colores...'); no hay prompts, salidas de la IA ni descripción del refinamiento humano. Defensa: no se registraron respuestas para este criterio (verificado solo en la entrega).",
+      "misconception": null
+     },
+     {
+      "criterionId": "c4",
+      "submissionScore": 0.5,
+      "defenseScore": 0,
+      "evidenceQuote": "Entrega: propuesta ordenada con acciones, actores y medición: 'Indicadores de evaluación: porcentaje de reducción de residuos generados, nivel de participación de la comunidad educativa y cantidad de material reciclado, medidos de forma mensual'; 'Participantes: directivos, docentes, estudiantes, padres de familia y personal de limpieza'. Faltan responsables asignados por acción, línea base y metas numéricas. Defensa: no se registraron respuestas para este criterio (verificado solo en la entrega).",
+      "misconception": null
+     }
+    ]
+   }
+  },
+  {
+   "alias": "Leo",
+   "work": "El problema es que hay mucha basura en el colegio, sobre todo en el patio.\n\nAcciones:\n1. Poner más tachos.\n2. Hacer afiches para que no boten basura.\n3. Castigar a los que botan basura al piso.\n\nParticipan todos los alumnos y profesores.\nPara saber si funciona vamos a ver si el patio está más limpio.",
+   "questions": [
+    {
+     "id": "q1",
+     "criterionId": "c2",
+     "question": "Tu entrega lista tres acciones (poner más tachos, hacer afiches y castigar), pero en ninguna parte dice cuál de los tres escenarios generados por la IA usaste como base de tu estrategia final. Indica cuál escenario elegiste y explica por qué lo preferiste sobre los otros dos, mencionando al menos una condición concreta de nuestro colegio que influyó en esa decisión."
+    },
+    {
+     "id": "q2",
+     "criterionId": "c1",
+     "question": "La consigna exigía una sección de 'Descarte y Justificación' para las 6 alternativas de la IA, y tu documento no la incluye. Toma una de las alternativas que descartaste y explica, en base a qué evidencia o situación real del colegio (espacio, presupuesto, horarios, comportamiento de los estudiantes) determinaste que no era viable aplicarla aquí."
+    },
+    {
+     "id": "q3",
+     "criterionId": "c2",
+     "question": "En la acción 3 escribes 'Castigar a los que botan basura al piso'. ¿Esta acción salió así de la IA o la modificaste de forma sustancial antes de incluirla? Explica qué verificaste sobre quién aplicaría ese castigo y si el reglamento interno del colegio realmente lo permite, y qué cambio harías si no lo permite."
+    },
+    {
+     "id": "q4",
+     "criterionId": "c2",
+     "question": "Tu criterio de éxito es 'vamos a ver si el patio está más limpio'. ¿Por qué decidiste medir así en lugar de usar un indicador concreto (por ejemplo, bolsas de residuos recogidas por semana o inspecciones con lista de chequeo)? Indica también quién registraría esa medición y con qué frecuencia."
+    },
+    {
+     "id": "q5",
+     "criterionId": "c2",
+     "question": "Escribes que 'participan todos los alumnos y profesores', sin asignar responsables específicos por acción. ¿Qué te llevó a tomar esa decisión en lugar de nombrar encargados por tarea, y qué ajuste propondrías si tras dos semanas la mayoría no participa?"
+    }
+   ],
+   "answers": [
+    {
+     "questionId": "q1",
+     "answer": "No usé la IA para esto, lo pensé yo. Lo de los tachos es porque en el patio hay pocos."
+    },
+    {
+     "questionId": "q2",
+     "answer": "No hice esa parte porque no usé la IA. Una idea que tuve y no puse fue hacer reciclaje, pero no sé a quién se lo venderíamos."
+    },
+    {
+     "questionId": "q3",
+     "answer": "Lo del castigo lo pensé yo. No sé si el reglamento lo permite; si no, haría que limpien su salón en vez de castigo."
+    },
+    {
+     "questionId": "q4",
+     "answer": "Porque es lo que se ve. Podría contarse cuántas bolsas se llenan, eso lo sabría el personal de limpieza, una vez por semana."
+    },
+    {
+     "questionId": "q5",
+     "answer": "No lo pensé mucho. Si no participan, pondría un encargado por salón."
+    }
+   ],
+   "evaluation": {
+    "summary": "Se valora tu honestidad: en la defensa reconociste que no usaste IA y que algunas decisiones 'no las pensaste mucho'. Y también hubo momentos con criterio real: propusiste contar bolsas de residuos una vez por semana con el personal de limpieza, sugeriste un encargado por salón si la participación baja, y buscaste una alternativa al castigo. El problema central es de proceso, no de ideas: la misión pedía usar una IA como copiloto, elegir uno de sus escenarios, modificar sus acciones con tu juicio y redactar la sección de 'Descarte y Justificación'; como eso no ocurrió, no hubo alternativas de IA que analizar ni decisiones que justificar, y tu borrador quedó demasiado breve. Para mejorar: (1) haz las consultas reales a la IA y guarda los prompts y sus respuestas; (2) elige un escenario y reescribe las tres acciones con cambios tuyos concretos; (3) redacta el descarte apelando a condiciones reales del colegio (presupuesto, espacio, reglamento interno: verifica si el castigo es viable); (4) nombra un responsable por acción y usa como métrica las bolsas por semana que tú mismo propusiste. Tu idea de medición y tu ajuste de encargados pueden ser la base de una propuesta sólida si las documentas bien.",
+    "perCriterion": [
+     {
+      "criterionId": "c1",
+      "submissionScore": 0,
+      "defenseScore": 0.3,
+      "evidenceQuote": "«No hice esa parte porque no usé la IA. Una idea que tuve y no puse fue hacer reciclaje, pero no sé a quién se lo venderíamos.»",
+      "misconception": "El estudiante asume que podía cumplir la consigna sin usar IA, cuando el uso de una IA generativa y la sección de descarte eran requisitos del proceso."
+     },
+     {
+      "criterionId": "c2",
+      "submissionScore": 0,
+      "defenseScore": 0.3,
+      "evidenceQuote": "«Porque es lo que se ve. Podría contarse cuántas bolsas se llenan, eso lo sabría el personal de limpieza, una vez por semana.» / «No lo pensé mucho. Si no participan, pondría un encargado por salón.»",
+      "misconception": null
+     },
+     {
+      "criterionId": "c3",
+      "submissionScore": 0,
+      "defenseScore": 0,
+      "evidenceQuote": "«No usé la IA para esto, lo pensé yo.» / «No hice esa parte porque no usé la IA.» / «Lo del castigo lo pensé yo.»",
+      "misconception": "El estudiante cree que la IA era opcional en la tarea, cuando la consigna la exigía como copiloto y pedía documentar prompts, salidas y el refinamiento humano."
+     },
+     {
+      "criterionId": "c4",
+      "submissionScore": 0.3,
+      "defenseScore": 0.3,
+      "evidenceQuote": "«Participan todos los alumnos y profesores. Para saber si funciona vamos a ver si el patio está más limpio.» / «Podría contarse cuántas bolsas se llenan, eso lo sabría el personal de limpieza, una vez por semana.»",
+      "misconception": null
+     }
+    ]
+   }
+  }
+ ]
+}

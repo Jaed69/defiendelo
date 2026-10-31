@@ -1,0 +1,351 @@
+{
+ "exampleId": "matematica-funcion-lineal",
+ "redesign": {
+  "statement": "Una mototaxi en Juliaca cobra S/ 3 de banderazo más S/ 1,50 por kilómetro. Otra empresa cobra S/ 2,50 por kilómetro sin banderazo. Con apoyo de IA si lo deseas, construye y compara las funciones de costo, decide a partir de qué distancia conviene cada servicio y verifica la respuesta de la IA con tus propios cálculos. Registra las decisiones que tomes y las alternativas que descartes con sus razones. Luego sustentarás tu trabajo en una conversación breve donde deberás explicar y defender tus conclusiones ante preguntas nuevas.",
+  "aiPolicy": "Este trabajo permite usar IA para explorar, calcular y graficar; la calificación se gana con las decisiones propias, la verificación del resultado y la sustentación oral.",
+  "criteria": [
+   {
+    "id": "red-1",
+    "name": "Sustentación del modelo propio",
+    "description": "En una conversación breve sobre su propio trabajo, la o el estudiante explica con sus palabras cómo planteó las funciones de costo de cada servicio, por qué eligió esa variable y ese dominio, y responde preguntas de comprobación (por ejemplo, qué cambia si el banderazo sube a S/ 3,50 o si la primera empresa baja a S/ 1,20 por km). Se evalúa la comprensión y la capacidad de defender decisiones, no la corrección del documento.",
+    "weight": 30,
+    "evidence": "defensa"
+   },
+   {
+    "id": "red-2",
+    "name": "Interpretación del resultado y límites del modelo",
+    "description": "En la sustentación, la o el estudiante interpreta el punto de equilibrio, señala a partir de qué distancia conviene cada servicio y explica los límites del modelo lineal frente a la realidad local de Juliaca (tarifas fijas reales, negociación del pasaje, tráfico, esperas), terminando con una recomendación útil para un usuario. Se pregunta por qué confía o no en el resultado obtenido.",
+    "weight": 30,
+    "evidence": "defensa"
+   },
+   {
+    "id": "red-3",
+    "name": "Verificación de la salida de la IA",
+    "description": "La entrega documenta cómo comprobó la respuesta generada con apoyo de IA: sustitución de valores propios (por ejemplo, 2 km y 10 km), verificación del punto de corte en la gráfica y corrección de cualquier error detectado, indicando qué se le pidió a la IA y qué se ajustó a partir de su salida.",
+    "weight": 20,
+    "evidence": "entrega"
+   },
+   {
+    "id": "red-4",
+    "name": "Registro de decisiones y alternativas descartadas",
+    "description": "La entrega incluye una sección breve donde se explican las decisiones tomadas (por ejemplo, usar un modelo lineal o comparar también tarifas fijas reales) y al menos una alternativa descartada con su razón (por ejemplo, modelar el costo por tiempo de viaje o por tramos), mostrando el criterio propio detrás del trabajo.",
+    "weight": 20,
+    "evidence": "entrega"
+   }
+  ],
+  "originalCriteria": [
+   {
+    "id": "orig-1",
+    "name": "Planteo de las funciones de costo",
+    "description": "Escribe correctamente la función de costo de cada servicio: C₁(x) = 3 + 1,50x y C₂(x) = 2,50x, identificando la pendiente y el costo fijo en cada caso.",
+    "weight": 35,
+    "evidence": "entrega"
+   },
+   {
+    "id": "orig-2",
+    "name": "Cálculo del punto de equilibrio",
+    "description": "Resuelve la igualdad de ambas funciones y obtiene la distancia (6 km) en la que los costos de los dos servicios se igualan, mostrando el procedimiento.",
+    "weight": 25,
+    "evidence": "entrega"
+   },
+   {
+    "id": "orig-3",
+    "name": "Gráfica de las funciones",
+    "description": "Representa ambas rectas en un plano cartesiano con ejes rotulados, escala adecuada y el punto de intersección debidamente señalado.",
+    "weight": 25,
+    "evidence": "entrega"
+   },
+   {
+    "id": "orig-4",
+    "name": "Conclusión sobre cuál conviene",
+    "description": "Indica claramente a partir de qué distancia conviene cada servicio y redacta una conclusión ordenada sobre la comparación.",
+    "weight": 15,
+    "evidence": "entrega"
+   }
+  ],
+  "rationale": "El cálculo de las funciones y la gráfica son ejecuciones que una IA produce sola, por eso pesan poco. El nuevo peso está en las decisiones del estudiante (qué modelo usar y qué descartar), la verificación independiente de la salida de la IA y la defensa oral, donde se comprueba si realmente entiende el punto de equilibrio y sus límites frente a la realidad local."
+ },
+ "stress": {
+  "original": {
+   "aiAnswer": "**Colegio — Tarea de Matemática, 3.º de secundaria**\n**Nombre:** ______________________ **Grado:** 3.º **Fecha:** ____________\n\n**Problema:** Una mototaxi en Juliaca cobra S/ 3 de banderazo más S/ 1,50 por kilómetro. Otra empresa cobra S/ 2,50 por kilómetro sin banderazo. Plantear la función de costo de cada una, determinar a partir de qué distancia conviene cada servicio y representarlo gráficamente.\n\n**1. Planteo de las funciones de costo**\n\nSea *x* la distancia recorrida en kilómetros y *C* el costo en soles.\n\n- Servicio A (mototaxi con banderazo):\n**C₁(x) = 3 + 1,50x**\n\n- Servicio B (empresa sin banderazo):\n**C₂(x) = 2,50x**\n\n**Justificación:** en el servicio A el costo se compone de un monto fijo (el banderazo de S/ 3, que se paga aunque el recorrido sea corto) más un monto variable de S/ 1,50 por cada kilómetro. En el servicio B no hay costo fijo, solo S/ 2,50 por kilómetro, por lo que su función es proporcional.\n\n**2. Determinación del punto de equilibrio**\n\nEl punto donde ambos servicios cuestan lo mismo se obtiene igualando las funciones:\n\nC₁(x) = C₂(x)\n3 + 1,50x = 2,50x\n3 = 2,50x − 1,50x\n3 = 1,00x\n**x = 6**\n\nPor lo tanto, a los **6 kilómetros** ambos servicios cuestan lo mismo:\n\nC₁(6) = 3 + 1,50(6) = 3 + 9 = **S/ 12**\nC₂(6) = 2,50(6) = **S/ 12**\n\n**3. Interpretación del resultado**\n\n- Si la distancia es **menor a 6 km** (0 ≤ x < 6): conviene el **servicio A**, porque el costo fijo se compensa con la tarifa más baja por kilómetro. Por ejemplo, a 4 km: C₁(4) = S/ 9 y C₂(4) = S/ 10.\n- Si la distancia es **mayor a 6 km** (x > 6): conviene el **servicio B**, porque al no pagar banderazo su tarifa por kilómetro domina. Por ejemplo, a 10 km: C₁(10) = S/ 18 y C₂(10) = S/ 25... se verifica que a 8 km: C₁(8) = S/ 15 y C₂(8) = S/ 20; efectivamente el servicio A se encarece más rápido.\n\n**4. Representación gráfica**\n\n```\n C (soles)\n 20 |                              C₁\n 18 |                         •\n 15 |                    •\n 12 |               ★ (6, 12) — punto de equilibrio\n 10 |          •\n  9 |       •\n  6 |    •          /\n  3 | •  /     C₂ (recta desde el origen)\n  0 |________________________________ x (km)\n     0   2   4   6   8   10  12\n```\n\nEn la gráfica, C₂(x) = 2,50x es una recta que parte del origen con mayor pendiente, y C₁(x) = 3 + 1,50x parte del punto (0, 3) con menor pendiente. Ambas se cortan en el punto **(6, 12)**: a la izquierda de ese punto la recta C₁ está por debajo (conviene la mototaxi) y a la derecha la recta C₂ está por debajo (conviene la empresa).\n\n**Conclusión:** para recorridos menores de 6 km conviene la mototaxi con banderazo; para recorridos mayores de 6 km conviene la empresa sin banderazo; a exactamente 6 km ambos cuestan S/ 12.",
+   "scores": [
+    {
+     "criterionId": "orig-1",
+     "score": 1,
+     "reason": "Plantea correctamente C₁(x) = 3 + 1,50x y C₂(x) = 2,50x, identificando el costo fijo (banderazo) y las pendientes de cada recta."
+    },
+    {
+     "criterionId": "orig-2",
+     "score": 0.5,
+     "reason": "Declara x = 6 km, pero el procedimiento mostrado (3 = 1,00x) da x = 3 y la verificación C₂(6) = S/ 12 es errónea (2,50 × 6 = 15), por lo que el desarrollo no sustenta el resultado."
+    },
+    {
+     "criterionId": "orig-3",
+     "score": 0.5,
+     "reason": "La gráfica tiene ejes rotulados, escala y el punto (6, 12) señalado, pero la posición relativa de las rectas es incorrecta: afirma que C₂ queda por debajo para x > 6, lo cual contradice sus pendientes."
+    },
+    {
+     "criterionId": "orig-4",
+     "score": 0.25,
+     "reason": "La conclusión está redactada de forma ordenada, pero invierte los rangos de conveniencia y sus propios ejemplos (a 10 km, C₁ = 18 < C₂ = 25) la contradicen."
+    }
+   ]
+  },
+  "redesigned": {
+   "aiAnswer": "**Trabajo: Comparación de costos de mototaxi en Juliaca**\n**Matemática – 3.º de secundaria**\n\n**1. Funciones de costo**\n\nPedí a la IA que construyera las funciones y esto fue lo que entregó:\n\n- Servicio A (con banderazo): C₁(x) = 3 + 1,50x\n- Servicio B (sin banderazo): C₂(x) = 2,50x\n\ndonde x es la distancia en kilómetros y C el costo en soles.\n\n**2. Punto de equilibrio**\n\nLa IA igualó ambas funciones:\n\n3 + 1,50x = 2,50x\n3 = 2,50x − 1,50x\n3 = 1x\nx = 6\n\nConclusión de la IA: hasta 6 km conviene el servicio B; desde 6 km en adelante conviene el servicio A. En x = 6 ambos cuestan S/ 15,00.\n\n**3. Verificación de la respuesta de la IA**\n\nVerifiqué reemplazando en las funciones:\n\n- x = 4: C₁ = 3 + 1,50(4) = 9 y C₂ = 2,50(4) = 10. Conviene el A. ✔\n- x = 6: C₁ = 3 + 1,50(6) = 12 y C₂ = 2,50(6) = 15.\n\nAquí noté que la IA dijo que en x = 6 ambos cuestan S/ 15, pero C₁ da S/ 12, así que el punto de equilibrio no cuadra y vuelvo a revisar el cálculo:\n\n3 + 1,50x = 2,50x → 3 = x, es decir, x = 3, no x = 6.\n\nCorrección: en x = 3, C₁ = 3 + 4,50 = 7,50 y C₂ = 2,50(3) = 7,50. Ambos cuestan S/ 7,50. La conclusión correcta es: hasta 3 km conviene el servicio B; desde 3 km en adelante conviene el servicio A.\n\n**4. Decisiones registradas y alternativas descartadas**\n\n- Descarté resolverlo solo con tablas de valores, porque la IA ya dio las funciones y era más rápido revisarlas.\n- Descarté graficar en papel, ya que el punto de equilibrio se encuentra igualando las ecuaciones y el gráfico no cambia el resultado.\n- Elegí el método algebraico (igualación) porque es directo y permite verificar con reemplazo.\n- Decidí no usar la primera respuesta de la IA (x = 6) porque mi verificación por reemplazo no la confirmó; el error estaba en el despeje de la ecuación.\n\n**5. Conclusión final**\n\nPara viajes menores a 3 km conviene el servicio B (S/ 2,50 por kilómetro, sin banderazo). Para viajes mayores a 3 km conviene el servicio A. En exactamente 3 km ambos cuestan lo mismo (S/ 7,50), por lo que en ese caso da igual cuál elegir.\n\n**6. Sustentación**\n\nEstoy listo para explicar en la conversación cómo igualé las funciones, por qué descarté x = 6 y cómo comprobar cualquier distancia que me pregunten reemplazando en las dos fórmulas.",
+   "scores": [
+    {
+     "criterionId": "red-1",
+     "score": 0.3,
+     "reason": "La sustentación es solo una promesa de lo que explicará; no justifica la variable ni el dominio y no muestra respuestas a preguntas de comprobación como cambios de tarifa."
+    },
+    {
+     "criterionId": "red-2",
+     "score": 0.5,
+     "reason": "Interpreta bien el punto de equilibrio y la distancia de conveniencia, pero no explica los límites del modelo lineal frente a la realidad de Juliaca ni fundamenta su confianza en el resultado."
+    },
+    {
+     "criterionId": "red-3",
+     "score": 0.7,
+     "reason": "Documenta bien la sustitución de valores propios, la detección del error de la IA y la corrección, pero omite la verificación gráfica del punto de corte y no prueba un valor lejano adicional."
+    },
+    {
+     "criterionId": "red-4",
+     "score": 0.8,
+     "reason": "Registra decisiones y varias alternativas descartadas con razones, aunque estas son superficiales y no considera alternativas de modelado como costo por tiempo o tramos."
+    }
+   ]
+  },
+  "ranAt": "2026-10-31T05:03:33.317Z"
+ },
+ "insights": {
+  "clusters": [
+   {
+    "label": "Limitación de la interpretación a la equivalencia matemática",
+    "criterionId": "red-2",
+    "studentAliases": [
+     "Vale"
+    ],
+    "quotes": [
+     "Le diría que use la Empresa A porque para más de 3 km es más barata."
+    ],
+    "suggestion": "Actividad: Simulación de Ruta Real. Pida a los estudiantes que tomen el resultado del punto de equilibrio y lo apliquen a tres escenarios simulados: 1) hora pico con tráfico, 2) tarifa negociada por el conductor, y 3) una ruta con un desvío de 1 km. Deben calcular el costo final y concluir si el modelo lineal inicial sigue siendo preciso."
+   }
+  ]
+ },
+ "students": [
+  {
+   "alias": "Vale",
+   "work": "Empresa A: C(x) = 3 + 1,5x   (x = kilómetros)\nEmpresa B: C(x) = 2,5x\n\nTabla:\nx (km):   0    1    2    3    4    5\nA (S/):   3   4,5   6   7,5   9  10,5\nB (S/):   0   2,5   5   7,5  10  12,5\n\nIgualo: 3 + 1,5x = 2,5x, entonces 3 = x. A los 3 km cuestan lo mismo, S/ 7,50.\nAntes de 3 km conviene B (no tiene banderazo). Después de 3 km conviene A porque sube más lento.\n\nGráfica: la recta A empieza en 3 en el eje vertical y la B empieza en 0. B es más empinada. Se cruzan en (3; 7,5).\n\nLo comprobé con mi casa: de donde vivo al mercado son como 2 km, y mi mamá paga S/ 5 en la mototaxi sin banderazo, que coincide con la empresa B. Para ir al terminal son 5 km y ahí conviene la A.",
+   "questions": [
+    {
+     "id": "q1",
+     "criterionId": "red-1",
+     "question": "¿Podrías explicar por qué elegiste la variable $x$ únicamente en kilómetros y por qué el dominio de tus funciones debe ser positivo, es decir, $x > 0$?"
+    },
+    {
+     "id": "q2",
+     "criterionId": "red-4",
+     "question": "El planteamiento exige registrar alternativas descartadas; ¿qué otros modelos de cálculo, como el basado en el tiempo de viaje o por tramos, consideraste y por qué descartaste esos enfoques en favor del modelo lineal?"
+    },
+    {
+     "id": "q3",
+     "criterionId": "red-2",
+     "question": "A pesar de que tu análisis es matemáticamente correcto, ¿cómo describirías los límites de este modelo lineal frente a la realidad de Juliaca? Menciona al menos un factor local (tráfico, negociación, etc.) que tu ecuación no puede predecir."
+    }
+   ],
+   "answers": [
+    {
+     "questionId": "q1",
+     "answer": "Porque la tarifa es por kilómetro, entonces la variable natural es la distancia. No puede ser negativa porque no se recorren kilómetros negativos; con x = 0 sería solo el banderazo, pero en la práctica nadie toma una mototaxi para 0 km."
+    },
+    {
+     "questionId": "q2",
+     "answer": "Pensé en cobrar por tiempo, pero en Juliaca las mototaxis cobran por carrera o por distancia, no por minuto. Lo de tramos sí pasa, por ejemplo una tarifa mínima de S/ 3, pero el enunciado da precios por kilómetro, por eso usé rectas."
+    },
+    {
+     "questionId": "q3",
+     "answer": "En la vida real el mototaxista te cobra según la zona y se negocia, y si llueve o es de noche te cobran más. Mi modelo da 7,50 a 3 km, pero mi mamá a veces paga S/ 5 por algo de 2,5 km porque regatea."
+    }
+   ],
+   "evaluation": {
+    "summary": "Estimado/a estudiante, has realizado un trabajo muy completo y riguroso. Tu planteamiento de las funciones de costo es claro y lograste identificar correctamente el punto de equilibrio. Lo que más destaca es tu pensamiento crítico, especialmente al comparar los resultados matemáticos con la realidad local de Juliaca y al justificar por qué elegiste el modelo lineal frente a otras alternativas (tiempo o tramos). Sostienes tus decisiones con argumentos sólidos y demuestras una comprensión profunda de los límites de cualquier modelo matemático aplicado a la vida real. ¡Excelente desempeño!",
+    "perCriterion": [
+     {
+      "criterionId": "red-1",
+      "submissionScore": 0.9,
+      "defenseScore": 1,
+      "evidenceQuote": "Porque la tarifa es por kilómetro, entonces la variable natural es la distancia. No puede ser negativa porque no se recorren kilómetros negativos; con x = 0 sería solo el banderazo, pero en la práctica nadie toma una mototaxi para 0 km.",
+      "misconception": null
+     },
+     {
+      "criterionId": "red-2",
+      "submissionScore": 0.9,
+      "defenseScore": 1,
+      "evidenceQuote": "En la vida real el mototaxista te cobra según la zona y se negocia, y si llueve o es de noche te cobran más. Mi modelo da 7,50 a 3 km, pero mi mamá a veces paga S/ 5 por algo de 2,5 km porque regatea.",
+      "misconception": null
+     },
+     {
+      "criterionId": "red-3",
+      "submissionScore": 1,
+      "defenseScore": 0.3,
+      "evidenceQuote": "No aplica una pregunta directa sobre la verificación de la IA en la defensa.",
+      "misconception": null
+     },
+     {
+      "criterionId": "red-4",
+      "submissionScore": 1,
+      "defenseScore": 1,
+      "evidenceQuote": "Pensé en cobrar por tiempo, pero en Juliaca las mototaxis cobran por carrera o por distancia, no por minuto. Lo de tramos sí pasa, por ejemplo una tarifa mínima de S/ 3, pero el enunciado da precios por kilómetro, por eso usé rectas.",
+      "misconception": null
+     }
+    ]
+   }
+  },
+  {
+   "alias": "Jhon",
+   "work": "Sea x la distancia recorrida en kilómetros.\n\nFunción de costo de la Empresa A: C_A(x) = 1,50x + 3\nFunción de costo de la Empresa B: C_B(x) = 2,50x\n\nPunto de equilibrio: C_A(x) = C_B(x)\n1,50x + 3 = 2,50x\n3 = 1,00x\nx = 3 km\nC_A(3) = C_B(3) = S/ 7,50\n\nAnálisis:\n- Para 0 <= x < 3 km: C_B(x) < C_A(x), por lo tanto conviene la Empresa B.\n- Para x = 3 km: ambos servicios cuestan lo mismo.\n- Para x > 3 km: C_A(x) < C_B(x), por lo tanto conviene la Empresa A.\n\nRepresentación gráfica: ambas funciones son lineales. C_A tiene pendiente 1,5 e intercepto 3; C_B tiene pendiente 2,5 e intercepto 0. Las rectas se intersecan en el punto (3; 7,5). La pendiente representa el costo por kilómetro y el intercepto representa el costo fijo (banderazo).",
+   "questions": [
+    {
+     "id": "q1",
+     "criterionId": "red-1",
+     "question": "¿En el Análisis, al definir el rango de distancias, decidiste establecer la condición $0 \text{ km} \to 3 \text{ km}$ para la Empresa B. ¿Qué criterio utilicaste para justificar el uso de una desigualdad estricta en el límite superior y no una desigualdad inclusiva?"
+    },
+    {
+     "id": "q2",
+     "criterionId": "red-4",
+     "question": "El documento no registra las alternativas descartadas, un punto solicitado. ¿Qué otro tipo de modelo (por ejemplo, costeo por tramos o función exponencial) consideraste para esta comparación y cuál fue la razón específica para descartarlo?"
+    },
+    {
+     "id": "q3",
+     "criterionId": "red-2",
+     "question": "En la interpretación del resultado, sabes que la Empresa A es más conveniente para $x > 3 \text{ km}$. ¿Qué recomendación práctica darías a un usuario que realiza un trayecto de 3,5 km, considerando la tarifa fija de S/ 3 del banderazo?"
+    },
+    {
+     "id": "q4",
+     "criterionId": "red-1",
+     "question": "Al definir $x$ como la distancia en kilómetros, estás fijando el dominio del modelo. Si la jurisdicción de Juliaca impusiera un límite máximo de recorrido de 5 km, ¿cómo deberías modificar o delimitar el dominio de tus funciones y por qué?"
+    }
+   ],
+   "answers": [
+    {
+     "questionId": "q1",
+     "answer": "Usé la desigualdad estricta porque en 3 km son iguales. Es la forma correcta de escribirlo."
+    },
+    {
+     "questionId": "q2",
+     "answer": "No consideré otro modelo porque el problema es lineal."
+    },
+    {
+     "questionId": "q3",
+     "answer": "Le diría que use la Empresa A porque para más de 3 km es más barata."
+    },
+    {
+     "questionId": "q4",
+     "answer": "Pondría que el dominio es de 0 a 5. No estoy seguro de qué más cambiaría."
+    }
+   ],
+   "evaluation": {
+    "summary": "Su trabajo inicial demuestra una clara comprensión de los conceptos básicos de modelado lineal, al identificar correctamente las funciones de costo y el punto de equilibrio. Sin embargo, en la defensa, se observa que la comprensión del modelo es muy superficial; por ejemplo, no pudo sustentar las decisiones sobre los límites del dominio ni explicó críticamente por qué descartó otros enfoques más complejos. Es necesario que profundice en la justificación teórica de sus decisiones matemáticas y en la aplicación de la modelización a escenarios del mundo real, considerando siempre los límites y las complejidades de su entorno local en Juliaca.",
+    "perCriterion": [
+     {
+      "criterionId": "red-1",
+      "submissionScore": 0.8,
+      "defenseScore": 0.3,
+      "evidenceQuote": "Usé la desigualdad estricta porque en 3 km son iguales. Es la forma correcta de escribirlo.",
+      "misconception": "El estudiante no logra articular la justificación matemática rigurosa para la definición de límites y el dominio en el contexto de una función de costo."
+     },
+     {
+      "criterionId": "red-2",
+      "submissionScore": 0.9,
+      "defenseScore": 0.4,
+      "evidenceQuote": "Le diría que use la Empresa A porque para más de 3 km es más barata.",
+      "misconception": "El estudiante limita la interpretación a la equivalencia matemática y no considera la variabilidad de los factores reales (tráfico, tiempos de espera o negociación) al recomendar un servicio."
+     },
+     {
+      "criterionId": "red-3",
+      "submissionScore": 0.5,
+      "defenseScore": 0,
+      "evidenceQuote": "N/A",
+      "misconception": null
+     },
+     {
+      "criterionId": "red-4",
+      "submissionScore": 0.4,
+      "defenseScore": 0.2,
+      "evidenceQuote": "No consideré otro modelo porque el problema es lineal.",
+      "misconception": "El estudiante presenta una limitación de alcance excesiva, rechazando deliberadamente la exploración de modelos que reflejarían mejor las complejidades operativas de un transporte urbano."
+     }
+    ]
+   }
+  },
+  {
+   "alias": "Luz",
+   "work": "A: y = 3 + 1,5x\nB: y = 2,5x\n\nx:  0   1    2    3\nA:  3  4,5   6   7,5\nB:  0  2,5   5   7,5\n\nSe cruzan cuando cuestan igual. Me sale en 2 km porque en 2 km la A cuesta 6 y la B cuesta 5, están cerca.\nConviene la B si el viaje es corto y la A si es largo.\nGráfica: dos rectas que suben, la A empieza más arriba.",
+   "questions": [
+    {
+     "id": "q1",
+     "criterionId": "red-1",
+     "question": "¿Cómo determinaste la ecuación de costo para la Mototaxi A (y = 3 + 1,5x) y qué representa específicamente la variable $x$ y la constante $3$ en ese modelo?"
+    },
+    {
+     "id": "q2",
+     "criterionId": "red-2",
+     "question": "En tu tabla mencionas que en 2 km los costos son 6 (A) y 5 (B), indicando que están 'cerca'. Si despejamos algebraicamente el punto de equilibrio ($3 + 1,5x = 2,5x$), ¿cuál es la distancia exacta a la que los dos servicios tienen el mismo costo?"
+    },
+    {
+     "id": "q3",
+     "criterionId": "red-2",
+     "question": "Basándote en la interpretación de tu resultado, ¿qué factores de la realidad de Juliaca (como el tráfico o los límites del pasaje fijo) harían que tu recomendación de cuándo conviene A o B sea inexacta?"
+    }
+   ],
+   "answers": [
+    {
+     "questionId": "q1",
+     "answer": "La x son los kilómetros y el 3 es lo que te cobran apenas subes, el banderazo. El 1,5 es lo que sube por cada kilómetro."
+    },
+    {
+     "questionId": "q2",
+     "answer": "Ah, despejando: 3 + 1,5x = 2,5x, paso 1,5x al otro lado y queda 3 = 1x, entonces x = 3. Me equivoqué en la tabla, en 3 km los dos cuestan 7,50, no en 2 km."
+    },
+    {
+     "questionId": "q3",
+     "answer": "El tráfico no cambia el precio si es por kilómetro, pero los mototaxistas a veces cobran lo que quieren. Y si es de noche cobran más."
+    }
+   ],
+   "evaluation": {
+    "summary": "Es admirable tu capacidad para analizar y corregir tus propios cálculos; en la defensa demostraste un manejo sólido de los conceptos matemáticos al identificar y subsanar el error en el punto de equilibrio. Demostraste una excelente capacidad crítica al hablar de los factores de la realidad de Juliaca que afectan el modelo lineal. Para la próxima, te animamos a documentar en tu entrega (el informe escrito) cómo decidiste usar el modelo lineal y qué alternativas pudiste haber descartado, lo que fortalecerá tu sustento técnico.",
+    "perCriterion": [
+     {
+      "criterionId": "red-1",
+      "submissionScore": 0.6,
+      "defenseScore": 1,
+      "evidenceQuote": "La x son los kilómetros y el 3 es lo que te cobran apenas subes, el banderazo. El 1,5 es lo que sube por cada kilómetro.",
+      "misconception": null
+     },
+     {
+      "criterionId": "red-2",
+      "submissionScore": 0.6,
+      "defenseScore": 1,
+      "evidenceQuote": "Ah, despejando: 3 + 1,5x = 2,5x, paso 1,5x al otro lado y queda 3 = 1x, entonces x = 3. Me equivoqué en la tabla, en 3 km los dos cuestan 7,50, no en 2 km.",
+      "misconception": null
+     },
+     {
+      "criterionId": "red-3",
+      "submissionScore": 0,
+      "defenseScore": 0,
+      "evidenceQuote": "N/A",
+      "misconception": null
+     },
+     {
+      "criterionId": "red-4",
+      "submissionScore": 0.3,
+      "defenseScore": 0.3,
+      "evidenceQuote": "N/A",
+      "misconception": null
+     }
+    ]
+   }
+  }
+ ]
+}

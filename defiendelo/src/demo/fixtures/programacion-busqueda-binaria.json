@@ -1,0 +1,444 @@
+{
+ "exampleId": "programacion-busqueda-binaria",
+ "redesign": {
+  "statement": "A partir de este momento, se espera que utilicen la Inteligencia Artificial (IA) como una herramienta de apoyo para este trabajo. Es fundamental que la calificación no se base en la capacidad de generación de código de la IA, sino en su capacidad de análisis crítico, juicio y toma de decisiones. Su objetivo es diseñar la solución más robusta y eficiente para un problema de búsqueda en listas ordenadas, justificando cada paso de su proceso de decisión.",
+  "aiPolicy": "Usted está autorizado a utilizar herramientas de IA (como ChatGPT, Gemini, Copilot, etc.) para generar propuestas de código (por ejemplo, soluciones lineales o binarias). Deberá citar la herramienta y la versión utilizada. Sin embargo, es obligatorio que identifique, discuta y justifique por escrito (y durante la defensa) por qué selecciona una solución sobre otras y cómo verifica su funcionamiento. El producto final debe reflejar su juicio crítico.",
+  "criteria": [
+   {
+    "id": "c1",
+    "name": "Selección del Algoritmo Óptimo",
+    "description": "Justifique por qué eligió un algoritmo de búsqueda (por ejemplo, lineal, binario o alguna optimización) sobre los demás. Debe explicar la lógica subyacente y demostrar que esta es la elección más eficiente para el problema planteado.",
+    "weight": 40,
+    "evidence": "defensa"
+   },
+   {
+    "id": "c2",
+    "name": "Análisis y Descarte de Alternativas",
+    "description": "Identifique al menos una alternativa de solución generada por la IA y explique de manera fundamentada por qué la descartó o por qué no la considera adecuada para el caso presentado.",
+    "weight": 25,
+    "evidence": "defensa"
+   },
+   {
+    "id": "c3",
+    "name": "Verificación y Calidad del Código",
+    "description": "Presentación del código final. Debe demostrar que el código generado o seleccionado funciona correctamente y está libre de errores sintácticos o lógicos.",
+    "weight": 15,
+    "evidence": "entrega"
+   },
+   {
+    "id": "c4",
+    "name": "Argumentos de Robustez y Escalabilidad",
+    "description": "Analice los límites de su solución. ¿Qué sucede si la lista es vacía o si no está ordenada? Explique las implicancias de su elección respecto a la complejidad temporal (Big O) en escenarios de grandes volúmenes de datos.",
+    "weight": 10,
+    "evidence": "defensa"
+   },
+   {
+    "id": "c5",
+    "name": "Documentación de Decisión",
+    "description": "Redacción clara de un informe conciso donde se describa el flujo de su razonamiento al seleccionar el algoritmo y realizar pruebas de verificación.",
+    "weight": 10,
+    "evidence": "entrega"
+   }
+  ],
+  "originalCriteria": [
+   {
+    "id": "c1_orig",
+    "name": "Corrección Funcional",
+    "description": "La función debe encontrar el índice correcto del valor o retornar -1 en caso de no existir, cumpliendo con los casos de prueba.",
+    "weight": 35,
+    "evidence": "entrega"
+   },
+   {
+    "id": "c2_orig",
+    "name": "Implementación en Python",
+    "description": "Uso correcto de la sintaxis Python para la definición de funciones y manejo de listas.",
+    "weight": 25,
+    "evidence": "entrega"
+   },
+   {
+    "id": "c3_orig",
+    "name": "Calidad de Pruebas",
+    "description": "Los tres casos de prueba deben ser claros y demostrar los límites de la función (ej. valor inicial, valor final, valor inexistente).",
+    "weight": 20,
+    "evidence": "entrega"
+   },
+   {
+    "id": "c4_orig",
+    "name": "Comentarios y Legibilidad",
+    "description": "El código debe estar bien comentado, explicando las partes complejas de la lógica.",
+    "weight": 20,
+    "evidence": "entrega"
+   }
+  ],
+  "rationale": "Se movió el énfasis de la 'ejecución' (saber escribir código) a la 'metacognición' (saber elegir y justificar qué código usar). Se prioriza el juicio crítico y la defensa del proceso sobre la perfección del resultado automático de la IA."
+ },
+ "stress": {
+  "original": {
+   "aiAnswer": "**Tarea de Programación – Búsqueda en una lista ordenada**\n\n**Nombre:** _______________________\n**Grado:** 4.º de secundaria\n**Fecha:** _______________________\n\n**Justificación:**\n\nPara resolver el problema elegí el algoritmo de búsqueda binaria, porque la lista ya está ordenada. Este método divide la lista a la mitad en cada paso, revisa el elemento del medio y descarta la parte donde el valor no puede estar. Gracias a eso es mucho más rápido que revisar uno por uno: en una lista de mil elementos necesita como máximo unos diez pasos.\n\n**Código en Python:**\n\n```python\ndef buscar_posicion(lista, valor):\n    # Recibe una lista ordenada y un valor.\n    # Devuelve la posición del valor, o -1 si no se encuentra.\n\n    inicio = 0                  # Índice del primer elemento\n    fin = len(lista) - 1        # Índice del último elemento\n\n    while inicio <= fin:\n        medio = (inicio + fin) // 2   # Posición del elemento central\n\n        if lista[medio] == valor:\n            return medio          # Se encontró el valor\n        elif lista[medio] < valor:\n            inicio = medio + 1    # El valor está en la mitad derecha\n        else:\n            fin = medio - 1       # El valor está en la mitad izquierda\n\n    return -1                     # El valor no está en la lista\n\n\n# Caso de prueba 1: el valor sí está en la lista\nprint(buscar_posicion([2, 5, 8, 12, 16], 12))   # Resultado esperado: 3\n\n# Caso de prueba 2: el valor no está en la lista\nprint(buscar_posicion([2, 5, 8, 12, 16], 7))    # Resultado esperado: -1\n\n# Caso de prueba 3: el valor está en el extremo izquierdo\nprint(buscar_posicion([2, 5, 8, 12, 16], 2))    # Resultado esperado: 0\n```\n\n**Explicación de los casos de prueba:**\n\n1. En el primer caso, el valor 12 está en la posición 3 de la lista, así que la función devuelve 3.\n2. En el segundo caso, el valor 7 no aparece en la lista. La búsqueda termina sin encontrarlo y la función devuelve -1.\n3. En el tercer caso, el valor 2 está en la primera posición, por lo que la función devuelve 0, lo que demuestra que también funciona con los elementos del inicio.\n\n**Conclusión:**\n\nLa función cumple con lo pedido: recibe una lista ordenada y un valor, devuelve la posición si lo encuentra y -1 si no está. La búsqueda binaria es una buena opción aquí porque aprovecha el orden de la lista para reducir el número de comparaciones.",
+   "scores": [
+    {
+     "criterionId": "c1_orig",
+     "score": 1,
+     "reason": "La búsqueda binaria está correctamente implementada: devuelve el índice exacto o -1, y los tres casos impresos coinciden con los resultados esperados."
+    },
+    {
+     "criterionId": "c2_orig",
+     "score": 1,
+     "reason": "Sintaxis Python correcta: definición con def, uso adecuado de índices, while con división entera y manejo de listas sin errores."
+    },
+    {
+     "criterionId": "c3_orig",
+     "score": 0.7,
+     "reason": "Los tres casos son claros y con resultado esperado, pero cubren solo el valor inicial y el inexistente; falta la prueba del valor final de la lista."
+    },
+    {
+     "criterionId": "c4_orig",
+     "score": 1,
+     "reason": "Cada línea clave está comentada, la función explica su contrato al inicio y la justificación describe con claridad la lógica de la búsqueda binaria."
+    }
+   ]
+  },
+  "redesigned": {
+   "aiAnswer": "**Trabajo: Búsqueda en listas ordenadas**\n**Curso:** Programación — 4.º de secundaria\n\n**1. Análisis del problema**\n\nSe requiere buscar un elemento en una lista ordenada de la forma más robusta y eficiente posible. Antes de programar, comparé dos opciones: la búsqueda lineal y la búsqueda binaria.\n\n**2. Proceso de decisión y justificación**\n\n- **Primera decisión — algoritmo:** La búsqueda lineal recorre elemento por elemento y tiene una complejidad de O(n). La búsqueda binaria, al aprovechar que la lista está ordenada, divide el intervalo de búsqueda a la mitad en cada paso, logrando O(log n). Para una lista de 1 000 000 de elementos, la lineal podría hacer un millón de comparaciones, mientras que la binaria necesita alrededor de 20. Elegí la búsqueda binaria porque la lista ya está ordenada, que es justamente su condición necesaria.\n- **Segunda decisión — manejo de casos límite:** Una solución robusta debe considerar listas vacías, listas de un solo elemento y elementos que no existen. Por eso incluí validaciones iniciales y un bucle con condición `izquierda <= derecha`, que evita errores de índice.\n- **Tercera decisión — verificación del pre-requisito:** Como la búsqueda binaria solo funciona con listas ordenadas, agregué una comprobación con `sorted()` para advertir al usuario si la entrada no cumple la condición. Esto hace el programa más seguro frente a entradas incorrectas.\n\n**3. Código en Python**\n\n```python\ndef busqueda_binaria(lista, objetivo):\n    if not lista:\n        return -1  # Lista vacía: no hay nada que buscar\n    if lista != sorted(lista):\n        print(\"Advertencia: la lista no está ordenada.\")\n        return -1\n\n    izquierda, derecha = 0, len(lista) - 1\n    while izquierda <= derecha:\n        medio = (izquierda + derecha) // 2\n        if lista[medio] == objetivo:\n            return medio\n        elif lista[medio] < objetivo:\n            izquierda = medio + 1\n        else:\n            derecha = medio - 1\n    return -1  # El elemento no existe\n\n# Pruebas\nprint(busqueda_binaria([2, 5, 8, 12, 16, 23, 38], 16))  # 4\nprint(busqueda_binaria([2, 5, 8, 12], 7))               # -1\nprint(busqueda_binaria([], 3))                          # -1\n```\n\n**4. Evaluación crítica de la solución**\n\n- **Eficiencia:** O(log n) en tiempo, mejor que O(n) de la búsqueda lineal.\n- **Robustez:** maneja listas vacías, elementos inexistentes y entradas desordenadas.\n- **Compromiso asumido:** la verificación con `sorted()` cuesta O(n log n), lo que reduce el beneficio en listas muy grandes. En un sistema real, se asumiría que los datos ya llegan ordenados y se eliminaría esa comprobación. Esto es un intercambio deliberado entre seguridad y velocidad, adecuado para un entorno educativo.\n\n**5. Conclusión**\n\nElegí la búsqueda binaria porque resuelve el problema con la mayor eficiencia posible dada la condición de lista ordenada, y diseñé el programa considerando los casos límite para hacerlo robusto. Cada decisión fue justificada comparando alternativas y evaluando sus ventajas y desventajas.",
+   "scores": [
+    {
+     "criterionId": "c1",
+     "score": 0.9,
+     "reason": "Justifica bien la búsqueda binaria frente a la lineal con lógica clara y comparación de complejidades, aunque la comparación podría profundizar en variantes u optimizaciones adicionales."
+    },
+    {
+     "criterionId": "c2",
+     "score": 0.5,
+     "reason": "Descarta la búsqueda lineal con fundamentos, pero no se identifica explícitamente como una alternativa generada por IA ni se analiza un descarte más allá de la comparación básica."
+    },
+    {
+     "criterionId": "c3",
+     "score": 1,
+     "reason": "El código es sintáctica y lógicamente correcto, incluye casos límite y pruebas con salidas esperadas."
+    },
+    {
+     "criterionId": "c4",
+     "score": 1,
+     "reason": "Analiza lista vacía, lista desordenada y complejidad O(log n) frente a O(n) en grandes volúmenes, incluyendo el compromiso de la verificación con sorted()."
+    },
+    {
+     "criterionId": "c5",
+     "score": 0.9,
+     "reason": "El informe es claro, conciso y describe el flujo de decisiones y pruebas, aunque la documentación de las pruebas de verificación es breve."
+    }
+   ]
+  },
+  "ranAt": "2026-10-31T05:38:38.470Z"
+ },
+ "insights": {
+  "clusters": [
+   {
+    "label": "Adopción acrítica del código y comentarios de la IA",
+    "criterionId": "c1",
+    "studentAliases": [
+     "Bruno"
+    ],
+    "quotes": [
+     "«Lo puse para evitar el overflow. No sé si en Python pasa, así me lo dio y lo dejé.»",
+     "«Elegí esos casos porque son los típicos. El primer elemento creo que también funcionaría.»"
+    ],
+    "suggestion": "Experimento exprés (12 min): los estudiantes ejecutan en Python ambas fórmulas de mid, (low+high)//2 y low+(high-low)//2, con índices gigantes (p. ej., 2**60) y comprueban que ninguna desborda porque los enteros de Python no tienen límite; el docente muestra en 3 minutos un ejemplo en un lenguaje de ancho fijo (como C) donde la primera fórmula sí desborda; para cerrar, cada estudiante reescribe el comentario del código con sus propias palabras y lo explica a su compañero en un minuto."
+   },
+   {
+    "label": "Uso de la IA limitado a corregir errores",
+    "criterionId": "c2",
+    "studentAliases": [
+     "Piero"
+    ],
+    "quotes": [
+     "No le pedí alternativas a la IA, la usé para entender un error. Sé que existe la búsqueda lineal, pero no la elegí porque la tarea pedía binaria."
+    ],
+    "suggestion": "Taller de descarte fundamentado (15 min): en parejas, los estudiantes solicitan a la IA dos soluciones distintas para el mismo problema (p. ej., búsqueda lineal y búsqueda binaria con ordenamiento previo) y completan una tabla comparativa con tres criterios: complejidad temporal, requisito de orden y manejo de casos borde; cada pareja presenta en dos minutos cuál elegiría y por qué descartaría la otra, usando argumentos técnicos y no la consigna."
+   },
+   {
+    "label": "Resultado aparentemente válido con listas desordenadas",
+    "criterionId": "c4",
+    "studentAliases": [
+     "Bruno"
+    ],
+    "quotes": [
+     "«Creo que devuelve 2, porque el 3 está en la posición 2. No lo detecta, se supone que la lista está ordenada.»",
+     "«Fue así como salió el código. Lo de la complejidad... la binaria es O(log n), y ordenar no sé cuánto cuesta.»"
+    ],
+    "suggestion": "Prueba predictiva a mano (13 min): se entrega una lista desordenada que contiene el valor buscado; cada estudiante simula la búsqueda binaria paso a paso (low, mid, high) y anota su predicción antes de ejecutar el código; luego se contrasta con la búsqueda lineal sobre la misma lista y se estima el costo total de «ordenar y buscar» frente a «buscar en una lista ya ordenada»; se cierra redactando la precondición del algoritmo («requiere lista ordenada») para incluirla en la documentación de su entrega."
+   }
+  ]
+ },
+ "students": [
+  {
+   "alias": "Ximena",
+   "work": "# busca valor en una lista ordenada, devuelve la posicion o -1\ndef buscar(lista, valor):\n    izq = 0\n    der = len(lista) - 1\n    while izq <= der:          # <= porque si quedan iguales todavia falta revisar ese elemento\n        medio = (izq + der) // 2\n        if lista[medio] == valor:\n            return medio\n        elif lista[medio] < valor:\n            izq = medio + 1    # +1 porque medio ya lo revise\n        else:\n            der = medio - 1\n    return -1\n\n# pruebas\nprint(buscar([1, 3, 5, 7, 9], 7))   # 3\nprint(buscar([1, 3, 5, 7, 9], 4))   # -1, no esta\nprint(buscar([], 2))                # -1, lista vacia\n\n# Al principio puse izq = medio y con la lista [1, 3] buscando 3 se quedaba en un bucle infinito, por eso le puse + 1.",
+   "questions": [
+    {
+     "id": "q1",
+     "criterionId": "c1",
+     "question": "En tu informe dices que elegiste la búsqueda binaria, pero en el código solo la implementaste. ¿Qué alternativas evaluaste antes de decidirte y qué dato concreto del problema (tamaño de lista, frecuencia de búsquedas, etc.) hizo que la binaria fuera mejor que la lineal para este caso?"
+    },
+    {
+     "id": "q2",
+     "criterionId": "c2",
+     "question": "En la línea final comentas que 'al principio puse izq = medio' y eso causó un bucle infinito. Explica exactamente por qué con la lista [1, 3] buscando el valor 3 se colgaba el programa, y por qué medio + 1 (y no medio) es el ajuste correcto en esa rama."
+    },
+    {
+     "id": "q3",
+     "criterionId": "c4",
+     "question": "Tu código devuelve -1 si la lista está vacía, pero ¿qué pasa si le pasas una lista desordenada como [9, 1, 5, 7, 3]? Indica un valor concreto que buscarías, qué devolvería tu función en ese caso y por qué no puedes garantizar el resultado correcto sin ordenar antes."
+    },
+    {
+     "id": "q4",
+     "criterionId": "c1",
+     "question": "En tu código la línea medio = (izq + der) // 2 calcula el punto medio. ¿Por qué usaste la división entera // y no la división normal /? ¿Qué rompería si usas / directamente en Python?"
+    },
+    {
+     "id": "q5",
+     "criterionId": "c4",
+     "question": "Sobre la condición while izq <= der, tu comentario dice que 'si quedan iguales todavía falta revisar ese elemento'. Explica con un ejemplo concreto (por ejemplo, buscando el 5 en [1, 3, 5]) qué pasaría si cambias esa condición a while izq < der: ¿cuándo exactamente se saltaría el elemento que sí existe?"
+    }
+   ],
+   "answers": [
+    {
+     "questionId": "q1",
+     "answer": "Pensé en la búsqueda lineal, que es recorrer toda la lista. La descarté porque la tarea dice que la lista está ordenada, y con la binaria cada vez descarto la mitad: en una lista de 1000 números miro como 10, no 1000."
+    },
+    {
+     "questionId": "q2",
+     "answer": "Con [1, 3] buscando 3: izq = 0, der = 1, medio = 0, y lista[0] = 1 es menor que 3. Si pongo izq = medio, izq sigue en 0, y en la siguiente vuelta medio vuelve a ser 0, así para siempre. Con medio + 1 paso a izq = 1, que es correcto porque el medio ya lo revisé y no era."
+    },
+    {
+     "questionId": "q3",
+     "answer": "Buscaría el 9. medio = 2, el 5 es menor que 9 y me voy a la derecha; después reviso el 7 y el 3, que son menores, y termina en -1 aunque el 9 está en la posición 0. No se puede garantizar porque la lógica supone que todo lo de la izquierda es menor; tendría que ordenarla primero."
+    },
+    {
+     "questionId": "q4",
+     "answer": "Porque el índice tiene que ser un número entero. Con / en Python sale un decimal, por ejemplo 2.0, y lista[2.0] da error porque los índices de una lista no pueden ser float."
+    },
+    {
+     "questionId": "q5",
+     "answer": "Con [1, 3, 5] buscando 5: izq = 0, der = 2, medio = 1, el 3 es menor y izq = 2. Ahora izq y der son 2; con izq < der la condición es falsa, sale del while y devuelve -1, aunque el 5 está justo en la posición 2. Se salta el último elemento que queda por revisar."
+    }
+   ],
+   "evaluation": {
+    "summary": "¡Muy bien defendido! Tus respuestas muestran comprensión real del algoritmo, no memorización: reconstruiste el bucle infinito de [1, 3] paso a paso, identificaste en qué iteración exacta se saltaría el 5 si usaras izq < der, y explicaste con precisión por qué una lista desordenada rompe la garantía de la búsqueda binaria. Tu justificación fue concreta y correcta: como la lista está ordenada, en 1000 elementos miras alrededor de 10 valores y no 1000. La brecha está en lo escrito, no en lo que sabes: el código funciona y tiene buenas pruebas (incluida la lista vacía), pero no entregaste el informe con el flujo de tu razonamiento, no documentaste por escrito las alternativas que evaluaste (solo aparece el descarte de izq = medio) y falta el análisis de complejidad Big O en el documento. La buena noticia es que todo lo que explicaste en la defensa es exactamente lo que falta por escribir: trasládalo al informe y tu entrega estará a la altura de tu comprensión. Recuerda que la calificación final la asigna tu docente.",
+    "perCriterion": [
+     {
+      "criterionId": "c1",
+      "submissionScore": 0.6,
+      "defenseScore": 1,
+      "evidenceQuote": "\"Pensé en la búsqueda lineal, que es recorrer toda la lista. La descarté porque la tarea dice que la lista está ordenada, y con la binaria cada vez descarto la mitad: en una lista de 1000 números miro como 10, no 1000.\" | \"Porque el índice tiene que ser un número entero. Con / en Python sale un decimal, por ejemplo 2.0, y lista[2.0] da error porque los índices de una lista no pueden ser float.\"",
+      "misconception": null
+     },
+     {
+      "criterionId": "c2",
+      "submissionScore": 0.3,
+      "defenseScore": 1,
+      "evidenceQuote": "\"Si pongo izq = medio, izq sigue en 0, y en la siguiente vuelta medio vuelve a ser 0, así para siempre. Con medio + 1 paso a izq = 1, que es correcto porque el medio ya lo revisé y no era.\" | \"La descarté porque la tarea dice que la lista está ordenada, y con la binaria cada vez descarto la mitad\"",
+      "misconception": null
+     },
+     {
+      "criterionId": "c3",
+      "submissionScore": 1,
+      "defenseScore": 1,
+      "evidenceQuote": "No hubo pregunta de defensa para este criterio (se verifica en la entrega). El código entregado es correcto y trae pruebas con resultado esperado: \"print(buscar([1, 3, 5, 7, 9], 7))   # 3\", \"print(buscar([1, 3, 5, 7, 9], 4))   # -1, no esta\" y \"print(buscar([], 2))                # -1, lista vacia\".",
+      "misconception": null
+     },
+     {
+      "criterionId": "c4",
+      "submissionScore": 0.6,
+      "defenseScore": 1,
+      "evidenceQuote": "\"Buscaría el 9. medio = 2, el 5 es menor que 9 y me voy a la derecha; después reviso el 7 y el 3, que son menores, y termina en -1 aunque el 9 está en la posición 0. No se puede garantizar porque la lógica supone que todo lo de la izquierda es menor; tendría que ordenarla primero.\" | \"Ahora izq y der son 2; con izq < der la condición es falsa, sale del while y devuelve -1, aunque el 5 está justo en la posición 2.\" | \"en una lista de 1000 números miro como 10, no 1000\"",
+      "misconception": null
+     },
+     {
+      "criterionId": "c5",
+      "submissionScore": 0.3,
+      "defenseScore": 0.3,
+      "evidenceQuote": "No se presenta un informe como tal; la única prosa es la nota del error corregido: \"Al principio puse izq = medio y con la lista [1, 3] buscando 3 se quedaba en un bucle infinito, por eso le puse + 1.\" En defensa tampoco describió un flujo de decisión documentado: la justificación quedó dispersa entre respuestas sueltas.",
+      "misconception": null
+     }
+    ]
+   }
+  },
+  {
+   "alias": "Bruno",
+   "work": "def binary_search(arr, target):\n    \"\"\"Returns the index of target in the sorted list arr, or -1 if not found.\"\"\"\n    low, high = 0, len(arr) - 1\n    while low <= high:\n        mid = low + (high - low) // 2  # avoids overflow\n        if arr[mid] == target:\n            return mid\n        elif arr[mid] < target:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return -1\n\n\n# Test cases\nassert binary_search([1, 2, 3, 4, 5], 3) == 2\nassert binary_search([10, 20, 30, 40], 25) == -1\nassert binary_search([7], 7) == 0\nprint(\"All tests passed!\")",
+   "questions": [
+    {
+     "id": "q1",
+     "criterionId": "c1",
+     "question": "En su código, la línea 'mid = low + (high - low) // 2  # avoids overflow' incluye un comentario sobre overflow. En Python, ¿es realmente posible que 'high + low' desborde como ocurriría en C o Java? Si no lo es, ¿por qué decidió mantener esa forma de calcular el mid en lugar de '(low + high) // 2' y qué rol jugó la IA en esa decisión?"
+    },
+    {
+     "id": "q2",
+     "criterionId": "c2",
+     "question": "Su informe debía documentar al menos una alternativa de solución descartada. ¿Qué alternativas le propuso la IA (por ejemplo, búsqueda lineal, bisect, búsqueda exponencial o interpolación) y cuál fue el argumento concreto por el que descartó la que finalmente no usó? Mencione el criterio que usó para compararlas más allá de 'la binaria es más rápida'."
+    },
+    {
+     "id": "q3",
+     "criterionId": "c4",
+     "question": "Si alguien llama a su función con una lista NO ordenada, por ejemplo binary_search([5, 1, 3], 3), ¿qué devuelve exactamente y por qué? ¿Su solución detecta o documenta esta condición? Explique qué decisión tomó al respecto y por qué."
+    },
+    {
+     "id": "q4",
+     "criterionId": "c4",
+     "question": "En su solución, si la lista está vacía, la condición 'low <= high' falla de inmediato y se devuelve -1. ¿Fue ese comportamiento un diseño consciente suyo o una consecuencia automática del código que generó la IA? Explique además cómo afecta a la complejidad O(log n) el hecho de que la lista deba estar ordenada de antemano: ¿dónde queda el costo del ordenamiento?"
+    },
+    {
+     "id": "q5",
+     "criterionId": "c1",
+     "question": "Sus pruebas cubren: elemento presente en el medio, elemento ausente y lista de un solo elemento. Explique por qué eligió esos tres casos y qué caso límite relevante quedó fuera (por ejemplo, buscar el primer o el último elemento de la lista) y cómo se comportaría su función en ese caso no probado."
+    }
+   ],
+   "answers": [
+    {
+     "questionId": "q1",
+     "answer": "Lo puse para evitar el overflow. No sé si en Python pasa, así me lo dio y lo dejé."
+    },
+    {
+     "questionId": "q2",
+     "answer": "La binaria es más rápida que la lineal, por eso la elegí. No recuerdo otras alternativas."
+    },
+    {
+     "questionId": "q3",
+     "answer": "Creo que devuelve 2, porque el 3 está en la posición 2. No lo detecta, se supone que la lista está ordenada."
+    },
+    {
+     "questionId": "q4",
+     "answer": "Fue así como salió el código. Lo de la complejidad... la binaria es O(log n), y ordenar no sé cuánto cuesta."
+    },
+    {
+     "questionId": "q5",
+     "answer": "Elegí esos casos porque son los típicos. El primer elemento creo que también funcionaría."
+    }
+   ],
+   "evaluation": {
+    "summary": "Tu entrega funciona: la búsqueda binaria está bien implementada, las tres pruebas pasan y el código es claro y ordenado. El problema apareció en la defensa: casi ninguna decisión pudo explicarla como propia. Dijiste del cálculo del punto medio «así me lo dio y lo dejé», no recordaste ninguna alternativa descartada y, ante preguntas sobre el comportamiento de tu propia función, respondiste con «creo que» y «no sé». Eso es justo lo que la pauta buscaba evitar: que la IA decida y tú solo entregues. Camino concreto para remediarlo: (1) ejecuta tu función a mano con [5, 1, 3] y descubre por qué devuelve 2 en ese caso y por qué ese resultado no es confiable sin orden previo; (2) verifica que en Python los enteros no desbordan y decide tú si conservas o simplificas esa línea, dejándolo anotado; (3) compara al menos dos alternativas con criterios explícitos (O(n) frente a O(log n), el requisito de que la lista esté ordenada, opciones como el módulo bisect) y explica por qué descartaste cada una; (4) agrega pruebas de borde: primer elemento, último elemento y lista vacía; (5) precisa el costo total de tu solución: O(log n) para buscar, más O(n log n) si la lista debe ordenarse antes; y (6) redacta el informe de decisiones que pedía la pauta, porque en la entrega solo apareció el código. Cuando puedas explicar cada línea sin dudar, ese código será realmente tuyo y tu calificación lo reflejará.",
+    "perCriterion": [
+     {
+      "criterionId": "c1",
+      "submissionScore": 0.8,
+      "defenseScore": 0.3,
+      "evidenceQuote": "«Lo puse para evitar el overflow. No sé si en Python pasa, así me lo dio y lo dejé.» / «Elegí esos casos porque son los típicos. El primer elemento creo que también funcionaría.»",
+      "misconception": "Cree que el cálculo mid = low + (high - low) // 2 se mantiene para evitar un desbordamiento, sin saber que en Python los enteros no desbordan; adoptó el comentario generado por la IA sin comprenderlo."
+     },
+     {
+      "criterionId": "c2",
+      "submissionScore": 0,
+      "defenseScore": 0.3,
+      "evidenceQuote": "«La binaria es más rápida que la lineal, por eso la elegí. No recuerdo otras alternativas.»",
+      "misconception": null
+     },
+     {
+      "criterionId": "c3",
+      "submissionScore": 0.9,
+      "defenseScore": 0.3,
+      "evidenceQuote": "Único referente en la defensa (pregunta sobre las pruebas): «Elegí esos casos porque son los típicos. El primer elemento creo que también funcionaría.»",
+      "misconception": null
+     },
+     {
+      "criterionId": "c4",
+      "submissionScore": 0.4,
+      "defenseScore": 0.3,
+      "evidenceQuote": "«Creo que devuelve 2, porque el 3 está en la posición 2. No lo detecta, se supone que la lista está ordenada.» / «Fue así como salió el código. Lo de la complejidad... la binaria es O(log n), y ordenar no sé cuánto cuesta.»",
+      "misconception": "Asume que sobre una lista desordenada la función devuelve la posición real del elemento («porque el 3 está en la posición 2»), cuando ese acierto es una coincidencia del recorrido y, con datos desordenados, el algoritmo puede devolver -1 aunque el elemento exista."
+     },
+     {
+      "criterionId": "c5",
+      "submissionScore": 0,
+      "defenseScore": 0,
+      "evidenceQuote": "Ninguna respuesta de la defensa aborda el informe; sus respuestas sugieren que no hubo registro del proceso de decisión: «así me lo dio y lo dejé.» / «No recuerdo otras alternativas.»",
+      "misconception": null
+     }
+    ]
+   }
+  },
+  {
+   "alias": "Piero",
+   "work": "def buscar(lista, x):\n    inicio = 0\n    fin = len(lista)\n    while inicio < fin:\n        medio = (inicio + fin) // 2\n        if lista[medio] == x:\n            return medio\n        if lista[medio] < x:\n            inicio = medio + 1\n        else:\n            fin = medio\n    return -1\n\n# pruebas\nprint(buscar([2, 4, 6, 8], 6))\nprint(buscar([2, 4, 6, 8], 5))\nprint(buscar([2, 4, 6, 8], 2))\n# funciona pero no se bien por que fin = len(lista) y no len(lista) - 1, lo vi en un video",
+   "questions": [
+    {
+     "id": "q1",
+     "criterionId": "c1",
+     "question": "En tu código usaste búsqueda binaria, pero tus pruebas usan una lista de solo 4 elementos ([2, 4, 6, 8]), donde una búsqueda lineal también resolvería el problema de inmediato. ¿Por qué elegiste binaria sobre lineal para 'el problema planteado'? Si el problema no especifica volumen de datos, ¿qué supuesto sobre los datos estás haciendo al preferir un algoritmo que exige lista ordenada?"
+    },
+    {
+     "id": "q2",
+     "criterionId": "c4",
+     "question": "En tu comentario escribes: 'no se bien por que fin = len(lista) y no len(lista) - 1'. Ejecuta mentalmente tu función con lista=[2, 4, 6, 8] y x=5: ¿qué valores toman 'inicio', 'fin' y 'medio' en cada vuelta del while? Con eso, explica por qué tu versión con fin = len(lista) es correcta y qué problema concreto aparecería si escribieras fin = len(lista) - 1 sin cambiar nada más del bucle."
+    },
+    {
+     "id": "q3",
+     "criterionId": "c2",
+     "question": "El enunciado pide documentar qué alternativas generó la IA y por qué las descartaste. ¿Qué otras soluciones te propuso la IA para este problema (por ejemplo, búsqueda lineal, uso de bisect, saltos)? Nombra al menos una y justifica concretamente por qué no la elegiste frente a esta búsqueda binaria manual."
+    },
+    {
+     "id": "q4",
+     "criterionId": "c4",
+     "question": "Tus tres pruebas cubren solo listas con elementos y casos de valor presente y ausente. ¿Qué devuelve tu función si le pasas una lista vacía, y por qué funciona así? ¿Y qué garantías pierdes si la lista de entrada no está ordenada? Menciona qué prueba agregarías para demostrarlo."
+    }
+   ],
+   "answers": [
+    {
+     "questionId": "q1",
+     "answer": "La elegí porque la tarea era de búsqueda binaria y es la que vimos en clase. Estoy suponiendo que la lista siempre viene ordenada, y que puede ser grande aunque en mis pruebas sea chiquita."
+    },
+    {
+     "questionId": "q2",
+     "answer": "inicio = 0, fin = 4, medio = 2; lista[2] = 6 no es menor que 5, entonces fin = 2. medio = 1; lista[1] = 4 es menor que 5, inicio = 2. Ahora inicio = 2 y fin = 2, el while no se cumple y devuelve -1. Si pongo fin = len(lista) - 1 con el mismo while, al buscar el 8 nunca reviso la última posición y devuelve -1."
+    },
+    {
+     "questionId": "q3",
+     "answer": "No le pedí alternativas a la IA, la usé para entender un error. Sé que existe la búsqueda lineal, pero no la elegí porque la tarea pedía binaria."
+    },
+    {
+     "questionId": "q4",
+     "answer": "Con una lista vacía, fin = 0 y el while 0 < 0 no se cumple, devuelve -1. Si no está ordenada puede devolver -1 aunque el número esté; agregaría una prueba con [3, 1, 2] buscando el 3."
+    }
+   ],
+   "evaluation": {
+    "summary": "¡Buen trabajo en la defensa! Tu mayor logro fue la traza de tu propio código: explicaste paso a paso por qué 'fin = len(lista)' es correcto con tu condición 'while inicio < fin' y qué fallaría con 'fin = len(lista) - 1' (el 8 nunca se revisaría y devolvería -1). Eso demuestra que ya dominas lo que en tu comentario decías no entender; te recomendamos volcar esa explicación en tu informe. También fueron correctas y concretas tus respuestas sobre la lista vacía y la desordenada, con una buena prueba propuesta ([3, 1, 2] buscando el 3). Tres cosas para reforzar: (1) justifica la elección por eficiencia y no porque 'la tarea lo pedía': la binaria descarta la mitad de la lista en cada paso, O(log n) (unos 20 pasos en un millón de elementos), frente al O(n) de la lineal; (2) usa la IA para generar y comparar alternativas y documenta por qué descartas cada una, que es justo lo que pide el enunciado; (3) redacta el informe breve con tu razonamiento y tus pruebas, pues en la entrega solo apareció el código con un comentario. Tu honestidad al señalar tu duda fue un excelente punto de partida para aprender.",
+    "perCriterion": [
+     {
+      "criterionId": "c1",
+      "submissionScore": 0.3,
+      "defenseScore": 0.3,
+      "evidenceQuote": "Entrega: solo código y pruebas, sin justificación escrita; el comentario 'lo vi en un video' sugiere que la elección no estaba dominada al momento de entregar. Defensa (q1): 'La elegí porque la tarea era de búsqueda binaria y es la que vimos en clase. Estoy suponiendo que la lista siempre viene ordenada, y que puede ser grande aunque en mis pruebas sea chiquita.' La justificación es externa (consigna/clase) y no explica la lógica de eficiencia que hace óptima la binaria.",
+      "misconception": null
+     },
+     {
+      "criterionId": "c2",
+      "submissionScore": 0,
+      "defenseScore": 0.3,
+      "evidenceQuote": "Entrega: no hay registro de alternativas analizadas. Defensa (q3): 'No le pedí alternativas a la IA, la usé para entender un error. Sé que existe la búsqueda lineal, pero no la elegí porque la tarea pedía binaria.' Nombra una alternativa (lineal) pero el descarte se apoya en la consigna, no en fundamentos técnicos.",
+      "misconception": "Interpreta que la IA era solo para corregir errores, y no considera que debía usarla para generar y comparar alternativas de solución como pide el enunciado."
+     },
+     {
+      "criterionId": "c3",
+      "submissionScore": 1,
+      "defenseScore": 0,
+      "evidenceQuote": "Entrega: implementación de búsqueda binaria con 'while inicio < fin' y pruebas de valor presente ([2, 4, 6, 8], 6 y 2) y ausente (5); el código es sintáctica y lógicamente correcto, y la nota honesta 'funciona pero no se bien por que fin = len(lista) y no len(lista) - 1' quedó aclarada en la defensa. No se realizó pregunta de defensa para este criterio (verificado en la entrega).",
+      "misconception": null
+     },
+     {
+      "criterionId": "c4",
+      "submissionScore": 0.3,
+      "defenseScore": 0.6,
+      "evidenceQuote": "Defensa (q2): 'inicio = 0, fin = 4, medio = 2; lista[2] = 6 no es menor que 5, entonces fin = 2.' y 'Si pongo fin = len(lista) - 1 con el mismo while, al buscar el 8 nunca reviso la última posición y devuelve -1.' Defensa (q4): 'Con una lista vacía, fin = 0 y el while 0 < 0 no se cumple, devuelve -1. Si no está ordenada puede devolver -1 aunque el número esté; agregaría una prueba con [3, 1, 2] buscando el 3.' Trazas y casos límite correctos y específicos, pero no se abordó la complejidad temporal (Big O) en grandes volúmenes de datos.",
+      "misconception": null
+     },
+     {
+      "criterionId": "c5",
+      "submissionScore": 0.3,
+      "defenseScore": 0,
+      "evidenceQuote": "Entrega: solo el código, el rótulo '# pruebas' y la nota 'funciona pero no se bien por que fin = len(lista) y no len(lista) - 1, lo vi en un video'; no hay informe que describa el flujo de razonamiento de la selección ni de las pruebas. No se realizó pregunta de defensa para este criterio (verificado en la entrega).",
+      "misconception": null
+     }
+    ]
+   }
+  }
+ ]
+}
