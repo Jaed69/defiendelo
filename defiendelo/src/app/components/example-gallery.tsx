@@ -9,7 +9,7 @@ import { type AssignmentSummary, assignmentSummary } from "@/domain/gap";
 import type { Assignment } from "@/domain/types";
 
 /** Headline numbers of the preloaded example assignments; examples that fail to load simply show no numbers. */
-function useShowcaseSummaries() {
+export function useShowcaseSummaries() {
   const [summaries, setSummaries] = useState<Record<string, AssignmentSummary>>({});
   useEffect(() => {
     let alive = true;
@@ -29,6 +29,11 @@ function useShowcaseSummaries() {
     };
   }, []);
   return summaries;
+}
+
+/** Where "Ver el resultado" lands: the submissions screen, which carries the demo's point. */
+export function resultHref({ id, teacherKey }: { id: string; teacherKey: string }) {
+  return `/docente/${id}/entregas?k=${teacherKey}`;
 }
 
 function mean(values: number[]) {
@@ -61,8 +66,13 @@ function AiBeforeAfter({ summary }: { summary: AssignmentSummary }) {
   );
 }
 
-export function ExampleGallery({ onUse }: { onUse: (example: ExampleTask) => void }) {
-  const summaries = useShowcaseSummaries();
+export function ExampleGallery({
+  summaries,
+  onUse,
+}: {
+  summaries: Record<string, AssignmentSummary>;
+  onUse: (example: ExampleTask) => void;
+}) {
   const measured = Object.values(summaries).filter((s) => s.aiOriginal !== null && s.aiRedesigned !== null);
 
   return (
@@ -93,7 +103,7 @@ export function ExampleGallery({ onUse }: { onUse: (example: ExampleTask) => voi
               {summary && <AiBeforeAfter summary={summary} />}
               <div className="mt-auto flex flex-wrap items-center gap-3">
                 {ready && (
-                  <Link href={`/docente/${ready.id}/entregas?k=${ready.teacherKey}`} className="btn">
+                  <Link href={resultHref(ready)} className="btn">
                     Ver el resultado
                   </Link>
                 )}
