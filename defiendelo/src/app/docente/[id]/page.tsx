@@ -6,7 +6,7 @@ import { api } from "@/app/api-client";
 import { AppBar, Logo } from "@/app/components/brand";
 import { GapBar } from "@/app/components/gap-bar";
 import { Waiting } from "@/app/components/waiting";
-import { aiObtainableScore, averageGap, givenAwayCriteria, triage } from "@/domain/gap";
+import { assignmentSummary, givenAwayCriteria, triage } from "@/domain/gap";
 import type { Assignment, Criterion } from "@/domain/types";
 
 const ATTEND_FIRST = 5;
@@ -92,7 +92,7 @@ export default function TeacherPage({ params }: { params: Promise<{ id: string }
   const studentLink = typeof window === "undefined" ? "" : `${window.location.origin}/alumno/${id}`;
   const ranking = triage(redesign.criteria, submissions);
   const pending = submissions.filter((s) => !s.evaluation).length;
-  const meanGap = averageGap(ranking);
+  const { aiOriginal, aiRedesigned, meanGap } = assignmentSummary(assignment);
   const toAttend = ranking.slice(0, ATTEND_FIRST).filter((r) => r.gap >= ATTENTION_GAP).length;
   const criterionName = (cid: string) => redesign.criteria.find((c) => c.id === cid)?.name ?? cid;
   const given = stress ? givenAwayCriteria(redesign.criteria, stress.redesigned.scores) : [];
@@ -158,13 +158,13 @@ export default function TeacherPage({ params }: { params: Promise<{ id: string }
           <dl className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             <Kpi
               label="IA sola, tarea original"
-              value={stress ? `${aiObtainableScore(redesign.originalCriteria, stress.original.scores)}%` : "—"}
+              value={aiOriginal === null ? "—" : `${aiOriginal}%`}
               note={stress ? "Lo que sacaba sin ningún alumno." : "Corre la prueba para medirlo."}
               tone={stress ? "text-pen" : "text-graphite"}
             />
             <Kpi
               label="IA sola, tarea rediseñada"
-              value={stress ? `${aiObtainableScore(redesign.criteria, stress.redesigned.scores)}%` : "—"}
+              value={aiRedesigned === null ? "—" : `${aiRedesigned}%`}
               note={stress ? "El resto se gana en la defensa." : "Corre la prueba para medirlo."}
               tone={stress ? "text-success" : "text-graphite"}
             />

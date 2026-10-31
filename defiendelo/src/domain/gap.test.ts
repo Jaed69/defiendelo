@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { aiObtainableScore, averageGap, givenAwayCriteria, studentGap, triage } from "./gap";
+import { aiObtainableScore, assignmentSummary, averageGap, givenAwayCriteria, studentGap, triage } from "./gap";
 import type { Criterion, Submission } from "./types";
 
 const criteria: Criterion[] = [
@@ -7,12 +7,12 @@ const criteria: Criterion[] = [
   { id: "c2", name: "Decisions", description: "", weight: 60, evidence: "defensa" },
 ];
 
-function submission(alias: string, perCriterion: [number, number][]): Submission {
+function submission(alias: string, perCriterion: [number, number][], askedCriteria: string[] = []): Submission {
   return {
     id: alias,
     alias,
     work: "",
-    questions: [],
+    questions: askedCriteria.map((criterionId, i) => ({ id: `q${i + 1}`, criterionId, question: "" })),
     answers: [],
     createdAt: "",
     answeredAt: "",
@@ -62,6 +62,18 @@ describe("studentGap", () => {
     expect(studentGap(criteria, submission("a", [[0.2, 1], [0.5, 0.5]]))).toBe(0);
   });
 
+  it("ignores criteria the defense never asked about", () => {
+    expect(studentGap(criteria, submission("a", [[1, 0], [1, 1]], ["c2"]))).toBe(0);
+  });
+
+  it("weighs only the asked criteria", () => {
+    expect(studentGap(criteria, submission("a", [[1, 0], [1, 0.5]], ["c2", "c2"]))).toBe(50);
+  });
+
+  it("uses every criterion when no question names one", () => {
+    expect(studentGap(criteria, submission("a", [[1, 0.5], [1, 0]], ["unknown"]))).toBe(80);
+  });
+
   it("is null when the defense was not evaluated yet", () => {
     expect(studentGap(criteria, { ...submission("a", []), evaluation: null })).toBeNull();
   });
@@ -91,5 +103,28 @@ describe("averageGap", () => {
 
   it("is null when nobody has defended yet", () => {
     expect(averageGap([])).toBeNull();
+  });
+});
+
+describe("assignmentSummary", () => {
+  const redesign = { statement: "", aiPolicy: "", rationale: "", criteria, originalCriteria: [{ ...criteria[0], weight: 100 }] };
+
+  it("reports the AI-alone scores before and after the redesign, defenses and mean gap", () => {
+    const stress = {
+      ranAt: "",
+      original: { aiAnswer: "", scores: [{ criterionId: "c1", score: 1, reason: "" }] },
+      redesigned: { aiAnswer: "", scores: [{ criterionId: "c1", score: 0.5, reason: "" }] },
+    };
+    const submissions = [submission("Ana", [[1, 1], [1, 1]]), submission("Bruno", [[1, 0], [1, 0]])];
+    expect(assignmentSummary({ redesign, stress, submissions })).toEqual({ aiOriginal: 100, aiRedesigned: 20, defenses: 2, meanGap: 50 });
+  });
+
+  it("leaves the AI scores and the gap empty before the stress test and the first defense", () => {
+    expect(assignmentSummary({ redesign, stress: null, submissions: [] })).toEqual({
+      aiOriginal: null,
+      aiRedesigned: null,
+      defenses: 0,
+      meanGap: null,
+    });
   });
 });

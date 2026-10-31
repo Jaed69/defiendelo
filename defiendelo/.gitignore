@@ -43,3 +43,6 @@ next-env.d.ts
 
 .vercel
 .env*
+
+# showcase seeding state (teacher keys of demo assignments)
+scripts/showcase/state.json

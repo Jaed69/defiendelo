@@ -4,9 +4,10 @@ import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { api } from "./api-client";
 import { AppBar, Logo, TeacherNote } from "./components/brand";
+import { ExampleGallery } from "./components/example-gallery";
 import { FileDrop } from "./components/file-drop";
 import { Waiting } from "./components/waiting";
-import { EXAMPLES, EXAMPLE_SUBJECTS, type ExampleTask, exampleSubjectLabel } from "./examples";
+import { EXAMPLES, type ExampleTask, exampleSubjectLabel } from "./examples";
 
 const ORIGINAL_LIMIT = 8000;
 
@@ -80,10 +81,8 @@ export default function Home() {
   const [form, setForm] = useState({ title: "", subject: "", original: "" });
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [filter, setFilter] = useState<string | null>(null);
   const [loaded, setLoaded] = useState("");
   const titleInput = useRef<HTMLInputElement>(null);
-  const shown = filter ? EXAMPLES.filter((e) => e.subject === filter) : EXAMPLES;
 
   function loadExample(example: ExampleTask) {
     setForm({ title: example.title, subject: exampleSubjectLabel(example), original: example.original });
@@ -171,50 +170,7 @@ export default function Home() {
           </ol>
         </section>
 
-        <section id="ejemplos" className="container-page grid gap-8 py-12" aria-labelledby="ejemplos-titulo">
-          <div className="grid gap-3">
-            <h2 id="ejemplos-titulo">Ejemplos por curso</h2>
-            <p className="prose-measure text-graphite">
-              Tareas que hoy se dejan en secundaria. En cada una ves qué parte entrega una IA sola y qué tendría que explicar el alumno
-              en su defensa. Elige una para probar Defiéndelo o úsala como modelo para la tuya.
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-2" role="group" aria-label="Filtrar ejemplos por curso">
-            <button type="button" className="filter" aria-pressed={filter === null} onClick={() => setFilter(null)}>
-              Todos los cursos
-            </button>
-            {EXAMPLE_SUBJECTS.map((subject) => (
-              <button key={subject} type="button" className="filter" aria-pressed={filter === subject} onClick={() => setFilter(subject)}>
-                {subject}
-              </button>
-            ))}
-          </div>
-          <ul className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {shown.map((example) => (
-              <li key={example.id} className="card flex flex-col gap-4 p-6">
-                <div className="grid gap-1">
-                  <span className="label text-brand-text">{exampleSubjectLabel(example)}</span>
-                  <h3>{example.title}</h3>
-                  <span className="text-[0.9375rem] text-graphite">Tema: {example.topic}</span>
-                </div>
-                <p className="text-[0.9375rem]">{example.original}</p>
-                <div className="grid gap-3 text-[0.9375rem]">
-                  <p className="rounded-[var(--radius-md)] border-l-4 border-pen bg-danger-subtle p-4">
-                    <span className="label block text-pen">Hoy la IA lo entrega sola</span>
-                    {example.aiAlone}
-                  </p>
-                  <p className="rounded-[var(--radius-md)] border-l-4 border-brand bg-brand-subtle p-4">
-                    <span className="label block text-brand-text">Con Defiéndelo, el alumno explica</span>
-                    {example.defense}
-                  </p>
-                </div>
-                <button type="button" className="btn-secondary mt-auto self-start" onClick={() => loadExample(example)}>
-                  Usar esta tarea
-                </button>
-              </li>
-            ))}
-          </ul>
-        </section>
+        <ExampleGallery onUse={loadExample} />
 
         <section id="redisena" className="container-page grid gap-8 pb-20 pt-12">
           <div className="flex flex-wrap items-end justify-between gap-4">
