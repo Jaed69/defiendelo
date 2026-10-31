@@ -1,3 +1,10 @@
+/** A published figure that shows how often students hand this kind of task to an AI. */
+export interface Evidence {
+  text: string;
+  source: string;
+  url: string;
+}
+
 /** A ready-made task a teacher can load into the form, with the reason it needs a redesign. */
 export interface ExampleTask {
   id: string;
@@ -11,20 +18,12 @@ export interface ExampleTask {
   aiAlone: string;
   /** What the student would have to explain in the defense after the redesign. */
   defense: string;
+  evidence?: Evidence;
 }
 
+const PISA_2025_PERU = "https://larepublica.pe/sociedad/2026/09/08/peru-retrocede-en-prueba-pisa-2025-y-no-alcanza-niveles-minimos-en-lectura-matematica-y-ciencias-439808";
+
 export const EXAMPLES: ExampleTask[] = [
-  {
-    id: "matematica-funcion-lineal",
-    subject: "Matemática",
-    level: "3.º de secundaria",
-    topic: "Función lineal",
-    title: "El precio de un viaje en mototaxi",
-    original:
-      "Un mototaxi cobra S/ 3 por subir y S/ 1.50 por cada kilómetro recorrido. Escribe la función que relaciona la distancia con el precio, completa una tabla de 0 a 10 km, haz la gráfica y responde: ¿cuánto cuesta un viaje de 7 km? ¿Cuántos kilómetros puedes recorrer con S/ 15?",
-    aiAlone: "La función, la tabla, la gráfica y las dos respuestas salen completas y correctas en segundos.",
-    defense: "Por qué la pendiente es 1.50 y no 3, qué cambia en la gráfica si sube la tarifa de subida y cómo lo comprobó con precios reales de su barrio.",
-  },
   {
     id: "comunicacion-texto-argumentativo",
     subject: "Comunicación",
@@ -32,31 +31,77 @@ export const EXAMPLES: ExampleTask[] = [
     topic: "Texto argumentativo",
     title: "¿Celulares en el colegio?",
     original:
-      "Escribe un texto argumentativo de 400 palabras sobre si se debería prohibir el uso del celular durante las clases. Incluye una tesis clara, dos argumentos con evidencia, un contraargumento y una conclusión.",
+      "Escribe un texto argumentativo de 400 palabras sobre la pregunta: ¿debería prohibirse el uso del celular durante el horario escolar en los colegios del Perú? Plantea una tesis clara, presenta al menos dos argumentos con evidencias y un contraargumento refutado. Cierra con una conclusión que retome tu postura.",
     aiAlone: "Un texto bien estructurado, con tesis, argumentos y conectores correctos, escrito sin ninguna opinión propia del alumno.",
     defense: "Por qué eligió esa tesis, de dónde salió su evidencia y cómo responde en el momento a un contraargumento que no estaba en su texto.",
+    evidence: { text: "36% de los alumnos peruanos de 15 años usa chatbots para redactar trabajos escritos.", source: "PISA 2025", url: PISA_2025_PERU },
   },
   {
-    id: "ciencia-fotosintesis",
-    subject: "Ciencia y Tecnología",
-    level: "2.º de secundaria",
-    topic: "Fotosíntesis",
-    title: "Fotosíntesis en casa",
+    id: "comunicacion-comprension-lectora",
+    subject: "Comunicación",
+    level: "3.º de secundaria",
+    topic: "Comprensión lectora",
+    title: "Los gallinazos sin plumas",
     original:
-      "Explica con tus palabras cómo las plantas transforman la luz en energía química. Incluye un diagrama del cloroplasto, las fases luminosa y oscura, y un experimento casero para comprobar que las plantas liberan oxígeno. Extensión: 2 páginas.",
-    aiAlone: "La explicación de las dos fases, la descripción del diagrama y un experimento casero típico.",
-    defense: "Qué observó en su propio experimento, qué pasaría si tapa la planta dos días y por qué el resultado no salió como esperaba.",
+      "Lee el cuento «Los gallinazos sin plumas» de Julio Ramón Ribeyro y responde: (1) ¿Cuál es el tema central? (2) ¿Qué representa don Santos? (3) Explica el significado del título. Finalmente, redacta un resumen de 150 palabras.",
+    aiAlone: "Las tres respuestas y el resumen, correctos, sin haber leído el cuento: es una obra muy comentada en internet.",
+    defense: "Qué escena le impactó y por qué, cómo cambia su lectura de don Santos si se pone en el lugar de Efraín y qué parte del cuento se parece a algo que vio en su ciudad.",
+    evidence: { text: "40% de los alumnos peruanos de 15 años usa chatbots para resumir textos.", source: "PISA 2025", url: PISA_2025_PERU },
+  },
+  {
+    id: "matematica-funcion-lineal",
+    subject: "Matemática",
+    level: "3.º de secundaria",
+    topic: "Función lineal",
+    title: "¿Qué mototaxi conviene?",
+    original:
+      "Una mototaxi en Juliaca cobra S/ 3 de banderazo más S/ 1,50 por kilómetro. Otra empresa cobra S/ 2,50 por kilómetro sin banderazo. Plantea la función de costo de cada una, determina a partir de qué distancia conviene cada servicio y represéntalo gráficamente.",
+    aiAlone: "Las dos funciones, el punto de corte en 3 km, la tabla y la descripción de la gráfica, completas y correctas en segundos.",
+    defense: "Qué significa el punto donde se cruzan las rectas, por qué una recta empieza más arriba que la otra y qué cambia si la primera empresa sube su banderazo.",
+    evidence: {
+      text: "Más del 40% de los adolescentes de EE. UU. ya usó chatbots para resolver problemas de matemática.",
+      source: "Pew Research Center, 2026",
+      url: "https://www.pewresearch.org/internet/2026/02/24/how-teens-use-and-view-ai/",
+    },
   },
   {
     id: "sociales-guerra-del-pacifico",
     subject: "Ciencias Sociales",
     level: "5.º de secundaria",
     topic: "Historia del Perú",
-    title: "Causas y consecuencias de la Guerra del Pacífico",
+    title: "Monografía: la Guerra del Pacífico",
     original:
-      "Elabora un informe sobre las causas de la Guerra del Pacífico (1879-1884) y sus consecuencias para el Perú. Usa al menos dos fuentes, incluye una línea de tiempo y una conclusión personal.",
-    aiAlone: "Un resumen ordenado de causas y consecuencias, una línea de tiempo y una conclusión genérica.",
-    defense: "Qué diferencia encontró entre sus dos fuentes, en cuál confía más y por qué, y cómo se ve hoy alguna consecuencia de la guerra en su región.",
+      "Elabora una monografía de 4 páginas sobre las causas y consecuencias de la Guerra del Pacífico (1879-1884) para el Perú. Incluye introducción, desarrollo con al menos tres fuentes citadas y conclusiones.",
+    aiAlone: "Una monografía ordenada, con causas, consecuencias, citas con formato correcto y una conclusión genérica.",
+    defense: "Qué diferencia encontró entre sus fuentes, en cuál confía más y por qué, y cómo se ve hoy alguna consecuencia de la guerra en su región.",
+    evidence: { text: "43% de los alumnos peruanos de 15 años usa chatbots para investigar.", source: "PISA 2025", url: PISA_2025_PERU },
+  },
+  {
+    id: "ciencia-informe-indagacion",
+    subject: "Ciencia y Tecnología",
+    level: "2.º de secundaria",
+    topic: "Indagación científica",
+    title: "La pastilla efervescente y la temperatura",
+    original:
+      "Indaga: ¿cómo influye la temperatura del agua en el tiempo de disolución de una pastilla efervescente? Formula tu hipótesis, identifica las variables, registra tus datos en una tabla con tres repeticiones y elabora un gráfico. Redacta el informe con discusión y conclusiones.",
+    aiAlone: "Hipótesis, variables, una tabla con datos inventados pero creíbles, la descripción del gráfico y las conclusiones.",
+    defense: "Cómo midió el tiempo, por qué sus tres repeticiones no dieron igual, qué hizo para que el agua estuviera a la temperatura que dice y qué haría distinto.",
+  },
+  {
+    id: "ingles-festival",
+    subject: "Inglés",
+    level: "2.º de secundaria",
+    topic: "Simple present",
+    title: "A festival from my region",
+    original:
+      "Write an email (120-150 words) to a pen pal from Canada describing a traditional festival from your region, such as Inti Raymi or the Fiesta de la Candelaria. Use the simple present and at least five time expressions.",
+    aiAlone: "Un correo sin errores, con el presente simple, cinco expresiones de tiempo y datos correctos del festival.",
+    defense: "Responder en inglés preguntas sobre el festival que eligió y lo que hace su familia ese día, y explicar por qué usó el presente simple.",
+    evidence: {
+      text: "Traducir es el tercer uso más común de la IA entre los adolescentes que la usan (41%).",
+      source: "Common Sense Media, 2024",
+      url: "https://www.commonsensemedia.org/press-releases/new-report-shows-students-are-embracing-artificial-intelligence-despite-lack-of-parent-awareness-and",
+    },
   },
   {
     id: "dpcc-residuos",
@@ -68,17 +113,6 @@ export const EXAMPLES: ExampleTask[] = [
       "Elabora una propuesta para reducir la basura en tu colegio. Describe el problema, plantea tres acciones concretas, indica quiénes participan y cómo medirán si la propuesta funcionó.",
     aiAlone: "Un plan genérico con tres acciones razonables que serviría para cualquier colegio del mundo.",
     defense: "Qué datos recogió en su propio colegio, por qué priorizó esa acción y qué hará si sus compañeros no participan.",
-  },
-  {
-    id: "ingles-pasado-simple",
-    subject: "Inglés",
-    level: "1.º de secundaria",
-    topic: "Simple past",
-    title: "My last weekend",
-    original:
-      "Write an email of 120 words to a friend describing what you did last weekend. Use at least eight verbs in simple past, including four irregular verbs, and ask your friend two questions.",
-    aiAlone: "Un correo sin errores, con los verbos irregulares exactos y la extensión pedida.",
-    defense: "Responder en inglés preguntas sobre su propio fin de semana y explicar por qué un verbo de su correo es irregular.",
   },
   {
     id: "programacion-busqueda-binaria",
@@ -96,9 +130,9 @@ export const EXAMPLES: ExampleTask[] = [
     subject: "Arte y Cultura",
     level: "4.º de secundaria",
     topic: "Indigenismo peruano",
-    title: "Leer una pintura de José Sabogal",
+    title: "El varayoc de Chinchero",
     original:
-      "Elige una pintura de José Sabogal. Describe sus colores, su composición y a los personajes, explica qué fue el indigenismo y cómo se refleja en la obra. Extensión: una página.",
+      "Analiza la obra «El varayoc de Chinchero» de José Sabogal: describe sus elementos visuales (color, composición, técnica), explica su relación con el movimiento indigenista y expresa tu interpretación personal en una página.",
     aiAlone: "Una descripción formal de la obra y una explicación correcta del indigenismo, sin haberla mirado.",
     defense: "Qué detalle de la pintura le llamó la atención, cómo lo interpreta y qué cambiaría si la obra se pintara hoy en su comunidad.",
   },
@@ -110,3 +144,10 @@ export const EXAMPLE_SUBJECTS = [...new Set(EXAMPLES.map((e) => e.subject))];
 export function exampleSubjectLabel(example: Pick<ExampleTask, "subject" | "level">) {
   return `${example.subject}, ${example.level}`;
 }
+
+/** Headline figure for the examples section. */
+export const HEADLINE_EVIDENCE: Evidence = {
+  text: "54% de los alumnos peruanos de 15 años usa chatbots de IA cada semana para estudiar (promedio OCDE: 46%).",
+  source: "PISA 2025",
+  url: PISA_2025_PERU,
+};

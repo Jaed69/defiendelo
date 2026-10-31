@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { EXAMPLES, EXAMPLE_SUBJECTS, exampleSubjectLabel } from "./examples";
+import { EXAMPLES, EXAMPLE_SUBJECTS, HEADLINE_EVIDENCE, exampleSubjectLabel } from "./examples";
 
 describe("example tasks", () => {
   it("cover at least six different school subjects", () => {
@@ -21,6 +21,13 @@ describe("example tasks", () => {
   it.each(EXAMPLES)("$id explains what the AI does alone and what the student defends", (example) => {
     expect(example.aiAlone.trim()).not.toBe("");
     expect(example.defense.trim()).not.toBe("");
+  });
+
+  it("cites every figure with a named source and a secure link", () => {
+    for (const evidence of [HEADLINE_EVIDENCE, ...EXAMPLES.flatMap((e) => (e.evidence ? [e.evidence] : []))]) {
+      expect(evidence.source.trim()).not.toBe("");
+      expect(evidence.url).toMatch(/^https:\/\//);
+    }
   });
 
   it("labels the subject with its grade", () => {
