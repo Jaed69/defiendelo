@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { use, useCallback, useEffect, useState } from "react";
 import { api } from "@/app/api-client";
 import { AppBar, Logo } from "@/app/components/brand";
+import { AssignmentSheet, PrintSheetButton } from "@/app/components/assignment-sheet";
 import { GapBar } from "@/app/components/gap-bar";
 import { Waiting } from "@/app/components/waiting";
 import { assignmentSummary, givenAwayCriteria, triage } from "@/domain/gap";
@@ -290,12 +291,20 @@ export default function TeacherPage({ params }: { params: Promise<{ id: string }
               )}
             </section>
 
-            <section id="rediseno" className="card grid gap-5 p-6 sm:p-8">
-              <h2>Tarea rediseñada</h2>
-              <p className="prose-measure whitespace-pre-line">{redesign.statement}</p>
-              <p className="prose-measure rounded-[var(--radius-md)] border-l-4 border-brand bg-brand-subtle p-4 font-bold">
-                {redesign.aiPolicy}
-              </p>
+            <section id="rediseno" className="card grid gap-5 p-4 sm:p-8">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <h2>Tarea rediseñada</h2>
+                <PrintSheetButton sheetId="hoja-tarea" />
+              </div>
+              <p className="text-graphite">Así la reciben tus alumnos. Puedes imprimirla o compartir el enlace.</p>
+              <AssignmentSheet
+                id="hoja-tarea"
+                title={assignment.title}
+                subject={assignment.subject}
+                statement={redesign.statement}
+                aiPolicy={redesign.aiPolicy}
+                criteria={redesign.criteria}
+              />
             </section>
           </div>
 
