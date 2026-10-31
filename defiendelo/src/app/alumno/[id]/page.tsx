@@ -152,7 +152,6 @@ export default function StudentPage({ params }: { params: Promise<{ id: string }
   const header = (
     <AppBar>
       <Logo />
-      <span className="chip chip-neutral">Alumno</span>
     </AppBar>
   );
 
@@ -203,10 +202,9 @@ export default function StudentPage({ params }: { params: Promise<{ id: string }
         </nav>
 
         <section className="grid gap-4">
-          <span className="chip chip-brand justify-self-start">{assignment.subject}</span>
-          <h1 className="text-[clamp(1.75rem,6vw,2.5rem)]">{assignment.title}</h1>
           {stage === "submit" ? (
             <>
+              <h1 className="sr-only">{assignment.title}</h1>
               <AssignmentSheet
                 id="hoja-tarea"
                 title={assignment.title}
@@ -221,7 +219,10 @@ export default function StudentPage({ params }: { params: Promise<{ id: string }
             </>
           ) : (
             <details>
-              <summary className="btn-quiet cursor-pointer">Ver el enunciado de la tarea</summary>
+              <summary className="cursor-pointer">
+                <h1 className="inline text-[clamp(1.5rem,5vw,2rem)]">{assignment.title}</h1>
+                <span className="btn-quiet ml-3">Ver la tarea</span>
+              </summary>
               <div className="mt-3">
                 <AssignmentSheet
                   title={assignment.title}
@@ -239,9 +240,7 @@ export default function StudentPage({ params }: { params: Promise<{ id: string }
           <section className="grid gap-6">
             <div className="grid gap-2">
               <h2>Tu entrega</h2>
-              <p className="prose-measure text-graphite">
-                Cuando entregues, te haremos unas preguntas sobre tu trabajo. Tendrás {DEFENSE_SECONDS / 60} minutos para responderlas.
-              </p>
+              <p className="text-graphite">Después te haremos unas preguntas sobre tu trabajo ({DEFENSE_SECONDS / 60} minutos).</p>
             </div>
             <form onSubmit={startDefense} className="grid gap-6">
               <div className="grid gap-2">
@@ -249,7 +248,7 @@ export default function StudentPage({ params }: { params: Promise<{ id: string }
                   Apodo
                 </label>
                 <span id="alias-hint" className="text-[0.9375rem] text-graphite">
-                  Usa un apodo, no tu nombre. No guardamos datos personales.
+                  No uses tu nombre real.
                 </span>
                 <input
                   id="alias"
@@ -266,9 +265,6 @@ export default function StudentPage({ params }: { params: Promise<{ id: string }
                 <label htmlFor="work" className="font-bold">
                   Tu trabajo
                 </label>
-                <span id="work-hint" className="text-[0.9375rem] text-graphite">
-                  Pega tu trabajo o súbelo como archivo.
-                </span>
                 <FileDrop
                   limit={WORK_LIMIT}
                   title="Sube tu archivo"
@@ -281,14 +277,17 @@ export default function StudentPage({ params }: { params: Promise<{ id: string }
                   minLength={20}
                   maxLength={WORK_LIMIT}
                   rows={10}
-                  aria-describedby="work-hint work-count"
+                  aria-label="O pega aquí tu trabajo"
+                  placeholder="O pega aquí tu trabajo"
                   className="font-mono text-[0.9375rem]"
                   value={work}
                   onChange={(e) => setWork(e.target.value)}
                 />
-                <span id="work-count" className="text-right text-[0.9375rem] tabular-nums text-graphite">
-                  {work.length.toLocaleString("es")} / {WORK_LIMIT.toLocaleString("es")} caracteres
-                </span>
+                {work.length > WORK_LIMIT * 0.8 && (
+                  <span className="text-right text-[0.9375rem] tabular-nums text-graphite">
+                    {work.length.toLocaleString("es")} / {WORK_LIMIT.toLocaleString("es")} caracteres
+                  </span>
+                )}
               </div>
               {error && (
                 <p role="alert" className="font-bold text-pen">
@@ -345,12 +344,11 @@ export default function StudentPage({ params }: { params: Promise<{ id: string }
             </div>
 
             <div className="grid gap-3">
-              <span className="chip chip-brand justify-self-start">Sobre tu trabajo</span>
               <h2 ref={questionHeading} tabIndex={-1} className="outline-none">
                 {question.question}
               </h2>
               <p id="answer-hint" className="prose-measure text-graphite">
-                Responde con tus palabras, en 2 a 4 oraciones. Ctrl + Enter pasa a la siguiente.
+                Responde con tus palabras, en 2 a 4 oraciones.
               </p>
             </div>
             <textarea
@@ -375,7 +373,7 @@ export default function StudentPage({ params }: { params: Promise<{ id: string }
             />
             {pasteBlocked && (
               <p id="paste-note" role="status" className="rounded-[var(--radius-md)] bg-highlight-subtle p-3 text-[0.9375rem] font-bold">
-                En la defensa no se puede pegar texto: queremos leer tu explicación, escrita por ti.
+                Aquí no se puede pegar texto: escribe tu explicación.
               </p>
             )}
 
@@ -407,7 +405,6 @@ export default function StudentPage({ params }: { params: Promise<{ id: string }
         {stage === "done" && evaluation && (
           <section className="grid gap-6">
             <div className="grid gap-3">
-              <span className="chip chip-success justify-self-start">Defensa enviada</span>
               <h2>Lo que defendiste</h2>
               <p className="prose-measure">{evaluation.summary}</p>
             </div>

@@ -190,7 +190,7 @@ export function AssignmentSheet({
           <span className="label flex items-center gap-2 text-brand-text">
             <SparklesIcon /> Uso de la IA
           </span>
-          <p className="font-bold leading-relaxed">{aiPolicy}</p>
+          <p className="leading-relaxed">{aiPolicy}</p>
         </div>
 
         <section className="grid gap-3" aria-label="Cómo se califica">
@@ -209,7 +209,7 @@ export function AssignmentSheet({
                       {c.evidence === "defensa" ? "En la defensa" : "En la entrega"}
                     </span>
                   </span>
-                  <span className="text-[0.9375rem] text-graphite">{c.description}</span>
+                  <span className="hidden text-[0.9375rem] text-graphite print:block">{c.description}</span>
                 </span>
               </li>
             ))}
