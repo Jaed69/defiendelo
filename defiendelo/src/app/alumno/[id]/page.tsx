@@ -399,8 +399,7 @@ function Result({ view, criterionName }: { view: StudentView; criterionName: (id
   const result = view.result!;
   const evaluation: Evaluation | null = result.evaluation;
   const scale = view.gradeScale;
-  // ponytail: 55% as the pass color line (11/20 in Peru); make it a session setting if schools differ.
-  const passed = (score: number) => score >= scale * 0.55;
+  const passed = (score: number) => score >= view.passingGrade;
   const gapOf = (p: Evaluation["perCriterion"][number]) => p.submissionScore - p.defenseScore;
   const widestGap = evaluation?.perCriterion.filter((p) => gapOf(p) >= 0.25).sort((a, b) => gapOf(b) - gapOf(a))[0]?.criterionId;
   return (

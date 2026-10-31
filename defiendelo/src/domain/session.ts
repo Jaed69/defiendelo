@@ -5,6 +5,7 @@ export const DEFAULT_SESSION: ClassSession = {
   deadline: null,
   questionsPerStudent: 2,
   gradeScale: 20,
+  passingGrade: 11,
   phase: "entregas",
   queue: [],
   current: null,
@@ -73,6 +74,7 @@ export interface StudentView {
   phase: SessionPhase;
   deadline: string | null;
   gradeScale: number;
+  passingGrade: number;
   status: StudentStatus;
   /** The student's own work and whether they may still replace it (only before submissions close). */
   work: string;
@@ -105,6 +107,7 @@ export function studentView(assignment: Assignment, submission: Submission, now:
     phase: session.phase,
     deadline: session.deadline,
     gradeScale: session.gradeScale,
+    passingGrade: session.passingGrade,
     status,
     work: submission.work,
     canReplace: acceptsSubmissions(session, now),

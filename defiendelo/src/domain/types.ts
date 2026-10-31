@@ -92,6 +92,8 @@ export interface ClassSession {
   deadline: string | null;
   questionsPerStudent: number;
   gradeScale: number;
+  /** Lowest passing grade on the same scale, set by the teacher. */
+  passingGrade: number;
   phase: SessionPhase;
   /** Submission ids in presentation order; proposed by the system, edited by the teacher. */
   queue: string[];

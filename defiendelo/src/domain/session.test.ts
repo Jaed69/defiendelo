@@ -71,6 +71,7 @@ describe("session", () => {
 
     const published = studentView(assignment({ phase: "publicado" }, subs), subs[1], NOW);
     expect(published.result?.grade).toBe(18);
+    expect(studentView(assignment({ phase: "publicado", passingGrade: 13 }, subs), subs[1], NOW).passingGrade).toBe(13);
   });
 
   it("lets the student replace their work only while submissions are open", () => {

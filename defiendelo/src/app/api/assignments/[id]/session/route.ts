@@ -9,6 +9,7 @@ const patch = z
     deadline: z.iso.datetime().nullable(),
     questionsPerStudent: z.number().int().min(1).max(5),
     gradeScale: z.number().int().min(1).max(100),
+    passingGrade: z.number().min(0).max(100),
     phase: z.enum(["entregas", "defensas", "publicado"]),
     queue: z.array(z.string().max(10)).max(200),
     current: z.string().max(10).nullable(),
