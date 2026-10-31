@@ -22,12 +22,18 @@ const criterionSchema = z.object({
   evidence: z.enum(["entrega", "defensa"]),
 });
 
-const redesignSchema = z.object({
-  statement: z.string(),
-  aiPolicy: z.string(),
+// Minimum lengths reject placeholders ("ok") and bare titles, which smaller models sometimes return;
+// a rejected reply is asked again by the provider adapter.
+export const redesignSchema = z.object({
+  statement: z
+    .string()
+    .trim()
+    .min(80)
+    .describe("The complete redesigned assignment, as the student will read it, in the language of the original. Never a title."),
+  aiPolicy: z.string().trim().min(20).describe("What AI use is allowed and what the student must declare."),
   criteria: z.array(criterionSchema),
   originalCriteria: z.array(criterionSchema),
-  rationale: z.string(),
+  rationale: z.string().trim().min(20).describe("One or two sentences for the teacher on why the grade moved."),
 });
 
 const scoresSchema = z.object({
@@ -99,7 +105,8 @@ Execution quality that an AI can produce alone must weigh little.
 Mark a criterion with evidence "defensa" when it can only be verified by asking the student about their own work live;
 mark it "entrega" when it is verified in the written submission. At least half of the weight must be "defensa".
 Also produce originalCriteria: the product-focused rubric a teacher would typically use for the ORIGINAL task today (mostly "entrega").
-Use 3 to 5 criteria in each list. Weights in each list sum to 100.`,
+Use 3 to 5 criteria in each list. Weights in each list sum to 100.
+"statement" is the full text of the redesigned assignment the student will receive, not its title.`,
       `Subject: ${input.subject}\nTitle: ${input.title}\n\nOriginal assignment:\n${input.original}`,
     );
   }
