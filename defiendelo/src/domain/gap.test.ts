@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { aiObtainableScore, givenAwayCriteria, studentGap, triage } from "./gap";
+import { aiObtainableScore, averageGap, givenAwayCriteria, studentGap, triage } from "./gap";
 import type { Criterion, Submission } from "./types";
 
 const criteria: Criterion[] = [
@@ -76,5 +76,20 @@ describe("triage", () => {
     ]);
     expect(result.map((r) => r.alias)).toEqual(["high", "low"]);
     expect(result[0].gap).toBe(100);
+  });
+});
+
+describe("averageGap", () => {
+  it("averages the triage gaps, rounded to a whole percent", () => {
+    const entries = [
+      { submissionId: "a", alias: "Ana", gap: 10 },
+      { submissionId: "b", alias: "Bruno", gap: 64 },
+      { submissionId: "c", alias: "Carla", gap: 25 },
+    ];
+    expect(averageGap(entries)).toBe(33);
+  });
+
+  it("is null when nobody has defended yet", () => {
+    expect(averageGap([])).toBeNull();
   });
 });
