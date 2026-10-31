@@ -89,7 +89,8 @@ export type StudentStatus = "entregado" | "en_cola" | "turno" | "responder" | "p
 
 export function studentStatus(session: ClassSession, submission: Submission, live = true): StudentStatus {
   if (submission.redoRequested && !submission.answeredAt) return "responder";
-  if (!live) return submission.answeredAt ? "publicado" : "responder";
+  // Even without a configured session the AI review waits for the teacher: the teacher decides the grade.
+  if (!live) return submission.answeredAt ? "evaluado" : "responder";
   if (session.phase === "publicado") return "publicado";
   if (session.phase === "entregas") return "entregado";
   if (isGraded(submission) || (session.method === "escrito" && submission.answeredAt)) return "evaluado";
