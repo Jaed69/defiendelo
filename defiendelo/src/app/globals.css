@@ -184,8 +184,14 @@ h3 {
 }
 
 textarea,
-input[type="text"] {
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"],
+select {
   width: 100%;
+  min-height: 3rem;
   background: var(--color-bg-surface);
   border: 1.5px solid var(--color-border-default);
   border-radius: var(--radius-md);
@@ -194,12 +200,36 @@ input[type="text"] {
 }
 
 textarea::placeholder,
-input[type="text"]::placeholder {
+input::placeholder {
   color: var(--color-text-secondary);
+}
+
+input:disabled,
+select:disabled,
+textarea:disabled {
+  background: var(--color-bg-subtle);
+  color: var(--color-text-secondary);
+}
+
+/* Native date pickers follow the light theme and the brand accent. */
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"] {
+  color-scheme: light;
+  accent-color: var(--color-bg-brand);
+}
+
+input[type="number"] {
+  font-variant-numeric: tabular-nums;
 }
 
 textarea:focus,
 input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+input[type="time"]:focus,
+input[type="datetime-local"]:focus,
+select:focus,
 button:focus-visible,
 a:focus-visible,
 summary:focus-visible {
@@ -226,6 +256,38 @@ summary:focus-visible {
 .btn {
   background: var(--color-bg-brand);
   color: white;
+  /* Same height as the bordered secondary button when they sit side by side. */
+  border: 2px solid transparent;
+}
+
+/* Smaller button for actions inside lists and rows. */
+.btn-sm {
+  min-height: 2.75rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.9375rem;
+}
+
+/* Square icon-only button; give it an aria-label. */
+.btn-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--color-border-default);
+  background: var(--color-bg-surface);
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+
+.btn-icon:hover:not(:disabled) {
+  border-color: var(--color-border-strong);
+}
+
+.btn-icon:disabled,
+.btn-secondary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 .btn:hover {

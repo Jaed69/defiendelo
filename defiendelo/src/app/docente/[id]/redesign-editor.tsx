@@ -7,8 +7,6 @@ import type { Assignment, Criterion } from "@/domain/types";
 
 type Row = Omit<Criterion, "id"> & { id?: string };
 
-const field = "w-full rounded-[var(--radius-md)] border-[1.5px] border-rule bg-surface px-3 py-2";
-
 /** Lets the teacher fix what the AI generated: statement, AI policy and rubric. */
 export function RedesignEditor({
   assignment,
@@ -72,7 +70,7 @@ export function RedesignEditor({
         {criteria.map((c, i) => (
           <div key={c.id ?? i} className="grid gap-2 rounded-[var(--radius-md)] border border-rule p-3">
             <div className="grid grid-cols-[minmax(0,1fr)_5.5rem] gap-2">
-              <input aria-label={`Nombre del criterio ${i + 1}`} className={`${field} font-bold`} required maxLength={120} value={c.name} onChange={(e) => edit(i, { name: e.target.value })} />
+              <input aria-label={`Nombre del criterio ${i + 1}`} className="font-bold" required maxLength={120} value={c.name} onChange={(e) => edit(i, { name: e.target.value })} />
               <label className="flex items-center gap-1">
                 <input
                   aria-label={`Peso del criterio ${i + 1}`}
@@ -80,7 +78,7 @@ export function RedesignEditor({
                   min={1}
                   max={100}
                   required
-                  className={`${field} text-right tabular-nums`}
+                  className="text-right"
                   value={c.weight}
                   onChange={(e) => edit(i, { weight: Number(e.target.value) })}
                 />
@@ -98,14 +96,14 @@ export function RedesignEditor({
             <div className="flex flex-wrap items-center justify-between gap-2">
               <select
                 aria-label={`Dónde se evalúa el criterio ${i + 1}`}
-                className={`${field} w-auto`}
+                className="w-auto!"
                 value={c.evidence}
                 onChange={(e) => edit(i, { evidence: e.target.value as Row["evidence"] })}
               >
                 <option value="entrega">Se evalúa en la entrega</option>
                 <option value="defensa">Se evalúa en la defensa</option>
               </select>
-              <button type="button" className="btn-quiet text-pen" onClick={() => setCriteria(criteria.filter((_, j) => j !== i))}>
+              <button type="button" className="btn-secondary btn-sm" onClick={() => setCriteria(criteria.filter((_, j) => j !== i))}>
                 Quitar
               </button>
             </div>
@@ -113,7 +111,7 @@ export function RedesignEditor({
         ))}
         <button
           type="button"
-          className="btn-quiet justify-self-start"
+          className="btn-secondary btn-sm justify-self-start"
           onClick={() => setCriteria([...criteria, { name: "", description: "", weight: Math.max(1, 100 - total), evidence: "defensa" }])}
         >
           + Agregar criterio
