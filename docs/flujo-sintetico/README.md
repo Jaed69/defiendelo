@@ -13,7 +13,7 @@ alumnos/respuestas-defensa.md     qué responde cada uno y qué nota le pone el 
 ## Pasos
 
 ### Docente: preparar la tarea
-1. En la portada, en «Rediseña una tarea», escribe el título «Búsqueda en una lista ordenada» y la materia «Programación, 4.° de secundaria».
+1. En la portada, en «Rediseña tu tarea», escribe el título «Búsqueda en una lista ordenada» y la materia «Programación, 4.° de secundaria».
 2. Arrastra `docente/tarea-original.pdf` a «Tarea original» y pulsa **Rediseñar la tarea**.
 3. En «1. Tu tarea»:
    - **Editar**: cambia algo de la rúbrica (los pesos deben sumar 100%) y guarda.

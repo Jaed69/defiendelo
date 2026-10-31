@@ -2,9 +2,24 @@
 
 **Tareas que los alumnos pueden resolver con IA, calificadas por lo que saben explicar.**
 
-Proyecto para **DSC HACK 2026 · Educación 2036**. La aplicación vive en [`defiendelo/`](defiendelo/).
+Proyecto para **DSC HACK 2026 · Educación 2036**.
 
-🔗 **Demo:** https://defiendelo.vercel.app
+🔗 **Demo:** https://defiendelo.vercel.app · 📄 **Propuesta:** [`docs/propuesta/`](docs/propuesta/) · 🔬 **Investigación:** [`docs/investigacion/`](docs/investigacion/)
+
+## 🗂️ Estructura del repositorio
+
+```
+.
+├── defiendelo/              Aplicación web (Next.js): código, tests y scripts
+│   ├── src/                 Dominio, puertos, adaptadores, casos de uso y pantallas
+│   ├── public/ejemplos/     PDF de las tareas de ejemplo
+│   └── README.md            Detalle técnico de la aplicación
+└── docs/                    Documentación del proyecto
+    ├── propuesta/           Propuesta enviada al hackathon y presentación del pitch
+    ├── investigacion/       Informes con la evidencia que sustenta el problema y la solución
+    ├── diseno/              Diseño de las pantallas (Pencil) y capturas
+    └── flujo-sintetico/     Datos para probar el flujo completo a mano
+```
 
 ---
 
@@ -163,4 +178,18 @@ npm run examples:pdf   # regenera los PDF de ejemplo (requiere Python con report
 2. Agrega la integración de **Upstash Redis** y una clave de IA (`ANTHROPIC_API_KEY` u `OPENROUTER_API_KEY`).
 3. Despliega. La prueba de estrés usa `maxDuration` de 300 s (requiere Fluid Compute).
 
-Más detalle técnico en [`defiendelo/README.md`](defiendelo/README.md).
+Más detalle técnico en [`defiendelo/README.md`](defiendelo/README.md). Para recorrer el flujo completo a mano con tres alumnos de prueba, sigue [`docs/flujo-sintetico/`](docs/flujo-sintetico/).
+
+---
+
+## 📚 Documentación
+
+| Documento | Qué contiene |
+| --- | --- |
+| [Propuesta DSC HACK 2026](docs/propuesta/propuesta-dsc-hack-2026.pdf) | La propuesta presentada al reto. |
+| [Pitch](docs/propuesta/defiendelo-pitch.pptx) | Presentación de la demo. |
+| [Educación 2036: oportunidades](docs/investigacion/educacion-2036-oportunidades.md) | Las cuatro grietas del reto y la evidencia detrás de la que elegimos. |
+| [Más valor para Defiéndelo](docs/investigacion/mas-valor-para-defiendelo.md) | Evidencia de aprendizaje, carga docente, regulación y caso de negocio. |
+| [Diseño](docs/diseno/) | Flujos y pantallas en Pencil. |
+
+Índice completo en [`docs/README.md`](docs/README.md).
