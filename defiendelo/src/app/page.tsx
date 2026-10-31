@@ -18,58 +18,36 @@ const REDESIGN_STEPS = [
   { after: 24, text: "Armando la rúbrica nueva. Ya casi está." },
 ];
 
-const HERO_EXAMPLE = EXAMPLES.find((e) => e.id === "programacion-busqueda-binaria")!;
+const HERO_EXAMPLE = EXAMPLES.find((e) => e.id === "comunicacion-texto-argumentativo")!;
 
 const HOW = [
-  ["Sube tu tarea", "PDF, Word o texto. La que ya usas con tus alumnos."],
-  ["Revisa el rediseño", "La IA sigue permitida; la nota pasa a las decisiones y a la defensa."],
-  ["Comparte el enlace", "Cada alumno entrega y responde preguntas sobre su propio trabajo."],
-  ["Mira quién entendió", "Ves la brecha de cada alumno y qué reforzar en la próxima clase."],
+  ["Sube tu tarea", "PDF, Word o texto."],
+  ["La rediseñamos", "Copiar a la IA ya no alcanza."],
+  ["Comparte el enlace", "Cada alumno entrega y explica."],
+  ["Mira quién entendió", "Y qué repasar en clase."],
 ];
 
-const SAMPLE_CODE = [
-  "def binary_search(arr, target):",
-  "    low, high = 0, len(arr) - 1",
-  "    while low <= high:",
-  "        mid = low + (high - low) // 2",
-  "        if arr[mid] < target:",
-  "            low = mid + 1",
-];
-
-/** The hero's example: a corrected submission, showing the product's whole argument at a glance. */
+/** The hero's example: a student who handed in AI work and cannot explain it. */
 function CorrectedSheet() {
   return (
-    <figure className="card grid-paper relative grid min-w-0 grid-cols-[minmax(0,1fr)] gap-6 overflow-hidden p-6 sm:p-8" aria-label="Ejemplo: entrega de un alumno corregida por Defiéndelo">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <span className="label text-graphite">Entrega de Bruno, 4.º de secundaria</span>
-        <span className="chip chip-danger">Brecha 64%</span>
-      </div>
-      <div className="relative">
-        <pre className="overflow-x-auto rounded-[var(--radius-md)] bg-subtle px-5 py-4 font-mono text-[0.875rem] leading-6 sm:text-[0.9375rem]">
-          {SAMPLE_CODE.join("\n")}
-        </pre>
-        <span className="absolute right-3 top-[5.5rem] hidden xl:block">
-          <TeacherNote>¿y por qué + 1?</TeacherNote>
-        </span>
-      </div>
+    <figure className="card grid-paper relative grid min-w-0 grid-cols-[minmax(0,1fr)] gap-6 overflow-hidden p-6 sm:p-8" aria-label="Ejemplo: un alumno defiende su tarea">
+      <span className="label text-graphite">Texto argumentativo · Comunicación, 4.º</span>
       <div className="grid gap-2">
-        <span className="label text-brand-text">Pregunta de defensa</span>
-        <p className="font-bold">¿Por qué mueves low a mid + 1 y no a mid? ¿Qué pasaría con una lista de 2 elementos?</p>
+        <span className="label text-brand-text">Pregunta al alumno</span>
+        <p className="font-display text-xl font-bold leading-snug">¿Por qué elegiste estar a favor y no en contra?</p>
         <p className="flex flex-wrap items-center gap-x-6 gap-y-1">
-          <span className="italic text-graphite">&ldquo;no sé, lo hizo ChatGPT&rdquo;</span>
+          <span className="text-lg italic text-graphite">&ldquo;No sé, lo hizo ChatGPT.&rdquo;</span>
           <TeacherNote>no lo puede explicar</TeacherNote>
         </p>
       </div>
       <figcaption className="grid gap-4 sm:grid-cols-2">
         <div className="card grid gap-1 p-5 shadow-none">
-          <span className="label text-graphite">IA sola, tarea original</span>
+          <span className="label text-graphite">Nota de la IA sola, tarea de siempre</span>
           <span className="stat-value text-pen">100%</span>
-          <span className="text-[0.9375rem] text-graphite">Saca la nota completa sin ningún alumno.</span>
         </div>
         <div className="card grid gap-1 p-5 shadow-none">
-          <span className="label text-graphite">IA sola, tarea rediseñada</span>
-          <span className="stat-value text-success">20%</span>
-          <span className="text-[0.9375rem] text-graphite">El resto se gana en la defensa.</span>
+          <span className="label text-graphite">Nota de la IA sola, tarea rediseñada</span>
+          <span className="stat-value text-success">22%</span>
         </div>
       </figcaption>
     </figure>
@@ -86,7 +64,7 @@ export default function Home() {
 
   function loadExample(example: ExampleTask) {
     setForm({ title: example.title, subject: exampleSubjectLabel(example), original: example.original });
-    setLoaded(`Cargamos «${example.title}» en el formulario. Revísala y pulsa «Rediseñar la tarea».`);
+    setLoaded(`Listo: cargamos «${example.title}». Pulsa «Rediseñar la tarea».`);
     document.getElementById("redisena")?.scrollIntoView({ behavior: "smooth" });
     titleInput.current?.focus({ preventScroll: true });
   }
@@ -111,12 +89,7 @@ export default function Home() {
     <>
       <AppBar>
         <Logo />
-        <nav aria-label="Principal" className="flex flex-wrap items-center gap-x-6">
-          <span className="hidden sm:inline">
-            <a href="#como-funciona" className="btn-quiet">
-              Cómo funciona
-            </a>
-          </span>
+        <nav aria-label="Principal">
           <a href="#redisena" className="btn-secondary">
             Rediseñar una tarea
           </a>
@@ -126,11 +99,9 @@ export default function Home() {
       <main id="contenido" tabIndex={-1} className="outline-none">
         <section className="container-page grid grid-cols-[minmax(0,1fr)] items-center gap-12 py-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,40rem)] lg:gap-16 lg:py-20">
           <div className="grid justify-items-start gap-6">
-            <span className="chip chip-highlight">Para docentes de secundaria</span>
             <h1 className="max-w-[15ch]">Que la nota mida lo que entendiste, no lo que escribió la IA.</h1>
             <p className="prose-measure max-w-[36rem] text-[1.1875rem] leading-[1.6] text-graphite">
-              Sube una tarea que ya usas. La rediseñamos para que la IA esté permitida pero no alcance, comprobamos cuánta nota saca la IA
-              sola y cada alumno defiende su propia entrega.
+              Sube la tarea que ya usas. La cambiamos para que copiar a la IA no alcance: cada alumno tiene que explicar lo que entregó.
             </p>
             <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
               <a href="#redisena" className="btn">
@@ -141,12 +112,10 @@ export default function Home() {
                 className="btn-quiet"
                 onClick={() => loadExample(HERO_EXAMPLE)}
               >
-                Ver un ejemplo con búsqueda binaria
+                Probar con un ejemplo
               </button>
             </div>
-            <p className="max-w-[32rem] text-[0.9375rem] text-graphite">
-              Sin registro. Los archivos se leen en tu dispositivo y no se suben a ningún servidor.
-            </p>
+            <p className="text-[0.9375rem] text-graphite">Gratis y sin registro.</p>
           </div>
           <CorrectedSheet />
         </section>
@@ -173,15 +142,7 @@ export default function Home() {
         <ExampleGallery onUse={loadExample} />
 
         <section id="redisena" className="container-page grid gap-8 pb-20 pt-12">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div className="grid gap-2">
-              <h2>Rediseña una tarea</h2>
-              <p className="text-graphite">Tarda menos de un minuto. Después puedes editar todo.</p>
-            </div>
-            <a href="#ejemplos" className="btn-quiet">
-              Ver tareas de ejemplo por curso
-            </a>
-          </div>
+          <h2>Rediseña una tarea</h2>
           <p role="status">
             {loaded && <span className="block rounded-[var(--radius-md)] bg-success-subtle p-4 font-bold">{loaded}</span>}
           </p>
@@ -221,7 +182,7 @@ export default function Home() {
               <FileDrop
                 limit={ORIGINAL_LIMIT}
                 title="Arrastra aquí tu PDF o Word"
-                hint="También sirve un archivo de texto. Se lee en tu dispositivo: no se sube a ningún servidor."
+                hint="PDF, Word o texto."
                 onText={(original) => setForm((f) => ({ ...f, original }))}
               />
               <div className="flex items-center gap-3 text-graphite" aria-hidden="true">
@@ -239,9 +200,11 @@ export default function Home() {
                 value={form.original}
                 onChange={(e) => setForm({ ...form, original: e.target.value })}
               />
-              <span id="original-count" className="text-right text-[0.9375rem] tabular-nums text-graphite">
-                {form.original.length.toLocaleString("es")} / {ORIGINAL_LIMIT.toLocaleString("es")} caracteres
-              </span>
+              {form.original.length > ORIGINAL_LIMIT * 0.8 && (
+                <span id="original-count" className="text-right text-[0.9375rem] tabular-nums text-graphite">
+                  {form.original.length.toLocaleString("es")} / {ORIGINAL_LIMIT.toLocaleString("es")} caracteres
+                </span>
+              )}
             </div>
             {error && (
               <p role="alert" className="font-bold text-pen">
@@ -249,11 +212,10 @@ export default function Home() {
               </p>
             )}
             <div className="grid gap-4">
-              <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+              <div>
                 <button className="btn" disabled={busy}>
                   {busy ? "Rediseñando la tarea…" : "Rediseñar la tarea"}
                 </button>
-                <span className="text-[0.9375rem] text-graphite">Después verás la versión nueva, su rúbrica y la prueba con la IA sola.</span>
               </div>
               {busy && <Waiting steps={REDESIGN_STEPS} expected="suele tardar menos de un minuto" />}
             </div>
