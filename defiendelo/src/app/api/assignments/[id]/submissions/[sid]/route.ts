@@ -3,7 +3,8 @@ import { getStudentView, replaceSubmission, submitDefense } from "@/application/
 import { assessmentAI, assignmentStore } from "@/composition";
 import { handle, studentToken } from "../../../../http";
 
-export const maxDuration = 60;
+// Real AI calls can take close to a minute and retry once before the demo fallback (Fluid Compute).
+export const maxDuration = 300;
 
 const body = z.object({
   answers: z
