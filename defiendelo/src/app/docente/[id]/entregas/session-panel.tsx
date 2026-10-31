@@ -1,326 +1,221 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { api } from "@/app/api-client";
-import { CheckIcon, ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon, MicIcon } from "@/app/components/icons";
-import { gradeReport, isGraded, LETTER_LABEL, LETTERS, suggestGrade, suggestLetter } from "@/domain/grading";
-import { isLive, questionsFor, sessionOf } from "@/domain/session";
+import { CheckIcon, UserCheckIcon } from "@/app/components/icons";
+import { teacherDecides } from "@/app/class-summary";
+import { criterionMarks, isGraded } from "@/domain/grading";
 import type { Assignment, ClassSession, Letter, Submission } from "@/domain/types";
-import { teacherHref } from "../teacher-frame";
 
-const POLL_MS = 5000;
+/** Sends one change of the class session and returns the updated assignment (null when it failed). */
+export type Send = (method: "PATCH" | "POST", body: object) => Promise<Assignment | null>;
 
-const PHASES: { key: ClassSession["phase"]; label: string }[] = [
-  { key: "entregas", label: "Entregas abiertas" },
-  { key: "defensas", label: "Defensas" },
-  { key: "publicado", label: "Notas publicadas" },
+export interface PanelProps {
+  assignment: Assignment;
+  teacherKey: string;
+  session: ClassSession;
+  send: Send;
+  busy: boolean;
+}
+
+export function formatNumber(value: number) {
+  return value.toLocaleString("es", { maximumFractionDigits: 1 });
+}
+
+/** "14/20" or a letter: a grade as the screens show it. */
+export function gradeText(session: Pick<ClassSession, "gradeScale">, value: number | Letter | null) {
+  if (value === null) return "—";
+  return typeof value === "string" ? value : `${formatNumber(value)}/${session.gradeScale}`;
+}
+
+/** The grade the teacher set, on the session scale. */
+export function finalGrade(session: Pick<ClassSession, "grading">, submission: Submission): number | Letter | null {
+  return session.grading === "literal" ? (submission.letter ?? null) : (submission.grade ?? null);
+}
+
+/** "Texto · 320 palabras · entregó el 29 oct, 21:14" */
+export function workMeta(submission: Submission) {
+  const words = submission.work.trim().split(/\s+/).filter(Boolean).length;
+  const when = new Date(submission.createdAt).toLocaleString("es", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+  return `Texto · ${words} ${words === 1 ? "palabra" : "palabras"} · entregó el ${when.replace(/\./g, "")}`;
+}
+
+export function workHref(assignmentId: string, teacherKey: string, submissionId: string) {
+  return `/docente/${assignmentId}/entregas/${submissionId}?k=${teacherKey}`;
+}
+
+export function criterionName(assignment: Assignment, criterionId: string) {
+  return assignment.redesign.criteria.find((c) => c.id === criterionId)?.name ?? "";
+}
+
+export type Mark = 1 | 0.5 | 0;
+
+/** A stored question score back to the teacher's mark. */
+export function markOf(score: number | undefined, scale: number): Mark | null {
+  if (score === undefined) return null;
+  const share = scale === 0 ? 0 : score / scale;
+  return share >= 0.75 ? 1 : share >= 0.25 ? 0.5 : 0;
+}
+
+const MARKS: { value: Mark; label: string; on: string }[] = [
+  { value: 1, label: "Lo explicó", on: "border-success bg-success-subtle text-success" },
+  { value: 0.5, label: "A medias", on: "border-ink bg-highlight-subtle text-ink" },
+  { value: 0, label: "No lo explicó", on: "border-pen bg-pen-soft text-pen" },
 ];
 
-function Report({ session, submissions }: { session: ClassSession; submissions: Submission[] }) {
-  const report = gradeReport(session, submissions);
-  const literal = session.grading === "literal";
+/** How the student answered one question, marked while listening or reading the sheet. */
+export function MarkButtons({ value, onChange, label, disabled }: { value: Mark | null; onChange: (mark: Mark) => void; label: string; disabled?: boolean }) {
   return (
-    <div className="grid gap-4 rounded-[var(--radius-md)] bg-subtle p-4">
-      <p className="text-[1.125rem]">
-        <span className="stat-value block">
-          {report.achieved} de {report.total}
-        </span>
-        {literal ? "lograron A (logro esperado) o AD (logro destacado)" : `aprobaron con ${session.passingGrade} o más`}
-        {report.graded < report.total && <span className="block text-[0.9375rem] text-graphite">{report.total - report.graded} sin nota todavía</span>}
-      </p>
-      {literal ? (
-        <dl className="grid grid-cols-4 gap-2 text-center">
-          {LETTERS.map((l) => (
-            <div key={l} className={`rounded-[var(--radius-sm)] p-2 ${l === "AD" || l === "A" ? "bg-success-subtle" : "bg-surface"}`}>
-              <dt className="font-display text-lg font-bold" title={LETTER_LABEL[l]}>
-                {l}
-              </dt>
-              <dd className="tabular-nums">{report.letters[l]}</dd>
-            </div>
-          ))}
-        </dl>
-      ) : (
-        report.average !== null && (
-          <p>
-            Promedio: <strong className="tabular-nums">{report.average}</strong> de {session.gradeScale}
-          </p>
-        )
-      )}
+    <div role="group" aria-label={label} className="flex flex-wrap gap-2">
+      {MARKS.map((m) => {
+        const on = value === m.value;
+        return (
+          <button
+            key={m.label}
+            type="button"
+            aria-pressed={on}
+            disabled={disabled}
+            onClick={() => onChange(m.value)}
+            className={`inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-[var(--radius-pill)] border px-3.5 text-[0.9375rem] font-bold ${
+              on ? m.on : "border-rule bg-surface text-graphite hover:border-ink hover:text-ink"
+            }`}
+          >
+            {on && <CheckIcon size={14} />}
+            {m.label}
+          </button>
+        );
+      })}
     </div>
   );
 }
 
-function GradeControl({
-  session,
-  submission,
-  suggestion,
-  onGrade,
-}: {
-  session: ClassSession;
-  submission: Submission;
-  suggestion: Letter | number | null;
-  onGrade: (input: { letter: Letter } | { grade: number }) => void;
-}) {
-  const [value, setValue] = useState(submission.grade?.toString() ?? "");
-  useEffect(() => setValue(submission.grade?.toString() ?? ""), [submission.grade]);
-
-  if (session.grading === "literal") {
-    return (
-      <div className="grid justify-items-end gap-1">
-        <div role="group" aria-label={`Nota de ${submission.alias}`} className="inline-grid grid-cols-4 gap-1">
-          {LETTERS.map((l) => {
-            const chosen = submission.letter === l;
-            return (
-              <button
-                key={l}
-                type="button"
-                title={LETTER_LABEL[l]}
-                aria-pressed={chosen}
-                onClick={() => onGrade({ letter: l })}
-                className={`size-11 cursor-pointer rounded-[var(--radius-md)] border-2 font-display font-bold ${chosen ? "border-brand bg-brand text-white" : suggestion === l ? "border-dashed border-brand bg-brand-subtle text-brand-text" : "border-rule bg-surface hover:border-ink"}`}
-              >
-                {l}
-              </button>
-            );
-          })}
-        </div>
-        {suggestion && !submission.letter && <span className="text-sm text-graphite">Sugerida: {suggestion}</span>}
-      </div>
-    );
-  }
-
+/** Numbered question with the rubric criterion it checks. */
+export function QuestionHead({ number, question, criterion }: { number: number; question: string; criterion: string }) {
   return (
-    <form
-      className="flex items-center gap-2"
-      onSubmit={(e) => {
-        e.preventDefault();
-        if (value !== "") onGrade({ grade: Number(value) });
-      }}
-    >
-      <input
-        type="number"
-        min={0}
-        max={session.gradeScale}
-        step="0.5"
-        aria-label={`Nota de ${submission.alias}`}
-        placeholder={suggestion != null ? String(suggestion) : undefined}
-        className="min-h-11! w-24! py-2! text-right"
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-      />
-      <span className="text-graphite">/ {session.gradeScale}</span>
-      <button className="btn-secondary btn-sm" disabled={value === "" || Number(value) === submission.grade}>
-        Guardar
-      </button>
-    </form>
+    <div className="grid grid-cols-[1.75rem_minmax(0,1fr)] gap-3">
+      <span className="grid size-7 place-items-center rounded-full bg-ink text-[0.875rem] font-bold text-white" aria-hidden="true">
+        {number}
+      </span>
+      <div className="grid gap-0.5">
+        <p className="font-bold leading-snug">
+          <span className="sr-only">Pregunta {number}: </span>
+          {question}
+        </p>
+        {criterion && <p className="text-[0.875rem] text-graphite">Criterio: {criterion}</p>}
+      </div>
+    </div>
   );
 }
 
-/** Live class session for the teacher: open/close, order and call students, grade each one, publish. */
-export function SessionPanel({
+/**
+ * "Notas para los alumnos": how many grades are reviewed, how often the teacher changed the AI, and
+ * the one button that shows the grades to the students.
+ */
+export function PublishCard({
   assignment,
-  teacherKey,
-  onChange,
-  reload,
-}: {
-  assignment: Assignment;
-  teacherKey: string;
-  onChange: (assignment: Assignment) => void;
-  reload: () => Promise<void>;
-}) {
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const live = isLive(assignment);
-  const session = sessionOf(assignment);
-
-  // Students keep handing in and answering while the teacher has this open.
-  useEffect(() => {
-    if (!live || session.phase === "publicado") return;
-    const timer = setInterval(() => void reload().catch(() => {}), POLL_MS);
-    return () => clearInterval(timer);
-  }, [live, reload, session.phase]);
-
-  if (!live) {
-    return (
-      <section className="card grid gap-3 p-6">
-        <h2 className="text-[1.375rem]">Notas de la clase</h2>
-        <p>Para poner notas, primero elige cómo vas a evaluar.</p>
-        <Link href={`${teacherHref(assignment.id, teacherKey, "tarea")}#evaluacion`} className="btn-secondary justify-self-start">
-          Configurar la evaluación
-        </Link>
-      </section>
-    );
-  }
-
-  async function send(method: "PATCH" | "POST", body: object) {
-    setBusy(true);
-    setError(null);
-    try {
-      onChange(await api<Assignment>(`/api/assignments/${assignment.id}/session`, { method, teacherKey, body: JSON.stringify(body) }));
-    } catch (e) {
-      setError((e as Error).message);
-    } finally {
-      setBusy(false);
-    }
-  }
-
-  const { submissions, redesign } = assignment;
-  const ordered =
-    session.phase === "entregas" ? submissions : session.queue.map((sid) => submissions.find((s) => s.id === sid)).filter((s): s is Submission => !!s);
-  const oral = session.method === "oral" && session.phase === "defensas";
-  const phaseIndex = PHASES.findIndex((p) => p.key === session.phase);
-  const graded = submissions.filter(isGraded).length;
-
-  function move(i: number, by: -1 | 1) {
-    const queue = [...session.queue];
-    [queue[i], queue[i + by]] = [queue[i + by], queue[i]];
-    void send("PATCH", { queue });
-  }
-
+  session,
+  send,
+  busy,
+  reviewed,
+  total,
+  noun = "revisadas",
+  showDecides = false,
+}: Omit<PanelProps, "teacherKey"> & { reviewed: number; total: number; noun?: string; showDecides?: boolean }) {
+  const published = session.phase === "publicado";
+  const ready = total > 0 && reviewed === total;
+  const marks = assignment.submissions.map((s) => criterionMarks(session, assignment.redesign.criteria, s));
   return (
-    <section className="card grid gap-6 p-6 sm:p-8" aria-busy={busy}>
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <h2>Notas de la clase</h2>
-        <ol className="flex flex-wrap gap-2" aria-label="Momento de la clase">
-          {PHASES.map((p, i) => (
-            <li key={p.key} aria-current={i === phaseIndex ? "step" : undefined} className={`chip inline-flex items-center gap-1 ${i === phaseIndex ? "chip-brand" : "chip-neutral"}`}>
-              {i < phaseIndex && <CheckIcon className="size-4" />}
-              {p.label}
-            </li>
-          ))}
-        </ol>
-      </div>
-
-      {session.phase === "entregas" && (
-        <div className="flex flex-wrap items-center gap-3">
-          <button className="btn" disabled={busy || submissions.length === 0} onClick={() => void send("PATCH", { phase: "defensas" })}>
-            Cerrar entregas y empezar las defensas
-          </button>
-          <span className="text-graphite">{submissions.length === 1 ? "1 entrega" : `${submissions.length} entregas`}</span>
-        </div>
-      )}
-      {session.phase === "defensas" && (
-        <div className="flex flex-wrap items-center gap-3">
-          <button className="btn" disabled={busy || graded === 0} onClick={() => void send("PATCH", { phase: "publicado" })}>
-            Publicar las notas
-          </button>
-          <span className="text-graphite">
-            {graded} de {submissions.length} con nota
-          </span>
-        </div>
-      )}
-      {session.phase === "publicado" && (
-        <button className="btn-secondary justify-self-start" disabled={busy} onClick={() => void send("PATCH", { phase: "defensas" })}>
-          Ocultar las notas para corregir
-        </button>
-      )}
-
-      {session.phase !== "entregas" && <Report session={session} submissions={submissions} />}
-
-      {ordered.length > 0 && (
-        <ol className="grid gap-2">
-          {ordered.map((s, i) => {
-            const current = oral && session.current === s.id;
-            const questions = questionsFor(session, s);
-            const suggestion = s.evaluation
-              ? session.grading === "literal"
-                ? suggestLetter(redesign.criteria, s.evaluation)
-                : suggestGrade(session, redesign.criteria, s.evaluation)
-              : null;
-            const question = current ? questions[session.currentQuestion] : null;
-            return (
-              <li key={s.id} className={`grid gap-3 rounded-[var(--radius-md)] border-2 p-3 ${current ? "border-brand bg-brand-subtle" : "border-rule"}`}>
-                {/* Phone: name and order arrows on top, grade and "Llamar" below. Wider: one row. */}
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-                  <span className="w-6 text-right tabular-nums text-graphite">{i + 1}</span>
-                  <span className="min-w-0 flex-1 font-bold">
-                    {s.alias}
-                    {current && (
-                      <span className="chip chip-danger ml-2 inline-flex items-center gap-1 align-middle">
-                        <MicIcon className="size-4" /> Defendiendo
-                      </span>
-                    )}
-                    {session.method === "escrito" && session.phase !== "entregas" && (
-                      <span className="ml-2 font-normal text-graphite">{s.answeredAt ? "· respondió" : "· respondiendo"}</span>
-                    )}
-                  </span>
-                  {oral && (
-                    <span className="ml-auto flex gap-1 sm:order-last sm:ml-0">
-                      <button type="button" className="btn-icon" aria-label={`Subir a ${s.alias}`} disabled={busy || i === 0} onClick={() => move(i, -1)}>
-                        <ChevronUpIcon />
-                      </button>
-                      <button type="button" className="btn-icon" aria-label={`Bajar a ${s.alias}`} disabled={busy || i === ordered.length - 1} onClick={() => move(i, 1)}>
-                        <ChevronDownIcon />
-                      </button>
-                    </span>
-                  )}
-                  {(session.phase !== "entregas" || oral) && (
-                    <div className="flex w-full flex-wrap items-start gap-2 sm:w-auto sm:justify-end">
-                      {session.phase !== "entregas" && (
-                        <GradeControl session={session} submission={s} suggestion={suggestion} onGrade={(input) => void send("POST", { submissionId: s.id, ...input })} />
-                      )}
-                      {oral && !current && !isGraded(s) && (
-                        <button type="button" className="btn-secondary btn-sm" disabled={busy} onClick={() => void send("PATCH", { current: s.id, currentQuestion: 0 })}>
-                          <MicIcon className="size-4" /> Llamar
-                        </button>
-                      )}
-                    </div>
-                  )}
-                </div>
-
-                {question && (
-                  <div className="grid gap-2 rounded-[var(--radius-md)] bg-surface p-3">
-                    <span className="label text-brand-text">
-                      Pregunta {session.currentQuestion + 1} de {questions.length}
-                    </span>
-                    <p className="font-display text-lg font-bold">{question.question}</p>
-                    <div className="grid grid-cols-2 gap-2 sm:flex">
-                      <button
-                        type="button"
-                        className="btn-secondary btn-sm"
-                        disabled={busy || session.currentQuestion === 0}
-                        onClick={() => void send("PATCH", { currentQuestion: session.currentQuestion - 1 })}
-                      >
-                        <ChevronLeftIcon className="size-4" /> Anterior
-                      </button>
-                      <button
-                        type="button"
-                        className="btn-secondary btn-sm"
-                        disabled={busy || session.currentQuestion >= questions.length - 1}
-                        onClick={() => void send("PATCH", { currentQuestion: session.currentQuestion + 1 })}
-                      >
-                        Siguiente <ChevronRightIcon className="size-4" />
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                <details>
-                  <summary className="btn-quiet cursor-pointer text-[0.9375rem]">Ver entrega{s.answers.length > 0 ? " y respuestas" : ""}</summary>
-                  <pre className="mt-2 max-h-72 overflow-auto whitespace-pre-wrap rounded-[var(--radius-md)] bg-subtle p-3 font-mono text-sm">{s.work}</pre>
-                  {s.answers.length > 0 && (
-                    <ul className="mt-2 grid gap-2">
-                      {questions.map((q) => (
-                        <li key={q.id} className="grid gap-1">
-                          <span className="font-bold">{q.question}</span>
-                          <span>{s.answers.find((a) => a.questionId === q.id)?.answer || "—"}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </details>
-              </li>
-            );
-          })}
-        </ol>
-      )}
-
-      {error && (
-        <p role="alert" className="font-bold text-pen">
-          {error}
+    <section className="card grid gap-4 border-2 border-ink p-5" aria-labelledby="publicar-titulo">
+      <h2 id="publicar-titulo" className="text-[1.25rem]">
+        Notas para los alumnos
+      </h2>
+      <div className="grid gap-2">
+        <p className="font-bold">
+          {reviewed} de {total} notas {noun}
         </p>
+        <div className="h-2 overflow-hidden rounded-full bg-subtle" aria-hidden="true">
+          <div className="h-full rounded-full bg-success-fill" style={{ width: `${total === 0 ? 0 : (reviewed / total) * 100}%` }} />
+        </div>
+      </div>
+      {showDecides && (
+        <div className="grid gap-1 rounded-[var(--radius-md)] bg-brand-subtle p-3.5">
+          <p className="flex items-center gap-2 font-bold text-brand-text">
+            <UserCheckIcon size={18} /> Tú decides
+          </p>
+          <p className="text-[0.9375rem]">{teacherDecides(marks)}</p>
+        </div>
+      )}
+      {published ? (
+        <>
+          <p className="flex items-center gap-2 font-bold text-success">
+            <CheckIcon size={18} /> Notas publicadas. Tus alumnos ya ven su nota.
+          </p>
+          <button type="button" className="btn-secondary w-full" disabled={busy} onClick={() => void send("PATCH", { phase: "defensas" })}>
+            Ocultar las notas para corregir
+          </button>
+        </>
+      ) : (
+        <>
+          <button
+            type="button"
+            className="btn w-full"
+            disabled={busy || !ready}
+            onClick={() => void send("PATCH", assignment.session ? { phase: "publicado" } : { method: "escrito", phase: "publicado" })}
+          >
+            Publicar notas
+          </button>
+          <p className="text-[0.875rem] text-graphite">Se activa cuando revises todas. Los alumnos ven solo la nota que tú aceptaste o pusiste.</p>
+        </>
       )}
     </section>
+  );
+}
+
+/** Before the defenses: who handed in, and the button that closes submissions. */
+export function OpenSubmissions({ assignment, session, send, busy, onSimulate }: Omit<PanelProps, "teacherKey"> & { onSimulate?: () => void }) {
+  const { submissions } = assignment;
+  const next =
+    session.method === "oral"
+      ? "Después llamas a cada alumno en clase."
+      : session.method === "papel"
+        ? "Después imprimes una hoja por alumno con sus preguntas."
+        : "Cada alumno responde sus preguntas en el celular.";
+  return (
+    <section className="card grid gap-5 p-5 sm:p-6" aria-labelledby="abiertas-titulo">
+      <div className="grid gap-1">
+        <h2 id="abiertas-titulo" className="text-[1.375rem]">
+          Las entregas están abiertas
+        </h2>
+        <p className="text-graphite">Cuando estén todos, cierra las entregas para empezar las defensas. {next}</p>
+      </div>
+      <ul className="flex flex-wrap gap-2">
+        {submissions.map((s) => (
+          <li key={s.id} className="chip chip-neutral">
+            {s.alias}
+          </li>
+        ))}
+      </ul>
+      <div className="flex flex-wrap items-center gap-3">
+        <button type="button" className="btn" disabled={busy || submissions.length === 0} onClick={() => void send("PATCH", { phase: "defensas" })}>
+          Cerrar entregas y empezar las defensas
+        </button>
+        {onSimulate && (
+          <button type="button" className="btn-secondary" disabled={busy} onClick={onSimulate}>
+            Simular entregas de la clase
+          </button>
+        )}
+      </div>
+    </section>
+  );
+}
+
+export function ungraded(submissions: Submission[]) {
+  return submissions.filter((s) => !isGraded(s));
+}
+
+export function LinkToWork({ assignment, teacherKey, submission }: { assignment: Assignment; teacherKey: string; submission: Submission }) {
+  return (
+    <Link href={workHref(assignment.id, teacherKey, submission.id)} className="inline-flex min-h-11 items-center font-bold text-brand-text hover:underline">
+      Ver lo que entregó
+    </Link>
   );
 }

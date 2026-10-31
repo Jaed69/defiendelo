@@ -41,7 +41,10 @@ function Steps({ steps }: { steps: Step[] }) {
       {steps.map((step) => {
         const { Icon, live } = stepKind(step);
         return (
-          <li key={step.number} className="relative grid grid-cols-[2.5rem_minmax(0,1fr)] gap-4">
+          <li
+            key={step.number}
+            className={`relative grid grid-cols-[2.5rem_minmax(0,1fr)] gap-4 ${live ? "rounded-[var(--radius-md)] bg-brand-subtle p-3 -mx-3" : ""}`}
+          >
             <span className="grid size-10 place-items-center rounded-full bg-brand font-display text-lg font-bold text-white" aria-hidden="true">
               {step.number}
             </span>
@@ -53,14 +56,14 @@ function Steps({ steps }: { steps: Step[] }) {
                     <span className="sr-only">Paso {step.number}: </span>
                     {step.title}
                   </span>
-                  {live && <span className="chip chip-danger">Se califica en vivo</span>}
+                  {live && <span className="chip chip-brand">Se califica en la defensa</span>}
                 </p>
                 <p className="leading-relaxed">{step.text}</p>
               </div>
             ) : (
               // The numbered circle already says which step it is, so an untitled step gets no made-up title.
               <div className="grid gap-1.5 pt-2">
-                {live && <span className="chip chip-danger justify-self-start">Se califica en vivo</span>}
+                {live && <span className="chip chip-brand justify-self-start">Se califica en la defensa</span>}
                 <p className="grid grid-cols-[1.25rem_minmax(0,1fr)] gap-2 leading-relaxed">
                   <Icon className="mt-0.5 text-brand-text" />
                   <span>
@@ -120,13 +123,16 @@ function Blocks({ blocks }: { blocks: StatementBlock[] }) {
   });
 }
 
-/** Opens the print dialog with only this sheet on the page. */
-function printSheet(sheetId: string) {
+/** Opens the print dialog with only this element on the page; it may be hidden on screen (class "hidden"). */
+export function printSheet(sheetId: string) {
   const sheet = document.getElementById(sheetId);
   if (!sheet) return;
   const root = document.createElement("div");
   root.id = "print-root";
-  root.appendChild(sheet.cloneNode(true));
+  const copy = sheet.cloneNode(true) as HTMLElement;
+  copy.classList.remove("hidden");
+  copy.removeAttribute("id");
+  root.appendChild(copy);
   document.body.appendChild(root);
   document.documentElement.classList.add("printing-sheet");
   const cleanUp = () => {
@@ -139,14 +145,14 @@ function printSheet(sheetId: string) {
 }
 
 /** `quiet` is a text action for tight rows (the student page); the default is a secondary button. */
-export function PrintSheetButton({ sheetId, quiet = false }: { sheetId: string; quiet?: boolean }) {
+export function PrintSheetButton({ sheetId, quiet = false, label }: { sheetId: string; quiet?: boolean; label?: string }) {
   return (
     <button
       type="button"
       className={quiet ? "flex min-h-11 items-center gap-2 font-bold text-brand-text" : "btn-secondary inline-flex items-center gap-2"}
       onClick={() => printSheet(sheetId)}
     >
-      <PrinterIcon /> {quiet ? "Imprimir" : "Imprimir tarea"}
+      <PrinterIcon /> {label ?? (quiet ? "Imprimir" : "Imprimir tarea")}
     </button>
   );
 }
@@ -198,27 +204,42 @@ export function AssignmentSheet({
           <p className="leading-relaxed">{aiPolicy}</p>
         </div>
 
-        <section className="grid gap-3" aria-label="Cómo se califica">
-          <h4 className="flex items-center gap-2 font-display text-lg font-bold">
-            <ListIcon className="text-brand-text" /> Cómo se califica
-          </h4>
-          <ul className="grid gap-2">
-            {criteria.map((c) => (
-              <li key={c.id} className="grid grid-cols-[3.25rem_minmax(0,1fr)] items-start gap-3 rounded-[var(--radius-md)] border border-rule p-3">
-                <span className="font-display text-xl font-extrabold tabular-nums text-brand-text">{c.weight}%</span>
-                <span className="grid gap-1">
-                  <span className="flex flex-wrap items-center gap-2 font-bold">
-                    {c.name}
-                    <span className={`chip ${c.evidence === "defensa" ? "chip-danger" : "chip-neutral"} inline-flex items-center gap-1`}>
+        <section className="grid gap-2" aria-label="Cómo se califica">
+          <table className="w-full border-separate border-spacing-0 overflow-hidden rounded-[var(--radius-md)] border border-rule text-left">
+            <thead>
+              <tr className="bg-subtle">
+                <th scope="col" className="px-3 py-2.5 font-display text-[1rem] font-bold sm:px-4">
+                  <span className="flex items-center gap-2">
+                    <ListIcon className="text-brand-text" size={18} /> Cómo se califica
+                  </span>
+                </th>
+                <th scope="col" className="px-3 py-2.5 text-right text-[0.875rem] font-bold text-graphite sm:px-4">
+                  Dónde se ve
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {criteria.map((c) => (
+                <tr key={c.id}>
+                  <td className="border-t border-rule px-3 py-2.5 sm:px-4">
+                    <span className="grid grid-cols-[3rem_minmax(0,1fr)] items-baseline gap-2">
+                      <span className="font-display text-[1.0625rem] font-extrabold tabular-nums text-brand-text">{c.weight}%</span>
+                      <span className="grid gap-0.5">
+                        <span className="font-bold leading-snug">{c.name}</span>
+                        <span className="hidden text-[0.9375rem] text-graphite print:block">{c.description}</span>
+                      </span>
+                    </span>
+                  </td>
+                  <td className="border-t border-rule px-3 py-2.5 text-right align-middle sm:px-4">
+                    <span className={`chip ${c.evidence === "defensa" ? "chip-brand" : "chip-neutral"}`}>
                       {c.evidence === "defensa" ? <MicIcon className="size-3.5" /> : <PenIcon className="size-3.5" />}
                       {c.evidence === "defensa" ? "En la defensa" : "En la entrega"}
                     </span>
-                  </span>
-                  <span className="hidden text-[0.9375rem] text-graphite print:block">{c.description}</span>
-                </span>
-              </li>
-            ))}
-          </ul>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </section>
       </div>
 
