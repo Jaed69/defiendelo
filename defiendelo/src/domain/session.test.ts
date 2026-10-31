@@ -1,0 +1,73 @@
+import { describe, expect, it } from "vitest";
+import { acceptsSubmissions, DEFAULT_SESSION, gradeQuestion, proposeQueue, studentStatus, studentView } from "./session";
+import type { Assignment, ClassSession, Submission } from "./types";
+
+function submission(id: string, createdAt = "2026-10-31T10:00:00Z"): Submission {
+  return {
+    id,
+    alias: `alias-${id}`,
+    work: "",
+    questions: [1, 2, 3].map((n) => ({ id: `q${n}`, criterionId: "c1", question: `Pregunta ${n} de ${id}` })),
+    answers: [],
+    evaluation: null,
+    createdAt,
+    answeredAt: null,
+    token: `token-${id}`,
+  };
+}
+
+function assignment(session: Partial<ClassSession>, submissions: Submission[]): Assignment {
+  return { submissions, session: { ...DEFAULT_SESSION, ...session } } as Assignment;
+}
+
+describe("session", () => {
+  it("accepts submissions only while open and before the deadline", () => {
+    const now = new Date("2026-10-31T12:00:00Z");
+    expect(acceptsSubmissions(DEFAULT_SESSION, now)).toBe(true);
+    expect(acceptsSubmissions({ ...DEFAULT_SESSION, deadline: "2026-10-31T11:00:00Z" }, now)).toBe(false);
+    expect(acceptsSubmissions({ ...DEFAULT_SESSION, phase: "defensas" }, now)).toBe(false);
+  });
+
+  it("proposes the queue by arrival order", () => {
+    expect(proposeQueue([submission("b", "2026-10-31T10:05:00Z"), submission("a", "2026-10-31T10:01:00Z")])).toEqual(["a", "b"]);
+  });
+
+  it("walks the questions, averages the grade and moves to the next ungraded student", () => {
+    const subs = [submission("a"), submission("b"), submission("c")];
+    subs[1].grade = 15;
+    let s: ClassSession = { ...DEFAULT_SESSION, phase: "defensas", queue: ["a", "b", "c"], current: "a" };
+    s = gradeQuestion(s, subs, "a", "q1", 14);
+    expect(s).toMatchObject({ current: "a", currentQuestion: 1 });
+    s = gradeQuestion(s, subs, "a", "q2", 17);
+    expect(subs[0].grade).toBe(15.5);
+    expect(s).toMatchObject({ current: "c", currentQuestion: 0 });
+  });
+
+  it("derives the student status from phase and method", () => {
+    const sub = submission("a");
+    const on = (session: Partial<ClassSession>) => studentStatus({ ...DEFAULT_SESSION, ...session }, sub);
+    expect(on({})).toBe("entregado");
+    expect(on({ phase: "defensas", current: "a" })).toBe("turno");
+    expect(on({ phase: "defensas", current: "b" })).toBe("en_cola");
+    expect(on({ phase: "defensas", method: "escrito" })).toBe("responder");
+    expect(on({ phase: "defensas", method: "papel" })).toBe("papel");
+    sub.grade = 12;
+    expect(on({ phase: "defensas", current: "b" })).toBe("evaluado");
+    expect(on({ phase: "publicado" })).toBe("publicado");
+  });
+
+  it("hides the grade until published and never leaks other students' data", () => {
+    const subs = [submission("a"), submission("b")];
+    subs[1].grade = 18;
+    const live = studentView(assignment({ phase: "defensas", queue: ["a", "b"], current: "b" }, subs), subs[1]);
+    expect(live.result).toBeNull();
+    expect(live.queue).toEqual(["alias-a", "alias-b"]);
+    expect(JSON.stringify(live)).not.toContain("token-a");
+
+    const turn = studentView(assignment({ phase: "defensas", queue: ["a", "b"], current: "a", currentQuestion: 1 }, subs), subs[0]);
+    expect(turn.question).toEqual({ number: 2, total: 2, text: "Pregunta 2 de a" });
+
+    const published = studentView(assignment({ phase: "publicado" }, subs), subs[1]);
+    expect(published.result?.grade).toBe(18);
+  });
+});

@@ -1,7 +1,7 @@
 import { z } from "zod/v4";
-import { submitDefense } from "@/application/use-cases";
+import { getStudentView, submitDefense } from "@/application/use-cases";
 import { assessmentAI, assignmentStore } from "@/composition";
-import { handle } from "../../../../http";
+import { handle, studentToken } from "../../../../http";
 
 export const maxDuration = 60;
 
@@ -11,11 +11,19 @@ const body = z.object({
     .max(10),
 });
 
+/** What the student sees right now; the student page polls it. */
+export async function GET(request: Request, { params }: { params: Promise<{ id: string; sid: string }> }) {
+  return handle(async () => {
+    const { id, sid } = await params;
+    return getStudentView(assignmentStore(), id, sid, studentToken(request));
+  });
+}
+
 export async function POST(request: Request, { params }: { params: Promise<{ id: string; sid: string }> }) {
   return handle(async () => {
     const { id, sid } = await params;
     const { answers } = body.parse(await request.json());
-    const submission = await submitDefense(assessmentAI(), assignmentStore(), id, sid, answers);
+    const submission = await submitDefense(assessmentAI(), assignmentStore(), id, sid, studentToken(request), answers);
     return { evaluation: submission.evaluation };
   });
 }

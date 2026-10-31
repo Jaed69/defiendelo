@@ -16,7 +16,7 @@ Objective: the student uploads their work and is then evaluated according to the
 | Phase | Screen | In Figma |
 | --- | --- | --- |
 | entregas | Entrega: statement, method, deadline countdown, alias, file/paste | yes (+ method, deadline) |
-| entregas, already submitted | Entregado ✓, can replace until close | no |
+| entregas, already submitted | Entregado ✓ + countdown (replacing the file is not built yet) | no |
 | orden / defensas | Sala: queue of aliases, own position, "Ahora: X" | no |
 | own turn, oral | Te toca: alias + current question | no |
 | own turn, escrito digital | Defensa (existing one-question-at-a-time) | yes |
@@ -24,29 +24,25 @@ Objective: the student uploads their work and is then evaluated according to the
 | done, not published | Listo ✓, nota pendiente | no |
 | publicado | Resultado + final grade and per-question grades | yes (+ grade) |
 
-## Contract with the teacher side (draft, to agree)
+## Contract with the teacher side (implemented, see `src/domain/types.ts` and `src/domain/session.ts`)
 
-```ts
-Assignment += {
-  method: "oral" | "escrito" | "papel",   // escrito = on the phone, papel = printed
-  deadline: string,
-  questionsPerStudent: number,
-  gradeScale: number,            // e.g. 20
-  phase: "entregas" | "orden" | "defensas" | "publicado",
-  queue: string[],               // submissionIds, editable by teacher
-  currentSubmissionId: string | null,
-  currentQuestionIndex: number,
-}
-Submission += {
-  token: string,                 // student reconnection, never exposed to others
-  questionGrades: { questionId: string; score: number }[],
-  grade: number | null,
-}
-```
+- `Assignment.session?: ClassSession` (read it with `sessionOf()`, defaults: oral, no deadline, 2 questions, scale 20, phase `entregas`).
+- `ClassSession = { method: "oral" | "escrito" | "papel", deadline, questionsPerStudent, gradeScale, phase: "entregas" | "defensas" | "publicado", queue, current, currentQuestion }`. "Orden" is not a phase: it is `defensas` with `current: null`.
+- `Submission += { token?, questionGrades?: Record<questionId, number>, grade? }`.
+- Questions: the AI generates them at submission (as before); only the first `questionsPerStudent` count.
 
-Student endpoint: `GET /api/assignments/[id]/sala?s=<sid>` with header `x-student-token`, polled every 2–3 s. Returns phase, method, deadline, queue aliases, current alias, current question (only on own turn), own status, own grade only when `phase === "publicado"`.
+| Who | Endpoint | Does |
+| --- | --- | --- |
+| Student | `POST /api/assignments/[id]/submissions` `{alias, work}` | 409 if closed; returns `{id, token}` |
+| Student | `GET /api/assignments/[id]/submissions/[sid]` + `x-student-token` | `StudentView`, polled every 3 s; 404 on bad token |
+| Student | `POST /api/assignments/[id]/submissions/[sid]` + token `{answers}` | written defense, only in `escrito` + `defensas` |
+| Teacher | `PATCH /api/assignments/[id]/session` + `x-teacher-key` | partial `ClassSession`; leaving `entregas` with an empty queue proposes it by arrival |
+| Teacher | `POST /api/assignments/[id]/session` + key `{submissionId, questionId?, score}` | scores a question (oral: advances question, then next ungraded student; grade = average) or sets the final grade |
+
+The teacher UI for these endpoints is the teammate's; this branch only adds the API.
 
 ## Log
 
 - L1 (2026-10-31, user): answers above (S2–S6). Figma PNGs reviewed: `Alumno/Entrega`, `Defensa`, `Resultado` cover the old instant flow; queue, turn and grade screens are missing.
 - L2 (user): "Celular o papel" — the teacher picks; written is a third method value (`escrito` on the phone, `papel` printed), not a separate flag.
+- L3 (user): "Mejor ve programando y luego vemos como queda el merge" — implemented domain (`session.ts`, 5 tests), API and the student page by status. Evidence: vitest 55/55, tsc clean, eslint 0 errors; demo-mode browser run at 375 px: submit → "Entregado" with countdown → queue "n.º 3 de 3, ahora defiende ana" → "¡Te toca!" with live question after grading ana and bruno → "Ya te evaluaron" → publish → 16/20 with per-question scores. API checks: late submit 409, written answer before opening 409, bad token 404, bad teacher key 403, written defense evaluates. Fixed: polling kept running after publish.

@@ -1,9 +1,13 @@
 import { NextResponse } from "next/server";
 import { z } from "zod/v4";
-import { ForbiddenError, NotFoundError } from "@/application/use-cases";
+import { ConflictError, ForbiddenError, NotFoundError } from "@/application/use-cases";
 
 export function teacherKey(request: Request): string | null {
   return request.headers.get("x-teacher-key");
+}
+
+export function studentToken(request: Request): string | null {
+  return request.headers.get("x-student-token");
 }
 
 export async function handle(run: () => Promise<unknown>): Promise<NextResponse> {
@@ -15,6 +19,9 @@ export async function handle(run: () => Promise<unknown>): Promise<NextResponse>
     }
     if (error instanceof ForbiddenError) {
       return NextResponse.json({ error: "Clave de docente inválida" }, { status: 403 });
+    }
+    if (error instanceof ConflictError) {
+      return NextResponse.json({ error: "Esto no se puede hacer en este momento de la sesión." }, { status: 409 });
     }
     if (error instanceof NotFoundError) {
       return NextResponse.json({ error: "No encontrado" }, { status: 404 });
