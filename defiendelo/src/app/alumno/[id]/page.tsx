@@ -6,10 +6,26 @@ import { AppBar, Logo, TeacherNote } from "@/app/components/brand";
 import { AssignmentSheet, PrintSheetButton } from "@/app/components/assignment-sheet";
 import { FileDrop } from "@/app/components/file-drop";
 import { GapBar } from "@/app/components/gap-bar";
+import {
+  CheckIcon,
+  ClipboardIcon,
+  ClockIcon,
+  EyeIcon,
+  HourglassIcon,
+  LockIcon,
+  MicIcon,
+  PaperclipIcon,
+  PenIcon,
+  PhoneIcon,
+  PrinterIcon,
+  SendIcon,
+  StarIcon,
+  UsersIcon,
+} from "@/app/components/icons";
 import { Waiting } from "@/app/components/waiting";
 import type { PublicAssignment } from "@/application/use-cases";
 import type { StudentView } from "@/domain/session";
-import type { EvaluationMethod, Evaluation } from "@/domain/types";
+import type { Evaluation, EvaluationMethod } from "@/domain/types";
 
 const DEFENSE_SECONDS = 10 * 60;
 const EXTRA_SECONDS = 5 * 60;
@@ -18,29 +34,20 @@ const POLL_MS = 3000;
 
 const SUBMIT_STEPS = [
   { after: 0, text: "Guardando tu entrega…" },
-  { after: 8, text: "Preparando preguntas sobre tus decisiones…" },
-  { after: 25, text: "Revisando que las preguntas sean claras. Ya casi." },
+  { after: 8, text: "Preparando preguntas sobre tu trabajo…" },
+  { after: 25, text: "Ya casi." },
 ];
 
 const EVALUATION_STEPS = [
   { after: 0, text: "Enviando tus respuestas…" },
-  { after: 8, text: "Comparando lo que explicaste con lo que entregaste…" },
-  { after: 20, text: "Ya casi." },
+  { after: 10, text: "Ya casi." },
 ];
 
-const METHOD_LABEL: Record<EvaluationMethod, string> = {
-  oral: "Defensa oral",
-  escrito: "Defensa escrita en el celular",
-  papel: "Evaluación escrita en papel",
+const METHOD: Record<EvaluationMethod, { label: string; Icon: typeof MicIcon }> = {
+  oral: { label: "Defensa oral", Icon: MicIcon },
+  escrito: { label: "Defensa en el celular", Icon: PhoneIcon },
+  papel: { label: "Evaluación en papel", Icon: PrinterIcon },
 };
-
-const METHOD_HINT: Record<EvaluationMethod, string> = {
-  oral: "Cuando cierre el plazo verás el orden. En tu turno, tu profe te hará preguntas sobre tu propio trabajo.",
-  escrito: "Cuando tu profe abra la defensa, responderás aquí unas preguntas sobre tu propio trabajo.",
-  papel: "Cuando tu profe abra la evaluación, te entregará las preguntas impresas.",
-};
-
-const STAGES = ["Entrega", "Defensa", "Resultado"];
 
 type Saved = { sid: string; token: string };
 
@@ -71,25 +78,36 @@ function countdown(deadline: string, now: number) {
   return left === 0 ? null : h ? `${h} h ${m} min` : `${m}:${s}`;
 }
 
-/** Remaining time as a ring that empties; the digits inside are the visible clock. */
-function TimerRing({ left, total, children }: { left: number; total: number; children: React.ReactNode }) {
-  const r = 34;
+/** A ring that fills with `value / total`; the children sit in the middle. */
+function Ring({
+  value,
+  total,
+  size = 80,
+  tone = "var(--color-bg-brand)",
+  children,
+}: {
+  value: number;
+  total: number;
+  size?: number;
+  tone?: string;
+  children: React.ReactNode;
+}) {
+  const r = size / 2 - 6;
   const length = 2 * Math.PI * r;
-  const urgent = left < 60;
   return (
-    <div className="relative grid size-20 shrink-0 place-items-center">
-      <svg width="80" height="80" viewBox="0 0 80 80" className="absolute inset-0 -rotate-90" aria-hidden="true">
-        <circle cx="40" cy="40" r={r} fill="none" stroke="var(--color-bg-subtle)" strokeWidth="6" />
+    <div className="relative grid shrink-0 place-items-center" style={{ width: size, height: size }}>
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="absolute inset-0 -rotate-90" aria-hidden="true">
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="var(--color-bg-subtle)" strokeWidth="8" />
         <circle
-          cx="40"
-          cy="40"
+          cx={size / 2}
+          cy={size / 2}
           r={r}
           fill="none"
-          stroke={urgent ? "var(--color-text-danger)" : "var(--color-bg-brand)"}
-          strokeWidth="6"
+          stroke={tone}
+          strokeWidth="8"
           strokeLinecap="round"
           strokeDasharray={length}
-          strokeDashoffset={length * (1 - left / total)}
+          strokeDashoffset={length * (1 - Math.min(1, value / total))}
           className="transition-[stroke-dashoffset] duration-1000 ease-linear"
         />
       </svg>
@@ -107,13 +125,37 @@ function Deadline({ deadline }: { deadline: string | null }) {
   }, [deadline]);
   if (!deadline) return null;
   const left = countdown(deadline, now);
-  const at = new Date(deadline).toLocaleString("es", { weekday: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
   return (
-    <span className={`chip justify-self-start ${left ? "chip-neutral" : "chip-danger"}`}>
-      {left ? `Cierra en ${left} (${at})` : `Plazo cerrado (${at})`}
+    <span className={`chip inline-flex items-center gap-1.5 tabular-nums ${left ? "chip-neutral" : "chip-danger"}`}>
+      <ClockIcon className="size-4" />
+      {left ? `Cierra en ${left}` : "Plazo cerrado"}
     </span>
   );
 }
+
+/** Empty/success/waiting state: one icon, one title, at most one line. */
+function StateCard({
+  icon,
+  tone = "brand",
+  title,
+  children,
+}: {
+  icon: React.ReactNode;
+  tone?: "brand" | "success" | "neutral";
+  title: string;
+  children?: React.ReactNode;
+}) {
+  const bubble = { brand: "bg-brand-subtle text-brand-text", success: "bg-success-subtle text-success", neutral: "bg-subtle text-graphite" }[tone];
+  return (
+    <section className="card grid justify-items-center gap-3 px-5 py-8 text-center" role="status">
+      <span className={`grid size-16 place-items-center rounded-full ${bubble}`}>{icon}</span>
+      <h2>{title}</h2>
+      {children && <div className="grid w-full justify-items-center gap-3 text-graphite">{children}</div>}
+    </section>
+  );
+}
+
+const BIG_ICON = "size-8";
 
 /** Written defense on the phone: one question at a time, timed, paste blocked. */
 function WrittenDefense({ view, onSend, busy }: { view: StudentView; onSend: (answers: Record<string, string>) => Promise<void>; busy: boolean }) {
@@ -150,6 +192,7 @@ function WrittenDefense({ view, onSend, busy }: { view: StudentView; onSend: (an
   if (!question) return null;
   const isLast = current === questions.length - 1;
   const answered = questions.filter((q) => (answers[q.id] ?? "").trim()).length;
+  const urgent = secondsLeft < 60;
 
   return (
     <section className="grid gap-5">
@@ -168,15 +211,15 @@ function WrittenDefense({ view, onSend, busy }: { view: StudentView; onSend: (an
                 setAnnouncement(`Agregamos ${EXTRA_SECONDS / 60} minutos.`);
               }}
             >
-              Necesito más tiempo
+              Necesito {EXTRA_SECONDS / 60} min más
             </button>
           )}
         </div>
-        <TimerRing left={secondsLeft} total={DEFENSE_SECONDS + (extended ? EXTRA_SECONDS : 0)}>
-          <p className={`relative font-display text-lg font-bold tabular-nums ${secondsLeft < 60 ? "text-pen" : ""}`} aria-hidden="true">
+        <Ring value={secondsLeft} total={DEFENSE_SECONDS + (extended ? EXTRA_SECONDS : 0)} tone={urgent ? "var(--color-text-danger)" : undefined}>
+          <p className={`relative font-display text-lg font-bold tabular-nums ${urgent ? "text-pen" : ""}`} aria-hidden="true">
             {Math.floor(secondsLeft / 60)}:{String(secondsLeft % 60).padStart(2, "0")}
           </p>
-        </TimerRing>
+        </Ring>
       </div>
       <p className="sr-only" aria-live="polite">
         {announcement}
@@ -186,21 +229,16 @@ function WrittenDefense({ view, onSend, busy }: { view: StudentView; onSend: (an
           <span key={q.id} className={`h-2 flex-1 rounded-full ${i === current ? "bg-brand" : (answers[q.id] ?? "").trim() ? "bg-inverse" : "bg-subtle"}`} />
         ))}
       </div>
-      <div className="grid gap-3">
-        <span className="chip chip-brand justify-self-start">Sobre tu trabajo</span>
-        <h2 ref={heading} tabIndex={-1} className="outline-none">
-          {question.question}
-        </h2>
-        <p id="answer-hint" className="prose-measure text-graphite">
-          Responde con tus palabras, en 2 a 4 oraciones. Ctrl + Enter pasa a la siguiente.
-        </p>
-      </div>
+      <h2 ref={heading} tabIndex={-1} className="outline-none">
+        {question.question}
+      </h2>
       <textarea
         className="ruled min-h-[12rem] rounded-[var(--radius-lg)]"
         rows={6}
         maxLength={4000}
+        placeholder="Con tus palabras, en 2 a 4 oraciones."
         aria-label={`Tu respuesta a la pregunta ${current + 1}`}
-        aria-describedby={`answer-hint${pasteBlocked ? " paste-note" : ""}`}
+        aria-describedby={pasteBlocked ? "paste-note" : undefined}
         value={answers[question.id] ?? ""}
         onChange={(e) => setAnswers({ ...answers, [question.id]: e.target.value })}
         onPaste={(e) => {
@@ -217,10 +255,10 @@ function WrittenDefense({ view, onSend, busy }: { view: StudentView; onSend: (an
       />
       {pasteBlocked && (
         <p id="paste-note" role="status" className="rounded-[var(--radius-md)] bg-highlight-subtle p-3 text-[0.9375rem] font-bold">
-          En la defensa no se puede pegar texto: queremos leer tu explicación, escrita por ti.
+          Aquí no se puede pegar: escríbelo tú.
         </p>
       )}
-      <div className="flex flex-wrap items-center gap-3">
+      <div className="flex gap-3">
         {current > 0 && (
           <button type="button" className="btn-secondary" onClick={() => setCurrent((c) => c - 1)}>
             Anterior
@@ -228,50 +266,131 @@ function WrittenDefense({ view, onSend, busy }: { view: StudentView; onSend: (an
         )}
         {isLast ? (
           <button type="button" className="btn flex-1" disabled={busy} onClick={() => void send()}>
-            {busy ? "Enviando tu defensa…" : `Enviar mi defensa (${answered} de ${questions.length} respondidas)`}
+            <SendIcon /> {busy ? "Enviando…" : `Enviar (${answered}/${questions.length})`}
           </button>
         ) : (
           <button type="button" className="btn flex-1" onClick={() => setCurrent((c) => c + 1)}>
-            Siguiente pregunta
+            Siguiente
           </button>
         )}
       </div>
-      {busy && <Waiting steps={EVALUATION_STEPS} expected="suele tardar menos de un minuto" />}
+      {busy && <Waiting steps={EVALUATION_STEPS} expected="menos de un minuto" />}
     </section>
+  );
+}
+
+function Avatar({ alias, active }: { alias: string; active?: boolean }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`grid size-10 shrink-0 place-items-center rounded-full font-display font-bold uppercase ${active ? "bg-brand text-white" : "bg-subtle text-graphite"}`}
+    >
+      {alias.slice(0, 1)}
+    </span>
   );
 }
 
 /** Oral queue: everyone sees the order, the student sees their place and who is presenting. */
 function Queue({ view }: { view: StudentView }) {
   return (
-    <section className="grid gap-5">
-      <div className="grid gap-2">
-        <span className="chip chip-brand justify-self-start">{METHOD_LABEL.oral}</span>
-        <h2>{view.position ? `Eres el n.º ${view.position} de ${view.queue.length}` : "Esperando el orden"}</h2>
-        <p className="prose-measure text-graphite" role="status">
-          {view.presenting ? `Ahora defiende ${view.presenting}.` : "Tu profe todavía no llama al primero."} Mantén esta pantalla abierta: te avisamos aquí.
-        </p>
-      </div>
-      <ol className="card grid gap-1 p-3">
-        {view.queue.map((alias, i) => {
-          const me = i + 1 === view.position;
-          const now = alias === view.presenting;
-          return (
-            <li
-              key={`${alias}-${i}`}
-              aria-current={me ? "true" : undefined}
-              className={`flex items-center gap-3 rounded-[var(--radius-md)] px-3 py-2 ${me ? "bg-brand-subtle font-bold" : ""}`}
-            >
-              <span className="w-6 text-right tabular-nums text-graphite">{i + 1}</span>
-              <span className="flex-1">
-                {alias}
-                {me && " (tú)"}
+    <section className="grid gap-4">
+      <div className="card grid grid-cols-2 divide-x divide-[var(--color-border-default)] p-0">
+        <div className="grid justify-items-center gap-1 p-5 text-center">
+          <span className="label text-graphite">Tu turno</span>
+          <span className="stat-value">{view.position ? `${view.position}.º` : "—"}</span>
+          <span className="text-[0.9375rem] text-graphite">de {view.queue.length}</span>
+        </div>
+        <div className="grid justify-items-center gap-2 p-5 text-center" role="status">
+          <span className="label text-graphite">Ahora</span>
+          {view.presenting ? (
+            <>
+              <span className="relative grid size-12 place-items-center rounded-full bg-danger-subtle text-pen">
+                <span className="absolute inset-0 animate-ping rounded-full bg-danger-subtle" aria-hidden="true" />
+                <MicIcon className="relative size-6" />
               </span>
-              {now && <span className="chip chip-danger">Defendiendo</span>}
-            </li>
-          );
-        })}
-      </ol>
+              <span className="font-bold">{view.presenting}</span>
+            </>
+          ) : (
+            <>
+              <span className="grid size-12 place-items-center rounded-full bg-subtle text-graphite">
+                <HourglassIcon className="size-6" />
+              </span>
+              <span className="text-graphite">Por empezar</span>
+            </>
+          )}
+        </div>
+      </div>
+
+      <div className="card grid gap-1 p-2">
+        <h2 className="label flex items-center gap-2 px-3 pt-2 text-graphite">
+          <UsersIcon className="size-4" /> Orden de la clase
+        </h2>
+        <ol className="grid">
+          {view.queue.map((alias, i) => {
+            const me = i + 1 === view.position;
+            const now = alias === view.presenting;
+            return (
+              <li
+                key={`${alias}-${i}`}
+                aria-current={me ? "true" : undefined}
+                className={`flex items-center gap-3 rounded-[var(--radius-md)] px-3 py-2 ${me ? "bg-brand-subtle" : ""}`}
+              >
+                <span className="w-5 text-right text-sm tabular-nums text-graphite">{i + 1}</span>
+                <Avatar alias={alias} active={me} />
+                <span className={`min-w-0 flex-1 truncate ${me ? "font-bold" : ""}`}>{alias}</span>
+                {me && <span className="chip chip-brand">Tú</span>}
+                {now && (
+                  <span className="text-pen" role="img" aria-label="Defendiendo ahora">
+                    <MicIcon />
+                  </span>
+                )}
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
+/** Own oral turn: impossible to miss, with the question being asked right now. */
+function YourTurn({ view }: { view: StudentView }) {
+  useEffect(() => {
+    const previous = document.title;
+    document.title = "¡Te toca! · Defiéndelo";
+    try {
+      navigator.vibrate?.([200, 100, 200]);
+    } catch {}
+    return () => {
+      document.title = previous;
+    };
+  }, []);
+  const q = view.question;
+  return (
+    <section className="grid gap-4" role="alert">
+      <div className="grid justify-items-center gap-3 rounded-[var(--radius-lg)] bg-brand px-5 py-8 text-center text-white">
+        <span className="relative grid size-20 place-items-center rounded-full bg-white/15">
+          <span className="absolute inset-0 animate-ping rounded-full bg-white/20" aria-hidden="true" />
+          <MicIcon className="relative size-10" />
+        </span>
+        <p className="font-display text-[clamp(2rem,9vw,3rem)] font-extrabold leading-none">¡Te toca!</p>
+        <p className="text-lg text-white/85">Acércate a tu profe, {view.alias}</p>
+      </div>
+      {q && (
+        <div className="card grid gap-3 p-5">
+          <div className="flex items-center justify-between gap-3">
+            <span className="label text-brand-text">
+              Pregunta {q.number} de {q.total}
+            </span>
+            <span className="flex gap-1" aria-hidden="true">
+              {Array.from({ length: q.total }, (_, i) => (
+                <span key={i} className={`h-2 w-6 rounded-full ${i < q.number ? "bg-brand" : "bg-subtle"}`} />
+              ))}
+            </span>
+          </div>
+          <p className="font-display text-xl font-bold leading-snug">{q.text}</p>
+        </div>
+      )}
     </section>
   );
 }
@@ -279,70 +398,101 @@ function Queue({ view }: { view: StudentView }) {
 function Result({ view, criterionName }: { view: StudentView; criterionName: (id: string) => string }) {
   const result = view.result!;
   const evaluation: Evaluation | null = result.evaluation;
+  const scale = view.gradeScale;
+  // ponytail: 55% as the pass color line (11/20 in Peru); make it a session setting if schools differ.
+  const passed = (score: number) => score >= scale * 0.55;
   const gapOf = (p: Evaluation["perCriterion"][number]) => p.submissionScore - p.defenseScore;
   const widestGap = evaluation?.perCriterion.filter((p) => gapOf(p) >= 0.25).sort((a, b) => gapOf(b) - gapOf(a))[0]?.criterionId;
   return (
-    <section className="grid gap-6">
-      <div className="card grid justify-items-start gap-2 p-5 sm:p-6">
-        <span className="label text-graphite">Tu nota</span>
+    <section className="grid gap-4">
+      <div className="card grid justify-items-center gap-3 px-5 py-8 text-center">
+        <h2 className="label flex items-center gap-1.5 text-graphite">
+          <StarIcon className="size-4" /> Tu nota
+        </h2>
         {result.grade == null ? (
-          <p className="text-graphite">Tu profe aún no te puso nota.</p>
+          <p className="text-graphite">Sin nota todavía.</p>
         ) : (
-          <p className="font-display text-5xl font-extrabold tabular-nums">
-            {result.grade}
-            <span className="text-2xl text-graphite"> / {view.gradeScale}</span>
-          </p>
+          <Ring value={result.grade} total={scale} size={144} tone={passed(result.grade) ? "var(--color-text-success)" : "var(--color-text-danger)"}>
+            <p className="relative font-display font-extrabold tabular-nums leading-none">
+              <span className="text-5xl">{result.grade}</span>
+              <span className="block text-base text-graphite">de {scale}</span>
+            </p>
+          </Ring>
         )}
       </div>
+
       {result.perQuestion.length > 0 && (
-        <div className="grid gap-3">
-          <h2>Pregunta por pregunta</h2>
-          <ul className="grid gap-3">
-            {result.perQuestion.map((q, i) => (
-              <li key={i} className="card flex items-start justify-between gap-4 p-4">
-                <p className="prose-measure">{q.question}</p>
-                <span className="shrink-0 font-bold tabular-nums">{q.score == null ? "—" : `${q.score} / ${view.gradeScale}`}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <ul className="card grid divide-y divide-[var(--color-border-default)] p-0" aria-label="Nota por pregunta">
+          {result.perQuestion.map((q, i) => (
+            <li key={i} className="flex items-start gap-3 p-4">
+              <span className="grid size-8 shrink-0 place-items-center rounded-full bg-subtle text-sm font-bold text-graphite">P{i + 1}</span>
+              <p className="line-clamp-3 flex-1 text-[0.9375rem]">{q.question}</p>
+              <span className={`chip shrink-0 tabular-nums ${q.score == null ? "chip-neutral" : passed(q.score) ? "chip-success" : "chip-danger"}`}>
+                {q.score ?? "—"}
+              </span>
+            </li>
+          ))}
+        </ul>
       )}
+
       {evaluation && (
-        <div className="grid gap-4">
-          <h2>Lo que defendiste</h2>
-          <p className="prose-measure">{evaluation.summary}</p>
-          <ul className="grid gap-4">
+        <details className="card p-5">
+          <summary className="btn-quiet cursor-pointer">Ver detalle por criterio</summary>
+          <ul className="mt-4 grid gap-5">
             {evaluation.perCriterion.map((p) => (
-              <li key={p.criterionId} className="card grid gap-3 p-5">
+              <li key={p.criterionId} className="grid gap-2">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <h3>{criterionName(p.criterionId)}</h3>
                   {p.criterionId === widestGap && <TeacherNote>¡revisa este!</TeacherNote>}
                 </div>
                 <GapBar submitted={p.submissionScore} explained={p.defenseScore} />
-                {p.misconception && (
-                  <p className="rounded-[var(--radius-md)] border-l-4 border-pen bg-danger-subtle p-4 text-[0.9375rem]">
-                    <span className="label block text-pen">Para repasar</span>
-                    {p.misconception}
-                  </p>
-                )}
+                {p.misconception && <p className="rounded-[var(--radius-md)] bg-danger-subtle p-3 text-[0.9375rem]">{p.misconception}</p>}
               </li>
             ))}
           </ul>
-        </div>
+        </details>
       )}
     </section>
   );
 }
 
-function Notice({ chip, title, children }: { chip: string; title: string; children: React.ReactNode }) {
+/** Three-step progress with icons; labels stay on one line on a phone. */
+function Steps({ index, method }: { index: number; method: EvaluationMethod }) {
+  const DefenseIcon = METHOD[method].Icon;
+  const steps = [
+    { label: "Entrega", icon: <PaperclipIcon /> },
+    { label: "Defensa", icon: <DefenseIcon /> },
+    { label: "Nota", icon: <StarIcon /> },
+  ];
   return (
-    <section className="card grid gap-3 p-5 sm:p-6" role="status">
-      <span className="chip chip-success justify-self-start">{chip}</span>
-      <h2>{title}</h2>
-      <p className="prose-measure text-graphite">{children}</p>
-    </section>
+    <nav aria-label="Pasos">
+      <ol className="grid grid-cols-3 gap-2">
+        {steps.map((step, i) => {
+          const done = i < index;
+          const current = i === index;
+          return (
+            <li key={step.label} aria-current={current ? "step" : undefined} className="grid justify-items-center gap-1.5 text-center">
+              <span
+                className={`grid size-10 place-items-center rounded-full ${current ? "bg-brand text-white" : done ? "bg-brand-subtle text-brand-text" : "bg-subtle text-graphite"}`}
+              >
+                {done ? <CheckIcon /> : step.icon}
+              </span>
+              <span className={`text-sm ${current ? "font-bold text-ink" : "text-graphite"}`}>
+                {step.label}
+                {done && <span className="sr-only"> (hecho)</span>}
+              </span>
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
   );
 }
+
+const SOURCES = [
+  { key: "archivo", label: "Subir archivo", Icon: PaperclipIcon },
+  { key: "texto", label: "Pegar texto", Icon: ClipboardIcon },
+] as const;
 
 export default function StudentPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -351,6 +501,10 @@ export default function StudentPage({ params }: { params: Promise<{ id: string }
   const [view, setView] = useState<StudentView | null>(null);
   const [alias, setAlias] = useState("");
   const [work, setWork] = useState("");
+  const [source, setSource] = useState<"archivo" | "texto">("archivo");
+  const [fromFile, setFromFile] = useState(false);
+  const [showText, setShowText] = useState(false);
+  const [showWork, setShowWork] = useState(false);
   const [busy, setBusy] = useState(false);
   const [editing, setEditing] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -438,7 +592,6 @@ export default function StudentPage({ params }: { params: Promise<{ id: string }
   const header = (
     <AppBar>
       <Logo />
-      <span className="chip chip-neutral">Alumno</span>
     </AppBar>
   );
 
@@ -460,38 +613,36 @@ export default function StudentPage({ params }: { params: Promise<{ id: string }
   }
 
   const { method, deadline } = assignment.session;
+  const { label: methodLabel, Icon: MethodIcon } = METHOD[method];
   const criterionName = (cid: string) => assignment.criteria.find((c) => c.id === cid)?.name ?? cid;
   const status = view?.status;
-  const stageIndex = !view ? 0 : status === "publicado" ? 2 : 1;
+  const stepIndex = !view ? 0 : status === "publicado" || status === "evaluado" ? 2 : 1;
+  const showForm = (!view && assignment.acceptsSubmissions) || (editing && status === "entregado");
+  // A file that hit the length limit was cut: open its text so the student checks the end.
+  const textVisible = source === "texto" || showText || (fromFile && work.length >= WORK_LIMIT);
 
   return (
     <>
       {header}
-      <main id="contenido" tabIndex={-1} className="mx-auto grid w-full max-w-2xl gap-8 px-4 py-8 outline-none sm:px-6 sm:py-10">
-        <nav aria-label="Pasos" className="card px-4 py-2 shadow-none">
-          <ol className="steps justify-between gap-x-2">
-            {STAGES.map((label, i) => (
-              <li key={label}>
-                <span aria-current={i === stageIndex ? "step" : undefined} className={i < stageIndex ? "step-done" : ""}>
-                  <span className="step-number" aria-hidden="true">
-                    {i < stageIndex ? "✓" : i + 1}
-                  </span>
-                  {label}
-                </span>
-              </li>
-            ))}
-          </ol>
-        </nav>
+      <main id="contenido" tabIndex={-1} className="mx-auto grid w-full max-w-xl gap-6 px-4 py-6 outline-none sm:px-6 sm:py-10">
+        <Steps index={stepIndex} method={method} />
 
-        <section className="grid gap-4">
-          <div className="flex flex-wrap gap-2">
-            <span className="chip chip-brand">{assignment.subject}</span>
-            <span className="chip chip-neutral">{METHOD_LABEL[method]}</span>
+        <section className="grid gap-3">
+          {/* Before submitting the open task sheet already shows the title. */}
+          <h1 className={view ? "text-[clamp(1.5rem,6vw,2rem)]!" : "sr-only"}>{assignment.title}</h1>
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="chip chip-brand inline-flex items-center gap-1.5">
+              <MethodIcon className="size-4" /> {methodLabel}
+            </span>
+            {(!view || status === "entregado") && <Deadline deadline={deadline} />}
           </div>
-          <h1 className="text-[clamp(1.75rem,6vw,2.5rem)]">{assignment.title}</h1>
-          {!view && <Deadline deadline={deadline} />}
-          {!view ? (
-            <>
+          <details open={!view} className="group">
+            <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 font-bold text-brand-text">
+              <EyeIcon className="size-5" />
+              <span className="group-open:hidden">Ver la tarea</span>
+              <span className="hidden group-open:inline">Ocultar la tarea</span>
+            </summary>
+            <div className="mt-2 grid gap-3">
               <AssignmentSheet
                 id="hoja-tarea"
                 title={assignment.title}
@@ -503,143 +654,139 @@ export default function StudentPage({ params }: { params: Promise<{ id: string }
               <div>
                 <PrintSheetButton sheetId="hoja-tarea" />
               </div>
-            </>
-          ) : (
-            <details>
-              <summary className="btn-quiet cursor-pointer">Ver el enunciado de la tarea</summary>
-              <div className="mt-3">
-                <AssignmentSheet
-                  title={assignment.title}
-                  subject={assignment.subject}
-                  statement={assignment.statement}
-                  aiPolicy={assignment.aiPolicy}
-                  criteria={assignment.criteria}
-                />
-              </div>
-            </details>
-          )}
+            </div>
+          </details>
         </section>
 
-        {!view && !assignment.acceptsSubmissions && (
-          <Notice chip="Entregas cerradas" title="Ya no se reciben entregas">
-            El plazo de esta tarea terminó. Si crees que es un error, avísale a tu profe.
-          </Notice>
-        )}
+        {!view && !assignment.acceptsSubmissions && <StateCard icon={<LockIcon className={BIG_ICON} />} tone="neutral" title="Entregas cerradas" />}
 
-        {((!view && assignment.acceptsSubmissions) || (editing && status === "entregado")) && (
-          <section className="grid gap-6">
-            <div className="grid gap-2">
-              <h2>{editing ? "Cambiar mi entrega" : "Tu entrega"}</h2>
-              <p className="prose-measure text-graphite">
-                {editing ? "Tu nueva versión reemplaza a la anterior. Las preguntas se harán sobre esta versión." : METHOD_HINT[method]}
-              </p>
-            </div>
-            <form onSubmit={submit} className="grid gap-6">
-              {!editing && (
-                <div className="grid gap-2">
-                  <label htmlFor="alias" className="font-bold">
-                    Apodo
-                  </label>
-                  <span id="alias-hint" className="text-[0.9375rem] text-graphite">
-                    Usa un apodo, no tu nombre. No guardamos datos personales.
-                  </span>
-                  <input
-                    id="alias"
-                    type="text"
-                    required
-                    maxLength={40}
-                    autoComplete="off"
-                    aria-describedby="alias-hint"
-                    value={alias}
-                    onChange={(e) => setAlias(e.target.value)}
-                  />
-                </div>
-              )}
-              <div className="grid gap-3">
-                <label htmlFor="work" className="font-bold">
-                  Tu trabajo
+        {showForm && (
+          <form onSubmit={submit} className="grid gap-5">
+            <h2>{editing ? "Cambiar mi entrega" : "Tu entrega"}</h2>
+            {!editing && (
+              <div className="grid gap-1.5">
+                <label htmlFor="alias" className="font-bold">
+                  Apodo
                 </label>
-                <span id="work-hint" className="text-[0.9375rem] text-graphite">
-                  Pega tu trabajo o súbelo como archivo.
-                </span>
-                <FileDrop limit={WORK_LIMIT} title="Sube tu archivo" hint="PDF, Word (.docx), texto o código (.py, .js, .java…)." onText={setWork} />
+                <input
+                  id="alias"
+                  type="text"
+                  required
+                  maxLength={40}
+                  autoComplete="off"
+                  placeholder="ej. luz_23 (no tu nombre real)"
+                  value={alias}
+                  onChange={(e) => setAlias(e.target.value)}
+                />
+              </div>
+            )}
+
+            <div className="grid gap-3">
+              <div role="tablist" aria-label="Cómo entregar" className="grid grid-cols-2 gap-1 rounded-[var(--radius-md)] bg-subtle p-1">
+                {SOURCES.map(({ key, label, Icon }) => (
+                  <button
+                    key={key}
+                    type="button"
+                    role="tab"
+                    aria-selected={source === key}
+                    onClick={() => setSource(key)}
+                    className={`flex min-h-11 items-center justify-center gap-2 rounded-[var(--radius-sm)] font-bold ${source === key ? "bg-surface text-ink shadow-sm" : "text-graphite"}`}
+                  >
+                    <Icon className="size-5" /> {label}
+                  </button>
+                ))}
+              </div>
+
+              {source === "archivo" && (
+                <FileDrop
+                  limit={WORK_LIMIT}
+                  title="Elige tu archivo"
+                  hint="PDF, Word, texto o código"
+                  onText={(text) => {
+                    setWork(text);
+                    setFromFile(true);
+                  }}
+                />
+              )}
+              {source === "archivo" && fromFile && (
+                <button type="button" className="btn-quiet justify-self-start" aria-expanded={showText} onClick={() => setShowText((s) => !s)}>
+                  {showText ? "Ocultar el texto" : "Ver o corregir el texto"}
+                </button>
+              )}
+              {textVisible && (
                 <textarea
                   id="work"
                   required
                   minLength={20}
                   maxLength={WORK_LIMIT}
-                  rows={10}
-                  aria-describedby="work-hint work-count"
+                  rows={source === "texto" ? 8 : 10}
+                  aria-label="Tu trabajo"
+                  placeholder="Pega aquí tu trabajo"
                   className="font-mono text-[0.9375rem]"
                   value={work}
                   onChange={(e) => setWork(e.target.value)}
                 />
-                <span id="work-count" className="text-right text-[0.9375rem] tabular-nums text-graphite">
-                  {work.length.toLocaleString("es")} / {WORK_LIMIT.toLocaleString("es")} caracteres
-                </span>
-              </div>
-              {error && (
-                <p role="alert" className="font-bold text-pen">
-                  {error}
-                </p>
               )}
-              <div className="grid gap-4">
-                <button className="btn w-full" disabled={busy}>
-                  {busy ? "Entregando…" : editing ? "Guardar mi nueva versión" : "Entregar mi trabajo"}
+              {work.length > WORK_LIMIT * 0.8 && (
+                <span className="text-right text-sm tabular-nums text-graphite">
+                  {work.length.toLocaleString("es")} / {WORK_LIMIT.toLocaleString("es")}
+                </span>
+              )}
+            </div>
+
+            {error && (
+              <p role="alert" className="font-bold text-pen">
+                {error}
+              </p>
+            )}
+            {busy && <Waiting steps={SUBMIT_STEPS} expected="cerca de un minuto" />}
+
+            <div className="sticky bottom-0 -mx-4 grid gap-2 border-t border-rule bg-page/95 px-4 py-3 backdrop-blur sm:static sm:mx-0 sm:border-0 sm:bg-transparent sm:p-0">
+              <button className="btn w-full" disabled={busy || work.trim().length < 20}>
+                <SendIcon /> {busy ? "Entregando…" : editing ? "Guardar nueva versión" : "Entregar"}
+              </button>
+              {editing && !busy && (
+                <button type="button" className="btn-secondary w-full" onClick={() => setEditing(false)}>
+                  Cancelar
                 </button>
-                {editing && !busy && (
-                  <button type="button" className="btn-secondary w-full" onClick={() => setEditing(false)}>
-                    Cancelar, dejar la entrega anterior
-                  </button>
-                )}
-                {busy && <Waiting steps={SUBMIT_STEPS} expected="suele tardar cerca de un minuto" />}
-              </div>
-            </form>
-          </section>
+              )}
+            </div>
+          </form>
         )}
 
         {status === "entregado" && !editing && (
-          <>
-            <Notice chip="Entregado ✓" title={`Listo, ${view!.alias}`}>
-              {METHOD_HINT[method]} Puedes cerrar esta pestaña y volver con el mismo enlace.
-            </Notice>
-            <Deadline deadline={deadline} />
-            <details className="card p-5">
-              <summary className="btn-quiet cursor-pointer">Ver lo que entregaste</summary>
-              <pre className="mt-3 max-h-80 overflow-auto whitespace-pre-wrap font-mono text-[0.9375rem]">{view!.work}</pre>
-            </details>
-            {view!.canReplace && (
-              <button
-                type="button"
-                className="btn-secondary justify-self-start"
-                onClick={() => {
-                  setWork(view!.work);
-                  setError(null);
-                  setEditing(true);
-                }}
-              >
-                Cambiar mi entrega
+          <StateCard icon={<CheckIcon className={BIG_ICON} />} tone="success" title="¡Entregado!">
+            <p>Te avisamos aquí cuando empiece.</p>
+            <div className={`grid w-full gap-2 ${view!.canReplace ? "grid-cols-2" : ""}`}>
+              <button type="button" className="btn-secondary whitespace-nowrap px-3!" aria-expanded={showWork} onClick={() => setShowWork((s) => !s)}>
+                <EyeIcon /> {showWork ? "Ocultar" : "Ver entrega"}
               </button>
+              {view!.canReplace && (
+                <button
+                  type="button"
+                  className="btn-secondary whitespace-nowrap px-3!"
+                  onClick={() => {
+                    setWork(view!.work);
+                    setSource("texto");
+                    setError(null);
+                    setEditing(true);
+                  }}
+                >
+                  <PenIcon /> Cambiar
+                </button>
+              )}
+            </div>
+            {showWork && (
+              <pre className="max-h-72 w-full overflow-auto whitespace-pre-wrap rounded-[var(--radius-md)] bg-subtle p-3 text-left font-mono text-sm text-ink">
+                {view!.work}
+              </pre>
             )}
-          </>
+          </StateCard>
         )}
 
         {status === "en_cola" && <Queue view={view!} />}
 
-        {status === "turno" && (
-          <section className="card grid gap-4 border-brand p-5 sm:p-6" role="alert">
-            <span className="chip chip-danger justify-self-start">¡Te toca!</span>
-            <h2 className="text-[clamp(2rem,8vw,3rem)]">{view!.alias}, acércate a tu profe</h2>
-            {view!.question && (
-              <div className="grid gap-2 rounded-[var(--radius-md)] bg-brand-subtle p-4">
-                <span className="label text-brand-text">
-                  Pregunta {view!.question.number} de {view!.question.total}
-                </span>
-                <p className="font-display text-xl font-bold">{view!.question.text}</p>
-              </div>
-            )}
-          </section>
-        )}
+        {status === "turno" && <YourTurn view={view!} />}
 
         {status === "responder" && (
           <>
@@ -653,15 +800,15 @@ export default function StudentPage({ params }: { params: Promise<{ id: string }
         )}
 
         {status === "papel" && (
-          <Notice chip={METHOD_LABEL.papel} title="Tu evaluación es en papel">
-            Tu profe te entregará las preguntas impresas. Cuando publique las notas, las verás aquí.
-          </Notice>
+          <StateCard icon={<PrinterIcon className={BIG_ICON} />} title="Evaluación en papel">
+            <p>Tu profe te dará la hoja.</p>
+          </StateCard>
         )}
 
         {status === "evaluado" && (
-          <Notice chip="Defensa terminada ✓" title="Ya te evaluaron">
-            Tu nota aparecerá aquí cuando tu profe publique los resultados.
-          </Notice>
+          <StateCard icon={<HourglassIcon className={BIG_ICON} />} title="¡Listo!">
+            <p>Tu nota aparecerá aquí.</p>
+          </StateCard>
         )}
 
         {status === "publicado" && <Result view={view!} criterionName={criterionName} />}
