@@ -3,6 +3,7 @@
 import { use, useCallback, useEffect, useRef, useState } from "react";
 import { api } from "@/app/api-client";
 import { AppBar, Logo, TeacherNote } from "@/app/components/brand";
+import { AssignmentSheet, PrintSheetButton } from "@/app/components/assignment-sheet";
 import { FileDrop } from "@/app/components/file-drop";
 import { GapBar } from "@/app/components/gap-bar";
 import { Waiting } from "@/app/components/waiting";
@@ -479,17 +480,31 @@ export default function StudentPage({ params }: { params: Promise<{ id: string }
           <h1 className="text-[clamp(1.75rem,6vw,2.5rem)]">{assignment.title}</h1>
           {!view && <Deadline deadline={deadline} />}
           {!view ? (
-            <div className="card grid gap-4 p-5 sm:p-6">
-              <p className="prose-measure whitespace-pre-line">{assignment.statement}</p>
-              <p className="rounded-[var(--radius-md)] border-l-4 border-brand bg-brand-subtle p-4 font-bold">
-                <span className="label block text-brand-text">Sobre la IA</span>
-                {assignment.aiPolicy}
-              </p>
-            </div>
+            <>
+              <AssignmentSheet
+                id="hoja-tarea"
+                title={assignment.title}
+                subject={assignment.subject}
+                statement={assignment.statement}
+                aiPolicy={assignment.aiPolicy}
+                criteria={assignment.criteria}
+              />
+              <div>
+                <PrintSheetButton sheetId="hoja-tarea" />
+              </div>
+            </>
           ) : (
             <details>
               <summary className="btn-quiet cursor-pointer">Ver el enunciado de la tarea</summary>
-              <p className="prose-measure mt-3 whitespace-pre-line">{assignment.statement}</p>
+              <div className="mt-3">
+                <AssignmentSheet
+                  title={assignment.title}
+                  subject={assignment.subject}
+                  statement={assignment.statement}
+                  aiPolicy={assignment.aiPolicy}
+                  criteria={assignment.criteria}
+                />
+              </div>
             </details>
           )}
         </section>
